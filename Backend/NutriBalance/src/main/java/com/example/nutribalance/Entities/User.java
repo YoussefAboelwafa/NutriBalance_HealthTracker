@@ -1,9 +1,11 @@
 package com.example.nutribalance.Entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,9 +30,16 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "plan_name")
     private Plan plan;
+    @JsonManagedReference
     @ManyToMany(mappedBy = "users")
     List<Coach> coaches;
-
+    public void addCoach(Coach coach) {
+        if (coaches == null) {
+            coaches = new ArrayList<>();
+        }
+        coaches.add(coach);
+        coach.getUsers().add(this);
+    }
     @ManyToMany(mappedBy = "users_reports")
     List<Coach> coaches_reports;
 

@@ -1,5 +1,6 @@
 package com.example.nutribalance.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,7 @@ public class Coach {
     private String price;
     @Column
     private int no_users_subscribed;
+    @JsonBackReference
     @ManyToMany(cascade = CascadeType.ALL)
             @JoinTable(
                     name="subscription",
@@ -42,7 +44,14 @@ public class Coach {
 
             )
     List<User> users;
-    @ManyToMany
+    public void addUsertoCoach(User user) {
+        if (users == null) {
+            users = new ArrayList<>();
+        }
+        users.add(user);
+        user.getCoaches().add(this);
+    }
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name="report",
             joinColumns = @JoinColumn(name="coach_id"),
@@ -52,6 +61,7 @@ public class Coach {
     List<User> users_reports;
 @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL)
     List<Plan> plans;
+
 
 
 }

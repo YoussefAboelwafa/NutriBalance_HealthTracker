@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 public class CoachController {
     @Autowired
     private  Iservice iservice;
-    @PostMapping("/save{sort}")
-    public Coach saveCoachWithUsers(@RequestBody Coach coach, @PathVariable String sort){
+    @PostMapping("/save")
+    public Coach saveCoachWithUsers(){
         return iservice.saveCoachWithUsers();
     }
 
