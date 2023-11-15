@@ -10,9 +10,5 @@ import org.springframework.web.bind.annotation.*;
 public class CoachController {
     @Autowired
     private  Iservice iservice;
-    @PostMapping("/save")
-    public Coach saveCoachWithUsers(){
-        return iservice.saveCoachWithUsers();
-    }
 
 }
