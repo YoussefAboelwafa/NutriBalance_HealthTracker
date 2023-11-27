@@ -1,5 +1,6 @@
 package com.example.nutribalance.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -30,7 +31,7 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "plan_name")
     private Plan plan;
-    @JsonManagedReference
+    @JsonIgnoreProperties("users")
     @ManyToMany(mappedBy = "users")
     List<Coach> coaches;
     public void addCoach(Coach coach) {
@@ -40,6 +41,7 @@ public class User {
         coaches.add(coach);
         coach.getUsers().add(this);
     }
+    @JsonIgnoreProperties("users_reports")
     @ManyToMany(mappedBy = "users_reports")
     List<Coach> coaches_reports;
 
