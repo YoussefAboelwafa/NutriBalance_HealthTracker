@@ -31,7 +31,7 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "plan_name")
     private Plan plan;
-    @JsonIgnoreProperties("users")
+   @JsonIgnoreProperties("users")
     @ManyToMany(mappedBy = "users")
     List<Coach> coaches;
     public void addCoach(Coach coach) {
