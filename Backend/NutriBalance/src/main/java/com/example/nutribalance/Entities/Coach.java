@@ -38,7 +38,7 @@ public class Coach {
     @Column
     private int no_users_subscribed;
     @Column
-    private int is_approved;
+    private int isapproved;
     @JsonIgnoreProperties("coaches")
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(

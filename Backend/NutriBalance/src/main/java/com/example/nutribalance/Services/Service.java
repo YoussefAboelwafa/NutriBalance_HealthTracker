@@ -7,6 +7,7 @@ import com.example.nutribalance.Repositries.UserRepositry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -28,4 +29,10 @@ public class Service implements Iservice{
         }
         return coachRepo.save(coach);
     }
+
+    @Override
+    public List<Coach> get_waiting_coaches() {
+        return coachRepo.findByisapproved(0);
+    }
 }
+

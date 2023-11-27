@@ -30,7 +30,7 @@ class NutriBalanceApplicationTests {
         coach.setPassword("123456");
         coach.setDescription("coach1 description");
         coach.setContact_number("01029979868");
-        coach.setIs_approved(0);
+        coach.setIsapproved(0);
         //case1: neither email nor username is found in the database
         when(coachRepositry.findByEmail(coach.getEmail())).thenReturn(Optional.empty());
         when(coachRepositry.findByUsername(coach.getUsername())).thenReturn(Optional.empty());

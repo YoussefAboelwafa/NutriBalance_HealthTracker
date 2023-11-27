@@ -8,6 +8,8 @@ import com.example.nutribalance.Services.Iservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/coach")
 public class CoachController {
@@ -16,5 +18,9 @@ public class CoachController {
 @PostMapping("/save")
     public Coach savecoach(@RequestBody Coach coach) {
     return iservice.savecoach(coach);
+}
+@GetMapping("/get_waiting_coaches")
+    public List<Coach> get_waiting_coaches() {
+    return iservice.get_waiting_coaches();
 }
 }
