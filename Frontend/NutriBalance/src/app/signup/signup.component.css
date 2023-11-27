@@ -93,6 +93,12 @@ select {
   display: flex;
   flex-direction: row;
 }
+
+#btn:disabled {
+  background: grey;
+  cursor: not-allowed;
+}
+
 #signup {
   margin-top: 20px;
   font-size: 14px;
