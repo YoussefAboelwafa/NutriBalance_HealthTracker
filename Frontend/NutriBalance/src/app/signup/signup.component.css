@@ -1,0 +1,150 @@
+div {
+  font-family: "Montserrat", sans-serif;
+}
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  padding: 0px;
+}
+
+.form {
+  width: 70vh;
+  align-items: center;
+  justify-self: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin-left: 1%;
+  order: 2;
+}
+.head1 {
+  font-weight: 700;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+.head2 {
+  font-weight: 700;
+  font-size: 34px;
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+td {
+  padding-left: 10px;
+}
+.fa-leaf {
+  color: #008081;
+}
+.image {
+  width: 80vh;
+  height: 100vh;
+  background: url("../../assets/images/joe.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  order: 1;
+}
+
+h3 {
+  color: #090914;
+  font-size: 24px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  line-height: 150%;
+  margin-top: 10%;
+}
+.box label {
+  align-self: stretch;
+  color: #0a0a0a;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+}
+.box input,
+select {
+  margin-bottom: 20px;
+  display: flex;
+  padding: 10px 12px;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid #c2c2c2;
+  color: #000;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  width: fill-available;
+  margin-top: 5px;
+}
+
+#btn {
+  width: 100%;
+  border-radius: 8px;
+  background: #008081;
+  font-size: 16px;
+  padding: 10px 16px;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  display: flex;
+  flex-direction: row;
+}
+#signup {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+#signup a {
+  color: #008081;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: 0.4s;
+  margin-left: 10px;
+}
+#signup a:hover {
+  color: #008081;
+  text-decoration: underline;
+  margin-left: 20px;
+}
+
+.error {
+  font-size: small;
+  margin-top: -19px;
+  margin-bottom: 10px;
+  margin-left: 2px;
+  color: red;
+}
+.spinner-border {
+  color: white;
+  font-size: 16px;
+  margin-left: 10px;
+  width: 20px;
+  height: 20px;
+}
+.signinnow {
+  color: #008081;
+}
+
+@media only screen and (max-width: 1000px) {
+  .form {
+    width: 100%;
+    max-width: 100%;
+    margin: 20px;
+    order: 3;
+  }
+
+  .image {
+    width: 100%;
+    order: 1;
+  }
+  .container {
+    overflow: scroll;
+    justify-content: center;
+    align-items: center;
+  }
+}
