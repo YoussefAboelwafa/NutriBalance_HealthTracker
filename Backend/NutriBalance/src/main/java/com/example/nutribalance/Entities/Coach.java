@@ -29,7 +29,7 @@ public class Coach {
     @Column
     private String description;
     @Lob
-    @Column(name = "cv", length = 1000)
+    @Column(name = "cv", length = 2147483647)
     private byte[] cv;
     @Column
     private int rating;
