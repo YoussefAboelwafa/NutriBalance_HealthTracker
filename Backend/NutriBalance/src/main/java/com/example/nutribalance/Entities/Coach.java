@@ -1,6 +1,8 @@
 package com.example.nutribalance.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,7 @@ public class Coach {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long coach_id;
     @Column
-    private String user_name;
+    private String username;
     @Column
     private String email;
     @Column
@@ -25,7 +27,7 @@ public class Coach {
     @Column
     private String contact_number;
     @Column
-    private String Description;
+    private String description;
     @Lob
     @Column(name = "cv", length = 1000)
     private byte[] cv;
@@ -35,7 +37,9 @@ public class Coach {
     private String price;
     @Column
     private int no_users_subscribed;
-    @JsonBackReference
+    @Column
+    private int is_approved;
+    @JsonIgnoreProperties("coaches")
     @ManyToMany(cascade = CascadeType.ALL)
             @JoinTable(
                     name="subscription",
@@ -51,6 +55,7 @@ public class Coach {
         users.add(user);
         user.getCoaches().add(this);
     }
+    @JsonIgnoreProperties("coaches_reports")
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name="report",
@@ -59,7 +64,8 @@ public class Coach {
 
     )
     List<User> users_reports;
-@OneToMany(mappedBy = "coach", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("coach")
+    @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL)
     List<Plan> plans;
 
 

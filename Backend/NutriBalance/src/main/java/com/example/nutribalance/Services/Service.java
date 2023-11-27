@@ -1,15 +1,12 @@
 package com.example.nutribalance.Services;
 
 import com.example.nutribalance.Entities.Coach;
-import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.Repositries.CoachRepositry;
 import com.example.nutribalance.Repositries.SubscriptionRepositry;
 import com.example.nutribalance.Repositries.UserRepositry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -22,4 +19,13 @@ public class Service implements Iservice{
     @Autowired
     private SubscriptionRepositry subscriptionRepo;
 
+    @Override
+    public Coach savecoach(Coach coach) {
+        Optional<Coach> old_coach_1= coachRepo.findByEmail(coach.getEmail());
+        Optional<Coach> old_coach_2= coachRepo.findByUsername(coach.getUsername());
+        if(old_coach_1.isPresent() || old_coach_2.isPresent()){
+            return null;
+        }
+        return coachRepo.save(coach);
+    }
 }

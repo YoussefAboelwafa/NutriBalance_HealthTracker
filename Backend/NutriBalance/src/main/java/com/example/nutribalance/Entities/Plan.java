@@ -1,5 +1,6 @@
 package com.example.nutribalance.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class Plan {
     private String Goal;
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL)
     List<User> users;
+    @JsonIgnoreProperties("plan")
     @ManyToOne
     @JoinColumn(name = "coach_id")
     private Coach coach;
