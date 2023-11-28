@@ -52,4 +52,23 @@ class NutriBalanceApplicationTests {
 
 
 
+    @Test
+
+    public void testApproveCoach() {
+        Coach coach = new Coach();
+        coach.setUsername("coach1");
+        coach.setCoach_id(1L);
+        coach.setIsapproved(0);
+        //case1: coach is found in the database
+        when(coachRepositry.findById(coach.getCoach_id())).thenReturn(Optional.of(coach));
+        when(coachRepositry.save(coach)).thenReturn(coach);
+        assertEquals(1, service.approvecoach(coach.getCoach_id()).getIsapproved());
+        assertEquals(coach, service.approvecoach(coach.getCoach_id()));
+        //case2: coach is not found in the database
+        when(coachRepositry.findById(coach.getCoach_id())).thenReturn(Optional.empty());
+        assertNull(service.approvecoach(coach.getCoach_id()));
+    }
+
+
+
 }
