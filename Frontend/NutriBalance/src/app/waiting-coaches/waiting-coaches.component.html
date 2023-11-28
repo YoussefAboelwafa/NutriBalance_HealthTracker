@@ -1,23 +1,33 @@
-
-  <div class="text-center align-items-center justify-content-center" *ngIf="!cvBlobUrl">
-  <div class="card" style="width: 50%;" *ngFor="let coach of coaches;let i=index">
+<div
+  class="container text-center align-items-center justify-content-center"
+  *ngIf="!cvBlobUrl"
+>
+  <div
+    class="card"
+    *ngFor="let coach of coaches; let i = index"
+  >
     <div class="card-body">
-      <h5 class="card-title"><strong> {{coach.username}}</strong></h5>
-      <p class="card-text">{{coach.description}}</p>
+      <h5 class="card-title">
+        <strong> {{ coach.username }}</strong>
+      </h5>
+      <p class="card-text">{{ coach.description }}</p>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item"><strong>Email: </strong> {{coach.email}}</li>
-      <li class="list-group-item"><strong>Price: </strong>{{coach.price}}</li>
-      <li class="list-group-item"><strong>Phone number: </strong>{{coach.contact_number}}</li>
+      <li class="list-group-item">
+        <strong>Email: </strong> {{ coach.email }}
+      </li>
+      <li class="list-group-item"><strong>Price: </strong>{{ coach.price }}</li>
+      <li class="list-group-item">
+        <strong>Phone number: </strong>{{ coach.contact_number }}
+      </li>
     </ul>
     <div class="card-body">
       <button class="btn btn-dark" (click)="view_cv(i)">View CV</button>
-      <button  class="btn btn-danger">Decline</button>
+      <button class="btn btn-danger">Decline</button>
       <button class="btn btn-success">Approve</button>
     </div>
   </div>
 </div>
-<div *ngIf="cvBlobUrl" style="height: 100vh;">
-    <iframe [src]="cvBlobUrl" width="100%" height="100%" frameborder="0"></iframe>
-  </div>
-  
+<div *ngIf="cvBlobUrl" style="height: 100vh">
+  <iframe [src]="cvBlobUrl" width="100%" height="100%" frameborder="0"></iframe>
+</div>
