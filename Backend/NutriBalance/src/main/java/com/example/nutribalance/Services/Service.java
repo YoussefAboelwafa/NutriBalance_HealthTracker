@@ -8,6 +8,7 @@ import com.example.nutribalance.Repositries.UserRepositry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -31,6 +32,25 @@ public class Service implements Iservice{
     }
 
     @Override
+    public List<Coach> get_waiting_coaches() {
+        return coachRepo.findByisapproved(0);
+    }
+
+    @Override
+    public String deletecoach(Long id) {
+        coachRepo.deleteById(id);
+        return "coach deleted";
+    }
+
+    @Override
+    public Coach approvecoach(Long id) {
+        Optional<Coach> coach = coachRepo.findById(id);
+        if(coach.isPresent()){
+            coach.get().setIsapproved(1);
+            return coachRepo.save(coach.get());
+        }
+        return null;
+
     public User saveuser(User user) {
         Optional<User> old_user_1= userRepo.findByEmail(user.getEmail());
         Optional<User> old_user_2= userRepo.findByUsername(user.getUsername());
@@ -38,5 +58,7 @@ public class Service implements Iservice{
             return null;
         }
         return userRepo.save(user);
+
     }
 }
+

@@ -34,7 +34,7 @@ class NutriBalanceApplicationTests {
         coach.setPassword("123456");
         coach.setDescription("coach1 description");
         coach.setContact_number("01029979868");
-        coach.setIs_approved(0);
+        coach.setIsapproved(0);
         //case1: neither email nor username is found in the database
         when(coachRepositry.findByEmail(coach.getEmail())).thenReturn(Optional.empty());
         when(coachRepositry.findByUsername(coach.getUsername())).thenReturn(Optional.empty());
@@ -54,6 +54,22 @@ class NutriBalanceApplicationTests {
 
     }
     @Test
+
+    public void testApproveCoach() {
+        Coach coach = new Coach();
+        coach.setUsername("coach1");
+        coach.setCoach_id(1L);
+        coach.setIsapproved(0);
+        //case1: coach is found in the database
+        when(coachRepositry.findById(coach.getCoach_id())).thenReturn(Optional.of(coach));
+        when(coachRepositry.save(coach)).thenReturn(coach);
+        assertEquals(1, service.approvecoach(coach.getCoach_id()).getIsapproved());
+        assertEquals(coach, service.approvecoach(coach.getCoach_id()));
+        //case2: coach is not found in the database
+        when(coachRepositry.findById(coach.getCoach_id())).thenReturn(Optional.empty());
+        assertNull(service.approvecoach(coach.getCoach_id()));
+
+
     public void testSaveUser() {
         User user = new User();
         user.setUsername("user1");
@@ -76,6 +92,7 @@ class NutriBalanceApplicationTests {
         when(userRepositry.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
         when(userRepositry.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
         assertNull(service.saveuser(user));
+
     }
 
 }

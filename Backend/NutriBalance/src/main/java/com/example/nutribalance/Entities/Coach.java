@@ -38,15 +38,15 @@ public class Coach {
     @Column
     private int no_users_subscribed;
     @Column
-    private int is_approved;
+    private int isapproved;
     @JsonIgnoreProperties("coaches")
     @ManyToMany(cascade = CascadeType.ALL)
-            @JoinTable(
-                    name="subscription",
-                    joinColumns = @JoinColumn(name="coach_id"),
-                    inverseJoinColumns = @JoinColumn(name="user_id")
+    @JoinTable(
+            name="subscription",
+            joinColumns = @JoinColumn(name="coach_id"),
+            inverseJoinColumns = @JoinColumn(name="user_id")
 
-            )
+    )
     List<User> users;
     public void addUsertoCoach(User user) {
         if (users == null) {
