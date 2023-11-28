@@ -1,0 +1,25 @@
+<div id="outer">
+
+<div id="title">
+  <h1>NutriBalance <i class="fa-solid fa-leaf"></i></h1>
+  <p id="quote">your wellness partner</p>
+</div>
+<div id="header-images">
+
+  <div id="cover-image1"></div>
+  <div id="cover-image2"></div>
+  <div id="cover-image3"></div>
+</div>
+  <label id="choose-role">choose role</label>
+<div id="inner">
+    <label >
+      <input  type="radio" name="role" value="admin" [(ngModel)]="selected_role" (change)="onSelection()"> Admin
+    </label>
+    <label>
+      <input  type="radio" name="role" value="coach" [(ngModel)]="selected_role" (change)="onSelection()"> Coach
+    </label>
+    <label>
+      <input  type="radio" name="role" value="user" [(ngModel)]="selected_role" (change)="onSelection()"> User
+    </label>
+</div>
+</div>
