@@ -1,6 +1,7 @@
 package com.example.nutribalance.Services;
 
 import com.example.nutribalance.Entities.Coach;
+import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.Repositries.CoachRepositry;
 import com.example.nutribalance.Repositries.SubscriptionRepositry;
 import com.example.nutribalance.Repositries.UserRepositry;
@@ -49,6 +50,15 @@ public class Service implements Iservice{
             return coachRepo.save(coach.get());
         }
         return null;
+
+    public User saveuser(User user) {
+        Optional<User> old_user_1= userRepo.findByEmail(user.getEmail());
+        Optional<User> old_user_2= userRepo.findByUsername(user.getUsername());
+        if(old_user_1.isPresent() || old_user_2.isPresent()){
+            return null;
+        }
+        return userRepo.save(user);
+
     }
 }
 

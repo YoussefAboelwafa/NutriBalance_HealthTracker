@@ -1,8 +1,13 @@
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
 import { HomeComponent } from './home/home.component';
+
 import{WaitingCoachesComponent} from './waiting-coaches/waiting-coaches.component';
+
+import { NgModule } from '@angular/core';
+
+
 export const routes: Routes = [
   {
     path: 'signup',
@@ -21,3 +26,9 @@ export const routes: Routes = [
     component: WaitingCoachesComponent,
   },
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
