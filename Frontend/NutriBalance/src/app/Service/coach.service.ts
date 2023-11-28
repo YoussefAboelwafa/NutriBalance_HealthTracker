@@ -14,4 +14,10 @@ export class CoachService {
   getwaitingcoaches(): Observable<any> {
     return this.http.get<any>(`${baseUrl}/get_waiting_coaches`);
   }
+  deleteCoach(id:any): Observable<string> {
+    return this.http.delete(`${baseUrl}/delete/${id}`,{ responseType: 'text' });
+  }
+  approveCoach(id:any): Observable<any> {
+    return this.http.get<any>(`${baseUrl}/approve/${id}`);
+  }
 }

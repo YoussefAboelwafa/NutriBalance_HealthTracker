@@ -34,5 +34,21 @@ public class Service implements Iservice{
     public List<Coach> get_waiting_coaches() {
         return coachRepo.findByisapproved(0);
     }
+
+    @Override
+    public String deletecoach(Long id) {
+        coachRepo.deleteById(id);
+        return "coach deleted";
+    }
+
+    @Override
+    public Coach approvecoach(Long id) {
+        Optional<Coach> coach = coachRepo.findById(id);
+        if(coach.isPresent()){
+            coach.get().setIsapproved(1);
+            return coachRepo.save(coach.get());
+        }
+        return null;
+    }
 }
 

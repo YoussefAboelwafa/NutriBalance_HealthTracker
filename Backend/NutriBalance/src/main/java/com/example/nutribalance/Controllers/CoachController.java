@@ -33,4 +33,12 @@ public class CoachController {
     public List<Coach> get_waiting_coaches() {
     return iservice.get_waiting_coaches();
 }
+@DeleteMapping("/delete/{id}")
+    public String deletecoach(@PathVariable Long id) {
+    return iservice.deletecoach(id);
+}
+@GetMapping("/approve/{id}")
+    public Coach approvecoach(@PathVariable Long id) {
+    return iservice.approvecoach(id);
+}
 }

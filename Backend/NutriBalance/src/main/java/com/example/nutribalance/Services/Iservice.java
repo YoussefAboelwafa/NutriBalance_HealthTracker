@@ -10,4 +10,6 @@ public interface Iservice {
     //------------------------------coach methods--------------------------------
     Coach savecoach(Coach coach);
     List<Coach> get_waiting_coaches();
+    String deletecoach(Long id);
+    Coach approvecoach(Long id);
 }

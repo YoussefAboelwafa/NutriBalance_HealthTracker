@@ -22,6 +22,7 @@ export class WaitingCoachesComponent implements OnInit{
     this.coachservice.getwaitingcoaches().subscribe(
       (data) => {
         this.coaches = data;
+        console.log(this.coaches);
       },
       (error) => {
         console.log(error);
@@ -39,5 +40,28 @@ export class WaitingCoachesComponent implements OnInit{
       const blobUrl = URL.createObjectURL(blob);
       this.cvBlobUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
     }
+  }
+  approve(i:number){
+    this.coachservice.approveCoach(this.coaches[i].coach_id).subscribe(
+      (data) => {
+        console.log(data);
+      this.coaches.splice(i,1);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  decline(i:number){
+    console.log('d5l')
+    this.coachservice.deleteCoach(this.coaches[i].coach_id).subscribe(
+      (data) => {
+        console.log(data);
+      this.coaches.splice(i,1);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }
