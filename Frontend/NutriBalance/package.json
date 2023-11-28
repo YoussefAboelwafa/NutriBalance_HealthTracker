@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "18": "^0.0.0",
     "@angular/animations": "^17.0.0",
     "@angular/common": "^17.0.0",
     "@angular/compiler": "^17.0.0",
@@ -20,6 +21,8 @@
     "@angular/platform-server": "^17.0.0",
     "@angular/router": "^17.0.0",
     "@angular/ssr": "^17.0.0",
+    "angular-auth-oidc-client": "^16.0.1",
+    "angular-oauth2-oidc": "^15.0.1",
     "express": "^4.18.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
