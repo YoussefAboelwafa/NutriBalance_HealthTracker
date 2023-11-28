@@ -50,7 +50,9 @@ public class Service implements Iservice{
             return coachRepo.save(coach.get());
         }
         return null;
+    }
 
+    @Override
     public User saveuser(User user) {
         Optional<User> old_user_1= userRepo.findByEmail(user.getEmail());
         Optional<User> old_user_2= userRepo.findByUsername(user.getUsername());
@@ -58,7 +60,5 @@ public class Service implements Iservice{
             return null;
         }
         return userRepo.save(user);
-
     }
 }
-

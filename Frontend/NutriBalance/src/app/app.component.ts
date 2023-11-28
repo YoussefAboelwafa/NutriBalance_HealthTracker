@@ -3,9 +3,6 @@ import { Router, RouterOutlet } from '@angular/router';
 import { Sign } from 'crypto';
 import { SigninComponent } from './signin/signin.component';
 import { CommonModule } from '@angular/common';
-
-import { RouterOutlet } from '@angular/router';
-import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
@@ -21,7 +18,7 @@ export class AppComponent {
 
   constructor(private router: Router) {
 
-    this.router.navigate(['waiting-coaches']);
+    this.router.navigate(['home']);
 
   }
 }
