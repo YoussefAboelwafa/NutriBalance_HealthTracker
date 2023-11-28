@@ -1,15 +1,12 @@
-import { Component, NgModule } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
-import { Sign } from 'crypto';
-import { SigninComponent } from './signin/signin.component';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-
-
+import { RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SigninComponent, CommonModule, HttpClientModule],
+  imports: [CommonModule, RouterOutlet,FormsModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
@@ -17,8 +14,6 @@ export class AppComponent {
   title = 'NutriBalance';
 
   constructor(private router: Router) {
-
-    this.router.navigate(['home']);
-
+    this.router.navigate(['role-type']);
   }
 }

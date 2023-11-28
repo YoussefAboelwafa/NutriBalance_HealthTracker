@@ -29,7 +29,7 @@ public class Coach {
     @Column
     private String description;
     @Lob
-    @Column(name = "cv", length = 2147483647)
+    @Column(name = "cv", length = 1000)
     private byte[] cv;
     @Column
     private int rating;
@@ -38,15 +38,15 @@ public class Coach {
     @Column
     private int no_users_subscribed;
     @Column
-    private int isapproved;
+    private int is_approved;
     @JsonIgnoreProperties("coaches")
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name="subscription",
-            joinColumns = @JoinColumn(name="coach_id"),
-            inverseJoinColumns = @JoinColumn(name="user_id")
+            @JoinTable(
+                    name="subscription",
+                    joinColumns = @JoinColumn(name="coach_id"),
+                    inverseJoinColumns = @JoinColumn(name="user_id")
 
-    )
+            )
     List<User> users;
     public void addUsertoCoach(User user) {
         if (users == null) {
