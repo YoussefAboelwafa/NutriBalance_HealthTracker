@@ -68,7 +68,8 @@ class NutriBalanceApplicationTests {
         //case2: coach is not found in the database
         when(coachRepositry.findById(coach.getCoach_id())).thenReturn(Optional.empty());
         assertNull(service.approvecoach(coach.getCoach_id()));
-
+    }
+    @Test
 
     public void testSaveUser() {
         User user = new User();
