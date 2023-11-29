@@ -32,7 +32,7 @@ export class SigninComponent {
   currentUser: any;
   googleURL = AppConstants.GOOGLE_AUTH_URL;
 
-  constructor(private shared: Shared, private userservice: UserService, private coachservice: CoachService, private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private shared: Shared, private userservice: UserService, private coachservice: CoachService, private service: AuthService, private tokenStorage: TokenStorageService, private router: Router, private route: ActivatedRoute,private pop_service:ModalPopServiceService) { }
 
   ngOnInit(): void {
     const token = this.route.snapshot.queryParamMap.get('token');

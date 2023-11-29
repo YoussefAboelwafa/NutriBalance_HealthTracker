@@ -89,6 +89,7 @@ public class Service implements Iservice{
         }
         return null;
     }
+
     @Override
     public User saveuser(User user) {
         Optional<User> old_user_1= userRepo.findByEmail(user.getEmail());
@@ -177,7 +178,6 @@ public class Service implements Iservice{
             }
         }
     }
-
     public Coach coachsignin(String email, String pass) {
         Optional<Coach> coach = coachRepo.findByEmail(email);
         Coach coach1 = coach.orElse(null);
