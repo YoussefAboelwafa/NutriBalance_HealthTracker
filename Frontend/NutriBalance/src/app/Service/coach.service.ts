@@ -20,4 +20,7 @@ export class CoachService {
   approveCoach(id:any): Observable<any> {
     return this.http.get<any>(`${baseUrl}/approve/${id}`);
   }
+  checksignin(email:string,password:string): Observable<any> {
+    return this.http.get<any>(`${baseUrl}/coachsignin/${email}/${password}`);
+  }
 }

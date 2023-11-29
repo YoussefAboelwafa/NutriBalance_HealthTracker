@@ -1,22 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
+import { UserService } from '../_services/user.service';
+import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import { TokenStorageService } from '../_services/token-storage.service';
+import { authInterceptorProviders } from '../_helpers/auth.interceptor';
+import { Shared } from '../common/shared';
 
 @Component({
   selector: 'app-home',
-  standalone: true,
-  imports: [CommonModule, RouterOutlet],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
-})
-export class HomeComponent {
 
-  constructor(private router: Router) { }
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
+})
+export class HomeComponent implements OnInit{
+  curuser:any
+  constructor(private router: Router,private userService: UserService, private tokenService:TokenStorageService,private shared:Shared) {
+    if(this.shared.loggedIn==true){
+    setTimeout(function() { 
+      alert("successfully logged in"); 
+    }, 1000);
+  }
+   }
+  content!: string;
+  ngOnInit(): void {
+   
+    this.userService.getPublicContent().subscribe(
+      data => {
+        this.content = data;
+      },
+      err => {
+        this.content = JSON.parse(err.error).message;
+      }
+    );
+  }
 
   signin(){
-    this.router.navigate(['/signin']);
+    this.shared.signin_flag=true;
+    this.router.navigate(['/role-type']);
   }
   signup(){
-    this.router.navigate(['/signup']);
+    this.shared.signin_flag=false;
+    this.router.navigate(['/role-type']);
   }
 }

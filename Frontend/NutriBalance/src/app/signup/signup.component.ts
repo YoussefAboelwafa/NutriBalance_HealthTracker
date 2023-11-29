@@ -5,22 +5,13 @@ import { HomeComponent } from '../home/home.component';
 import { SigninComponent } from '../signin/signin.component';
 import { FormsModule } from '@angular/forms';
 import { User } from '../Objects/User';
-import { UserService } from '../Services/user.service';
+import { UserService } from '../_services/user.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    SigninComponent,
-    HomeComponent,
-    FormsModule,
-  ],
-  providers: [UserService, HttpClient],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css',
+  styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
   constructor(private router: Router, private userservice: UserService) {}

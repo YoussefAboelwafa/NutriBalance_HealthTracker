@@ -8,7 +8,7 @@ describe('CoachSignupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CoachSignupComponent]
+      declarations: [CoachSignupComponent]
     })
     .compileComponents();
     

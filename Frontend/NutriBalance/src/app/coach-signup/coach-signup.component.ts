@@ -3,18 +3,15 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Coach } from '../Objects/Coach';
-import { CoachService } from '../Services/coach.service';
+import { CoachService } from '../Service/coach.service';
 import { SigninComponent } from '../signin/signin.component';
 import { HomeComponent } from '../home/home.component';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-coach-signup',
-  standalone: true,
-  imports: [CommonModule,RouterOutlet,FormsModule,SigninComponent,HomeComponent],
-  providers: [CoachService,HttpClient],
   templateUrl: './coach-signup.component.html',
-  styleUrl: './coach-signup.component.css'
+  styleUrls: ['./coach-signup.component.css']
 })
 export class CoachSignupComponent {
 

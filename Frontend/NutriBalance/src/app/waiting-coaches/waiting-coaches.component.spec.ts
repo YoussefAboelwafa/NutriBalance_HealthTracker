@@ -8,7 +8,7 @@ describe('WaitingCoachesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [WaitingCoachesComponent]
+      declarations: [WaitingCoachesComponent]
     })
     .compileComponents();
     
