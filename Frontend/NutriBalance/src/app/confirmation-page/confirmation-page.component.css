@@ -1,0 +1,17 @@
+.main {
+display: flex;
+justify-content: center;
+align-items: center;
+
+height: 5vw;
+width: 100%;
+background-color:cadetblue;
+
+
+}
+
+.main a{
+    color: black;
+    font-size: 1.5vw;
+    font-weight: bold;
+}

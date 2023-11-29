@@ -22,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ConfirmationPageComponent } from './confirmation-page/confirmation-page.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     CoachSignupComponent,
     RoleTypeComponent,
     FpPopupComponent,
+    ConfirmationPageComponent,
 
   ],
   imports: [
