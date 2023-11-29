@@ -9,7 +9,7 @@ const USER_KEY = 'auth-user';
 export class TokenStorageService {
 
   constructor() { }
-
+  
   signOut(): void {
     window.sessionStorage.clear();
   }

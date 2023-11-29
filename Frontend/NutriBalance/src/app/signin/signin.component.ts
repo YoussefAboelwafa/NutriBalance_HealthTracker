@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
 import { SignupComponent } from '../signup/signup.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators  } from '@angular/forms';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { AppConstants } from '../common/app.constants';
@@ -11,6 +11,9 @@ import { UserService } from '../_services/user.service';
 import { AuthService } from '../_services/auth.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { authInterceptorProviders } from '../_helpers/auth.interceptor';
+import { RoleTypeComponent } from '../role-type/role-type.component';
+import { CoachService } from '../Service/coach.service';
+import { Shared } from '../common/shared';
 
 @Component({
   selector: 'app-signin',
@@ -47,67 +50,104 @@ import { authInterceptorProviders } from '../_helpers/auth.interceptor';
 //   }
 // }
 
-export class SigninComponent implements OnInit {
+export class SigninComponent  {
 
-  form: any = {};
-  isLoggedIn = false;
-  isLoginFailed = false;
-  errorMessage = '';
-  currentUser: any;
-  googleURL = AppConstants.GOOGLE_AUTH_URL;
+  // form: any = {};
+  // isLoggedIn = false;
+  // isLoginFailed = false;
+  // errorMessage = '';
+  // currentUser: any;
+  // googleURL = AppConstants.GOOGLE_AUTH_URL;
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService,private router: Router, private route: ActivatedRoute, private userService: UserService) {}
+  // constructor(private authService: AuthService, private tokenStorage: TokenStorageService,private router: Router, private route: ActivatedRoute, private userService: UserService) {}
 
-  ngOnInit(): void {
-	const token = this.route.snapshot.queryParamMap.get('token');
-	const error = this.route.snapshot.queryParamMap.get('error');
-  	if (this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
-      this.currentUser = this.tokenStorage.getUser();
-      console.log(this.currentUser)
+  // ngOnInit(): void {
+	// const token = this.route.snapshot.queryParamMap.get('token');
+	// const error = this.route.snapshot.queryParamMap.get('error');
+  // 	if (this.tokenStorage.getToken()) {
+  //     this.isLoggedIn = true;
+  //     this.currentUser = this.tokenStorage.getUser();
+  //     console.log(this.currentUser)
+  //   }
+  // 	else if(token){
+  // 		this.tokenStorage.saveToken(token);
+  //     console.log(token)
+  // 		this.userService.getCurrentUser().subscribe(
+  // 		      data => {
+  // 		        this.login(data);
+  // 		      },
+  // 		      err => {
+  // 		        this.errorMessage = err.error.message;
+  // 		        this.isLoginFailed = true;
+  // 		      }
+  // 		  );
+  // 	}
+  // 	else if(error){
+  // 		this.errorMessage = error;
+	//     this.isLoginFailed = true;
+  // 	}
+  // }
+
+  // onSubmit(): void {
+  //   this.authService.login(this.form).subscribe(
+  //     data => {
+  //       this.tokenStorage.saveToken(data.accessToken);
+  //       this.login(data.user);
+  //     },
+  //     err => {
+  //       this.errorMessage = err.error.message;
+  //       this.isLoginFailed = true;
+  //     }
+  //   );
+  // }
+  //   home() {
+  //   this.router.navigate(['/home']);
+  // }
+  // login(user:any): void {
+	// this.tokenStorage.saveUser(user);
+	// this.isLoginFailed = false;
+	// this.isLoggedIn = true;
+	// this.currentUser = this.tokenStorage.getUser();
+  // console.log(this.currentUser)
+  // console.log("LOGIN SUCCESS");
+  //   // window.location.reload();
+  // }
+  constructor(private shared:Shared,private userservice:UserService,private coachservice:CoachService,private router:Router){}
+  email: any;
+  password : any;
+  role=this.shared.selectedrole;
+  onSubmit(event: any){
+  
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) {
+      alert('Invalid email format');
     }
-  	else if(token){
-  		this.tokenStorage.saveToken(token);
-      console.log(token)
-  		this.userService.getCurrentUser().subscribe(
-  		      data => {
-  		        this.login(data);
-  		      },
-  		      err => {
-  		        this.errorMessage = err.error.message;
-  		        this.isLoginFailed = true;
-  		      }
-  		  );
-  	}
-  	else if(error){
-  		this.errorMessage = error;
-	    this.isLoginFailed = true;
-  	}
-  }
-
-  onSubmit(): void {
-    this.authService.login(this.form).subscribe(
-      data => {
-        this.tokenStorage.saveToken(data.accessToken);
-        this.login(data.user);
-      },
-      err => {
-        this.errorMessage = err.error.message;
-        this.isLoginFailed = true;
+   
+    else if(this.role=='user') {
+    this.userservice.checksignin(this.email,this.password).subscribe(data => {
+      console.log(data);
+      if(data==null) alert('wrong email or password');
+      else{
+        this.shared.loggedIn=true;
+      this.router.navigate(['/home']);
       }
-    );
-  }
-    home() {
-    this.router.navigate(['/home']);
-  }
-  login(user:any): void {
-	this.tokenStorage.saveUser(user);
-	this.isLoginFailed = false;
-	this.isLoggedIn = true;
-	this.currentUser = this.tokenStorage.getUser();
-  console.log(this.currentUser)
-  console.log("LOGIN SUCCESS");
-    // window.location.reload();
+    });
+    }
+    else if(this.role=='coach'){
+      
+      this.coachservice.checksignin(this.email,this.password).subscribe(data => {
+        console.log(data);
+        if(data==null) alert('wrong email or password');
+        else{
+          this.shared.loggedIn=true;
+          this.router.navigate(['/home']);
+         
+        }
+      });
+    }
+    else if(this.role=='admin'){
+      //todo
+    }
+
   }
 
 }
