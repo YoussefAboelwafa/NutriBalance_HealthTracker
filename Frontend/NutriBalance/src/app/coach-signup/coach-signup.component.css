@@ -11,7 +11,7 @@ div {
     top: 0px;
     padding: 0px;
   }
-  
+
   .form {
     width: 70vh;
     align-items: center;
@@ -50,7 +50,7 @@ div {
     background-position: center;
     order: 1;
   }
-  
+
   h3 {
     color: #090914;
     font-size: 24px;
@@ -81,7 +81,7 @@ div {
     width: fill-available;
     margin-top: 5px;
   }
-  
+
   #btn {
     width: 100%;
     border-radius: 8px;
@@ -96,12 +96,17 @@ div {
     display: flex;
     flex-direction: row;
   }
-  #signup {
+#btn:disabled {
+  background: grey;
+  cursor: not-allowed;
+}
+
+#signup {
     margin-top: 20px;
     font-size: 14px;
     font-weight: 700;
   }
-  
+
   #signup a {
     color: #008081;
     cursor: pointer;
@@ -114,7 +119,7 @@ div {
     text-decoration: underline;
     margin-left: 20px;
   }
-  
+
   .error {
     font-size: small;
     margin-top: -19px;
@@ -132,7 +137,7 @@ div {
   .signinnow {
     color: #008081;
   }
-  
+
 
   @media only screen and (max-width: 1000px) {
     .form {
@@ -141,7 +146,7 @@ div {
       margin: 20px;
       order: 3;
     }
-  
+
     .image {
       width: 100%;
       order: 1;
