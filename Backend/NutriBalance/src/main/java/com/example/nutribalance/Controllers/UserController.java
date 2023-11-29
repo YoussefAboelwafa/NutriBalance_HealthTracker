@@ -15,4 +15,10 @@ public class UserController {
     public User saveUser(@RequestBody User user){
         return service.saveuser(user);
     }
+
+    @GetMapping("/usersignin")
+    public User signIn(@RequestParam("email") String email,@RequestParam("password") String password){
+        return service.usersignin(email,password);
+    }
 }
+

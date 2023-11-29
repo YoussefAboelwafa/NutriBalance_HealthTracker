@@ -61,4 +61,10 @@ public class Service implements Iservice{
         }
         return userRepo.save(user);
     }
+    @Override
+    public User usersignin(String email, String password){
+        Optional<User> user=userRepo.findByEmail(email);
+        if(user.isPresent() && user.get().getPassword().equals(password)) return user.get();
+        return null;
+    }
 }
