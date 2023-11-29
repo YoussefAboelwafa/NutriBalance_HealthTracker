@@ -49,11 +49,28 @@ public class Service implements Iservice{
         Optional<Coach> coach = coachRepo.findById(id);
         if(coach.isPresent()){
             coach.get().setIsapproved(1);
+            EmailService myservice = null;
+
+            EmailDetails mail = new EmailDetails();
+            mail.setMsgBody("Dear [User],\n" +
+                    "\n" +
+                    "Thank you for registering with NutriBalance!\n" +
+                    "\n" +
+                    "To complete your registration, please click on the following link:\n" +
+                    "\n"+"<h2><a href=\"[[http://localhost:4200/Confirmation]]\" onclick=\"return handleLinkClick(event);\">Confirm Registration</a></h2>"
+                    +
+                    "\n" +
+                    "If you did not sign up for NutriBalance, please disregard this email.\n" +
+                    "\n" +
+                    "Thank you,\n" +
+                    "NutriBalance Team\n");
+            mail.setRecipient(coach.get().getEmail());
+            mail.setSubject("NutriBalance Confirmation Mail!");
+            myservice.sendSimpleMail(mail);
             return coachRepo.save(coach.get());
         }
         return null;
     }
-
     @Override
     public User saveuser(User user) {
         Optional<User> old_user_1= userRepo.findByEmail(user.getEmail());
@@ -65,7 +82,7 @@ public class Service implements Iservice{
     }
     @Override
     public User usersignin(String email, String password){
-        Optional<User> user=userRepo.f0indByEmail(email);
+        Optional<User> user=userRepo.findByEmail(email);
         if(user.isPresent() && user.get().getPassword().equals(password)) return user.get();
         return null;
     }
@@ -82,6 +99,7 @@ public class Service implements Iservice{
                     return null;
                 }
             }
+            return coach1;
         }
         return null;
     }
