@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './adminpage.component.html',
-  styleUrl: './adminpage.component.css'
+  styleUrls: ['./adminpage.component.css']
 })
 export class AdminpageComponent {
 

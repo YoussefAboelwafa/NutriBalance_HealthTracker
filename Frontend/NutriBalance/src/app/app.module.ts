@@ -14,6 +14,8 @@ import { AuthService } from './_services/auth.service';
 import { AppComponent } from './app.component';
 import { CoachSignupComponent } from './coach-signup/coach-signup.component';
 import { RoleTypeComponent } from './role-type/role-type.component';
+import { Shared } from './common/shared';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +33,7 @@ import { RoleTypeComponent } from './role-type/role-type.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthService,authInterceptorProviders],
+  providers: [AuthService,authInterceptorProviders,Shared],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

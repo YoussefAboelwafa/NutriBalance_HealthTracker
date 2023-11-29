@@ -15,6 +15,6 @@ export class AppComponent {
   title = 'NutriBalance';
 
   constructor(private router: Router) {
-    this.router.navigate(['/adminpage']);
+    this.router.navigate(['/home']);
   }
 }

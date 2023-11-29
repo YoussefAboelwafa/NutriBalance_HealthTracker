@@ -1,5 +1,6 @@
 package com.example.nutribalance;
 import com.example.nutribalance.Entities.Coach;
+import com.example.nutribalance.Entities.Plan;
 import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.Repositries.CoachRepositry;
 import com.example.nutribalance.Repositries.UserRepositry;
@@ -69,6 +70,7 @@ class NutriBalanceApplicationTests {
         when(coachRepositry.findById(coach.getCoach_id())).thenReturn(Optional.empty());
         assertNull(service.approvecoach(coach.getCoach_id()));
     }
+
     @Test
 
     public void testSaveUser() {
@@ -93,6 +95,31 @@ class NutriBalanceApplicationTests {
         when(userRepositry.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
         when(userRepositry.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
         assertNull(service.saveuser(user));
+
+    }
+    @Test
+    public void testUserSignin(){
+
+        User user=new User();
+        user.setUsername("user1");
+        user.setUser_id(1);
+        user.setEmail("user1@gmail.com");
+        user.setPassword("123456");
+        user.setContact_number("01234567891");
+        user.setPlan(new Plan());
+        user.setUser_id(1);
+
+        service.saveuser(user);
+
+        when(userRepositry.findByEmail("tvscx@gmail.com")).thenReturn(Optional.empty());
+        assertNull(service.usersignin("tvscx@gmail.com","123456"));
+
+        when(userRepositry.findByEmail("user1@gmail.com")).thenReturn(Optional.of(user));
+        assertEquals(user,service.usersignin("user1@gmail.com","123456"));
+
+        when(userRepositry.findByEmail("user1@gmail.com")).thenReturn(Optional.of(user));
+        assertNull(service.usersignin("user1@gmail.com","111111"));
+
 
     }
 
