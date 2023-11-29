@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Coach } from '../Objects/Coach';
-import { CoachService } from '../Services/coach.service';
+import { CoachService } from '../Service/coach.service';
 import { SigninComponent } from '../signin/signin.component';
 import { HomeComponent } from '../home/home.component';
 import { HttpClient } from '@angular/common/http';

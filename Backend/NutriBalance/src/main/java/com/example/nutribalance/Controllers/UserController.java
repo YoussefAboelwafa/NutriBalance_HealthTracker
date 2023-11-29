@@ -16,8 +16,8 @@ public class UserController {
         return service.saveuser(user);
     }
 
-    @GetMapping("/usersignin")
-    public User signIn(@RequestParam("email") String email,@RequestParam("password") String password){
+    @GetMapping("/usersignin/{email}/{password}")
+    public User signIn(@PathVariable String email,@PathVariable String password){
         return service.usersignin(email,password);
     }
 }

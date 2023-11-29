@@ -6,7 +6,7 @@ import{WaitingCoachesComponent} from './waiting-coaches/waiting-coaches.componen
 import { CoachSignupComponent } from './coach-signup/coach-signup.component';
 import { NgModule } from '@angular/core';
 import { AdminpageComponent } from './adminpage/adminpage.component';
-
+import { RoleTypeComponent } from './role-type/role-type.component';
 
 export const routes: Routes = [
   {
@@ -33,6 +33,10 @@ export const routes: Routes = [
   {
     path: 'adminpage',
     component: AdminpageComponent,
+  },
+  {
+    path: 'role-type',
+    component: RoleTypeComponent,
   },
   
 
