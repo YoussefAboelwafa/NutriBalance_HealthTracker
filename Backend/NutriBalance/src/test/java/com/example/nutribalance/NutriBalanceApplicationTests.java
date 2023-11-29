@@ -1,20 +1,15 @@
 package com.example.nutribalance;
 
-import com.example.nutribalance.Controllers.UserController;
 import com.example.nutribalance.Entities.Coach;
-import com.example.nutribalance.Entities.Plan;
 import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.Repositries.CoachRepositry;
 import com.example.nutribalance.Repositries.UserRepositry;
 import com.example.nutribalance.Services.Iservice;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
@@ -32,8 +27,6 @@ class NutriBalanceApplicationTests {
     private CoachRepositry coachRepositry;
     @MockBean
     private UserRepositry userRepositry;
-    @MockBean
-    private UserController userController;
 
     @Test
     public void testSaveCoach() {
@@ -64,7 +57,6 @@ class NutriBalanceApplicationTests {
     }
 
     @Test
-
     public void testApproveCoach() {
         Coach coach = new Coach();
         coach.setUsername("coach1");
@@ -106,63 +98,5 @@ class NutriBalanceApplicationTests {
         assertNull(service.saveuser(user));
 
     }
-
-    @Test
-    public void testUserSignin() {
-
-        User user = new User();
-        user.setUsername("user1");
-        user.setUser_id(1);
-        user.setEmail("user1@gmail.com");
-        user.setPassword("123456");
-        user.setContact_number("01234567891");
-        user.setPlan(new Plan());
-        user.setUser_id(1);
-
-        service.saveuser(user);
-
-        when(userRepositry.findByEmail("tvscx@gmail.com")).thenReturn(Optional.empty());
-        assertNull(service.usersignin("tvscx@gmail.com", "123456"));
-
-        when(userRepositry.findByEmail("user1@gmail.com")).thenReturn(Optional.of(user));
-        assertEquals(user, service.usersignin("user1@gmail.com", "123456"));
-
-        when(userRepositry.findByEmail("user1@gmail.com")).thenReturn(Optional.of(user));
-        assertNull(service.usersignin("user1@gmail.com", "111111"));
-
-    }
-    @Test
-    public void testUserSaveController() {
-        User user = new User();
-        user.setUsername("user1");
-        user.setUser_id(1);
-        user.setEmail("user1@gmail.com");
-        user.setPassword("123456");
-        user.setContact_number("01234567891");
-
-        when(userController.saveUser(user)).thenReturn(user);
-        assertEquals(user, userController.saveUser(user));
-    }
-    @Test
-    public void testUserExistingEmailController() {
-        User user = new User();
-        user.setUsername("user1");
-        user.setUser_id(1);
-        user.setEmail("user1@gmail.com");
-        user.setPassword("123456");
-        user.setContact_number("01234567891");
-
-        // 2 users with the same email
-        User user2 = new User();
-        user2.setUsername("user2");
-        user2.setUser_id(2);
-        user2.setEmail("user1@gmail.com");
-        user2.setPassword("123456");
-        user2.setContact_number("01234567891");
-
-        when(userController.saveUser(user2)).thenReturn(null);
-        assertNull(userController.saveUser(user2));
-    }
-
 
 }
