@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConstants } from '../common/app.constants';
-
+import { User } from '../Objects/User';
+const baseUrl = 'http://localhost:8080/user';
 const httpOptions = {
 		  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 		};
@@ -14,6 +15,12 @@ const httpOptions = {
 export class UserService {
 
   constructor(private http: HttpClient) { }
+  saveUser(user:User): Observable<any> {
+    return this.http.post<any>(`${baseUrl}/save`,user);
+  }
+  checksignin(email:string,password:string): Observable<any> {
+    return this.http.get<any>(`${baseUrl}/usersignin/${email}/${password}`);
+  }
 
   getPublicContent(): Observable<any> {
     return this.http.get(AppConstants.API_URL + 'all', { responseType: 'text' });

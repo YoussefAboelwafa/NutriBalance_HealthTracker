@@ -83,7 +83,7 @@ public class SecurityConfig {
                         exceptionHandling.authenticationEntryPoint((request, response, authException) -> response.sendError(401))
                 )
                 .authorizeHttpRequests(auth->
-                        auth.requestMatchers("/", "/error", "/api/all", "/api/auth/**", "/oauth2/**" ,"/api/**").permitAll()
+                        auth.requestMatchers("/", "/error", "/api/all", "/api/auth/**", "/oauth2/**" ,"/api/**","/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .oauth2Login(

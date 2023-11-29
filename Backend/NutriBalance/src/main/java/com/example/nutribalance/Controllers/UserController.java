@@ -3,6 +3,7 @@ package com.example.nutribalance.Controllers;
 import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.Services.Iservice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -15,4 +16,14 @@ public class UserController {
     public User saveUser(@RequestBody User user){
         return service.saveuser(user);
     }
+
+    @GetMapping("/usersignin/{email}/{password}")
+    public User signIn(@PathVariable String email,@PathVariable String password){
+        return service.usersignin(email,password);
+    }
+
+    public <T> ResponseEntity<T> saveuser(User user) {
+        return null;
+    }
 }
+
