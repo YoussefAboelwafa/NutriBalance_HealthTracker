@@ -160,23 +160,24 @@ public class Service implements Iservice{
         return resetPassword.orElse(null);
     }
     @Override
-    public void resetPassword(LoginRequest loginRequest,String role){
-        if(role.equals("user")){
-            Optional<User> user=userRepo.findByEmail(loginRequest.getEmail());
-            if(user.isPresent()){
+    public void resetPassword(LoginRequest loginRequest,String role) {
+        if (role.equals("user")) {
+            Optional<User> user = userRepo.findByEmail(loginRequest.getEmail());
+            if (user.isPresent()) {
                 user.get().setPassword(passwordEncoder.encode(loginRequest.getPassword()));
                 userRepo.save(user.get());
                 resetPasswordRepository.deleteById(resetPasswordRepository.findByEmail(loginRequest.getEmail()).getId());
             }
-        }
-        else if(role.equals("coach")){
-            Optional<Coach> coach=coachRepo.findByEmail(loginRequest.getEmail());
-            if(coach.isPresent()){
+        } else if (role.equals("coach")) {
+            Optional<Coach> coach = coachRepo.findByEmail(loginRequest.getEmail());
+            if (coach.isPresent()) {
                 coach.get().setPassword(passwordEncoder.encode(loginRequest.getPassword()));
                 coachRepo.save(coach.get());
                 resetPasswordRepository.deleteById(resetPasswordRepository.findByEmail(loginRequest.getEmail()).getId());
             }
         }
+    }
+
     public Coach coachsignin(String email, String pass) {
         Optional<Coach> coach = coachRepo.findByEmail(email);
         Coach coach1 = coach.orElse(null);
