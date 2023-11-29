@@ -6,37 +6,36 @@
     justify-content: center;
     height: 100%;
   }
-  
+
   /* Style the popup title */
   h1 {
     font-size: 24px;
     margin-bottom: 20px;
   }
-  
+
   /* Style the input field */
   mat-form-field {
     width: 100%;
     max-width: 300px;
     margin-bottom: 20px;
   }
-  
+
   /* Style the submit button */
   button {
     margin-top: 10px;
   }
-  
+
   /* Style the close button */
   button[mat-button] {
-    color: #007bff; /* Change the color to match your design */
+    color: #008081;
     text-transform: uppercase;
     font-weight: bold;
     border: none;
     background: transparent;
     cursor: pointer;
   }
-  
+
   /* Style the close button on hover */
   button[mat-button]:hover {
     text-decoration: underline;
   }
-  
