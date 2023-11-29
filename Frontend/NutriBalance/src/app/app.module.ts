@@ -12,6 +12,8 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { AuthService } from './_services/auth.service';
 import { AppComponent } from './app.component';
+import { CoachSignupComponent } from './coach-signup/coach-signup.component';
+import { RoleTypeComponent } from './role-type/role-type.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { AppComponent } from './app.component';
     AppComponent,
     HomeComponent,
     SignupComponent,
+    CoachSignupComponent,
+    RoleTypeComponent
 
   ],
   imports: [
