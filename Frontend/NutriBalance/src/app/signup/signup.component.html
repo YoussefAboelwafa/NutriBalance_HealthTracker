@@ -1,101 +1,108 @@
 <div class="container">
-  <div class="image"></div>
-
-  <div class="form">
-    <form #form="ngForm">
-      <table class="box">
-        <h3 class="head1">Sign up to</h3>
-        <h3 class="head2">NutriBalance <i class="fa-solid fa-leaf"></i></h3>
-        <tr>
-          <td>
-            <label for="name">User Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Enter your user name"
-              required
-              class="form-control"
-              minlength="3"
-              [(ngModel)]="user.username"
-            />
-          </td>
-        </tr>
-
-        <tr>
-          <td colspan="2">
-            <label for="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
-              required
-              class="form-control"
-              [(ngModel)]="user.email"
-            />
-          </td>
-        </tr>
-
-        <tr>
-          <td colspan="2">
-            <label for="phone">Phone number</label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              placeholder="Enter your phone number"
-              required
-              class="form-control"
-              [(ngModel)]="user.contact_number"
-            />
-          </td>
-        </tr>
-
-        <tr>
-          <td colspan="2">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Password"
-              required
-              class="form-control"
-              minlength="8"
-              [(ngModel)]="user.password"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <label for="password2">Confirm your password</label>
-            <input
-              type="password"
-              id="password2"
-              name="password2"
-              placeholder="Password"
-              required
-              class="form-control"
-              minlength="8"
-              placeholder="Confrim your password"
-              [(ngModel)]="confirmedPassword"
-            />
-          </td>
-        </tr>
-
-        <tr>
-          <td colspan="2">
-            <button id="btn" type="submit" (click)="submit()" [disabled]="!form.valid">
-              Sign up
-            </button>
-            <p id="signup">
-              Already a member?
-              <a (click)="signin()">Sign in now</a>
-            </p>
-          </td>
-        </tr>
-      </table>
-    </form>
+    <div class="image"></div>
+  
+    <div class="form">
+      <form>
+        <table class="box">
+          <h3 class="head1">Sign up to</h3>
+          <h3 class="head2">NutriBalance <i class="fa-solid fa-leaf"></i></h3>
+          <tr>
+            <td>
+              <label for="fname">First name</label>
+              <input
+                type="text"
+                id="fname"
+                name="fname"
+                placeholder="First name"
+                required
+                class="form-control"
+                minlength="3"
+              />
+            </td>
+  
+            <td>
+              <label for="lname">Last name</label>
+              <input
+                type="text"
+                id="lname"
+                name="lname"
+                placeholder="Last name"
+                required
+                class="form-control"
+                minlength="3"
+              />
+            </td>
+          </tr>
+  
+          <tr>
+            <td colspan="2">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email"
+                required
+                class="form-control"
+                email
+              />
+            </td>
+          </tr>
+  
+          <tr>
+            <td colspan="2">
+              <label for="phone">Phone number</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="Enter your phone number"
+                required
+                class="form-control"
+              />
+            </td>
+          </tr>
+  
+          <tr>
+            <td colspan="2">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Password"
+                required
+                class="form-control"
+                minlength="8"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <label for="password2">Confirm your password</label>
+              <input
+                type="password"
+                id="password2"
+                name="password2"
+                placeholder="Password"
+                required
+                class="form-control"
+                minlength="8"
+                placeholder="Confrim your password"
+              />
+            </td>
+          </tr>
+  
+          <tr>
+            <td colspan="2">
+              <button id="btn" type="submit">Sign up</button>
+              <p id="signup">
+                Already a member?
+                <a (click)="signin()">Sign in now</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
   </div>
-</div>
