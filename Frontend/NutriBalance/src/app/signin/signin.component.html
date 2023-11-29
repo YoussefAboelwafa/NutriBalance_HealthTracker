@@ -75,9 +75,19 @@
               />
             </td>
           </tr>
+
           <tr>
             <td>
                 <button id="btn" type="submit" (click)="onSubmit($event)">Sign in</button> 
+                <div class="form-group">
+                  <p class="social-login text-center">
+                    <span>or</span>
+                      Sign in with:
+                      <a  href="{{ googleURL }}" class="ml-2">
+                                  <i class="fa-brands fa-google" style="font-size: 2rem;"></i>
+                      </a>
+                  </p>
+              </div>
             </td>
           </tr>
         </table>
