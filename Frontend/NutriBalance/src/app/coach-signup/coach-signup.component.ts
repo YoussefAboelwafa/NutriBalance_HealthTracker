@@ -10,11 +10,8 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-coach-signup',
-  standalone: true,
-  imports: [CommonModule,RouterOutlet,FormsModule,SigninComponent,HomeComponent],
-  providers: [CoachService,HttpClient],
   templateUrl: './coach-signup.component.html',
-  styleUrl: './coach-signup.component.css'
+  styleUrls: ['./coach-signup.component.css']
 })
 export class CoachSignupComponent {
 

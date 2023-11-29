@@ -4,10 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-role-type',
-  standalone: true,
-  imports: [CommonModule,FormsModule],
   templateUrl: './role-type.component.html',
-  styleUrl: './role-type.component.css'
+  styleUrls:[ './role-type.component.css']
 })
 export class RoleTypeComponent {
 selected_role:string='';

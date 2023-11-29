@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		user.setEmail(formDTO.getEmail());
 		user.setPassword(passwordEncoder.encode(formDTO.getPassword()));
-		user.setUser_name(formDTO.getName());
+		user.setUsername(formDTO.getName());
 		return user;
 	}
 
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {
-		existingUser.setUser_name(oAuth2UserInfo.getName());
+		existingUser.setUsername(oAuth2UserInfo.getName());
 		return userRepository.save(existingUser);
 	}
 

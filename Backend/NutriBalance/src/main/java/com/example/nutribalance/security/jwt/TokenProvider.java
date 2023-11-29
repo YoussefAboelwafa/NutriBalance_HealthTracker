@@ -45,7 +45,7 @@ public class TokenProvider {
 		LocalUser userPrincipal = (LocalUser) authentication.getPrincipal();
 		return Jwts.builder()
 				.setId(Long.toString(userPrincipal.getUser().getUser_id()))
-				.setSubject(userPrincipal.getUser().getUser_name())
+				.setSubject(userPrincipal.getUser().getUsername())
 				.setIssuedAt(new Date())
 				.setIssuer("app-Service")
 				.setExpiration(calcTokenExpirationDate())
