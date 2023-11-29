@@ -4,13 +4,14 @@ import com.example.nutribalance.dto.LocalUser;
 import com.example.nutribalance.dto.SignUpRequest;
 //import com.example.nutribalance.exception.UserAlreadyExistAuthenticationException;
 import com.example.nutribalance.Entities.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 
 import java.util.Map;
 import java.util.Optional;
 
-public interface UserService {
+public interface UserService{
 
 	public User registerNewUser(SignUpRequest signUpRequest) throws Exception;
 
