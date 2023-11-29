@@ -1,9 +1,5 @@
-import { Component, NgModule } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
-import { Sign } from 'crypto';
-import { SigninComponent } from './signin/signin.component';
-import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {Component, NgModule} from '@angular/core';
+import {Router, RouterOutlet} from '@angular/router';
 
 
 @Component({

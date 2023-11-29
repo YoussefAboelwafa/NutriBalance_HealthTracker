@@ -1,7 +1,7 @@
 
 #outer{
     background-color : #008081;
-    align-items: center; 
+    align-items: center;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -20,8 +20,9 @@ h1{
     margin-left: 5%;
     text-align: center;
     font-weight: 700;
-    font-size: 50px; 
+    font-size: 50px;
     color:#333;
+    margin-top: 20px;
 }
 #leaf{
     background-image: url('/assets/images/leaf.png');
@@ -31,11 +32,11 @@ h1{
     left: 52%;
     z-index: 1;
     text-align: center;
-    font-size: 15px; 
+    font-size: 15px;
 }
 #quote{
     margin-top: 2%;
-    font-size: 15px; 
+    font-size: 15px;
     font-family: Arial, Helvetica, sans-serif;
     color:darkgreen;
 }
@@ -47,20 +48,20 @@ h1{
     height: 50%;
 }
 #cover-image1{
-    
+
     background-image: url('/assets/images/header-image-1.png');
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
     width: 33%;
 }
 #cover-image2{
     background-image: url('/assets/images/header-image-2.png');
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
     width: 33%;
 }
 
 #cover-image3{
     background-image: url('/assets/images/header-image-3.png');
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
     width: 33%;
 }
 .fa-leaf {
@@ -84,13 +85,16 @@ h1{
   label{
     display: block;
     color: black;
+    font-size: larger;
     font-weight: 700;
   }
-  
+
   input[type="radio"] {
-    margin-left: 0;
+    transform: scale(2); /* Adjust the scale factor as needed */
+    margin-right: 5px;
+    cursor: pointer;
   }
-  
+
   p {
     font-weight: bold;
     color: #333;

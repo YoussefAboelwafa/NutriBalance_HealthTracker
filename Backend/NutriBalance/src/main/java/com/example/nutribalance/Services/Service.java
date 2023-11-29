@@ -26,7 +26,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @org.springframework.stereotype.Service
-public class Service implements Iservice{
+public class Service implements Iservice {
     @Autowired
     private UserRepositry userRepo;
     @Autowired
@@ -45,9 +45,9 @@ public class Service implements Iservice{
 
     @Override
     public Coach savecoach(Coach coach) {
-        Optional<Coach> old_coach_1= coachRepo.findByEmail(coach.getEmail());
-        Optional<Coach> old_coach_2= coachRepo.findByUsername(coach.getUsername());
-        if(old_coach_1.isPresent() || old_coach_2.isPresent()){
+        Optional<Coach> old_coach_1 = coachRepo.findByEmail(coach.getEmail());
+        Optional<Coach> old_coach_2 = coachRepo.findByUsername(coach.getUsername());
+        if (old_coach_1.isPresent() || old_coach_2.isPresent()) {
             return null;
         }
         return coachRepo.save(coach);
@@ -67,7 +67,7 @@ public class Service implements Iservice{
     @Override
     public Coach approvecoach(Long id) {
         Optional<Coach> coach = coachRepo.findById(id);
-        if(coach.isPresent()){
+        if (coach.isPresent()) {
             coach.get().setIsapproved(1);
 
 
@@ -77,7 +77,7 @@ public class Service implements Iservice{
                     "Thank you for registering with NutriBalance!\n" +
                     "\n" +
                     "To complete your registration, please click on the following link:\n" +
-                    "\n"+"<h2><a href=\"[[http://localhost:4200/Confirmation]]\" onclick=\"return handleLinkClick(event);\">Confirm Registration</a></h2>"
+                    "\n" + "<h2><a href=\"[[http://localhost:4200/Confirmation]]\" onclick=\"return handleLinkClick(event);\">Confirm Registration</a></h2>"
                     +
                     "\n" +
                     "If you did not sign up for NutriBalance, please disregard this email.\n" +
@@ -94,29 +94,29 @@ public class Service implements Iservice{
 
     @Override
     public User saveuser(User user) {
-        Optional<User> old_user_1= userRepo.findByEmail(user.getEmail());
-        Optional<User> old_user_2= userRepo.findByUsername(user.getUsername());
-        if(old_user_1.isPresent() || old_user_2.isPresent()){
+        Optional<User> old_user_1 = userRepo.findByEmail(user.getEmail());
+        Optional<User> old_user_2 = userRepo.findByUsername(user.getUsername());
+        if (old_user_1.isPresent() || old_user_2.isPresent()) {
             return null;
         }
         return userRepo.save(user);
     }
+
     @Override
-    public User usersignin(String email, String password){
-        Optional<User> user=userRepo.findByEmail(email);
-        if(user.isPresent() && user.get().getPassword().equals(password)) return user.get();
+    public User usersignin(String email, String password) {
+        Optional<User> user = userRepo.findByEmail(email);
+        if (user.isPresent() && user.get().getPassword().equals(password)) return user.get();
         return null;
     }
 
     @Override
-    public String findByEmailRole(String email, String role){
-        if(role.equals("user")){
-            Optional<User> user=userRepo.findByEmail(email);
-            if(user.isPresent()) return user.get().getUsername();
-        }
-        else if(role.equals("coach")){
-            Optional<Coach> coach=coachRepo.findByEmail(email);
-            if(coach.isPresent()) return coach.get().getUsername();
+    public String findByEmailRole(String email, String role) {
+        if (role.equals("user")) {
+            Optional<User> user = userRepo.findByEmail(email);
+            if (user.isPresent()) return user.get().getUsername();
+        } else if (role.equals("coach")) {
+            Optional<Coach> coach = coachRepo.findByEmail(email);
+            if (coach.isPresent()) return coach.get().getUsername();
         }
         return null;
     }
@@ -124,8 +124,6 @@ public class Service implements Iservice{
     @Override
     public void sendForgetPasswordEmail(ResetPassword resetPassword) throws UnsupportedEncodingException, MessagingException {
         String toAddress = resetPassword.getEmail();
-        String fromAddress = "nutribalance553@gmail.com";
-        String senderName = "NutriBalance team";
         String subject = "Please verify your registration";
         String content = "Dear [[name]],<br>"
                 + "Here is the OTP code to forget password :<br>"
@@ -133,37 +131,36 @@ public class Service implements Iservice{
                 + "Thank you,<br>"
                 + "NutriBalance team";
 
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-        helper.setFrom(fromAddress, senderName);
-        helper.setTo(toAddress);
-        helper.setSubject(subject);
 
         content = content.replace("[[name]]", resetPassword.getUsername());
         String verifyURL = resetPassword.getToken();
 
         content = content.replace("[[URL]]", verifyURL);
+        EmailDetails mail = new EmailDetails();
+        mail.setMsgBody(content);
+        mail.setRecipient(toAddress);
+        mail.setSubject(subject);
+        emailService.sendSimpleMail(mail);
 
-        helper.setText(content, true);
-
-        mailSender.send(message);
         System.out.println("Email has been sent");
 
     }
+
     @Override
-    public void create_reset_password(ResetPassword resetPassword){
-        Optional<ResetPassword> old_reset_password= Optional.ofNullable(resetPasswordRepository.findByEmail(resetPassword.getEmail()));
+    public void create_reset_password(ResetPassword resetPassword) {
+        Optional<ResetPassword> old_reset_password = Optional.ofNullable(resetPasswordRepository.findByEmail(resetPassword.getEmail()));
         old_reset_password.ifPresent(password -> resetPasswordRepository.deleteById(password.getId()));
         resetPasswordRepository.save(resetPassword);
     }
+
     @Override
-    public ResetPassword get_reset_password(String email){
-        Optional<ResetPassword> resetPassword= Optional.ofNullable(resetPasswordRepository.findByEmail(email));
+    public ResetPassword get_reset_password(String email) {
+        Optional<ResetPassword> resetPassword = Optional.ofNullable(resetPasswordRepository.findByEmail(email));
         return resetPassword.orElse(null);
     }
+
     @Override
-    public void resetPassword(LoginRequest loginRequest,String role) {
+    public void resetPassword(LoginRequest loginRequest, String role) {
         if (role.equals("user")) {
             Optional<User> user = userRepo.findByEmail(loginRequest.getEmail());
             if (user.isPresent()) {
@@ -180,6 +177,7 @@ public class Service implements Iservice{
             }
         }
     }
+
     public Coach coachsignin(String email, String pass) {
         Optional<Coach> coach = coachRepo.findByEmail(email);
         Coach coach1 = coach.orElse(null);

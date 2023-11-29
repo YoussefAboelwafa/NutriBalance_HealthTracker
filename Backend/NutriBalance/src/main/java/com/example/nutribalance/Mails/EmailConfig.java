@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 
 @Configuration
-public class EmailConfig{
+public class EmailConfig {
 
     @Value("${email1.host}")
     private String email1Host;
@@ -48,8 +48,6 @@ public class EmailConfig{
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.starttls.required", "true");
-//        props.put("mail.smtp.connectiontimeout", 800000);
-//        props.put("mail.debug", "true");
         return mailSender;
     }
 
@@ -66,9 +64,8 @@ public class EmailConfig{
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.starttls.required", "true");
-        //increase the timeout to 30 seconds
-//        props.put("mail.smtp.connectiontimeout", 900000);
-//        props.put("mail.debug", "true");
+        props.put("mail.smtp.timeout", "50000000"); // Set timeout to 5 seconds
+        props.put("mail.smtp.connectiontimeout", "50000000"); // Set connection timeout to 5 seconds
         return mailSender;
     }
 }
