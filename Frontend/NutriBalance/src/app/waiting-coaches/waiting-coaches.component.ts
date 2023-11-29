@@ -6,11 +6,9 @@ import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-waiting-coaches',
-  standalone: true,
-  providers: [CoachService,HttpClient],
-  imports: [CommonModule],
+
   templateUrl: './waiting-coaches.component.html',
-  styleUrl: './waiting-coaches.component.css'
+  styleUrls: ['./waiting-coaches.component.css']
 })
 export class WaitingCoachesComponent implements OnInit{
   coaches: Coach[] = [];
