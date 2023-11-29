@@ -29,4 +29,17 @@ export class AuthService {
       socialProvider: 'LOCAL'
     }, httpOptions);
   }
+  verify(token:any):Observable<any>{
+    return this.http.get(AppConstants.AUTH_API+ `/auth/verify`,{params:{'code':token}} );
+  }
+  forgetPassword(email:any):Observable<any>{
+    return this.http.get(AppConstants.AUTH_API+ `/auth/forgetPassword`, {params:{'email':email}} );
+  }
+  checkOtp(otp:any,email:any):Observable<any>{
+    return this.http.get(AppConstants.AUTH_API+ `/auth/checkOtp`, {params:{'otp':otp,'email':email}} );
+  }
+  resetPassword(email:any,pass:any):Observable<any>{
+    return this.http.post(AppConstants.AUTH_API+ `/auth/resetPassword`, {login:email,password:pass} );
+  }
+
 }

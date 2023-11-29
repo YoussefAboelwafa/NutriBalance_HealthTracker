@@ -14,7 +14,10 @@ import { authInterceptorProviders } from '../_helpers/auth.interceptor';
 import { RoleTypeComponent } from '../role-type/role-type.component';
 import { CoachService } from '../Service/coach.service';
 import { Shared } from '../common/shared';
+import { ModalPopServiceService } from '../_services/modal-pop-service.service';
 
+import { FpPopupComponent } from '../fp-popup/fp-popup.component';
+declare const $: any;
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -112,10 +115,15 @@ export class SigninComponent  {
   // console.log("LOGIN SUCCESS");
   //   // window.location.reload();
   // }
-  constructor(private shared:Shared,private userservice:UserService,private coachservice:CoachService,private router:Router){}
+  constructor(private shared:Shared,private userservice:UserService,private coachservice:CoachService,private router:Router,private pop_service:ModalPopServiceService,
+    private service:AuthService){}
   email: any;
   password : any;
   role=this.shared.selectedrole;
+  flag_show_login = false;
+  flag_btn_login = true;
+
+  flag_forget_spinner =false;
   onSubmit(event: any){
   
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) {
@@ -147,6 +155,69 @@ export class SigninComponent  {
     else if(this.role=='admin'){
       //todo
     }
+
+  }
+  forget_pass_first_step(email: any) {
+    this.flag_forget_spinner=true
+    this.service.forgetPassword(email).subscribe(
+      (res)=>{
+        this.flag_forget_spinner=false
+        this.email=email;
+        $('#forget_pass_send_email').modal('hide');
+        $('#verify_email_to_change').modal('show');
+      },
+      (err)=>{
+        this.flag_forget_spinner=false
+        $('#forget_pass_send_email').modal('hide');
+        this.pop_service.pop_up("Email is not registered","Forget Password");
+
+      }
+
+    );
+       
+  }
+  forget_pass_second_step(verify_code: any) {
+    this.flag_forget_spinner=true
+    this.flag_forget_spinner=false
+    this.service.checkOtp(verify_code,this.email).subscribe(
+      (res)=>{
+        this.flag_forget_spinner=false
+        $('#verify_email_to_change').modal('hide');
+        $('#change_pass').modal('show');
+      },
+      (err)=>{
+        this.flag_forget_spinner=false
+        $('#verify_email_to_change').modal('hide');
+        this.pop_service.pop_up("Code is invalid","Forget Password");
+      }
+    );
+  }
+  forget_pass_final_step(new_pass: any) {
+    this.flag_forget_spinner=true
+     if(new_pass.length<8){
+      this.flag_forget_spinner=false
+        this.pop_service.pop_up("Password must be at least 8 characters","Forget Password");
+        return;
+      }
+      this.service.resetPassword(this.email,new_pass).subscribe(
+        (res)=>{
+          this.flag_forget_spinner=false
+          $('#change_pass').modal('hide');
+        },
+        (err)=>{
+          this.flag_forget_spinner=false
+          this.pop_service.pop_up("Error : Try Again",'Forget password');
+          return;
+        }
+      );
+        
+
+
+  }
+  close(){
+    $('#forget_pass_send_email').modal('hide');
+    $('#verify_email_to_change').modal('hide');
+    $('#change_pass').modal('hide');
 
   }
 
