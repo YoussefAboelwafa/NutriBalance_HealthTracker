@@ -67,7 +67,7 @@ public class EmailConfig{
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.starttls.required", "true");
         //increase the timeout to 30 seconds
-//        props.put("mail.smtp.connectiontimeout", 800000);
+//        props.put("mail.smtp.connectiontimeout", 900000);
 //        props.put("mail.debug", "true");
         return mailSender;
     }
