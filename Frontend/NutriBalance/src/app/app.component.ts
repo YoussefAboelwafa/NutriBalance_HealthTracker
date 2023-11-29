@@ -1,6 +1,5 @@
 import { Component, NgModule } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
-import { Sign } from 'crypto';
 import { SigninComponent } from './signin/signin.component';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { CommonModule } from '@angular/common';
@@ -16,6 +15,6 @@ export class AppComponent {
   title = 'NutriBalance';
 
   constructor(private router: Router) {
-    this.router.navigate(['/coach-signup']);
+    this.router.navigate(['/adminpage']);
   }
 }

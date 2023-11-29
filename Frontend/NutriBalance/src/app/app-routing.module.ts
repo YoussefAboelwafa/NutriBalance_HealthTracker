@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import{WaitingCoachesComponent} from './waiting-coaches/waiting-coaches.component';
 import { CoachSignupComponent } from './coach-signup/coach-signup.component';
 import { NgModule } from '@angular/core';
+import { AdminpageComponent } from './adminpage/adminpage.component';
 
 
 export const routes: Routes = [
@@ -29,12 +30,16 @@ export const routes: Routes = [
     path: 'coach-signup',
     component: CoachSignupComponent,
   },
+  {
+    path: 'adminpage',
+    component: AdminpageComponent,
+  },
   
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{ relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
