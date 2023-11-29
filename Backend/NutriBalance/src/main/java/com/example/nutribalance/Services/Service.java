@@ -3,6 +3,8 @@ package com.example.nutribalance.Services;
 import com.example.nutribalance.Entities.Coach;
 import com.example.nutribalance.Entities.ResetPassword;
 import com.example.nutribalance.Entities.User;
+import com.example.nutribalance.Mails.EmailDetails;
+import com.example.nutribalance.Mails.EmailService;
 import com.example.nutribalance.Repositries.CoachRepositry;
 import com.example.nutribalance.Repositries.ResetPasswordRepository;
 import com.example.nutribalance.Repositries.SubscriptionRepositry;
@@ -81,7 +83,7 @@ public class Service implements Iservice{
     }
     @Override
     public User usersignin(String email, String password){
-        Optional<User> user=userRepo.findByEmail(email);
+        Optional<User> user=userRepo.f0indByEmail(email);
         if(user.isPresent() && user.get().getPassword().equals(password)) return user.get();
         return null;
     }
@@ -158,6 +160,20 @@ public class Service implements Iservice{
                 resetPasswordRepository.deleteById(resetPasswordRepository.findByEmail(loginRequest.getEmail()).getId());
             }
         }
-
+    public Coach coachsignin(String email, String pass) {
+        Optional<Coach> coach = coachRepo.findByEmail(email);
+        Coach coach1 = coach.orElse(null);
+        if (coach.isPresent()) {
+            if (coach1.getIsapproved() == 1) {
+                if (coach1.getPassword().equals(pass)) {
+                    return coach1;
+                } else {
+                    return null;
+                }
+            }
+        }
+        return null;
     }
 }
+
+

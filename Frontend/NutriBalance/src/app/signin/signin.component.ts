@@ -23,36 +23,6 @@ declare const $: any;
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css'],
 })
-// export class SigninComponent implements OnInit {
-//   loginForm!: FormGroup;
-
-//   constructor(private formBuilder: FormBuilder,private router: Router) { }
-
-
-
-//   ngOnInit(): void {
-//     this.loginForm = this.formBuilder.group({
-//       email: ['', Validators.required],
-//       password: ['', Validators.required]
-//     });
-//   }
-
-//   login(): void {
-//     if (this.loginForm.invalid) {
-//       return;
-//     }
-
-//     console.log("hamo 3ady")
-//   }
-
-//   googleLogin(): void {
-//     console.log("hamo google")
-//   }
-//   home() {
-//     this.router.navigate(['/home']);
-//   }
-// }
-
 export class SigninComponent {
 
   form: any = {};
@@ -103,7 +73,6 @@ export class SigninComponent {
     console.log("LOGIN SUCCESS");
     // window.location.reload();
   }
-  // constructor(private shared:Shared,private userservice:UserService,private coachservice:CoachService,private router:Router){}
   email: any;
   password : any;
   role=this.shared.selectedrole;

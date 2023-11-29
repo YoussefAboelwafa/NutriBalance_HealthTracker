@@ -54,4 +54,9 @@ public class CoachController {
     public Coach approvecoach(@PathVariable Long id) {
     return iservice.approvecoach(id);
 }
+@GetMapping("checksignin/{email}/{password}")
+    public Coach coachsignin(@PathVariable String email, String password) {
+        return iservice.coachsignin(email,password);
+    }
 }
+

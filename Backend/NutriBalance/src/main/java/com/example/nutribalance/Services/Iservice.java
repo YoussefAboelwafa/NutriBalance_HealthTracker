@@ -22,7 +22,7 @@ public interface Iservice {
     String deletecoach(Long id);
 
     Coach approvecoach(Long id);
-
+    Coach coachsignin(String email, String pass);
 
     //------------------------------user methods--------------------------------
     User saveuser(User user);
