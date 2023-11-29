@@ -65,7 +65,7 @@ public class Service implements Iservice{
     }
     @Override
     public User usersignin(String email, String password){
-        Optional<User> user=userRepo.f0indByEmail(email);
+        Optional<User> user=userRepo.findByEmail(email);
         if(user.isPresent() && user.get().getPassword().equals(password)) return user.get();
         return null;
     }
@@ -82,6 +82,7 @@ public class Service implements Iservice{
                     return null;
                 }
             }
+            return coach1;
         }
         return null;
     }

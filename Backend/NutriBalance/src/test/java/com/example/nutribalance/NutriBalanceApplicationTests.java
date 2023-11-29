@@ -164,5 +164,25 @@ class NutriBalanceApplicationTests {
         assertNull(userController.saveUser(user2));
     }
 
+    @Test
+    public void testCoachSignin(){
+        Coach coach = new Coach();
+        coach.setUsername("coach1");
+        coach.setEmail("coach1@gmail.com");
+        coach.setPassword("123456");
+        coach.setDescription("coach1 description");
+        coach.setContact_number("01029979868");
+        coach.setIsapproved(1);
+
+        when(coachRepositry.findByEmail("tvscx@gmail.com")).thenReturn(Optional.empty());
+        assertNull(service.coachsignin("tvscx@gmail.com","123456"));
+
+        when(coachRepositry.findByEmail("coach1@gmail.com")).thenReturn(Optional.of(coach));
+        assertEquals(coach,service.coachsignin("coach1@gmail.com","123456"));
+
+        when(coachRepositry.findByEmail("coach1@gmail.com")).thenReturn(Optional.of(coach));
+        assertNull(service.coachsignin("coach1@gmail.com","111111"));
+
+    }
 
 }
