@@ -10,17 +10,8 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    SigninComponent,
-    HomeComponent,
-    FormsModule,
-  ],
-  providers: [UserService, HttpClient],
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.css',
+  styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
   constructor(private router: Router, private userservice: UserService) {}

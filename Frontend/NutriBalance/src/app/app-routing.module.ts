@@ -19,6 +19,7 @@ export const routes: Routes = [
     path: 'home',
     component: HomeComponent,
   },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'waiting-coaches',
     component: WaitingCoachesComponent,
@@ -26,7 +27,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{ relativeLinkResolution: 'legacy' })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
