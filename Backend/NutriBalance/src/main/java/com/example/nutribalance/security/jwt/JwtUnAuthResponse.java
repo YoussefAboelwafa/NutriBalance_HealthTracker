@@ -14,13 +14,8 @@ import java.util.Objects;
 
 @Component
 public class JwtUnAuthResponse implements AuthenticationEntryPoint, Serializable {
-
-    /**
-     *
-     */
     @Serial
     private static final long serialVersionUID = 2848589597094595376L;
-
 
 
     @Override

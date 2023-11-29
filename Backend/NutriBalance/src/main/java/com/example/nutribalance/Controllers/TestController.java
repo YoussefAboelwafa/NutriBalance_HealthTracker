@@ -1,19 +1,13 @@
 package com.example.nutribalance.Controllers;
 
-
-import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.dto.CurrentUser;
 import com.example.nutribalance.dto.LocalUser;
-import com.example.nutribalance.dto.UserInfo;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.nutribalance.util.GeneralUtils;
 
-import java.lang.annotation.*;
 
 @RestController
 @RequestMapping("/api")

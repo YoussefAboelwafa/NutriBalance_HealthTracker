@@ -12,11 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 
-/**
- * 
- * @author Chinna
- *
- */
 @Service("localUserDetailService")
 public class LocalUserDetailService implements UserDetailsService {
 

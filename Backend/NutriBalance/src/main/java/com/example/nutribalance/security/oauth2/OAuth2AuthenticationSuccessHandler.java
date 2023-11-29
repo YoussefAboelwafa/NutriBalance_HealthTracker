@@ -1,7 +1,6 @@
 package com.example.nutribalance.security.oauth2;
 
-//import com.example.nutribalance.config.AppProperties;
-//import com.example.nutribalance.exception.BadRequestException;
+
 import com.example.nutribalance.security.jwt.TokenProvider;
 import com.example.nutribalance.util.CookieUtils;
 import jakarta.servlet.ServletException;
