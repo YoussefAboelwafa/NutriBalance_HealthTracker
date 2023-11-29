@@ -14,6 +14,8 @@ import com.example.nutribalance.security.oauth2.user.OAuth2UserInfoFactory;
 import com.example.nutribalance.util.GeneralUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
@@ -63,6 +65,7 @@ public class UserServiceImpl implements UserService {
 	private User buildUser(final SignUpRequest formDTO) {
 		User user = new User();
 		user.setEmail(formDTO.getEmail());
+		user.setContact_number(formDTO.getPhoneNumber());
 		user.setPassword(passwordEncoder.encode(formDTO.getPassword()));
 		user.setUsername(formDTO.getName());
 		return user;
@@ -82,6 +85,7 @@ public class UserServiceImpl implements UserService {
 		} else if (StringUtils.isEmpty(oAuth2UserInfo.getEmail())) {
 			throw new IllegalStateException("Email not found from OAuth2 provider");
 		}
+		oAuth2UserInfo.getAttributes().get("phone");
 		SignUpRequest userDetails = toUserRegistrationObject(registrationId, oAuth2UserInfo);
 		User user = findUserByEmail(oAuth2UserInfo.getEmail());
 		if (user != null) {
@@ -102,6 +106,8 @@ public class UserServiceImpl implements UserService {
 	private SignUpRequest toUserRegistrationObject(String registrationId, OAuth2UserInfo oAuth2UserInfo) {
 		return SignUpRequest.builder()
 				.providerUserID(oAuth2UserInfo.getId())
+				.imageUrl(oAuth2UserInfo.getImageUrl())
+				.phoneNumber(oAuth2UserInfo.getPhoneNumber())
 				.email(oAuth2UserInfo.getEmail())
 				.password("password")
 				.name(oAuth2UserInfo.getName())
@@ -113,4 +119,5 @@ public class UserServiceImpl implements UserService {
 	public Optional<User> findUserById(Long id) {
 		return userRepository.findById(id);
 	}
+
 }
