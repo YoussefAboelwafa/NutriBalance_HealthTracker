@@ -7,6 +7,7 @@ import { CoachSignupComponent } from './coach-signup/coach-signup.component';
 import { NgModule } from '@angular/core';
 import { AdminpageComponent } from './adminpage/adminpage.component';
 import { RoleTypeComponent } from './role-type/role-type.component';
+import { ConfirmationPageComponent } from './confirmation-page/confirmation-page.component';
 
 
 export const routes: Routes = [
@@ -38,6 +39,10 @@ export const routes: Routes = [
   {
     path: 'role-type',
     component: RoleTypeComponent,
+  },
+  {
+    path: 'Confirmation',
+    component: ConfirmationPageComponent,
   },
 
 ];
