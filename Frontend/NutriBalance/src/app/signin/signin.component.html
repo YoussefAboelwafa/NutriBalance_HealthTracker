@@ -81,6 +81,140 @@
             </td>
           </tr>
         </table>
+        <label
+        data-toggle="modal"
+        data-target="#forget_pass_send_email"
+        id="forget"
+      >
+        <span
+          ><u data-toggle="modal" data-target="#forget_pass_send_email"
+            >Forget Password?</u
+          ></span
+        >
+      </label>
       </form>
     </div>
   </div>
+
+<div
+  class="modal fade"
+  id="forget_pass_send_email"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Forget password</h5>
+        <button class="outer_button" (click)="close()">
+          <button
+            type="button"
+            class="close close1"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2>Enter Email :</h2>
+        <input type="email" name="forget_pass" id="forget_pass_input" #forget />
+      </div>
+      <div class="modal-footer">
+        <button (click)="forget_pass_first_step(forget.value)">
+          Next
+          <div class="spinner-border text-light" role="status" *ngIf="flag_forget_spinner==true"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="verify_email_to_change"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          Verification code
+        </h5>
+        <button class="outer_button" (click)="close()">
+          <button
+            type="button"
+            class="close close1"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2>Enter Verification code :</h2>
+        <input
+          type="text"
+          name="forget_pass"
+          id="forget_pass_input"
+          #verify_code
+        />
+      </div>
+      <div class="modal-footer">
+        <button (click)="forget_pass_second_step(verify_code.value)">
+          Next
+          <div class="spinner-border text-light" role="status" *ngIf="flag_forget_spinner==true"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="change_pass"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">New Password</h5>
+        <button class="outer_button" (click)="close()">
+          <button
+            type="button"
+            class="close close1"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2>Enter New Password :</h2>
+        <input
+          type="text"
+          name="forget_pass"
+          id="forget_pass_input"
+          #new_pass
+        />
+      </div>
+      <div class="modal-footer">
+        <button (click)="forget_pass_final_step(new_pass.value)">
+          Next
+          <div class="spinner-border text-light" role="status" *ngIf="flag_forget_spinner==true"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
