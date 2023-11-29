@@ -1,4 +1,5 @@
 package com.example.nutribalance;
+
 import com.example.nutribalance.Entities.Coach;
 import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.Repositries.CoachRepositry;
@@ -26,6 +27,7 @@ class NutriBalanceApplicationTests {
     private CoachRepositry coachRepositry;
     @MockBean
     private UserRepositry userRepositry;
+
     @Test
     public void testSaveCoach() {
         Coach coach = new Coach();
@@ -39,7 +41,7 @@ class NutriBalanceApplicationTests {
         when(coachRepositry.findByEmail(coach.getEmail())).thenReturn(Optional.empty());
         when(coachRepositry.findByUsername(coach.getUsername())).thenReturn(Optional.empty());
         when(coachRepositry.save(coach)).thenReturn(coach);
-        assertEquals(coach,service.savecoach(coach));
+        assertEquals(coach, service.savecoach(coach));
         //case2: email is found in the database
         when(coachRepositry.findByEmail(coach.getEmail())).thenReturn(Optional.of(coach));
         assertNull(service.savecoach(coach));
@@ -53,8 +55,8 @@ class NutriBalanceApplicationTests {
         assertNull(service.savecoach(coach));
 
     }
-    @Test
 
+    @Test
     public void testApproveCoach() {
         Coach coach = new Coach();
         coach.setUsername("coach1");
@@ -68,7 +70,9 @@ class NutriBalanceApplicationTests {
         //case2: coach is not found in the database
         when(coachRepositry.findById(coach.getCoach_id())).thenReturn(Optional.empty());
         assertNull(service.approvecoach(coach.getCoach_id()));
+    }
 
+    @Test
 
     public void testSaveUser() {
         User user = new User();
@@ -80,7 +84,7 @@ class NutriBalanceApplicationTests {
         when(userRepositry.findByEmail(user.getEmail())).thenReturn(Optional.empty());
         when(userRepositry.findByUsername(user.getUsername())).thenReturn(Optional.empty());
         when(userRepositry.save(user)).thenReturn(user);
-        assertEquals(user,service.saveuser(user));
+        assertEquals(user, service.saveuser(user));
         //case2: email is found in the database
         when(userRepositry.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
         assertNull(service.saveuser(user));
