@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
@@ -23,6 +23,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ConfirmationPageComponent } from './confirmation-page/confirmation-page.component';
+import { AdminpageComponent } from './adminpage/adminpage.component';
+import { CommonModule } from '@angular/common';
+import { WaitingCoachesComponent } from './waiting-coaches/waiting-coaches.component';
+
+
 
 @NgModule({
   declarations: [
@@ -34,6 +39,9 @@ import { ConfirmationPageComponent } from './confirmation-page/confirmation-page
     RoleTypeComponent,
     FpPopupComponent,
     ConfirmationPageComponent,
+    AdminpageComponent,
+    WaitingCoachesComponent
+  
 
   ],
   imports: [
@@ -45,7 +53,9 @@ import { ConfirmationPageComponent } from './confirmation-page/confirmation-page
     MatDialogModule,
     MatInputModule,
     MatButtonModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    CommonModule
+  
   ],
   providers: [AuthService,authInterceptorProviders,Shared,ModalPopServiceService,FpPopupComponent],
   bootstrap: [AppComponent]

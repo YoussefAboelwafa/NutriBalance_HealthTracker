@@ -40,6 +40,8 @@ public class Service implements Iservice{
     @Qualifier("email2Sender")
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private EmailService emailService;
 
     @Override
     public Coach savecoach(Coach coach) {
@@ -67,7 +69,7 @@ public class Service implements Iservice{
         Optional<Coach> coach = coachRepo.findById(id);
         if(coach.isPresent()){
             coach.get().setIsapproved(1);
-            EmailService myservice = null;
+
 
             EmailDetails mail = new EmailDetails();
             mail.setMsgBody("Dear [User],\n" +
@@ -84,7 +86,7 @@ public class Service implements Iservice{
                     "NutriBalance Team\n");
             mail.setRecipient(coach.get().getEmail());
             mail.setSubject("NutriBalance Confirmation Mail!");
-            myservice.sendSimpleMail(mail);
+            emailService.sendSimpleMail(mail);
             return coachRepo.save(coach.get());
         }
         return null;

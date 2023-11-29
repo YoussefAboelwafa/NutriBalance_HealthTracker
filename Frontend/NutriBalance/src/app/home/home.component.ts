@@ -43,4 +43,19 @@ export class HomeComponent implements OnInit{
     this.shared.signin_flag=false;
     this.router.navigate(['/role-type']);
   }
+  menuOptions: string[] = ["Home", "About", "Programs", "Sign In", "SignUp"];
+
+  onMenuClick(option: string) {
+    console.log(option);
+    if(option=="Sign In"){
+      this.shared.signin_flag=true;
+    this.router.navigate(['/role-type']);
+    }
+    else if(option=="SignUp")
+    { this.shared.signin_flag=false;
+      this.router.navigate(['/role-type']);
+
+    }
+    // You can add your custom logic here based on the selected option
+}
 }

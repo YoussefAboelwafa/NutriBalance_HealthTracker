@@ -5,8 +5,8 @@ import { HomeComponent } from './home/home.component';
 import{WaitingCoachesComponent} from './waiting-coaches/waiting-coaches.component';
 import { NgModule } from '@angular/core';
 import {CoachSignupComponent} from "./coach-signup/coach-signup.component";
-
-
+import {RoleTypeComponent} from "./role-type/role-type.component";
+import { AdminpageComponent } from './adminpage/adminpage.component';
 export const routes: Routes = [
   {
     path: 'signup',
@@ -28,6 +28,20 @@ export const routes: Routes = [
     path: 'coach-signup',
     component: CoachSignupComponent,
   },
+  {
+    path: 'role-type',
+    component: RoleTypeComponent,
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+  {
+    path: 'adminpage',
+    component: AdminpageComponent,
+  },
+
 
 ];
 

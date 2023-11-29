@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AppConstants } from '../common/app.constants';
 
@@ -13,14 +13,14 @@ const httpOptions = {
 export class AuthService {
   constructor(private http: HttpClient) { }
 
-  login(credentials:any): Observable<any> {
+  login(credentials: any): Observable<any> {
     return this.http.post(AppConstants.AUTH_API + 'signin', {
       email: credentials.username,
       password: credentials.password
     }, httpOptions);
   }
 
-  register(user:any): Observable<any> {
+  register(user: any): Observable<any> {
     return this.http.post(AppConstants.AUTH_API + 'signup', {
       displayName: user.displayName,
       email: user.email,
@@ -29,17 +29,22 @@ export class AuthService {
       socialProvider: 'LOCAL'
     }, httpOptions);
   }
-  verify(token:any):Observable<any>{
-    return this.http.get(AppConstants.AUTH_API+ `/auth/verify`,{params:{'code':token}} );
+  verify(token: any): Observable<any> {
+    return this.http.get(AppConstants.AUTH_API + "/verify", { params: { 'code': token } });
   }
-  forgetPassword(email:any):Observable<any>{
-    return this.http.get(AppConstants.AUTH_API+ `/auth/forgetPassword`, {params:{'email':email}} );
+  forgetPassword(email: any, role: any): Observable<any> {
+    return this.http.get(AppConstants.AUTH_API + "/forgetPassword", { params: { 'email': email, 'role': role } });
   }
-  checkOtp(otp:any,email:any):Observable<any>{
-    return this.http.get(AppConstants.AUTH_API+ `/auth/checkOtp`, {params:{'otp':otp,'email':email}} );
+  checkOtp(otp: any, email: any): Observable<any> {
+    return this.http.get(AppConstants.AUTH_API + "/checkOtp", { params: { 'otp': otp, 'email': email } });
   }
-  resetPassword(email:any,pass:any):Observable<any>{
-    return this.http.post(AppConstants.AUTH_API+ `/auth/resetPassword`, {login:email,password:pass} );
+  resetPassword(email: any, pass: any, role: any): Observable<any> {
+    const params = new HttpParams().set('role', role);
+    return this.http.post(
+      AppConstants.AUTH_API + "/resetPassword",
+      { login: email, password: pass },
+      { params }
+    );
   }
 
 }

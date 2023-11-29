@@ -1,5 +1,74 @@
+/* app.component.css */
+/* Add some basic styling */
 body {
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-  }
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 70px;
+  width: 100%;
+  margin-left: 40vw;
+  
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color:#111;
+  font-weight: bold;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  margin-left: 2vw;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+#top {
+  display: flex;
+  flex-direction: row;
+  background-color:rgba(127, 255, 212, 0.500);
+  height: 80px;
+}
+
+#top a{
+  padding-top: 3vw;
+  font-weight: bold;
+}
+
+
+#header-img {
+  width: 4vw;
+  height: 4vw;
+  margin-left: 7vw;
+  margin-top: 1vw;
+  margin-right: 1vw;
+}
+
+#menu a{
+  margin-bottom: 0.5vw;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+  display: block;
+}
+
+/* Change color on hover */
+#menu a:hover {
+  background-color:rgba(127, 255, 212, 0.250);
+}

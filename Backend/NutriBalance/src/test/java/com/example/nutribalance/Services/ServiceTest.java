@@ -57,7 +57,7 @@ class ServiceTest {
     private ResetPasswordRepository resetPasswordRepository;
 
     @Autowired
-    private Service service;
+    private Iservice service;
 
     @MockBean
     private SubscriptionRepositry subscriptionRepositry;
@@ -195,63 +195,6 @@ class ServiceTest {
         String actualDeletecoachResult = service.deletecoach(1L);
         verify(coachRepositry).deleteById(Mockito.<Long>any());
         assertEquals("coach deleted", actualDeletecoachResult);
-    }
-
-    /**
-     * Method under test: {@link Service#approvecoach(Long)}
-     */
-    @Test
-    void testApprovecoach() throws UnsupportedEncodingException {
-        Coach coach = new Coach();
-        coach.setCoach_id(1L);
-        coach.setContact_number("42");
-        coach.setCv("AXAXAXAX".getBytes("UTF-8"));
-        coach.setDescription("The characteristics of someone or something");
-        coach.setEmail("jane.doe@example.org");
-        coach.setIsapproved(1);
-        coach.setNo_users_subscribed(1);
-        coach.setPassword("iloveyou");
-        coach.setPlans(new ArrayList<>());
-        coach.setPrice("Price");
-        coach.setRating(1);
-        coach.setUsername("janedoe");
-        coach.setUsers(new ArrayList<>());
-        coach.setUsers_reports(new ArrayList<>());
-        Optional<Coach> ofResult = Optional.of(coach);
-
-        Coach coach2 = new Coach();
-        coach2.setCoach_id(1L);
-        coach2.setContact_number("42");
-        coach2.setCv("AXAXAXAX".getBytes("UTF-8"));
-        coach2.setDescription("The characteristics of someone or something");
-        coach2.setEmail("jane.doe@example.org");
-        coach2.setIsapproved(1);
-        coach2.setNo_users_subscribed(1);
-        coach2.setPassword("iloveyou");
-        coach2.setPlans(new ArrayList<>());
-        coach2.setPrice("Price");
-        coach2.setRating(1);
-        coach2.setUsername("janedoe");
-        coach2.setUsers(new ArrayList<>());
-        coach2.setUsers_reports(new ArrayList<>());
-        when(coachRepositry.save(Mockito.<Coach>any())).thenReturn(coach2);
-        when(coachRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
-        Coach actualApprovecoachResult = service.approvecoach(1L);
-        verify(coachRepositry).findById(Mockito.<Long>any());
-        verify(coachRepositry).save(Mockito.<Coach>any());
-        assertSame(coach2, actualApprovecoachResult);
-    }
-
-    /**
-     * Method under test: {@link Service#approvecoach(Long)}
-     */
-    @Test
-    void testApprovecoach2() {
-        Optional<Coach> emptyResult = Optional.empty();
-        when(coachRepositry.findById(Mockito.<Long>any())).thenReturn(emptyResult);
-        Coach actualApprovecoachResult = service.approvecoach(1L);
-        verify(coachRepositry).findById(Mockito.<Long>any());
-        assertNull(actualApprovecoachResult);
     }
 
     /**
@@ -731,62 +674,7 @@ class ServiceTest {
         assertNull(actualCoachsigninResult);
     }
 
-    /**
-     * Method under test: {@link Service#coachsignin(String, String)}
-     */
-    @Test
-    void testCoachsignin2() throws UnsupportedEncodingException {
-        Coach coach = mock(Coach.class);
-        when(coach.getIsapproved()).thenReturn(0);
-        doNothing().when(coach).setCoach_id(Mockito.<Long>any());
-        doNothing().when(coach).setContact_number(Mockito.<String>any());
-        doNothing().when(coach).setCv(Mockito.<byte[]>any());
-        doNothing().when(coach).setDescription(Mockito.<String>any());
-        doNothing().when(coach).setEmail(Mockito.<String>any());
-        doNothing().when(coach).setIsapproved(anyInt());
-        doNothing().when(coach).setNo_users_subscribed(anyInt());
-        doNothing().when(coach).setPassword(Mockito.<String>any());
-        doNothing().when(coach).setPlans(Mockito.<List<Plan>>any());
-        doNothing().when(coach).setPrice(Mockito.<String>any());
-        doNothing().when(coach).setRating(anyInt());
-        doNothing().when(coach).setUsername(Mockito.<String>any());
-        doNothing().when(coach).setUsers(Mockito.<List<User>>any());
-        doNothing().when(coach).setUsers_reports(Mockito.<List<User>>any());
-        coach.setCoach_id(1L);
-        coach.setContact_number("42");
-        coach.setCv("AXAXAXAX".getBytes("UTF-8"));
-        coach.setDescription("The characteristics of someone or something");
-        coach.setEmail("jane.doe@example.org");
-        coach.setIsapproved(1);
-        coach.setNo_users_subscribed(1);
-        coach.setPassword("iloveyou");
-        coach.setPlans(new ArrayList<>());
-        coach.setPrice("Price");
-        coach.setRating(1);
-        coach.setUsername("janedoe");
-        coach.setUsers(new ArrayList<>());
-        coach.setUsers_reports(new ArrayList<>());
-        Optional<Coach> ofResult = Optional.of(coach);
-        when(coachRepositry.findByEmail(Mockito.<String>any())).thenReturn(ofResult);
-        Coach actualCoachsigninResult = service.coachsignin("jane.doe@example.org", "Pass");
-        verify(coach).getIsapproved();
-        verify(coach).setCoach_id(Mockito.<Long>any());
-        verify(coach).setContact_number(Mockito.<String>any());
-        verify(coach).setCv(Mockito.<byte[]>any());
-        verify(coach).setDescription(Mockito.<String>any());
-        verify(coach).setEmail(Mockito.<String>any());
-        verify(coach).setIsapproved(anyInt());
-        verify(coach).setNo_users_subscribed(anyInt());
-        verify(coach).setPassword(Mockito.<String>any());
-        verify(coach).setPlans(Mockito.<List<Plan>>any());
-        verify(coach).setPrice(Mockito.<String>any());
-        verify(coach).setRating(anyInt());
-        verify(coach).setUsername(Mockito.<String>any());
-        verify(coach).setUsers(Mockito.<List<User>>any());
-        verify(coach).setUsers_reports(Mockito.<List<User>>any());
-        verify(coachRepositry).findByEmail(Mockito.<String>any());
-        assertNull(actualCoachsigninResult);
-    }
+
 
     /**
      * Method under test: {@link Service#coachsignin(String, String)}

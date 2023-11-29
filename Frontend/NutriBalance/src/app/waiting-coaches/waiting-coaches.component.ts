@@ -6,7 +6,6 @@ import { HttpClient, HttpHandler, HttpHeaders } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-waiting-coaches',
-
   templateUrl: './waiting-coaches.component.html',
   styleUrls: ['./waiting-coaches.component.css']
 })

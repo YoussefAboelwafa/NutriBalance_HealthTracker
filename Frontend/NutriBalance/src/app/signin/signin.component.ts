@@ -32,7 +32,7 @@ export class SigninComponent {
   currentUser: any;
   googleURL = AppConstants.GOOGLE_AUTH_URL;
 
-  constructor(private shared: Shared, private userservice: UserService, private coachservice: CoachService, private service: AuthService, private tokenStorage: TokenStorageService, private router: Router, private route: ActivatedRoute,private pop_service:ModalPopServiceService) { }
+  constructor(private shared: Shared, private userservice: UserService, private coachservice: CoachService, private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router, private route: ActivatedRoute, private pop_service:ModalPopServiceService) { }
 
   ngOnInit(): void {
     const token = this.route.snapshot.queryParamMap.get('token');
@@ -109,13 +109,13 @@ export class SigninComponent {
       });
     }
     else if(this.role=='admin'){
-      //todo
+      this.router.navigate(['/adminpage']);
     }
 
   }
   forget_pass_first_step(email: any) {
     this.flag_forget_spinner=true
-    this.service.forgetPassword(email).subscribe(
+    this.authService.forgetPassword(email,this.role).subscribe(
       (res)=>{
         this.flag_forget_spinner=false
         this.email=email;
@@ -135,7 +135,7 @@ export class SigninComponent {
   forget_pass_second_step(verify_code: any) {
     this.flag_forget_spinner=true
     this.flag_forget_spinner=false
-    this.service.checkOtp(verify_code,this.email).subscribe(
+    this.authService.checkOtp(verify_code,this.email).subscribe(
       (res)=>{
         this.flag_forget_spinner=false
         $('#verify_email_to_change').modal('hide');
@@ -155,7 +155,7 @@ export class SigninComponent {
         this.pop_service.pop_up("Password must be at least 8 characters","Forget Password");
         return;
       }
-      this.service.resetPassword(this.email,new_pass).subscribe(
+      this.authService.resetPassword(this.email,new_pass,this.role).subscribe(
         (res)=>{
           this.flag_forget_spinner=false
           $('#change_pass').modal('hide');
