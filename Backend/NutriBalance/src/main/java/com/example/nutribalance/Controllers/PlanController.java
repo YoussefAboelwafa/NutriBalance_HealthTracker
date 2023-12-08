@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class PlanController {
     @Autowired
     private Iservice iservice;
+
     @PostMapping("/save")
     public Plan saveplan(@RequestBody Plan plan) {
         return iservice.saveplan(plan);

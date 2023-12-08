@@ -13,9 +13,9 @@ import { Router } from '@angular/router';
 export class CreateplanComponent implements OnInit {
 
   form: FormGroup;
-  plan=new Plan();
+  plan = new Plan();
   //validators for form
-  constructor(private fb: FormBuilder,private planService:PlanService,private tokenStorageService: TokenStorageService,private router:Router) {
+  constructor(private fb: FormBuilder, private planService: PlanService, private tokenStorageService: TokenStorageService, private router: Router) {
     this.form = this.fb.group({
       planName: ['', Validators.required],
       goal: ['', Validators.required],
@@ -24,23 +24,23 @@ export class CreateplanComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.plan.goal="cut";
-    
+    this.plan.goal = "cut";
+
   }
   onSubmit(): void {
-  let coach:Coach  =this.tokenStorageService.getCoach();
-    this.plan.coach=coach;
-   this.planService.savePlan(this.plan).subscribe(data =>{
-      if(data!=null){
+    let coach: Coach = this.tokenStorageService.getCoach();
+    this.plan.coach = coach;
+    this.planService.savePlan(this.plan).subscribe(data => {
+      if (data != null) {
         alert("Plan created successfully");
         //todo: navigate to view-plans page
         this.router.navigate(['/coach-page']);
       }
-      else{
+      else {
         alert("There is a plan with the same name");
-        this.plan.planName="";
-        this.plan.description="";
+        this.plan.planName = "";
+        this.plan.description = "";
       }
-   })
+    })
   }
 }

@@ -179,7 +179,6 @@ public class Service implements Iservice {
     }
 
 
-
     public Coach coachsignin(String email, String pass) {
         Optional<Coach> coach = coachRepo.findByEmail(email);
         Coach coach1 = coach.orElse(null);
@@ -195,6 +194,7 @@ public class Service implements Iservice {
         }
         return null;
     }
+
     // -------------------------plan service-------------------------
     @Override
     public Plan saveplan(Plan plan) {
