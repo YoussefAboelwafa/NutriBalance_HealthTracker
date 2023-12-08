@@ -17,6 +17,7 @@ import { Shared } from '../common/shared';
 import { ModalPopServiceService } from '../_services/modal-pop-service.service';
 
 import { FpPopupComponent } from '../fp-popup/fp-popup.component';
+import { Coach } from '../Objects/Coach';
 declare const $: any;
 @Component({
   selector: 'app-signin',
@@ -97,13 +98,19 @@ export class SigninComponent {
     });
     }
     else if (this.role == 'coach') {
-
       this.coachservice.checksignin(this.email, this.password).subscribe(data => {
         console.log(data);
         if (data == null) alert('wrong email or password');
         else {
+          let coach: Coach = data;
+          if(coach.isapproved==0){
+             alert('Sorry, Your account is not approved yet');
+          }
+          else{
           this.shared.loggedIn = true;
-          this.router.navigate(['/home']);
+          this.tokenStorage.saveCoach(coach);
+          this.router.navigate(['/coach-page']);
+          }
 
         }
       });
