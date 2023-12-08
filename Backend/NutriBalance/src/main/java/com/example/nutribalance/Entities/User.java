@@ -30,7 +30,7 @@ public class User {
     private List<Weight> weights;
 
     @ManyToOne
-    @JoinColumn(name = "plan_name")
+    @JoinColumn(name = "planName")
     private Plan plan;
    @JsonIgnoreProperties("users")
     @ManyToMany(mappedBy = "users")

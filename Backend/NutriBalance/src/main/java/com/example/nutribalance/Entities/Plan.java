@@ -2,15 +2,19 @@ package com.example.nutribalance.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "plan")
 public class Plan {
     @Id
     @Column(unique = true, nullable = false)
-    private String plan_name;
+    private String planName;
     @Column
     private String description;
     @Column
