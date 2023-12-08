@@ -2,15 +2,20 @@
 <div>
   <!-- The menu bar container -->
   <div id="top">
-    <img id="header-img" src="../../assets/images/leaf.png" alt="Header Image">
+    <img
+      id="header-img"
+      src="../../assets/images/leaf.png"
+      alt="Header Image"
+    />
 
     <a>NutriBalance</a>
     <ul id="mainMenuBar">
-      <li *ngFor="let option of menuOptions">
-        <a (click)="onMenuClick(option)">{{ option }}</a>
+      <li>
+        <a (click)="onMenuClick('Sign In')">SignIn</a>
+      </li>
+      <li>
+        <a (click)="onMenuClick('SignUp')">SignUp</a>
       </li>
     </ul>
-
   </div>
-
 </div>
