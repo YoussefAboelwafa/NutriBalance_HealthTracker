@@ -55,7 +55,7 @@ public class CoachController {
     return iservice.approvecoach(id);
 }
 @GetMapping("checksignin/{email}/{password}")
-    public Coach coachsignin(@PathVariable String email, String password) {
+    public Coach coachsignin(@PathVariable String email, @PathVariable String password) {
         return iservice.coachsignin(email,password);
     }
 }

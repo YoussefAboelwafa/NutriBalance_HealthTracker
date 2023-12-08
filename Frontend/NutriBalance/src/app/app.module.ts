@@ -26,6 +26,7 @@ import { ConfirmationPageComponent } from './confirmation-page/confirmation-page
 import { AdminpageComponent } from './adminpage/adminpage.component';
 import { CommonModule } from '@angular/common';
 import { WaitingCoachesComponent } from './waiting-coaches/waiting-coaches.component';
+import { CoachPageComponent } from './coach-page/coach-page.component';
 
 
 
@@ -40,7 +41,8 @@ import { WaitingCoachesComponent } from './waiting-coaches/waiting-coaches.compo
     FpPopupComponent,
     ConfirmationPageComponent,
     AdminpageComponent,
-    WaitingCoachesComponent
+    WaitingCoachesComponent,
+    CoachPageComponent
   
 
   ],
