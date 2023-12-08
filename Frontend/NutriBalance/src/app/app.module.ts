@@ -4,7 +4,7 @@ import { NgModule} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { SigninComponent } from './signin/signin.component';
@@ -27,6 +27,7 @@ import { AdminpageComponent } from './adminpage/adminpage.component';
 import { CommonModule } from '@angular/common';
 import { WaitingCoachesComponent } from './waiting-coaches/waiting-coaches.component';
 import { CoachPageComponent } from './coach-page/coach-page.component';
+import { CreateplanComponent } from './createplan/createplan.component';
 
 
 
@@ -42,7 +43,8 @@ import { CoachPageComponent } from './coach-page/coach-page.component';
     ConfirmationPageComponent,
     AdminpageComponent,
     WaitingCoachesComponent,
-    CoachPageComponent
+    CoachPageComponent,
+    CreateplanComponent
   
 
   ],
@@ -56,7 +58,8 @@ import { CoachPageComponent } from './coach-page/coach-page.component';
     MatInputModule,
     MatButtonModule,
     MatFormFieldModule,
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   
   ],
   providers: [AuthService,authInterceptorProviders,Shared,ModalPopServiceService,FpPopupComponent],

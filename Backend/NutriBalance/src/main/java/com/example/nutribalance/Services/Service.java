@@ -1,14 +1,12 @@
 package com.example.nutribalance.Services;
 
 import com.example.nutribalance.Entities.Coach;
+import com.example.nutribalance.Entities.Plan;
 import com.example.nutribalance.Entities.ResetPassword;
 import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.Mails.EmailDetails;
 import com.example.nutribalance.Mails.EmailService;
-import com.example.nutribalance.Repositries.CoachRepositry;
-import com.example.nutribalance.Repositries.ResetPasswordRepository;
-import com.example.nutribalance.Repositries.SubscriptionRepositry;
-import com.example.nutribalance.Repositries.UserRepositry;
+import com.example.nutribalance.Repositries.*;
 import com.example.nutribalance.dto.LoginRequest;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -42,6 +40,8 @@ public class Service implements Iservice {
     private JavaMailSender mailSender;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private PlanRepositry planRepositry;
 
     @Override
     public Coach savecoach(Coach coach) {
@@ -178,6 +178,7 @@ public class Service implements Iservice {
         }
     }
 
+
     public Coach coachsignin(String email, String pass) {
         Optional<Coach> coach = coachRepo.findByEmail(email);
         Coach coach1 = coach.orElse(null);
@@ -193,6 +194,14 @@ public class Service implements Iservice {
         }
         return null;
     }
+
+    // -------------------------plan service-------------------------
+    @Override
+    public Plan saveplan(Plan plan) {
+        Plan existingPlan = planRepositry.findByPlanName(plan.getPlanName());
+        if (existingPlan != null) {
+            return null;
+        }
+        return planRepositry.save(plan);
+    }
 }
-
-

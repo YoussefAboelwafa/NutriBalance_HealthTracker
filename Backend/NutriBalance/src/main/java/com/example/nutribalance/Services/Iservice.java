@@ -1,6 +1,7 @@
 package com.example.nutribalance.Services;
 
 import com.example.nutribalance.Entities.Coach;
+import com.example.nutribalance.Entities.Plan;
 import com.example.nutribalance.Entities.ResetPassword;
 import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.dto.LoginRequest;
@@ -36,4 +37,5 @@ public interface Iservice {
     ResetPassword get_reset_password(String email);
 
     void resetPassword(LoginRequest loginRequest, String role);
+    Plan saveplan(Plan plan);
 }

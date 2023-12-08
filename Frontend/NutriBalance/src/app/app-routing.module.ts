@@ -8,6 +8,7 @@ import {CoachSignupComponent} from "./coach-signup/coach-signup.component";
 import {RoleTypeComponent} from "./role-type/role-type.component";
 import { AdminpageComponent } from './adminpage/adminpage.component';
 import { CoachPageComponent } from './coach-page/coach-page.component';
+import { CreateplanComponent } from './createplan/createplan.component';
 export const routes: Routes = [
   {
     path: 'signup',
@@ -45,6 +46,10 @@ export const routes: Routes = [
   {
     path: 'coach-page',
     component: CoachPageComponent,
+  },
+  {
+    path: 'createplan',
+    component: CreateplanComponent,
   },
 
 
