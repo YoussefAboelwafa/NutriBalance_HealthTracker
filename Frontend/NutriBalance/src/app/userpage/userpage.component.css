@@ -23,6 +23,8 @@ body {
   font-size: 0.88rem;
   user-select: none;
   background-color: rgba(150, 213, 192, 0.22);
+  /* margin-left:0px; 
+     overflow: auto; */
 }
 
 #container {
@@ -99,6 +101,6 @@ body {
 #sidebar-end-block a:hover {
   margin-left: 30px;
 }
-i {
-  margin-right: 10px;
+i{
+    margin-right: 10px;
 }
