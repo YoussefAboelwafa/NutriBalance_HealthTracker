@@ -1,16 +1,24 @@
+import { CalculatorComponent } from './calculator/calculator.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
 import { HomeComponent } from './home/home.component';
-import{WaitingCoachesComponent} from './waiting-coaches/waiting-coaches.component';
+import { WaitingCoachesComponent } from './waiting-coaches/waiting-coaches.component';
 import { NgModule } from '@angular/core';
-import {CoachSignupComponent} from "./coach-signup/coach-signup.component";
-import {RoleTypeComponent} from "./role-type/role-type.component";
+import { CoachSignupComponent } from './coach-signup/coach-signup.component';
+import { RoleTypeComponent } from './role-type/role-type.component';
 import { AdminpageComponent } from './adminpage/adminpage.component';
 import { CoachPageComponent } from './coach-page/coach-page.component';
 import { CreateplanComponent } from './createplan/createplan.component';
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
+import { UserpageComponent } from './userpage/userpage.component';
 export const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
+
   {
     path: 'signup',
     component: SignupComponent,
@@ -36,11 +44,6 @@ export const routes: Routes = [
     component: RoleTypeComponent,
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full',
-  },
-  {
     path: 'adminpage',
     component: AdminpageComponent,
   },
@@ -59,9 +62,17 @@ export const routes: Routes = [
     component: CreateplanComponent,
     
   },
- 
 
-
+  {
+    path: 'userpage',
+    component: UserpageComponent,
+    children: [
+      {
+        path: 'calculator',
+        component: CalculatorComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({

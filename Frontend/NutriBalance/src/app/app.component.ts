@@ -18,8 +18,6 @@ export class AppComponent {
     //     this.router.navigate(['/']);
     //   }
     // });
-
-    // this.router.navigate(['coach-page']);
-
+    this.router.navigate(['userpage']);
   }
 }

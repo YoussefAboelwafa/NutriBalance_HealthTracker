@@ -49,7 +49,6 @@ export class HomeComponent implements OnInit{
     this.shared.signin_flag=false;
     this.router.navigate(['/role-type']);
   }
-  menuOptions: string[] = ["Home", "About", "Programs", "Sign In", "SignUp"];
 
   onMenuClick(option: string) {
     console.log(option);
