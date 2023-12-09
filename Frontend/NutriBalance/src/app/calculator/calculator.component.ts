@@ -9,6 +9,14 @@ export class CalculatorComponent implements OnInit {
 
   constructor() { }
 
+  userGDA:any = {
+    weigth: 0,
+    height: 0,
+    age: 0,
+    gender:'',
+    activity:'',
+  }
+
   ngOnInit(): void {
   }
 

@@ -1,1 +1,159 @@
-<p>calculator works!</p>
+<div class="container">
+  <div class="form-section">
+    <h2>Calculate Your GDA</h2>
+    <form #form="ngForm">
+      <div class="form-group">
+        <label for="weight">Weight (Kg):</label>
+        <input
+          type="number"
+          id="weight"
+          name="weight"
+          [(ngModel)]="userGDA.weight"
+          class="form-control"
+          placeholder="Enter your weight in kg"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="height">Height (m):</label>
+        <input
+          type="number"
+          id="height"
+          name="height"
+          [(ngModel)]="userGDA.height"
+          class="form-control"
+          placeholder="Enter your height in m"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input
+          type="number"
+          id="age"
+          name="age"
+          [(ngModel)]="userGDA.age"
+          class="form-control"
+          placeholder="Enter your age"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label>Gender:</label>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="male"
+            name="gender"
+            [(ngModel)]="userGDA.gender"
+            value="male"
+            checked
+          />
+          <label class="form-check-label" for="male">Male</label>
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            id="female"
+            name="gender"
+            [(ngModel)]="userGDA.gender"
+            value="female"
+          />
+          <label class="form-check-label" for="female">Female</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="activity">Activity Level:</label>
+        <select
+          id="activity"
+          name="activity"
+          [(ngModel)]="userGDA.activity"
+          class="form-control"
+          required
+        >
+          <option value="low" selected>Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="!form.valid">
+        Calculate
+      </button>
+    </form>
+  </div>
+  <div class="table-section">
+    <h2>Average GDA Table</h2>
+    <table class="table table-striped table-hover">
+      <caption>
+        <strong>Guideline Daily Amount Values</strong>
+      </caption>
+      <thead>
+        <tr>
+          <th width="96" align="left" class="toplevel_th" scope="col">
+            Typical values
+          </th>
+          <th width="75" align="center" class="toplevel_th" scope="col">
+            Women
+          </th>
+          <th width="78" align="center" class="toplevel_th" scope="col">Men</th>
+          <th width="116" align="center" class="toplevel_th" scope="col">
+            Children <br />
+            (5-10 years)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left" scope="row"><strong>Calories</strong></td>
+          <td align="center">2,000 kcal</td>
+          <td align="center">2,500 kcal</td>
+          <td align="center">1,800 kcal</td>
+        </tr>
+        <tr>
+          <td align="left" scope="row"><strong>Protein</strong></td>
+          <td align="center">45 g</td>
+          <td align="center">55 g</td>
+          <td align="center">24 g</td>
+        </tr>
+        <tr>
+          <td align="left" scope="row"><strong>Carbohydrate</strong></td>
+          <td align="center">230 g</td>
+          <td align="center">300g</td>
+          <td align="center">220 g</td>
+        </tr>
+        <tr>
+          <td align="left" scope="row"><strong>Sugars</strong></td>
+          <td align="center">90 g</td>
+          <td align="center">120 g</td>
+          <td align="center">85 g</td>
+        </tr>
+        <tr>
+          <td align="left" scope="row"><strong>Fat</strong></td>
+          <td align="center">70 g</td>
+          <td align="center">95 g</td>
+          <td align="center">70 g</td>
+        </tr>
+        <tr>
+          <td align="left" scope="row"><strong>Saturates</strong></td>
+          <td align="center">20 g</td>
+          <td align="center">30 g</td>
+          <td align="center">20 g</td>
+        </tr>
+        <tr>
+          <td align="left" scope="row"><strong>Fibre</strong></td>
+          <td align="center">24 g</td>
+          <td align="center">24 g</td>
+          <td align="center">15 g</td>
+        </tr>
+        <tr>
+          <td align="left" scope="row"><strong>Salt</strong></td>
+          <td align="center">6 g</td>
+          <td align="center">6 g</td>
+          <td align="center">4 g</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

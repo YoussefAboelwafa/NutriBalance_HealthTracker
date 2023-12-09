@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+}
+
+.form-section,
+.table-section {
+  flex: 1;
+  padding: 20px;
+}
+.table-section {
+  border: 3px solid #333;
+}
+input,
+select {
+  width: 70%;
+  padding: 10px;
+  border: 2px solid #333;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
