@@ -72,3 +72,160 @@ li a:hover {
 #menu a:hover {
   background-color: rgba(127, 255, 212, 0.250);
 }
+
+
+
+
+/*---------------------------------------------*/
+@media (max-width: 700px) {
+  .page3 .industry-container{
+    display: inline-block;
+    width: 90%;
+  }
+  .page3 .industry-container .industry-card {
+    width: 90%;
+  }
+  .user-sidebar.open {
+    width:100%;
+  }
+  .user-sidebar .not-logged  {
+    width: 100%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    }
+    .user-sidebar .logged-in{
+      width: 100%;
+      border: none;
+    }
+    .user-sidebar .logged-in .title{
+      width: 80vw;
+      border: none;
+      margin-bottom: 2rem;
+    }
+  .user-sidebar .not-logged p {
+    width: 100%;
+
+  }
+  .user-sidebar .not-logged button {
+    margin-top: 1vw;
+  }
+}
+.user-sidebar .logged-in .logout {
+  margin-top: 3rem;
+}
+.user-sidebar .logged-in .logout button {
+  width: 200px;
+  height: 50px;
+  background-color: red;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 2rem;
+  cursor: pointer;
+}
+.user-sidebar .logged-in .logout button:hover {
+  background-color: #8d3a95;
+}
+
+
+.user-sidebar {
+  position: fixed;
+  top: 0;
+  right: -700px; /* Initially hidden to the right */
+  height: 100%;
+  width: 700px;
+  background-color: #1b1c1d;
+  box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+  transition: right 0.3s ease-in-out; /* Add a smooth animation */
+}
+.user-sidebar.open {
+  right: 0; /* Slide in from the right when open */
+  width: 700px;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-sidebar .not-logged p {
+  font-size: larger;
+  font-weight: 600;
+}
+.user-sidebar .not-logged button {
+  width: 200px;
+  height: 50px;
+  background-color: #8d3a95;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 2rem;
+  cursor: pointer;
+}
+.user-sidebar .not-logged button:hover {
+  background-color: #8d3a95;
+}
+.user-sidebar .logged-in {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2rem;
+  /* border: 3px solid #ccc; */
+  height: 60vh;
+  width: 35vw;
+}
+.user-sidebar .buttons button {
+  width: 200px;
+  height: 50px;
+  background-color: #8d3a95;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 2rem;
+  cursor: pointer;
+}
+.user-sidebar .buttons button:hover {
+  background-color: #8d3a95;
+}
+.user-sidebar .logged-in span {
+  color: #ff7782;
+}
+.user-sidebar .logged-in .title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.user-sidebar .logged-in .title {
+  height:fit-content;
+}
+.user-sidebar .logged-in .title p {
+  font-size: 30px;
+  font-weight: 600;
+}
+.user-sidebar .logged-in .user-info p {
+  font-size: 20px;
+  font-weight: 700;
+}
+.user-sidebar .logged-in .user-info .left {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+}
+.user-sidebar .logged-in .user-info {
+  margin-top: 2rem;
+  display: flex;
+  gap: 3rem;
+}
+.user-sidebar .logged-in .right img {
+  height: 250px;
+}
+.user-link {
+  cursor: pointer;
+}
+

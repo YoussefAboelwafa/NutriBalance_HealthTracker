@@ -17,7 +17,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
@@ -45,12 +47,32 @@ public class Service implements Iservice {
 
     @Override
     public Coach savecoach(Coach coach) {
-        Optional<Coach> old_coach_1 = coachRepo.findByEmail(coach.getEmail());
-        Optional<Coach> old_coach_2 = coachRepo.findByUsername(coach.getUsername());
-        if (old_coach_1.isPresent() || old_coach_2.isPresent()) {
+        return coachRepo.save(coach);
+    }
+
+    @Override
+    public Coach updateCoach(Coach coach) {
+        Optional<Coach> existingCoachOpt = coachRepo.findById(coach.getCoach_id());
+        if (existingCoachOpt.isEmpty()) {
             return null;
         }
-        return coachRepo.save(coach);
+        Coach existingCoach = existingCoachOpt.get();
+        existingCoach.setDescription(coach.getDescription());
+        existingCoach.setPrice(coach.getPrice());
+        existingCoach.setContact_number(coach.getContact_number());
+        existingCoach.setAddress(coach.getAddress());
+        return coachRepo.save(existingCoach);
+
+    }
+
+    @Override
+    public Coach updateCoachCV(String email, byte[] bytes) {
+        Optional<Coach> coach = coachRepo.findByEmail(email);
+        if (coach.isPresent()) {
+            coach.get().setCv(bytes);
+            return coachRepo.save(coach.get());
+        }
+        return null;
     }
 
     @Override
@@ -178,7 +200,6 @@ public class Service implements Iservice {
         }
     }
 
-
     public Coach coachsignin(String email, String pass) {
         Optional<Coach> coach = coachRepo.findByEmail(email);
         Coach coach1 = coach.orElse(null);
@@ -194,8 +215,6 @@ public class Service implements Iservice {
         }
         return null;
     }
-
-    // -------------------------plan service-------------------------
     @Override
     public Plan saveplan(Plan plan) {
         Plan existingPlan = planRepositry.findByPlanName(plan.getPlanName());
@@ -204,4 +223,23 @@ public class Service implements Iservice {
         }
         return planRepositry.save(plan);
     }
+    @Override
+    public Coach addImageToCoach(String Email,MultipartFile image ) {
+        try {
+            Coach coach = coachRepo.findByEmail(Email).orElse(null);
+            if (coach == null) {
+                return null; // Handle the case when the coach is not found
+            }
+            coach.setImage(image.getBytes());
+            coachRepo.save(coach);
+            return coach;
+        } catch (Exception e) {
+            // Handle the exception gracefully by logging and potentially re-throwing it
+            System.err.println("Error while changing user image: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error while changing user image", e);
+        }
+    }
+
+
 }

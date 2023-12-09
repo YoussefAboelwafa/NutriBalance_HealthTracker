@@ -22,10 +22,15 @@ public class Coach {
     private String username;
     @Column
     private String email;
+    @Lob
+    @Column(name = "image", columnDefinition = "longblob")
+    private byte[] image;
     @Column
     private String password;
     @Column
     private String contact_number;
+    @Column
+    private String address;
     @Column
     private String description;
     @Lob

@@ -1,4 +1,3 @@
-<!-- app.component.html -->
 <div>
   <!-- The menu bar container -->
   <div id="top">
@@ -9,6 +8,52 @@
       <li *ngFor="let option of menuOptions">
         <a (click)="onMenuClick(option)">{{ option }}</a>
       </li>
+      <!-- <a class="nav-link"> -->
+        <div class="user-link" (click)="toggleUserSidebar()">
+          <i class="fa-regular fa-circle-user fa-2x" style="cursor: pointer;" ></i>
+        </div>
+        <div class="user-sidebar" [ngClass]="{ 'open': isUserSidebarOpen }">
+          <button class="close-button" (click)="closeUserSidebar()" >
+            <i class="fa-solid fa-xmark fa-2x" id="red-icon"></i></button>
+          <ng-container *ngIf="!isLogin">
+            <div class="not-logged">
+              <!-- Display this when user is not logged in -->
+              <p style="color: white;font-size: 38px;font-weight: 600;">You are not logged in.</p>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="isLogin">
+            <div class="logged-in">
+              <div class="title">
+                <p style="color: white;font-size: 40px;">Hey</p>
+                <p style="color: white;font-size: 40px;display: flex;justify-content: center;align-items: center;"><span> {{curuser.username}}</span></p>
+              </div>
+              <!-- <div class="user-info">
+                <div class="left">
+
+                  <p>Email: <span>{{ user.email }}</span></p>
+                  <p>Country: <span>{{user.country}}</span></p>
+                  <p>Company Name: <span>{{ user.company_name }}</span></p>
+
+                </div>
+                <div class="right">
+                  <img src="{{user.img}}">
+                </div>
+
+              </div> -->
+              <div class="buttons">
+              <!-- <button (click)="goTouserPage()" *ngIf="!isadmin" >Go To User Page</button>
+              <button (click)="goToadminPage()" *ngIf="isadmin" >Go To Admin Page</button> -->
+            </div>
+              <div class="logout">
+                <button (click)="logout()" class="fa fa-sign-out" >logout</button>
+
+              </div>
+            </div>
+          </ng-container>
+
+        </div>
+
+      <!-- </a> -->
     </ul>
 
   </div>

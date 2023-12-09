@@ -6,6 +6,7 @@ import com.example.nutribalance.Entities.ResetPassword;
 import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.dto.LoginRequest;
 import jakarta.mail.MessagingException;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -25,6 +26,7 @@ public interface Iservice {
     Coach approvecoach(Long id);
     Coach coachsignin(String email, String pass);
 
+
     //------------------------------user methods--------------------------------
     User saveuser(User user);
 
@@ -38,4 +40,9 @@ public interface Iservice {
 
     void resetPassword(LoginRequest loginRequest, String role);
     Plan saveplan(Plan plan);
+    Coach addImageToCoach(String Email, MultipartFile image );
+
+    Coach updateCoach(Coach coach);
+
+    Coach updateCoachCV(String email, byte[] bytes);
 }

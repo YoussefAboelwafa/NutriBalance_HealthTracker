@@ -1,22 +1,13 @@
 package com.example.nutribalance.service;
 
-import com.example.nutribalance.Repositries.CoachRepositry;
-import com.example.nutribalance.dto.LocalUser;
-import com.example.nutribalance.dto.Role;
-import com.example.nutribalance.dto.SignUpRequest;
-import com.example.nutribalance.dto.SocialProvider;
-
 import com.example.nutribalance.Entities.User;
-import com.example.nutribalance.Repositries.AdminRepositry;
+import com.example.nutribalance.Repositries.CoachRepositry;
 import com.example.nutribalance.Repositries.UserRepositry;
+import com.example.nutribalance.dto.LocalUser;
+import com.example.nutribalance.dto.SignUpRequest;
 import com.example.nutribalance.security.oauth2.user.OAuth2UserInfo;
 import com.example.nutribalance.security.oauth2.user.OAuth2UserInfoFactory;
-import com.example.nutribalance.util.GeneralUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
@@ -24,7 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Optional;
 
 
 @Service
@@ -85,7 +77,9 @@ public class UserServiceImpl implements UserService {
 		} else if (StringUtils.isEmpty(oAuth2UserInfo.getEmail())) {
 			throw new IllegalStateException("Email not found from OAuth2 provider");
 		}
-		oAuth2UserInfo.getAttributes().get("phone");
+
+		System.out.println("s---------------------------: " +oAuth2UserInfo.getAttributes());
+
 		SignUpRequest userDetails = toUserRegistrationObject(registrationId, oAuth2UserInfo);
 		User user = findUserByEmail(oAuth2UserInfo.getEmail());
 		if (user != null) {

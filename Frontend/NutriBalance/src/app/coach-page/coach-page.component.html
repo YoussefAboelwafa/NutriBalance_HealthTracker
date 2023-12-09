@@ -1,1 +1,38 @@
-<p>coach-page works!</p>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div id="container">
+        <aside class="holder">
+        <div id="sidebar">
+            <div class="top" style="display: flex;">
+              <img id="header-img" src="../../assets/images/leaf.png" alt="Header Image">
+              <a id="Name" >NutriBalance</a>
+            </div>
+            
+            <div id="menu">
+            <a *ngFor="let menuItem of menuItems" routerLinkActive="active">
+                <a [routerLink]="[menuItem.path]" (click)="onRemoveButtonClick()">
+                    <i [ngClass]="menuItem.icon" ><p>{{menuItem.title}}</p></i>
+                </a>
+            </a>
+
+            </div>
+
+            <div id="sidebar-end-block">
+              <a><i class="fas fa-sign-out-alt icon"></i> Logout</a>
+            </div>
+        </div>
+        
+        </aside>
+        <main>
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+
+</body>
+</html>
+
