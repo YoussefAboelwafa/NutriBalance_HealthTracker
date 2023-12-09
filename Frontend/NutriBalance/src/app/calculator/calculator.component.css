@@ -1,7 +1,10 @@
 .container {
   display: flex;
 }
-
+h2 {
+  font-weight: 800;
+  margin-bottom: 20px;
+}
 .form-section,
 .table-section {
   flex: 1;
@@ -13,8 +16,56 @@
 input,
 select {
   width: 70%;
-  padding: 10px;
   border: 2px solid #333;
   border-radius: 5px;
-  margin-bottom: 10px;
+}
+.form-group label {
+  font-size: large;
+  font-weight: bold;
+  cursor: pointer;
+}
+.form-check label {
+  font-weight: normal;
+  cursor: pointer;
+}
+.form-check-input {
+  display: none;
+}
+
+.custom-radio {
+  padding-left: 25px;
+  position: relative;
+}
+
+.custom-radio:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #333;
+}
+
+.form-check-input:checked + .custom-radio:after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #28a745;
+}
+button {
+  padding: 10px;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 20px;
+}
+i {
+  margin-left: 5px;
 }

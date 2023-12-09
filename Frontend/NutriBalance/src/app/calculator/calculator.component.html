@@ -10,19 +10,23 @@
           name="weight"
           [(ngModel)]="userGDA.weight"
           class="form-control"
-          placeholder="Enter your weight in kg"
+          placeholder="Enter your weight in (kg)"
+          min="0"
+          max="300"
           required
         />
       </div>
       <div class="form-group">
-        <label for="height">Height (m):</label>
+        <label for="height">Height (cm):</label>
         <input
           type="number"
           id="height"
           name="height"
           [(ngModel)]="userGDA.height"
           class="form-control"
-          placeholder="Enter your height in m"
+          placeholder="Enter your height in (cm)"
+          min="0"
+          max="300"
           required
         />
       </div>
@@ -35,34 +39,34 @@
           [(ngModel)]="userGDA.age"
           class="form-control"
           placeholder="Enter your age"
+          min="0"
+          max="120"
           required
         />
       </div>
-      <div class="form-group">
-        <label>Gender:</label>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            id="male"
-            name="gender"
-            [(ngModel)]="userGDA.gender"
-            value="male"
-            checked
-          />
-          <label class="form-check-label" for="male">Male</label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            id="female"
-            name="gender"
-            [(ngModel)]="userGDA.gender"
-            value="female"
-          />
-          <label class="form-check-label" for="female">Female</label>
-        </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="male"
+          name="gender"
+          [(ngModel)]="userGDA.gender"
+          value="male"
+          required
+        />
+        <label class="form-check-label custom-radio" for="male">Male</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="female"
+          name="gender"
+          [(ngModel)]="userGDA.gender"
+          value="female"
+          required
+        />
+        <label class="form-check-label custom-radio" for="female">Female</label>
       </div>
       <div class="form-group">
         <label for="activity">Activity Level:</label>
@@ -78,9 +82,14 @@
           <option value="high">High</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-success" [disabled]="!form.valid">
-        Calculate
-      </button>
+      <div class="btns">
+        <button type="submit" class="btn btn-success" [disabled]="!form.valid" (click)="calculateGDA()">
+          Calculate GDA <i class="fa-solid fa-calculator"></i>
+        </button>
+        <button type="submit" class="btn btn-dark" [disabled]="!form.valid">
+          Save Your Weight <i class="fa-solid fa-floppy-disk"></i>
+        </button>
+      </div>
     </form>
   </div>
   <div class="table-section">
