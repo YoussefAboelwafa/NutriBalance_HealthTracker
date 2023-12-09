@@ -16,6 +16,8 @@
 //import com.example.nutribalance.Entities.ResetPassword;
 //import com.example.nutribalance.Entities.User;
 //import com.example.nutribalance.Entities.Weight;
+//import com.example.nutribalance.Mails.EmailDetails;
+//import com.example.nutribalance.Mails.EmailService;
 //import com.example.nutribalance.Repositries.CoachRepositry;
 //import com.example.nutribalance.Repositries.ResetPasswordRepository;
 //import com.example.nutribalance.Repositries.SubscriptionRepositry;
@@ -41,7 +43,7 @@
 //import org.springframework.test.context.ContextConfiguration;
 //import org.springframework.test.context.junit.jupiter.SpringExtension;
 //
-//@ContextConfiguration(classes = {Service.class})
+//@ContextConfiguration(classes = {Service.class, JavaMailSender.class, EmailDetails.class, EmailService.class})
 //@ExtendWith(SpringExtension.class)
 //class ServiceTest {
 //    @MockBean

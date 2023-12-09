@@ -26,8 +26,13 @@ import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationC
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorHandler;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizationRequestResolver;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
+import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -37,6 +42,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Configuration
@@ -48,6 +54,9 @@ public class SecurityConfig {
     private CustomOAuth2UserService customOAuth2UserService;
 
     @Autowired
+    private ClientRegistrationRepository clientRegistrationRepository;
+
+    @Autowired
     private CustomOidcUserService customOidcUserService;
 
     @Autowired
@@ -55,7 +64,6 @@ public class SecurityConfig {
 
     @Autowired
     private OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
-
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -70,6 +78,10 @@ public class SecurityConfig {
 //    }
 
 
+    @Bean
+    public OAuth2AuthorizationRequestResolver customOAuth2AuthorizationRequestResolverBean() {
+        return new CustomOAuth2AuthorizationRequestResolver(clientRegistrationRepository);
+    }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -98,7 +110,8 @@ public class SecurityConfig {
                         oauth2Login -> oauth2Login
                                 .authorizationEndpoint(authorizationEndpoint -> {
                                             authorizationEndpoint.authorizationRequestRepository(cookieAuthorizationRequestRepository());
-//                                            authorizationEndpoint.baseUri("/oauth2/authorize/google");
+                                            authorizationEndpoint.authorizationRequestResolver(customOAuth2AuthorizationRequestResolverBean());
+
                                         }
                                 )
 
@@ -122,6 +135,17 @@ public class SecurityConfig {
     @Bean
     public HttpCookieOAuth2AuthorizationRequestRepository cookieAuthorizationRequestRepository() {
         return new HttpCookieOAuth2AuthorizationRequestRepository();
+    }
+
+
+    private OAuth2AuthorizationRequestResolver authorizationRequestResolver(
+            ClientRegistrationRepository clientRegistrationRepository) {
+
+        DefaultOAuth2AuthorizationRequestResolver authorizationRequestResolver =
+                new DefaultOAuth2AuthorizationRequestResolver(
+                        clientRegistrationRepository, "/oauth2/authorization");
+
+        return  authorizationRequestResolver;
     }
 
 

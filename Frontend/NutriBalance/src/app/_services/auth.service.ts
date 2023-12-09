@@ -31,7 +31,6 @@ export class AuthService {
       socialProvider: 'LOCAL'
     }, httpOptions);
   }
-
   verify(token: any): Observable<any> {
     return this.http.get(AppConstants.AUTH_API + "/verify", {params: {'code': token}});
   }

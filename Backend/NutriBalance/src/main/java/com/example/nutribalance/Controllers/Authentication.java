@@ -2,12 +2,10 @@ package com.example.nutribalance.Controllers;
 
 
 import com.example.nutribalance.Entities.ResetPassword;
-import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.Services.Iservice;
-import com.example.nutribalance.dto.LocalUser;
 import com.example.nutribalance.dto.LoginRequest;
-import com.example.nutribalance.security.jwt.TokenProvider;
-import org.antlr.v4.runtime.Token;
+import jakarta.servlet.http.HttpSession;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 
-
-import net.bytebuddy.utility.RandomString;
 @RestController
 public class Authentication {
     @Autowired
@@ -43,13 +39,10 @@ public class Authentication {
         return user;
     }
 
-    @GetMapping("/oauth2/authorization/google")
-    public void getProduct(@Param("id") Long id) {
-        System.out.println("id-----------------------------------------nosnodnononona----------------------------------------: " + id);
-    }
     @GetMapping("/forgetPassword")
     public ResponseEntity<?> forgetPassword(@Param("email") String email, @Param("role") String role){
         String username = service.findByEmailRole(email, role);
+        System.out.println("username: " + username);
         if (username == null) {
             return ResponseEntity.badRequest().body("Error: Email is not valid!");
         }
@@ -67,7 +60,7 @@ public class Authentication {
         service.create_reset_password(resetPassword);
         return ResponseEntity.ok().build();
     }
-    @GetMapping("/checkOtp")
+    @GetMapping("/w")
     public ResponseEntity<?> checkOtp(@Param("otp") String otp,@Param("email") String email) {
         ResetPassword user = service.get_reset_password(email);
         if (user == null) {
@@ -81,7 +74,6 @@ public class Authentication {
     @PostMapping("/resetPassword")
     public ResponseEntity<?> resetPassword(@RequestBody LoginRequest loginRequest,@Param("role") String role) {
         service.resetPassword(loginRequest,role);
-
         return ResponseEntity.ok().build();
     }
 }

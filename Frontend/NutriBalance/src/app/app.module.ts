@@ -26,6 +26,7 @@ import { CommonModule } from '@angular/common';
 import { WaitingCoachesComponent } from './waiting-coaches/waiting-coaches.component';
 import { CoachPageComponent } from './coach-page/coach-page.component';
 import { CreateplanComponent } from './createplan/createplan.component';
+import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 
@@ -43,6 +44,7 @@ import { CalculatorComponent } from './calculator/calculator.component';
     WaitingCoachesComponent,
     CoachPageComponent,
     CreateplanComponent,
+    CoachProfileComponent
     UserpageComponent,
     CalculatorComponent,
   ],

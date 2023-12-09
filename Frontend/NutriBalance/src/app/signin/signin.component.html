@@ -42,7 +42,7 @@
           <tr>
             <td>
                 <button id="btn" class="signinbtn" type="submit" (click)="onSubmit($event)" [disabled]="!form.valid">Sign in</button>
-                <div class="form-group">
+                <div class="form-group" *ngIf="isUser">
                   <p class="social-login text-center">
                     <span>or</span>
                       Sign in with:
