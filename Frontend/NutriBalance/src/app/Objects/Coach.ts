@@ -10,7 +10,11 @@ export class Coach{
     description:any;
     cv?: string;
     price:any;
+    address:any;
+    image?: any;
+    rating:any
     isapproved:any;
+  
     users:User[]=[];
     plans:Plan[]=[];
 }

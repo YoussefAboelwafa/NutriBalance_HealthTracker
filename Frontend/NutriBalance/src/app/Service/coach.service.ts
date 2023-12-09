@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Coach } from '../Objects/Coach';
 const baseUrl = 'http://localhost:8080/coach';
 @Injectable({
   providedIn: 'root'
 })
 export class CoachService {
-
+ 
   constructor(private http: HttpClient) {}
   saveCoach(formdata:FormData): Observable<any> {
     return this.http.post<any>(`${baseUrl}/save`,formdata);
@@ -29,4 +30,14 @@ export class CoachService {
   update_comment(comment:any,user_id:any): Observable<any> {
     return this.http.get<any>(`${baseUrl}/update_comment/${comment}/${user_id}`);
   }
+  addImage(email:any,formdata:any){
+    return this.http.post<any>(`${baseUrl}/addImageToCoach/${email}`,formdata);
+  }
+  updateCoach(coach: any):Observable<any> {
+    return this.http.put<any>(`${baseUrl}/updateCoach`,coach);
+  }
+  addCv(email: any, file: any) {
+    return this.http.post<any>(`${baseUrl}/updateCV/${email}`, file);
+  }
+  
 }

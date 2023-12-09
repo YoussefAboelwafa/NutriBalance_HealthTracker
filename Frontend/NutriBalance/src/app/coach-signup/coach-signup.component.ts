@@ -15,12 +15,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CoachSignupComponent {
 
-   label: String='Upload CV';
+  label: String = 'Upload CV';
 
-  constructor(private router: Router, private coachservice: CoachService) {}
+  constructor(private router: Router, private coachservice: CoachService) { }
 
-  coach=new Coach();
-  confirmedPassword : any;
+  coach = new Coach();
+  confirmedPassword: any;
   selectedFile !: File;
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
@@ -29,9 +29,9 @@ export class CoachSignupComponent {
   signin() {
     this.router.navigate(['/signin']);
   }
-  signup(){
-    this.coach.isapproved=0;
-    
+  signup() {
+    this.coach.isapproved = 0;
+
     if (this.coach.password != this.confirmedPassword) {
       alert('Passwords do not match');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.coach.email)) {
@@ -40,14 +40,14 @@ export class CoachSignupComponent {
       alert('Invalid contact number');
     } else if (!/^[a-zA-Z0-9_]+$/.test(this.coach.username)) {
       alert('Invalid username format (only letters, numbers, and _)');
-    } 
+    }
 
-  const formData = new FormData();
-  formData.append('file', this.selectedFile, this.selectedFile.name);
-  formData.append('coach', JSON.stringify(this.coach));
+    const formData = new FormData();
+    formData.append('file', this.selectedFile, this.selectedFile.name);
+    formData.append('coach', JSON.stringify(this.coach));
 
-  this.coachservice.saveCoach(formData).subscribe(data => {
-    console.log(data);
-  });
+    this.coachservice.saveCoach(formData).subscribe(data => {
+      console.log(data);
+    });
   }
 }
