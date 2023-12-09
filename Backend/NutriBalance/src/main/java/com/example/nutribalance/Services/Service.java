@@ -1,9 +1,6 @@
 package com.example.nutribalance.Services;
 
-import com.example.nutribalance.Entities.Coach;
-import com.example.nutribalance.Entities.Plan;
-import com.example.nutribalance.Entities.ResetPassword;
-import com.example.nutribalance.Entities.User;
+import com.example.nutribalance.Entities.*;
 import com.example.nutribalance.Mails.EmailDetails;
 import com.example.nutribalance.Mails.EmailService;
 import com.example.nutribalance.Repositries.*;
@@ -29,8 +26,6 @@ public class Service implements Iservice {
     private UserRepositry userRepo;
     @Autowired
     private CoachRepositry coachRepo;
-    @Autowired
-    private SubscriptionRepositry subscriptionRepo;
     @Autowired
     private ResetPasswordRepository resetPasswordRepository;
     @Autowired
@@ -71,22 +66,22 @@ public class Service implements Iservice {
             coach.get().setIsapproved(1);
 
 
-            EmailDetails mail = new EmailDetails();
-            mail.setMsgBody("Dear [User],\n" +
-                    "\n" +
-                    "Thank you for registering with NutriBalance!\n" +
-                    "\n" +
-                    "To complete your registration, please click on the following link:\n" +
-                    "\n" + "<h2><a href=\"[[http://localhost:4200/Confirmation]]\" onclick=\"return handleLinkClick(event);\">Confirm Registration</a></h2>"
-                    +
-                    "\n" +
-                    "If you did not sign up for NutriBalance, please disregard this email.\n" +
-                    "\n" +
-                    "Thank you,\n" +
-                    "NutriBalance Team\n");
-            mail.setRecipient(coach.get().getEmail());
-            mail.setSubject("NutriBalance Confirmation Mail!");
-            emailService.sendSimpleMail(mail);
+//            EmailDetails mail = new EmailDetails();
+//            mail.setMsgBody("Dear [User],\n" +
+//                    "\n" +
+//                    "Thank you for registering with NutriBalance!\n" +
+//                    "\n" +
+//                    "To complete your registration, please click on the following link:\n" +
+//                    "\n" + "<h2><a href=\"[[http://localhost:4200/Confirmation]]\" onclick=\"return handleLinkClick(event);\">Confirm Registration</a></h2>"
+//                    +
+//                    "\n" +
+//                    "If you did not sign up for NutriBalance, please disregard this email.\n" +
+//                    "\n" +
+//                    "Thank you,\n" +
+//                    "NutriBalance Team\n");
+//            mail.setRecipient(coach.get().getEmail());
+//            mail.setSubject("NutriBalance Confirmation Mail!");
+//            emailService.sendSimpleMail(mail);
             return coachRepo.save(coach.get());
         }
         return null;
@@ -125,11 +120,7 @@ public class Service implements Iservice {
     public void sendForgetPasswordEmail(ResetPassword resetPassword) throws UnsupportedEncodingException, MessagingException {
         String toAddress = resetPassword.getEmail();
         String subject = "Please verify your registration";
-        String content = "Dear [[name]],<br>"
-                + "Here is the OTP code to forget password :<br>"
-                + "<h3>[[URL]]</h3>"
-                + "Thank you,<br>"
-                + "NutriBalance team";
+        String content = "Dear [[name]],<br>" + "Here is the OTP code to forget password :<br>" + "<h3>[[URL]]</h3>" + "Thank you,<br>" + "NutriBalance team";
 
 
         content = content.replace("[[name]]", resetPassword.getUsername());
@@ -204,4 +195,40 @@ public class Service implements Iservice {
         }
         return planRepositry.save(plan);
     }
+
+    // to @aboelwafa, @medany, @ayman this is for you
+    @Override
+    public User subscribe_to_plan(String planName, Long user_id) {
+        Plan plan = planRepositry.findByPlanName(planName);
+        User user = userRepo.findById(user_id).orElse(null);
+        if (plan != null && user != null) {
+            Long coach_id = plan.getCoach().getCoach_id();
+            Coach coach = coachRepo.findById(coach_id).orElse(null);
+            user.setCoach(coach);
+            user.setPlan(plan);
+            return userRepo.save(user);
+        }
+        return null;
+    }
+
+    @Override
+    public List<User> get_subscribed_users(Long coach_id) {
+        Coach coach = coachRepo.findById(coach_id).orElse(null);
+        if (coach != null) {
+            return coach.getUsers();
+        }
+        return null;
+    }
+
+    @Override
+    public User update_comment(String comment, Long user_id) {
+        User user = userRepo.findById(user_id).orElse(null);
+        if (user != null) {
+            user.setComment(comment);
+            return userRepo.save(user);
+        }
+        return null;
+    }
+
+
 }

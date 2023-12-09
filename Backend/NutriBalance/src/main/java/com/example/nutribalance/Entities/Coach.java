@@ -1,11 +1,13 @@
 package com.example.nutribalance.Entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,23 +41,9 @@ public class Coach {
     private int no_users_subscribed;
     @Column
     private int isapproved;
-    @JsonIgnoreProperties("coaches")
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name="subscription",
-            joinColumns = @JoinColumn(name="coach_id"),
-            inverseJoinColumns = @JoinColumn(name="user_id")
-
-    )
-    List<User> users;
-    public void addUsertoCoach(User user) {
-        if (users == null) {
-            users = new ArrayList<>();
-        }
-        users.add(user);
-        user.getCoaches().add(this);
-    }
-    @JsonIgnoreProperties("coaches_reports")
+    @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL)
+    @JsonIgnore
+    List<User> users=new ArrayList<>();
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name="report",
@@ -63,9 +51,10 @@ public class Coach {
             inverseJoinColumns = @JoinColumn(name="user_id")
 
     )
-    List<User> users_reports;
-    @JsonIgnoreProperties("coach")
+    @JsonIgnore
+    List<User> users_reports=new ArrayList<>();
     @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL)
+    @JsonIgnore
     List<Plan> plans;
 
 

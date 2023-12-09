@@ -1,9 +1,6 @@
 package com.example.nutribalance.Services;
 
-import com.example.nutribalance.Entities.Coach;
-import com.example.nutribalance.Entities.Plan;
-import com.example.nutribalance.Entities.ResetPassword;
-import com.example.nutribalance.Entities.User;
+import com.example.nutribalance.Entities.*;
 import com.example.nutribalance.dto.LoginRequest;
 import jakarta.mail.MessagingException;
 
@@ -38,4 +35,7 @@ public interface Iservice {
 
     void resetPassword(LoginRequest loginRequest, String role);
     Plan saveplan(Plan plan);
+    User subscribe_to_plan(String planName, Long user_id);
+    List<User> get_subscribed_users(Long coach_id);
+    User update_comment(String comment, Long user_id);
 }

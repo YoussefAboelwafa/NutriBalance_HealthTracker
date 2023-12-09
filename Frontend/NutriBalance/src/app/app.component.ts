@@ -12,7 +12,7 @@ export class AppComponent {
 
   constructor(private router: Router) {
 
-    this.router.navigate(['createplan']);
+    this.router.navigate(['view-subscriptions']);
 
   }
 }
