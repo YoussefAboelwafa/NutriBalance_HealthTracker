@@ -12,7 +12,9 @@ export class AppComponent {
 
   constructor(private router: Router) {
 
-    this.router.navigate(['view-subscriptions']);
+
+    this.router.navigate(['userpage']);
+
 
   }
 }
