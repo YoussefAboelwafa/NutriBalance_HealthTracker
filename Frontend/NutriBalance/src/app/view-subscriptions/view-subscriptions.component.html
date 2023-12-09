@@ -1,0 +1,32 @@
+<div class="container text-center align-items-center justify-content-center">
+    <div class="card" *ngFor="let user of subscribed_users; let i = index">
+        <div class="card-body">
+            <h5 class="card-title">
+                <strong> {{ user.username }}</strong>
+            </h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <strong>Subscribed in: </strong> {{ user.plan?.planName }}
+            </li>
+            <li class="list-group-item">
+                <strong>Email: </strong> {{ user.email }}
+            </li>
+            <li class="list-group-item">
+                <strong>Phone number: </strong>{{ user.contact_number }}
+            </li>
+        </ul>
+        <div class="card-body comment-section">
+            <div class="comment-header">
+                <label for="comment"><strong>Comment: </strong> </label>
+                <a *ngIf="!hide_edit_btn[i]" (click)="update_flag(i)">
+                    <i class="fa-solid fa-pen"></i>
+                </a>
+            </div>
+
+            <p *ngIf="!comment_update[i]">{{comment_text[i]}}</p>
+            <textarea *ngIf="comment_update[i]" [(ngModel)]="comment_text[i]"></textarea>
+            <button *ngIf="comment_update[i]" class="btn btn-dark" (click)="update_comment(i)">Update Comment</button>
+        </div>
+    </div>
+</div>

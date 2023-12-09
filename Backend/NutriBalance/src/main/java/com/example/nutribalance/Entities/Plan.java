@@ -1,9 +1,11 @@
 package com.example.nutribalance.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -20,8 +22,8 @@ public class Plan {
     @Column
     private String Goal;
     @OneToMany(mappedBy = "plan", cascade = CascadeType.ALL)
+    @JsonIgnore
     List<User> users;
-    @JsonIgnoreProperties("plan")
     @ManyToOne
     @JoinColumn(name = "coach_id")
     private Coach coach;
