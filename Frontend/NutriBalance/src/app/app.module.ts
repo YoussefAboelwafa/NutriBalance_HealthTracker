@@ -1,11 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule} from '@angular/core';
-
+import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { SigninComponent } from './signin/signin.component';
 import { HomeComponent } from './home/home.component';
@@ -29,8 +27,7 @@ import { WaitingCoachesComponent } from './waiting-coaches/waiting-coaches.compo
 import { CoachPageComponent } from './coach-page/coach-page.component';
 import { CreateplanComponent } from './createplan/createplan.component';
 import { UserpageComponent } from './userpage/userpage.component';
-
-
+import { CalculatorComponent } from './calculator/calculator.component';
 
 @NgModule({
   declarations: [
@@ -46,9 +43,8 @@ import { UserpageComponent } from './userpage/userpage.component';
     WaitingCoachesComponent,
     CoachPageComponent,
     CreateplanComponent,
-    UserpageComponent
-  
-
+    UserpageComponent,
+    CalculatorComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,10 +57,15 @@ import { UserpageComponent } from './userpage/userpage.component';
     MatButtonModule,
     MatFormFieldModule,
     CommonModule,
-    ReactiveFormsModule
-  
+    ReactiveFormsModule,
   ],
-  providers: [AuthService,authInterceptorProviders,Shared,ModalPopServiceService,FpPopupComponent],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthService,
+    authInterceptorProviders,
+    Shared,
+    ModalPopServiceService,
+    FpPopupComponent,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

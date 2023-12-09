@@ -1,3 +1,4 @@
+import { CalculatorComponent } from './calculator/calculator.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
@@ -56,6 +57,12 @@ export const routes: Routes = [
   {
     path: 'userpage',
     component: UserpageComponent,
+    children: [
+      {
+        path: 'calculator',
+        component: CalculatorComponent,
+      },
+    ],
   },
 ];
 

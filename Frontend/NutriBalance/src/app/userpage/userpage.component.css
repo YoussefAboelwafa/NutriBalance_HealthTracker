@@ -73,8 +73,10 @@ body {
   display: block;
 }
 
-/* Change color on hover */
 #menu a:hover {
+  background-color: rgba(127, 255, 212, 0.25);
+}
+.active {
   background-color: rgba(127, 255, 212, 0.25);
 }
 
@@ -83,12 +85,12 @@ body {
   margin-top: auto;
   display: flex;
   justify-content: center;
-  align-items: center; /* Center the child elements vertically */
+  align-items: center;
   bottom: 0;
   left: 0;
   width: 250px;
-  height: 50px; /* Adjust the height as needed */
-  background-color: #000; /* Black color */
+  height: 50px;
+  background-color: #000;
 }
 
 #sidebar-end-block a {
@@ -101,6 +103,6 @@ body {
 #sidebar-end-block a:hover {
   margin-left: 30px;
 }
-i{
-    margin-right: 10px;
+i {
+  margin-right: 10px;
 }
