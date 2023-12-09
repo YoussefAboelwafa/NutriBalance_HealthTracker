@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f4f4f4;
@@ -45,8 +45,8 @@ body {
   transition: 0.4s;
 }
 #top a:hover {
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
 }
 #top label {
   color: rgb(206, 255, 215);
@@ -120,6 +120,11 @@ body {
 .signuptoday a {
   color: #008080;
   text-decoration: underline;
+  transition: 0.3s;
+}
+.signuptoday a:hover {
+  color: #000;
+  margin-right: 5px;
 }
 .signuptoday i {
   color: #008080;
