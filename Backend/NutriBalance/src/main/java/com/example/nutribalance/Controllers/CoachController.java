@@ -60,81 +60,22 @@ public class CoachController {
     }
 
     @GetMapping("checksignin/{email}/{password}")
-    public CoachDto coachsignin(@PathVariable String email, @PathVariable String password) {
-        Coach coach = iservice.coachsignin(email, password);
-        if (coach != null) {
-            return CoachDto.builder()
-                    .coach_id(coach.getCoach_id())
-                    .username(coach.getUsername())
-                    .email(coach.getEmail())
-                    .isapproved(coach.getIsapproved())
-                    .cv(coach.getCv())
-                    .price(coach.getPrice())
-                    .rating(coach.getRating())
-                    .address(coach.getAddress())
-                    .description(coach.getDescription())
-                    .no_users_subscribed(coach.getNo_users_subscribed())
-                    .contact_number(coach.getContact_number())
-                    .image(coach.getImage())
-                    .build();
-        }
-        return null;
+    public Coach coachsignin(@PathVariable String email, @PathVariable String password) {
+        return iservice.coachsignin(email, password);
     }
 
     @PostMapping("/addImageToCoach/{Email}")
-    public CoachDto addImageToCoach(@PathVariable String Email, @RequestParam("file") MultipartFile image) {
-        Coach coach = iservice.addImageToCoach(Email, image);
-        return CoachDto.builder()
-                .coach_id(coach.getCoach_id())
-                .username(coach.getUsername())
-                .email(coach.getEmail())
-                .isapproved(coach.getIsapproved())
-                .cv(coach.getCv())
-                .price(coach.getPrice())
-                .rating(coach.getRating())
-                .address(coach.getAddress())
-                .description(coach.getDescription())
-                .no_users_subscribed(coach.getNo_users_subscribed())
-                .contact_number(coach.getContact_number())
-                .image(coach.getImage())
-                .build();
+    public Coach addImageToCoach(@PathVariable String Email, @RequestParam("file") MultipartFile image) {
+        return iservice.addImageToCoach(Email, image);
     }
 
     @PutMapping("/updateCoach")
-    public CoachDto updateCaoch(@RequestBody Coach coach) {
-        Coach coach1 = iservice.updateCoach(coach);
-        return CoachDto.builder()
-                .coach_id(coach1.getCoach_id())
-                .username(coach1.getUsername())
-                .email(coach1.getEmail())
-                .isapproved(coach1.getIsapproved())
-                .cv(coach1.getCv())
-                .price(coach1.getPrice())
-                .rating(coach1.getRating())
-                .address(coach1.getAddress())
-                .description(coach1.getDescription())
-                .no_users_subscribed(coach1.getNo_users_subscribed())
-                .contact_number(coach1.getContact_number())
-                .image(coach1.getImage())
-                .build();
+    public Coach updateCaoch(@RequestBody Coach coach) {
+        return iservice.updateCoach(coach);
     }
     @PostMapping("/updateCV/{email}")
-    public CoachDto updateCV(@PathVariable("email") String email,@RequestParam("file") MultipartFile file) throws IOException {
-        Coach coach1 = iservice.updateCoachCV(email,file.getBytes());
-        return CoachDto.builder()
-                .coach_id(coach1.getCoach_id())
-                .username(coach1.getUsername())
-                .email(coach1.getEmail())
-                .isapproved(coach1.getIsapproved())
-                .cv(coach1.getCv())
-                .price(coach1.getPrice())
-                .rating(coach1.getRating())
-                .address(coach1.getAddress())
-                .description(coach1.getDescription())
-                .no_users_subscribed(coach1.getNo_users_subscribed())
-                .contact_number(coach1.getContact_number())
-                .image(coach1.getImage())
-                .build();
+    public Coach updateCV(@PathVariable("email") String email,@RequestParam("file") MultipartFile file) throws IOException {
+        return iservice.updateCoachCV(email,file.getBytes());
     }
 
 }

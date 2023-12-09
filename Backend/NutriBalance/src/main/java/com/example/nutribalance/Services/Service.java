@@ -228,15 +228,12 @@ public class Service implements Iservice {
         try {
             Coach coach = coachRepo.findByEmail(Email).orElse(null);
             if (coach == null) {
-                return null; // Handle the case when the coach is not found
+                return null;
             }
             coach.setImage(image.getBytes());
             coachRepo.save(coach);
             return coach;
         } catch (Exception e) {
-            // Handle the exception gracefully by logging and potentially re-throwing it
-            System.err.println("Error while changing user image: " + e.getMessage());
-            e.printStackTrace();
             throw new RuntimeException("Error while changing user image", e);
         }
     }

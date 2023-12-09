@@ -21,6 +21,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -514,4 +515,108 @@ class CoachControllerTest {
                                         + "\"email\":\"jane.doe@example.org\",\"password\":\"iloveyou\",\"contact_number\":\"42\",\"weights\":[],\"plan\":{},"
                                         + "\"coaches_reports\":[]}],\"users_reports\":[],\"plans\":[]}"));
     }
+    /**
+     * Method under test: {@link CoachController#addImageToCoach(String, MultipartFile)}}
+     */
+    @Test
+    void testAddImageToCoach() throws Exception {
+        Coach coach = new Coach();
+        coach.setCoach_id(1L);
+        coach.setContact_number("42");
+        coach.setCv("AXAXAXAX".getBytes("UTF-8"));
+        coach.setDescription("The characteristics of someone or something");
+        coach.setEmail("jane.doe@example.org");
+        coach.setIsapproved(1);
+        coach.setNo_users_subscribed(1);
+        coach.setPassword("iloveyou");
+        coach.setPlans(new ArrayList<>());
+        coach.setPrice("Price");
+        coach.setRating(1);
+        coach.setUsername("janedoe");
+        coach.setImage("Image".getBytes("UTF-8"));
+        when(iservice.addImageToCoach(Mockito.<String>any(), Mockito.<MultipartFile>any())).thenReturn(coach);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .multipart("/coach/addImageToCoach/{Email}", "jane.doe@example.org")
+                .param("file", "foo");
+        MockMvcBuilders.standaloneSetup(coachController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().is(400));
+    }
+    @Test
+    void testAddImageToCoach2() throws Exception {
+        Coach coach = new Coach();
+        coach.setCoach_id(1L);
+        coach.setContact_number("42");
+        coach.setCv("AXAXAXAX".getBytes("UTF-8"));
+        coach.setDescription("The characteristics of someone or something");
+        coach.setEmail("jane.doe@example.org");
+        coach.setIsapproved(1);
+        coach.setNo_users_subscribed(1);
+        coach.setPassword("iloveyou");
+        coach.setPrice("Price");
+        coach.setRating(1);
+        coach.setUsername("janedoe");
+        coach.setImage("Image".getBytes("UTF-8"));
+        when(iservice.addImageToCoach(Mockito.<String>any(), Mockito.<MultipartFile>any())).thenReturn(coach);
+        //build the request that have an image as multipart file in the param
+        MockMultipartFile file = new MockMultipartFile("file", "test.txt", MediaType.TEXT_PLAIN_VALUE,
+                "Hello, World!".getBytes());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .multipart("/coach/addImageToCoach/{Email}", "jane.doe@example.org")
+                .file(file);
+        MockMvcBuilders.standaloneSetup(coachController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().is(200))
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string(
+                                "{\"coach_id\":1,\"username\":\"janedoe\",\"email\":\"jane.doe@example.org\",\"image\":\"SW1hZ2U=\"," +
+                                        "\"password\":\"iloveyou\",\"contact_number"
+                                        + "\":\"42\",\"address\":null,\"description\":\"The characteristics of someone or something\"," +
+                                        "\"cv\":\"QVhBWEFYQVg=\",\"rating\":1,"
+                                        + "\"price\":\"Price\",\"no_users_subscribed\":1,\"isapproved\":1,\"users\":null,\"users_reports\":null,\"plans\":null}"));
+
+    }
+    /**
+     * Method under test: {@link CoachController#updateCaoch(Coach)}
+     */
+    @Test
+    void testUpdateCaoch() throws Exception {
+        Coach coach = new Coach();
+        coach.setCoach_id(1L);
+        coach.setUsername("janedoe");
+        when(iservice.updateCoach(Mockito.<Coach>any())).thenReturn(coach);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put("/coach/updateCoach")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"coach_id\":1,\"username\":\"janedoe\"}");
+        MockMvcBuilders.standaloneSetup(coachController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().json("{\"coach_id\":1,\"username\":\"janedoe\"}"));
+    }
+
+    @Test
+    void testUpdateCV() throws Exception {
+        Coach coach = new Coach();
+        coach.setCoach_id(1L);
+        coach.setUsername("janedoe");
+        when(iservice.updateCoachCV(Mockito.<String>any(), Mockito.<byte[]>any())).thenReturn(coach);
+        MockMultipartFile file = new MockMultipartFile("file", "cv.txt", MediaType.TEXT_PLAIN_VALUE, "CV content".getBytes());
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .multipart("/coach/updateCV/{email}", "jane.doe@example.org")
+                .file(file);
+        MockMvcBuilders.standaloneSetup(coachController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content().json("{\"coach_id\":1,\"username\":\"janedoe\"}"));
+    }
+
+
 }
