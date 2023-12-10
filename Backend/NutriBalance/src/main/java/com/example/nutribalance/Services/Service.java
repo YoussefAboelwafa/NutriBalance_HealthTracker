@@ -194,6 +194,7 @@ public class Service implements Iservice {
     public Coach coachsignin(String email, String pass) {
         Optional<Coach> coach = coachRepo.findByEmail(email);
         Coach coach1 = coach.orElse(null);
+//        System.out.println(coach1);
         if (coach.isPresent()) {
             if (coach1.getIsapproved() == 1) {
                 if (coach1.getPassword().equals(pass)) {
@@ -206,6 +207,7 @@ public class Service implements Iservice {
         }
         return null;
     }
+
     @Override
     public Plan saveplan(Plan plan) {
         Plan existingPlan = planRepositry.findByPlanName(plan.getPlanName());
@@ -249,11 +251,8 @@ public class Service implements Iservice {
         return null;
     }
 
-
-}
-
     @Override
-    public Coach addImageToCoach(String Email,MultipartFile image ) {
+    public Coach addImageToCoach(String Email, MultipartFile image) {
         try {
             Coach coach = coachRepo.findByEmail(Email).orElse(null);
             if (coach == null) {

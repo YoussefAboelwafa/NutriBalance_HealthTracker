@@ -2,6 +2,7 @@ package com.example.nutribalance.Controllers;
 
 import com.example.nutribalance.Entities.Coach;
 import com.example.nutribalance.Entities.User;
+import com.example.nutribalance.Mails.EmailDetails;
 import com.example.nutribalance.Mails.EmailService;
 import com.example.nutribalance.Services.Iservice;
 import com.example.nutribalance.dto.CoachDto;
@@ -24,21 +25,21 @@ public class CoachController {
     private EmailService emailService;
 
     @PostMapping("/save")
-
-    public ResponseEntity<?> savecoach(
-            @RequestParam("file") MultipartFile file,
-            @RequestParam("coach") String coachJson) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Coach coach = objectMapper.readValue(coachJson, Coach.class);
-//    EmailDetails details = new EmailDetails();
-//    details.setRecipient(coach.getEmail());
-//    details.setSubject("Waiting for approval Email");
-//    details.setMsgBody("Dear "+coach.getUsername()+",\n" +
-//            "Thank you for your interest in joining our team. We have received your application for the position of Nutrition Coach. We are currently reviewing all applications and will be in touch with those who we feel are best suited for the position.\n" +
-//            "Thank you again for your interest in working with us. We wish you the best of luck with your job search.\n" +
-//            "Sincerely,\n" +
-//            "NutriBalance Team");
-//    emailService.sendSimpleMail(details);
+//
+//    public ResponseEntity<?> savecoach(
+//            @RequestParam("file") MultipartFile file,
+//            @RequestParam("coach") String coachJson) throws IOException {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        Coach coach = objectMapper.readValue(coachJson, Coach.class);
+////    EmailDetails details = new EmailDetails();
+////    details.setRecipient(coach.getEmail());
+////    details.setSubject("Waiting for approval Email");
+////    details.setMsgBody("Dear "+coach.getUsername()+",\n" +
+////            "Thank you for your interest in joining our team. We have received your application for the position of Nutrition Coach. We are currently reviewing all applications and will be in touch with those who we feel are best suited for the position.\n" +
+////            "Thank you again for your interest in working with us. We wish you the best of luck with your job search.\n" +
+////            "Sincerely,\n" +
+////            "NutriBalance Team");
+////    emailService.sendSimpleMail(details);
 
     public ResponseEntity<?> savecoach(@RequestParam("file") MultipartFile file, @RequestParam("coach") String coachJson) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -85,6 +86,7 @@ public class CoachController {
     @GetMapping("/update_comment/{comment}/{user_id}")
     public User update_comment(@PathVariable String comment, @PathVariable Long user_id) {
         return iservice.update_comment(comment, user_id);
+    }
     @PostMapping("/addImageToCoach/{Email}")
     public Coach addImageToCoach(@PathVariable String Email, @RequestParam("file") MultipartFile image) {
         return iservice.addImageToCoach(Email, image);

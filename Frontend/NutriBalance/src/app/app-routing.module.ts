@@ -52,17 +52,17 @@ export const routes: Routes = [
   {
     path: 'coach-page',
     component: CoachPageComponent,
-    children:[
+    children: [
       {
-        path:'coachprofile',
-        component:CoachProfileComponent,
+        path: 'coachprofile',
+        component: CoachProfileComponent,
       },
     ]
   },
   {
     path: 'createplan',
     component: CreateplanComponent,
-    
+
   },
 
   {
@@ -71,20 +71,18 @@ export const routes: Routes = [
     component: ViewSubscriptionsComponent,
   },
 
-    path: 'userpage',
-    component: UserpageComponent,
-    children: [
-      {
-        path: 'calculator',
-        component: CalculatorComponent,
-      },
-    ],
-  },
-
+ { path: 'userpage',
+  component: UserpageComponent,
+  children: [
+    {
+      path: 'calculator',
+      component: CalculatorComponent,
+    },
+  ],}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

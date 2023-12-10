@@ -42,8 +42,6 @@ public class CoachServiceTest {
     private UserRepositry userRepositry;
 
     @MockBean
-    private SubscriptionRepositry subscriptionRepo;
-    @MockBean
     private ResetPasswordRepository resetPasswordRepository;
     @MockBean
     private PasswordEncoder passwordEncoder;
