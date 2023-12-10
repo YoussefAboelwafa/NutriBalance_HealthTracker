@@ -17,4 +17,7 @@ export class Coach{
   
     users:User[]=[];
     plans:Plan[]=[];
+    [key: string]: any;
+
+
 }

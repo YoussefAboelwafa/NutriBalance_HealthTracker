@@ -46,7 +46,7 @@ import { CalculatorComponent } from './calculator/calculator.component';
     CoachPageComponent,
     CreateplanComponent,
     ViewSubscriptionsComponent,
-    CoachProfileComponent
+    CoachProfileComponent,
     UserpageComponent,
     CalculatorComponent,
   ],
