@@ -18,5 +18,4 @@ public class ResetPassword {
     private String username;
     @Column
     private String email;
-
 }

@@ -2,7 +2,7 @@ import { validateHorizontalPosition } from '@angular/cdk/overlay';
 import { Component, NgModule, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+// import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-calculator',
@@ -10,7 +10,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./calculator.component.css'],
 })
 export class CalculatorComponent implements OnInit {
-  constructor(private dialog: MatDialog, private modalService: NgbModal) {}
+  constructor(private dialog: MatDialog){}
 
   show_table: boolean = false;
   show_result: boolean = true;

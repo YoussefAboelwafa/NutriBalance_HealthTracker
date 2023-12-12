@@ -38,7 +38,8 @@ export class CoachProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.coach = this.storage.getCoach();
-    this.originalCoach = { ...this.coach };
+    if(this.coach)
+    {this.originalCoach = { ...this.coach };
     console.log(this.coach);
     this.emptyFields = [];
     for (const key of Object.keys(this.coach)) {
@@ -60,6 +61,9 @@ export class CoachProfileComponent implements OnInit {
       const blob = new Blob([uint8Array], { type: 'application/pdf' });
       const blobUrl = URL.createObjectURL(blob);
       this.cvBlobUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
+    }}
+    else{
+      this.hasPhoto=false
     }
   }
   convertToImage(string: any) {
