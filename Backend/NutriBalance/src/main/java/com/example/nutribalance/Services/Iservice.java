@@ -57,4 +57,6 @@ public interface Iservice {
     String deletePlan(String planName);
 
     boolean verify(String code);
+
+    Coach registerCoach(Coach coach);
 }

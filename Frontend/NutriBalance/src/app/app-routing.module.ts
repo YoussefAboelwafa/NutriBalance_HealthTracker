@@ -14,6 +14,7 @@ import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscripti
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
 import { CoachPlansComponent } from './coach-plans/coach-plans.component';
+import { VerifiedComponent } from './verified/verified.component';
 
 export const routes: Routes = [
   {
@@ -74,6 +75,10 @@ export const routes: Routes = [
         component: ViewSubscriptionsComponent,
       },
     ],
+  },
+  {
+    path:'verify/:token',
+    component:VerifiedComponent
   },
 
   {

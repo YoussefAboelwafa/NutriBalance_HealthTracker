@@ -76,7 +76,6 @@ export class CoachProfileComponent implements OnInit {
     const blobUrl = URL.createObjectURL(blob);
     return this.sanitizer.bypassSecurityTrustUrl(blobUrl) as SafeUrl;
   }
-  convertToByteArray(url: any) {}
   handleImageInput(event: any): void {
     const file = event.target.files[0]; // Get the selected file
     if (file) {
@@ -86,7 +85,7 @@ export class CoachProfileComponent implements OnInit {
       this.coachservice.addImage(this.coach.email, formData).subscribe({
         next: (response) => {
           this.storage.saveCoach(response);
-          this.imageUrl = this.convertToImage(this.selectedImage);
+          this.imageUrl = this.convertToImage(response.image);
         },
         error: (error) => {
           console.log(error);
@@ -96,7 +95,6 @@ export class CoachProfileComponent implements OnInit {
   }
 
   toggleEditMode() {
-    // this.originalCoach = { ...this.coach }; // Store a deep copy of the coach when entering edit mode
     this.isEdit = true;
   }
 

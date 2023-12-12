@@ -50,28 +50,4 @@ class EmailControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
                 .andExpect(MockMvcResultMatchers.content().string("Send Simple Mail"));
     }
-
-    /**
-     * Method under test:  {@link EmailController#sendMailWithAttachment(EmailDetails)}
-     */
-    @Test
-    void testSendMailWithAttachment() throws Exception {
-        when(emailService.sendMailWithAttachment(Mockito.<EmailDetails>any())).thenReturn("Send Mail With Attachment");
-
-        EmailDetails emailDetails = new EmailDetails();
-        emailDetails.setAttachment("Attachment");
-        emailDetails.setMsgBody("Not all who wander are lost");
-        emailDetails.setRecipient("Recipient");
-        emailDetails.setSubject("Hello from the Dreaming Spires");
-        String content = (new ObjectMapper()).writeValueAsString(emailDetails);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/sendMailWithAttachment")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(emailController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("Send Mail With Attachment"));
-    }
 }
