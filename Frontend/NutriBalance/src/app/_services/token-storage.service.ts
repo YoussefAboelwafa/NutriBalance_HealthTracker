@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -9,10 +10,12 @@ const COACH_KEY = 'auth-coach';
 })
 export class TokenStorageService {
 
-  constructor() { }
-  
+  constructor(private sanitizer: DomSanitizer) { }
+
   signOut(): void {
     window.sessionStorage.clear();
+    window.location.reload();
+
   }
 
   public saveToken(token: string): void {

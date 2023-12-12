@@ -1,5 +1,7 @@
 import { Component, NgModule } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
@@ -10,6 +12,11 @@ export class AppComponent {
   title = 'NutriBalance';
 
   constructor(private router: Router) {
-    this.router.navigate(['userpage/calculator']);
+
+    const previousUrl = localStorage.getItem('previousUrl');
+    if (previousUrl) {
+      router.navigateByUrl(previousUrl);
+      localStorage.removeItem('previousUrl');
+    }
   }
 }

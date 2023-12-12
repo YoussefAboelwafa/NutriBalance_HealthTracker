@@ -1,9 +1,6 @@
 package com.example.nutribalance.Services;
 
-import com.example.nutribalance.Entities.Coach;
-import com.example.nutribalance.Entities.Plan;
-import com.example.nutribalance.Entities.ResetPassword;
-import com.example.nutribalance.Entities.User;
+import com.example.nutribalance.Entities.*;
 import com.example.nutribalance.Mails.EmailDetails;
 import com.example.nutribalance.Mails.EmailService;
 import com.example.nutribalance.Repositries.*;
@@ -17,7 +14,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Optional;
@@ -29,8 +28,6 @@ public class Service implements Iservice {
     private UserRepositry userRepo;
     @Autowired
     private CoachRepositry coachRepo;
-    @Autowired
-    private SubscriptionRepositry subscriptionRepo;
     @Autowired
     private ResetPasswordRepository resetPasswordRepository;
     @Autowired
@@ -45,12 +42,32 @@ public class Service implements Iservice {
 
     @Override
     public Coach savecoach(Coach coach) {
-        Optional<Coach> old_coach_1 = coachRepo.findByEmail(coach.getEmail());
-        Optional<Coach> old_coach_2 = coachRepo.findByUsername(coach.getUsername());
-        if (old_coach_1.isPresent() || old_coach_2.isPresent()) {
+        return coachRepo.save(coach);
+    }
+
+    @Override
+    public Coach updateCoach(Coach coach) {
+        Optional<Coach> existingCoachOpt = coachRepo.findById(coach.getCoach_id());
+        if (existingCoachOpt.isEmpty()) {
             return null;
         }
-        return coachRepo.save(coach);
+        Coach existingCoach = existingCoachOpt.get();
+        existingCoach.setDescription(coach.getDescription());
+        existingCoach.setPrice(coach.getPrice());
+        existingCoach.setContact_number(coach.getContact_number());
+        existingCoach.setAddress(coach.getAddress());
+        return coachRepo.save(existingCoach);
+
+    }
+
+    @Override
+    public Coach updateCoachCV(String email, byte[] bytes) {
+        Optional<Coach> coach = coachRepo.findByEmail(email);
+        if (coach.isPresent()) {
+            coach.get().setCv(bytes);
+            return coachRepo.save(coach.get());
+        }
+        return null;
     }
 
     @Override
@@ -71,22 +88,22 @@ public class Service implements Iservice {
             coach.get().setIsapproved(1);
 
 
-            EmailDetails mail = new EmailDetails();
-            mail.setMsgBody("Dear [User],\n" +
-                    "\n" +
-                    "Thank you for registering with NutriBalance!\n" +
-                    "\n" +
-                    "To complete your registration, please click on the following link:\n" +
-                    "\n" + "<h2><a href=\"[[http://localhost:4200/Confirmation]]\" onclick=\"return handleLinkClick(event);\">Confirm Registration</a></h2>"
-                    +
-                    "\n" +
-                    "If you did not sign up for NutriBalance, please disregard this email.\n" +
-                    "\n" +
-                    "Thank you,\n" +
-                    "NutriBalance Team\n");
-            mail.setRecipient(coach.get().getEmail());
-            mail.setSubject("NutriBalance Confirmation Mail!");
-            emailService.sendSimpleMail(mail);
+//            EmailDetails mail = new EmailDetails();
+//            mail.setMsgBody("Dear [User],\n" +
+//                    "\n" +
+//                    "Thank you for registering with NutriBalance!\n" +
+//                    "\n" +
+//                    "To complete your registration, please click on the following link:\n" +
+//                    "\n" + "<h2><a href=\"[[http://localhost:4200/Confirmation]]\" onclick=\"return handleLinkClick(event);\">Confirm Registration</a></h2>"
+//                    +
+//                    "\n" +
+//                    "If you did not sign up for NutriBalance, please disregard this email.\n" +
+//                    "\n" +
+//                    "Thank you,\n" +
+//                    "NutriBalance Team\n");
+//            mail.setRecipient(coach.get().getEmail());
+//            mail.setSubject("NutriBalance Confirmation Mail!");
+//            emailService.sendSimpleMail(mail);
             return coachRepo.save(coach.get());
         }
         return null;
@@ -125,11 +142,7 @@ public class Service implements Iservice {
     public void sendForgetPasswordEmail(ResetPassword resetPassword) throws UnsupportedEncodingException, MessagingException {
         String toAddress = resetPassword.getEmail();
         String subject = "Please verify your registration";
-        String content = "Dear [[name]],<br>"
-                + "Here is the OTP code to forget password :<br>"
-                + "<h3>[[URL]]</h3>"
-                + "Thank you,<br>"
-                + "NutriBalance team";
+        String content = "Dear [[name]],<br>" + "Here is the OTP code to forget password :<br>" + "<h3>[[URL]]</h3>" + "Thank you,<br>" + "NutriBalance team";
 
 
         content = content.replace("[[name]]", resetPassword.getUsername());
@@ -178,10 +191,10 @@ public class Service implements Iservice {
         }
     }
 
-
     public Coach coachsignin(String email, String pass) {
         Optional<Coach> coach = coachRepo.findByEmail(email);
         Coach coach1 = coach.orElse(null);
+//        System.out.println(coach1);
         if (coach.isPresent()) {
             if (coach1.getIsapproved() == 1) {
                 if (coach1.getPassword().equals(pass)) {
@@ -195,7 +208,6 @@ public class Service implements Iservice {
         return null;
     }
 
-    // -------------------------plan service-------------------------
     @Override
     public Plan saveplan(Plan plan) {
         Plan existingPlan = planRepositry.findByPlanName(plan.getPlanName());
@@ -204,4 +216,56 @@ public class Service implements Iservice {
         }
         return planRepositry.save(plan);
     }
+
+    // to @aboelwafa, @medany, @ayman this is for you
+    @Override
+    public User subscribe_to_plan(String planName, Long user_id) {
+        Plan plan = planRepositry.findByPlanName(planName);
+        User user = userRepo.findById(user_id).orElse(null);
+        if (plan != null && user != null) {
+            Long coach_id = plan.getCoach().getCoach_id();
+            Coach coach = coachRepo.findById(coach_id).orElse(null);
+            user.setCoach(coach);
+            user.setPlan(plan);
+            return userRepo.save(user);
+        }
+        return null;
+    }
+
+    @Override
+    public List<User> get_subscribed_users(Long coach_id) {
+        Coach coach = coachRepo.findById(coach_id).orElse(null);
+        if (coach != null) {
+            return coach.getUsers();
+        }
+        return null;
+    }
+
+    @Override
+    public User update_comment(String comment, Long user_id) {
+        User user = userRepo.findById(user_id).orElse(null);
+        if (user != null) {
+            user.setComment(comment);
+            return userRepo.save(user);
+        }
+        return null;
+    }
+
+    @Override
+    public Coach addImageToCoach(String Email, MultipartFile image) {
+        try {
+            Coach coach = coachRepo.findByEmail(Email).orElse(null);
+            if (coach == null) {
+                return null;
+            }
+            coach.setImage(image.getBytes());
+            coachRepo.save(coach);
+            return coach;
+        } catch (Exception e) {
+            throw new RuntimeException("Error while changing user image", e);
+        }
+    }
+
+
 }
+

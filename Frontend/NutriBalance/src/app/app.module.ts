@@ -26,6 +26,8 @@ import { CommonModule } from '@angular/common';
 import { WaitingCoachesComponent } from './waiting-coaches/waiting-coaches.component';
 import { CoachPageComponent } from './coach-page/coach-page.component';
 import { CreateplanComponent } from './createplan/createplan.component';
+import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscriptions.component';
+import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -44,6 +46,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     WaitingCoachesComponent,
     CoachPageComponent,
     CreateplanComponent,
+    ViewSubscriptionsComponent,
+    CoachProfileComponent,
     UserpageComponent,
     CalculatorComponent,
   ],

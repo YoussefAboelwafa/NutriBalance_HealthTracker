@@ -10,7 +10,10 @@ import { RoleTypeComponent } from './role-type/role-type.component';
 import { AdminpageComponent } from './adminpage/adminpage.component';
 import { CoachPageComponent } from './coach-page/coach-page.component';
 import { CreateplanComponent } from './createplan/createplan.component';
+import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscriptions.component';
+import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
+
 export const routes: Routes = [
   {
     path: '',
@@ -49,11 +52,22 @@ export const routes: Routes = [
   {
     path: 'coach-page',
     component: CoachPageComponent,
+    children: [
+      {
+        path: 'coachprofile',
+        component: CoachProfileComponent,
+      },
+      {
+        path: 'createplan',
+        component: CreateplanComponent,
+      },
+      {
+        path: 'view-subscriptions',
+        component: ViewSubscriptionsComponent,
+      },
+    ],
   },
-  {
-    path: 'createplan',
-    component: CreateplanComponent,
-  },
+
   {
     path: 'userpage',
     component: UserpageComponent,
