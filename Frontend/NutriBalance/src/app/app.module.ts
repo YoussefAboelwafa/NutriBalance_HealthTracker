@@ -30,12 +30,15 @@ import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscripti
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
 import { CalculatorComponent } from './calculator/calculator.component';
+
 import { CoachPlansComponent } from './coach-plans/coach-plans.component';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { MatSelectModule } from '@angular/material/select';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -75,7 +78,7 @@ import { MatSelectModule } from '@angular/material/select';
     ReactiveFormsModule,
     MatSidenavModule,
     MatSelectModule
-
+    NgbModule,
   ],
   providers: [
     AuthService,

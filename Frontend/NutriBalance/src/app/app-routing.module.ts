@@ -33,11 +33,7 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-  },
-  {
-    path: 'waiting-coaches',
-    component: WaitingCoachesComponent,
-  },
+  },  
   {
     path: 'coach-signup',
     component: CoachSignupComponent,
@@ -49,6 +45,12 @@ export const routes: Routes = [
   {
     path: 'adminpage',
     component: AdminpageComponent,
+    children: [
+      {
+        path: 'waiting-coaches',
+        component: WaitingCoachesComponent,
+      },
+    ]
   },
   {
     path: 'coach-page',
@@ -62,17 +64,16 @@ export const routes: Routes = [
         path: 'showplans',
         component: CoachPlansComponent,
       }
-    ]
-  },
-  {
-    path: 'createplan',
-    component: CreateplanComponent,
-
-  },
-
-  {
-    path: 'view-subscriptions',
-    component: ViewSubscriptionsComponent,
+      ,
+      {
+        path: 'createplan',
+        component: CreateplanComponent,
+      },
+      {
+        path: 'view-subscriptions',
+        component: ViewSubscriptionsComponent,
+      },
+    ],
   },
 
   {
@@ -84,11 +85,11 @@ export const routes: Routes = [
         component: CalculatorComponent,
       },
     ],
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

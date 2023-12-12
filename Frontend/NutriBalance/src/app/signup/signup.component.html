@@ -8,12 +8,12 @@
         <h3 class="head2">NutriBalance <i class="fa-solid fa-leaf"></i></h3>
         <tr>
           <td>
-            <label for="name">User Name</label>
+            <label for="name">User Full Name</label>
             <input
               type="text"
               id="name"
               name="name"
-              placeholder="Enter your user name"
+              placeholder="Enter your full name"
               required
               class="form-control"
               minlength="3"
@@ -29,7 +29,7 @@
               type="email"
               id="email"
               name="email"
-              placeholder="Email"
+              placeholder="Enter your email"
               required
               class="form-control"
               [(ngModel)]="user.email"
@@ -39,7 +39,7 @@
 
         <tr>
           <td colspan="2">
-            <label for="phone">Phone number</label>
+            <label for="phone">Phone Number</label>
             <input
               type="tel"
               id="phone"
@@ -69,7 +69,7 @@
         </tr>
         <tr>
           <td colspan="2">
-            <label for="password2">Confirm your password</label>
+            <label for="password2">Confirm Your Password</label>
             <input
               type="password"
               id="password2"
@@ -78,7 +78,7 @@
               required
               class="form-control"
               minlength="8"
-              placeholder="Confrim your password"
+              placeholder="confrim your password"
               [(ngModel)]="confirmedPassword"
             />
           </td>
