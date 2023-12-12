@@ -19,6 +19,7 @@ import { ModalPopServiceService } from '../_services/modal-pop-service.service';
 
 import { FpPopupComponent } from '../fp-popup/fp-popup.component';
 import { Coach } from '../Objects/Coach';
+import { User } from '../Objects/User';
 declare const $: any;
 @Component({
   selector: 'app-signin',
@@ -37,7 +38,7 @@ export class SigninComponent {
   role = this.shared.selectedrole;
   flag_show_login = false;
   flag_btn_login = true;
-  isUser=true
+  isUser = true
 
 
   constructor(private shared: Shared, private userservice: UserService, private coachservice: CoachService, private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router, private route: ActivatedRoute, private pop_service: ModalPopServiceService, private shred: Shared) { }
@@ -66,11 +67,11 @@ export class SigninComponent {
       this.errorMessage = error;
       this.isLoginFailed = true;
     }
-    if(this.shared.selectedrole=='user'){
-      this.isUser=true
+    if (this.shared.selectedrole == 'user') {
+      this.isUser = true
     }
-    else{
-      this.isUser=false
+    else {
+      this.isUser = false
     }
   }
 
@@ -104,13 +105,13 @@ export class SigninComponent {
         if (data == null) alert('wrong email or password');
         else {
           let user: User = data;
-            this.shared.loggedIn = true;
-            this.tokenStorage.saveUser(user);
-            this.router.navigate(['/userpage']);
+          this.shared.loggedIn = true;
+          this.tokenStorage.saveUser(user);
+          this.router.navigate(['/userpage']);
         }
       });
     }
-      else if (this.role == 'coach') {
+    else if (this.role == 'coach') {
       this.coachservice
         .checksignin(this.email, this.password)
         .subscribe((data) => {
@@ -128,8 +129,8 @@ export class SigninComponent {
           }
 
         }
-      );
-      }
+        );
+    }
     else if (this.role == 'admin') {
       this.router.navigate(['/adminpage']);
     }

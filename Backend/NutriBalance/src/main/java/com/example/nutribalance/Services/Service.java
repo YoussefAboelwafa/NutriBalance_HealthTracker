@@ -118,24 +118,6 @@ public class Service implements Iservice {
         Optional<Coach> coach = coachRepo.findById(id);
         if (coach.isPresent()) {
             coach.get().setIsapproved(1);
-
-
-//            EmailDetails mail = new EmailDetails();
-//            mail.setMsgBody("Dear [User],\n" +
-//                    "\n" +
-//                    "Thank you for registering with NutriBalance!\n" +
-//                    "\n" +
-//                    "To complete your registration, please click on the following link:\n" +
-//                    "\n" + "<h2><a href=\"[[http://localhost:4200/Confirmation]]\" onclick=\"return handleLinkClick(event);\">Confirm Registration</a></h2>"
-//                    +
-//                    "\n" +
-//                    "If you did not sign up for NutriBalance, please disregard this email.\n" +
-//                    "\n" +
-//                    "Thank you,\n" +
-//                    "NutriBalance Team\n");
-//            mail.setRecipient(coach.get().getEmail());
-//            mail.setSubject("NutriBalance Confirmation Mail!");
-//            emailService.sendSimpleMail(mail);
             return coachRepo.save(coach.get());
         }
         return null;
@@ -149,7 +131,7 @@ public class Service implements Iservice {
             return null;
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        sendVerificationMail(user);
+        sendVerificationMail(user, "user");
         return userRepo.save(user);
     }
 
@@ -182,25 +164,85 @@ public class Service implements Iservice {
             return false;
         }
         User user = userRepo.findByEmail(resetPassword.getEmail()).orElse(null);
-        if (user == null) {
-            return false;
+
+        String role = user == null ? "coach" : "user";
+        if (role.equals("user")) {
+            user.setEnabled(true);
+            userRepo.save(user);
         }
-        user.setEnabled(true);
-        userRepo.save(user);
+        else {
+            Coach coach = coachRepo.findByEmail(resetPassword.getEmail()).orElse(null);
+            if (coach == null) {
+                return false;
+            }
+            coach.setEnabled(true);
+            EmailDetails details = getApprovalEmailDetails(coach);
+            emailService.sendSimpleMail(details);
+            coachRepo.save(coach);
+        }
+        resetPasswordRepository.deleteById(resetPassword.getId());
         return true;
     }
 
+    private static EmailDetails getApprovalEmailDetails(Coach coach) {
+        EmailDetails details = new EmailDetails();
+        details.setRecipient(coach.getEmail());
+        details.setSubject("Waiting for approval Email");
+        details.setMsgBody("Dear " + coach.getUsername() + ",\n" +
+                "Thank you for your interest in joining our team. We have received your application for the position of Nutrition Coach. We are currently reviewing all applications and will be in touch with those who we feel are best suited for the position.\n" +
+                "Thank you again for your interest in working with us. We wish you the best of luck with your job search.\n" +
+                "Sincerely,\n" +
+                "NutriBalance Team");
+        return details;
+    }
 
-    private void sendVerificationMail(User user) {
-        Optional<ResetPassword> old_reset_password = Optional.ofNullable(resetPasswordRepository.findByEmail(user.getEmail()));
-        old_reset_password.ifPresent(password -> resetPasswordRepository.deleteById(password.getId()));
-        ResetPassword resetPassword = new ResetPassword();
-        resetPassword.setEmail(user.getEmail());
-        resetPassword.setUsername(user.getUsername());
-        String token = RandomString.make(64);
-        resetPassword.setToken(token);
-        user.setEnabled(false);
-        String toAddress = user.getEmail();
+    @Override
+    public Coach registerCoach(Coach coach) {
+        Optional<Coach> old_coach_1 = coachRepo.findByEmail(coach.getEmail());
+        if (old_coach_1.isPresent()) {
+            return null;
+        }
+        coach.setPassword(passwordEncoder.encode(coach.getPassword()));
+        sendVerificationMail(coach, "coach");
+        EmailDetails details = new EmailDetails();
+        details.setRecipient(coach.getEmail());
+        return coachRepo.save(coach);
+    }
+
+
+    private void sendVerificationMail(Object user, String role) {
+       Optional<ResetPassword> old_reset_password = Optional.ofNullable(resetPasswordRepository.findByEmail(user.getEmail()));
+       old_reset_password.ifPresent(password -> resetPasswordRepository.deleteById(password.getId()));
+        if (role.equals("user")) {
+            User user1 = (User) user;
+            ResetPassword resetPassword = new ResetPassword();
+            resetPassword.setEmail(user1.getEmail());
+            resetPassword.setUsername(user1.getUsername());
+            String token = RandomString.make(64);
+            resetPassword.setToken(token);
+            resetPasswordRepository.save(resetPassword);
+            user1.setEnabled(false);
+            EmailDetails mail = getEmailDetails(user1.getEmail(), user1.getUsername(), token);
+            emailService.sendSimpleMail(mail);
+
+        }
+        else if (role.equals("coach")) {
+            Coach coach = (Coach) user;
+            ResetPassword resetPassword = new ResetPassword();
+            resetPassword.setEmail(coach.getEmail());
+            resetPassword.setUsername(coach.getUsername());
+            String token = RandomString.make(64);
+            resetPassword.setToken(token);
+            resetPasswordRepository.save(resetPassword);
+            coach.setEnabled(false);
+            EmailDetails mail = getEmailDetails(coach.getEmail(), coach.getUsername(), token);
+            emailService.sendSimpleMail(mail);
+        }
+
+
+    }
+
+    private static EmailDetails getEmailDetails(String email, String name, String token) {
         String subject = "Please verify your registration";
         String content = "Dear [[name]],<br>"
                 + "Thank you for signing up with Galaxy!<br>"
@@ -211,7 +253,7 @@ public class Service implements Iservice {
                 + "Thank you for choosing NutriBalance!<br>"
                 + "NutriBalance team";
         String siteURL = "http://localhost:4200/verify";
-        content = content.replace("[[name]]", user.getUsername());
+        content = content.replace("[[name]]", name);
         String verifyURL = siteURL + "/" + token;
         content = content.replace("[[URL]]", verifyURL);
         String script = "<script type=\"text/javascript\">\n"
@@ -224,10 +266,9 @@ public class Service implements Iservice {
         content = script + content;
         EmailDetails mail = new EmailDetails();
         mail.setMsgBody(content);
-        mail.setRecipient(toAddress);
+        mail.setRecipient(email);
         mail.setSubject(subject);
-        emailService.sendSimpleMail(mail);
-
+        return mail;
     }
 
 
@@ -311,10 +352,10 @@ public class Service implements Iservice {
         }
     }
 
+    @Override
     public Coach coachsignin(String email, String pass) {
         Optional<Coach> coach = coachRepo.findByEmail(email);
         Coach coach1 = coach.orElse(null);
-//        System.out.println(coach1);
         if (coach.isPresent()) {
             if (coach1.getIsapproved() == 1) {
                 if (coach1.getPassword().equals(pass)) {

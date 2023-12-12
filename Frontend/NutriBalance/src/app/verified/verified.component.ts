@@ -9,21 +9,23 @@ import { AuthService } from '../_services/auth.service';
 export class VerifiedComponent implements OnInit{
   constructor(private router: Router,private route :ActivatedRoute,private authservice:AuthService) {
   }
-  flag_verify=false;
+  isVerified=false;
   go() {
-    this.flag_verify=true;
-    this.router.navigate(['']);
+    this.isVerified=true;
+    // this.router.navigate(['']);
   }
   token: any;
   ngOnInit() {
-    this.flag_verify=false;
+    this.isVerified=false;
     this.token = this.route.snapshot.paramMap.get('token')!;
     this.authservice.verify(this.token).subscribe(
       data => {
-        this.go()
+        // this.go()
+        this.isVerified=true;
       },
       err => {
-        this.router.navigate(['']);
+        alert("The verification code is invalid")
+        // this.router.navigate(['']);
       }
     );
     
