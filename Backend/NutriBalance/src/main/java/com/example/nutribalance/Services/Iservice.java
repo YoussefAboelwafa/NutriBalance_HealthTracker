@@ -2,10 +2,12 @@ package com.example.nutribalance.Services;
 
 import com.example.nutribalance.Entities.*;
 import com.example.nutribalance.dto.LoginRequest;
+import com.example.nutribalance.dto.PlanDto;
 import jakarta.mail.MessagingException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,4 +52,9 @@ public interface Iservice {
 
     Coach updateCoachCV(String email, byte[] bytes);
 
+    List<Plan> getPlans(Long coachId);
+
+    Plan updatePlan(Plan plan);
+
+    String deletePlan(String planName);
 }

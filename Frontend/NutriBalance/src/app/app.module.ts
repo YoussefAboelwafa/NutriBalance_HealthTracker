@@ -30,7 +30,16 @@ import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscripti
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
 import { CalculatorComponent } from './calculator/calculator.component';
+
+import { CoachPlansComponent } from './coach-plans/coach-plans.component';
+import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+
+import { MatSelectModule } from '@angular/material/select';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -50,6 +59,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CoachProfileComponent,
     UserpageComponent,
     CalculatorComponent,
+    CoachPlansComponent,
+    EditDialogComponent,
+    ConfirmDialogComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -63,6 +76,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatFormFieldModule,
     CommonModule,
     ReactiveFormsModule,
+    MatSidenavModule,
+    MatSelectModule
     NgbModule,
   ],
   providers: [
@@ -71,6 +86,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     Shared,
     ModalPopServiceService,
     FpPopupComponent,
+    
+
   ],
   bootstrap: [AppComponent],
 })

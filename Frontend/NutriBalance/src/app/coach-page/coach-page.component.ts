@@ -41,6 +41,7 @@ export interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
+
   { path: 'coachprofile', title: 'Profile', icon: 'fa fa-user-edit icon', class: '' },
   { path: 'createplan', title: 'Create Plan', icon: 'fa fa-plus-circle icon', class: '' },
   { path: 'view-subscriptions', title: 'View Subscriptions', icon: 'fa fa-eye icon', class: ''}

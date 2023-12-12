@@ -14,6 +14,7 @@ html {
 }
 
 body {
+
   width: 100%;
   font-family: sans-serif;
   margin: 0;
@@ -54,6 +55,13 @@ body {
   font-size: 1.3vw;
   font-weight: 600;
 }
+main {
+    flex: 1; /* Takes the remaining space */
+    overflow: auto; /* Enable scrolling if content exceeds the height */
+    padding: 20px; /* Optional padding */
+    box-sizing: border-box;
+    max-width: 100%; /* Ensure the main doesn't exceed the size of the screen */
+  }
 
 #content {
   flex: 1;
@@ -72,6 +80,20 @@ body {
   padding: 10px;
   display: block;
 }
+.sidenav-container {
+    height: 100vh;
+  }
+  
+  .sidenav {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .sidenav-content {
+    padding: 20px;
+  }
+  
 
 #menu a:hover {
   background-color: rgba(127, 255, 212, 0.25);

@@ -13,6 +13,7 @@ import { CreateplanComponent } from './createplan/createplan.component';
 import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscriptions.component';
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
+import { CoachPlansComponent } from './coach-plans/coach-plans.component';
 
 export const routes: Routes = [
   {
@@ -59,6 +60,11 @@ export const routes: Routes = [
         path: 'coachprofile',
         component: CoachProfileComponent,
       },
+      {
+        path: 'showplans',
+        component: CoachPlansComponent,
+      }
+      ,
       {
         path: 'createplan',
         component: CreateplanComponent,
