@@ -3,9 +3,8 @@
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
 
-    <div id="container">
+<div id="container">
         <aside class="holder">
         <div id="sidebar">
             <div class="top" style="display: flex;">
@@ -14,25 +13,27 @@
             </div>
             
             <div id="menu">
-            <a *ngFor="let menuItem of menuItems" routerLinkActive="active">
+              <a *ngFor="let menuItem of menuItems" routerLinkActive="active">
                 <a [routerLink]="[menuItem.path]" (click)="onRemoveButtonClick()">
-                    <i [ngClass]="menuItem.icon" ><p>{{menuItem.title}}</p></i>
+                  <i [ngClass]="menuItem.icon" ><p>{{menuItem.title}}</p></i>
                 </a>
-            </a>
+              </a>
 
             </div>
 
             <div id="sidebar-end-block">
               <a><i class="fas fa-sign-out-alt icon"></i> Logout</a>
             </div>
-        </div>
-        
+          </div>
+          
         </aside>
-        <main>
+        
+        <body>
+        <main style="height:100vh;">
             <router-outlet></router-outlet>
         </main>
+      </body>
     </div>
 
-</body>
 </html>
 

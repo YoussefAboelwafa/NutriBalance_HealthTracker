@@ -23,11 +23,7 @@ body {
     font-size: 0.88rem;
     user-select: none;
     background-color: rgba(150, 213, 192, 0.220);
-    /* margin-left:0px; 
-     overflow: auto; */
 }
-
-
 #container {
     display: flex;
     flex: 1;
@@ -54,6 +50,13 @@ body {
     text-decoration: none;
     font-size: 1.3vw;
 }
+main {
+    flex: 1; /* Takes the remaining space */
+    overflow: auto; /* Enable scrolling if content exceeds the height */
+    padding: 20px; /* Optional padding */
+    box-sizing: border-box;
+    max-width: 100%; /* Ensure the main doesn't exceed the size of the screen */
+  }
 
 #content {
     flex: 1;
@@ -72,6 +75,20 @@ margin-top: 2vw;
     padding: 10px;
     display: block;
 }
+.sidenav-container {
+    height: 100vh;
+  }
+  
+  .sidenav {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .sidenav-content {
+    padding: 20px;
+  }
+  
 
 /* Change color on hover */
 #menu a:hover {

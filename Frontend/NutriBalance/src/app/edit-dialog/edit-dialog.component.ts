@@ -1,5 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+
+import { MatSelectModule } from '@angular/material/select';
+
 
 @Component({
   selector: 'app-edit-dialog',
@@ -11,6 +14,17 @@ export class EditDialogComponent {
     public dialogRef: MatDialogRef<EditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
+
+  compareGoal(option1: any, option2: any): boolean {
+    return option1 && option2 ? option1.value === option2.value : option1 === option2;
+  }
+  
+
+  goalOptions = [
+    { label: 'Cut', value: 'Cut' },
+    { label: 'Bulk', value: 'Bulk' },
+    // Add more options as needed
+  ];
 
   onCancel(): void {
     this.dialogRef.close("cancel");

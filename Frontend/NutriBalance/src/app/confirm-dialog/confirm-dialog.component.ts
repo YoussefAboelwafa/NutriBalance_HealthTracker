@@ -7,16 +7,12 @@ import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
   templateUrl: './confirm-dialog.component.html',
   styleUrls: ['./confirm-dialog.component.css']
 })
-export class ConfirmDialogComponent implements OnInit {
+export class ConfirmDialogComponent  {
 
   constructor(
     public dialogRef: MatDialogRef<EditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
-
   onConfirm(): void {
     this.dialogRef.close("confirm");
   }

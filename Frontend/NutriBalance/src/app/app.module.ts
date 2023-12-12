@@ -33,6 +33,10 @@ import { CalculatorComponent } from './calculator/calculator.component';
 import { CoachPlansComponent } from './coach-plans/coach-plans.component';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+
+import { MatSelectModule } from '@angular/material/select';
+
 
 @NgModule({
   declarations: [
@@ -55,6 +59,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     CoachPlansComponent,
     EditDialogComponent,
     ConfirmDialogComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -68,6 +73,9 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     MatFormFieldModule,
     CommonModule,
     ReactiveFormsModule,
+    MatSidenavModule,
+    MatSelectModule
+
   ],
   providers: [
     AuthService,
@@ -75,6 +83,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     Shared,
     ModalPopServiceService,
     FpPopupComponent,
+    
+
   ],
   bootstrap: [AppComponent],
 })

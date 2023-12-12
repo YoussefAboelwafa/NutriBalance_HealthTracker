@@ -14,28 +14,40 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 })
 export class CoachPlansComponent implements OnInit {
 
-
-  plans: Plan[] = []
   coach!: Coach
+
+  plans: Plan[] =[]
+
   constructor(private storage: TokenStorageService, private service: CoachService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.coach = this.storage.getCoach()
-    this.service.getCoachPlans(this.coach.coach_id).subscribe(data => {
-      this.plans = data
-    })
+    if (this.coach) {
+      this.service.getCoachPlans(this.coach.coach_id).subscribe(data => {
+        this.plans = data
+      })
+    }
   }
   delete_plan(plan: Plan) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '300px',
+      data: {
+        title: "Confirm Delete",
+        body: "Are you sure you want to delete this plan?"
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == "confirm") {
+        // let data="Plan deleted"
         this.service.deletePlan(plan.planName).subscribe(data => {
-          if (data =="Plan deleted")
-           window.location.reload()
-           else 
-           console.log(result)
+          if (data == "Plan deleted") {
+            //remove the plan from plans array
+            this.plans = this.plans.filter(p => p.planName != plan.planName)
+            window.location.reload()
+          }
+          else {
+            console.log(result)
+          }
         })
       }
     });
@@ -47,20 +59,24 @@ export class CoachPlansComponent implements OnInit {
     dialogConfig.height = '50%';
     const dialogRef = this.dialog.open(EditDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((data: any) => {
-
-
       if (data) {
-        this.openConfirmDialog(data)
+        this.openConfirmDialog("Are you sure you want to update this information?")
       }
     });
   }
   openConfirmDialog(data: any): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '300px',
+      data: {
+        title: "Confirm Update",
+        body: data
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == "confirm") {
         this.service.updatePlan(data).subscribe(data => {
+          let index = this.plans.findIndex(x => x.planName === data.planName);
+          this.plans[index] = data
           window.location.reload()
         })
       }

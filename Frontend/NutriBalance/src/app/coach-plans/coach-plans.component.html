@@ -13,27 +13,25 @@
             <li class="list-group-item">
                 <strong>Goal: </strong> {{ plan.goal }}
             </li>
-
         </ul>
         <div class="card-body">
-            <button class="btn btn-danger" (click)="delete_plan(plan)" mat-raised-button color="primary" > Delete</button>
-            <button class="btn btn-success" (click)="openEditDialog(plan)"mat-raised-button color="primary" >Edit</button>
+            <button class="btn btn-danger" (click)="delete_plan(plan)">
+                Delete</button>
+            <button class="btn btn-success" (click)="openEditDialog(plan)" >Edit</button>
         </div>
     </div>
 </div>
 
 
 <!-- <body> -->
-    <!-- show a message if there is no plans to ask the coach for add new plan -->
-    <div *ngIf="plans.length==0">
-
-        <h5 style="
-        margin-top: 20rem;
-        margin-left: 30rem;
-        text-align: center;
+<!-- show a message if there is no plans to ask the coach for add new plan -->
+<div *ngIf="plans.length==0">
+    <h5 style="
+                margin-top: 20rem;
+                text-align: center;
                 font-size: 24px;
                 color: #333;">
-            <strong> There is no plans yet</strong>
-        </h5>
-    </div>
+        <strong> There is no plans yet</strong>
+    </h5>
+</div>
 <!-- </body> -->

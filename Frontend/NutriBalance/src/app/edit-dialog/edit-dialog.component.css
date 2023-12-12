@@ -1,7 +1,52 @@
-.mat-dialog-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999; 
-  }
- 
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+mat-dialog-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+  font-size: medium;
+  font-style: normal;
+  font-weight: 600;
+}
+
+strong {
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #0062cc;
+}
+
+
+input {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+button {
+  margin-left: 10px;
+}
+
+.mat-dialog-container::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  z-index: -1; /* Behind the dialog */
+}
