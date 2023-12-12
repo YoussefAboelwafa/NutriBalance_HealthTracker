@@ -30,6 +30,7 @@ import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscripti
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
 import { CalculatorComponent } from './calculator/calculator.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { CalculatorComponent } from './calculator/calculator.component';
     MatFormFieldModule,
     CommonModule,
     ReactiveFormsModule,
+    NgbModule,
   ],
   providers: [
     AuthService,

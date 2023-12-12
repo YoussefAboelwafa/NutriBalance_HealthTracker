@@ -71,6 +71,7 @@ body {
   text-decoration: none;
   padding: 10px;
   display: block;
+  transition: 0.2s;
 }
 
 #menu a:hover {
