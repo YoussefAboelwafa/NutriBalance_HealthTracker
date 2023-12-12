@@ -16,6 +16,12 @@ public interface Iservice {
     //------------------------------coach methods--------------------------------
     Coach savecoach(Coach coach);
     User usersignin(String email, String password);
+
+
+    User updateUser(User user);
+
+    User addImageToUser(String Email, MultipartFile image );
+
     List<Coach> get_waiting_coaches();
 
     String deletecoach(Long id);

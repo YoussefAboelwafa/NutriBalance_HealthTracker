@@ -41,4 +41,10 @@ export class UserService {
   getCurrentUser(): Observable<any> {
     return this.http.get(AppConstants.API_URL + 'user/me', httpOptions);
   }
+  addImage(email:any,formdata:any){
+    return this.http.post<any>(`${baseUrl}/addImageToUser/${email}`,formdata);
+  }
+  updateUser(user: any):Observable<any> {
+    return this.http.put<any>(`${baseUrl}/updateUser`,user);
+  }
 }

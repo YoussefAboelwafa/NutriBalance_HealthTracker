@@ -118,24 +118,6 @@ public class Service implements Iservice {
         Optional<Coach> coach = coachRepo.findById(id);
         if (coach.isPresent()) {
             coach.get().setIsapproved(1);
-
-
-//            EmailDetails mail = new EmailDetails();
-//            mail.setMsgBody("Dear [User],\n" +
-//                    "\n" +
-//                    "Thank you for registering with NutriBalance!\n" +
-//                    "\n" +
-//                    "To complete your registration, please click on the following link:\n" +
-//                    "\n" + "<h2><a href=\"[[http://localhost:4200/Confirmation]]\" onclick=\"return handleLinkClick(event);\">Confirm Registration</a></h2>"
-//                    +
-//                    "\n" +
-//                    "If you did not sign up for NutriBalance, please disregard this email.\n" +
-//                    "\n" +
-//                    "Thank you,\n" +
-//                    "NutriBalance Team\n");
-//            mail.setRecipient(coach.get().getEmail());
-//            mail.setSubject("NutriBalance Confirmation Mail!");
-//            emailService.sendSimpleMail(mail);
             return coachRepo.save(coach.get());
         }
         return null;
@@ -152,7 +134,30 @@ public class Service implements Iservice {
         sendVerificationMail(user, "user");
         return userRepo.save(user);
     }
+
     @Override
+    public User updateUser(User user) {
+        Optional<User> existingUserOpt = userRepo.findById(user.getUser_id());
+        if (existingUserOpt.isEmpty()) {
+            return null;
+        }
+        return userRepo.save(user);
+    }
+
+    @Override
+    public User addImageToUser(String Email, MultipartFile image ){
+        try {
+            User user = userRepo.findByEmail(Email).orElse(null);
+            if (user == null) {
+                return null;
+            }
+            user.setImage(image.getBytes());
+            userRepo.save(user);
+            return user;
+        } catch (Exception e) {
+            throw new RuntimeException("Error while changing user image", e);
+        }
+    }
     public boolean verify(String verificationCode) {
         ResetPassword resetPassword = resetPasswordRepository.findByToken(verificationCode);
         if (resetPassword == null ) {
@@ -206,8 +211,8 @@ public class Service implements Iservice {
 
 
     private void sendVerificationMail(Object user, String role) {
-//        Optional<ResetPassword> old_reset_password = Optional.ofNullable(resetPasswordRepository.findByEmail(user.getEmail()));
-//        old_reset_password.ifPresent(password -> resetPasswordRepository.deleteById(password.getId()));
+       Optional<ResetPassword> old_reset_password = Optional.ofNullable(resetPasswordRepository.findByEmail(user.getEmail()));
+       old_reset_password.ifPresent(password -> resetPasswordRepository.deleteById(password.getId()));
         if (role.equals("user")) {
             User user1 = (User) user;
             ResetPassword resetPassword = new ResetPassword();

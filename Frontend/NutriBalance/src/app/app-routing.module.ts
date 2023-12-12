@@ -15,6 +15,7 @@ import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
 import { CoachPlansComponent } from './coach-plans/coach-plans.component';
 import { VerifiedComponent } from './verified/verified.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 export const routes: Routes = [
   {
@@ -88,6 +89,10 @@ export const routes: Routes = [
       {
         path: 'calculator',
         component: CalculatorComponent,
+      },
+      {
+        path: 'userprofile',
+        component: UserProfileComponent,
       },
     ],
   },
