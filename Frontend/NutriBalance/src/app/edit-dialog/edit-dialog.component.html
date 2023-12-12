@@ -1,0 +1,22 @@
+<header>
+<div>
+    <h2 mat-dialog-title>Edit Plan</h2>
+    <mat-dialog-content>
+        <form>
+            <label for="planName">Plan Name</label>
+            <strong>{{data.planName}}</strong>
+            <br />
+            <label for="description">Description</label>
+            <input type="text" id="description" [(ngModel)]="data.description" [ngModelOptions]="{standalone: true}"/>
+            <br />
+            <label for="goal">Goal</label>
+            <input type="text" id="goal" [(ngModel)]="data.goal" [ngModelOptions]="{standalone: true}"/>
+            <br />
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="onNoClick()">Cancel</button>
+        <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+    </mat-dialog-actions>
+</div>
+</header>

@@ -76,6 +76,6 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     ModalPopServiceService,
     FpPopupComponent,
   ],
-  bootstrap: [AppComponent,CoachPageComponent,CoachPlansComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
