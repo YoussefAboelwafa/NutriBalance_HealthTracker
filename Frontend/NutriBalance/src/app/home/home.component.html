@@ -13,12 +13,14 @@
       <label class="title">NutriBalance</label>
     </div>
     <ul id="mainMenuBar">
-      <li>
+      
+      <li *ngIf="!isLogin">
         <a (click)="onMenuClick('Sign In')">SignIn</a>
       </li>
-      <li>
+      <li *ngIf="!isLogin">
         <a (click)="onMenuClick('SignUp')">SignUp</a>
       </li>
+    
       <!-- <a class="nav-link"> -->
         <div class="user-link" (click)="toggleUserSidebar()">
           <i class="fa-regular fa-circle-user fa-2x" style="cursor: pointer;" ></i>
@@ -28,12 +30,30 @@
             <i class="fa-solid fa-xmark fa-2x" id="red-icon"></i></button>
           <ng-container *ngIf="!isLogin">
             <div class="not-logged">
-              <!-- Display this when user is not logged in -->
-              <p style="color: white;font-size: 38px;font-weight: 600;">You are not logged in.</p>
+              <p style="color: white;font-size: 25px;font-weight: 600;">You are not logged in.</p>
             </div>
           </ng-container>
           <ng-container *ngIf="isLogin">
             <div class="logged-in">
+              <div class="photo-container" *ngIf="hasPhoto">
+                <div class="photo-wrapper">
+                  <img
+                    [src]="imageUrl"
+                    alt="Photo"
+                    class="rounded-circle-container"
+                  />
+                </div>
+              </div>
+              <div class="photo-container" *ngIf="!hasPhoto">
+                <div class="photo-wrapper">
+                  <img
+                    src={{defaultImageUrl}}
+                    alt="Photo"
+                    class="rounded-circle-container"
+                  />
+                </div>
+              </div>
+              <br>
               <div class="title">
                 <p style="color: white;font-size: 40px;">Hey</p>
                 <p style="color: white;font-size: 40px;display: flex;justify-content: center;align-items: center;"><span> {{curuser.username}}</span></p>
@@ -52,8 +72,10 @@
 
               </div> -->
               <div class="buttons">
-              <!-- <button (click)="goTouserPage()" *ngIf="!isadmin" >Go To User Page</button>
-              <button (click)="goToadminPage()" *ngIf="isadmin" >Go To Admin Page</button> -->
+              <button (click)="goToUserPage()" *ngIf="role=='user'" >Go To User Page</button>
+              <button (click)="goToCoachPage()" *ngIf="role=='coach'" >Go To Coach Page</button>
+              <button (click)="goToAdminPage()" *ngIf="role=='admin'" >Go To Admin Page</button>
+
             </div>
               <div class="logout">
                 <button (click)="logout()" class="fa fa-sign-out" >logout</button>
