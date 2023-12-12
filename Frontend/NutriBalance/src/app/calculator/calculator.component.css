@@ -1,0 +1,136 @@
+.container {
+  display: flex;
+}
+h2 {
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+.form-section,
+.table-section {
+  flex: 1;
+  padding: 20px;
+}
+.table-section {
+  border: 3px solid #333;
+  border-radius: 10px;
+}
+input,
+select {
+  width: 70%;
+  border: 2px solid #333;
+  border-radius: 5px;
+}
+.form-group label {
+  font-size: large;
+  font-weight: bold;
+  cursor: pointer;
+}
+.form-check label {
+  font-weight: normal;
+  cursor: pointer;
+}
+.form-check-input {
+  display: none;
+}
+
+.custom-radio {
+  padding-left: 25px;
+  position: relative;
+}
+
+.custom-radio:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #333;
+}
+
+.form-check-input:checked + .custom-radio:after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #28a745;
+}
+button {
+  padding: 10px;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 20px;
+}
+i {
+  margin-left: 5px;
+}
+.result-header {
+  display: flex;
+  flex-direction: row;
+}
+.result-header h2 {
+  flex: 1;
+}
+.result-header a {
+  cursor: pointer;
+}
+.result-header i {
+  font-size: 32px;
+  transition: 0.4s;
+}
+.result_element {
+  font-size: 16px;
+}
+.line-container {
+  width: 100%;
+  position: relative;
+}
+
+.line {
+  height: 2px;
+  background: #000;
+}
+
+.point {
+  width: 18px;
+  height: 18px;
+  background: #28a745;
+  border-radius: 50%;
+  border: 3px solid #000;
+  position: absolute;
+  top: -8px;
+}
+
+.labels {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+
+a .fa-circle-info {
+  color: #2931c6b6;
+}
+a .fa-circle-xmark {
+  color: #d31919;
+}
+a i:hover {
+  color: #000;
+}
+.fa-left-long{
+  font-size: 34px;
+  font-weight: 900;
+  transition: 0.5s;
+  cursor: pointer;
+  color: #333;
+}
+a .fa-left-long:hover{
+  color: #a6a6a6;
+  margin-right: 10px;
+  font-size: 36px;
+}
