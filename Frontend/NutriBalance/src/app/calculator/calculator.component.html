@@ -83,7 +83,12 @@
         </select>
       </div>
       <div class="btns">
-        <button type="submit" class="btn btn-success" [disabled]="!form.valid" (click)="calculateGDA()">
+        <button
+          type="submit"
+          class="btn btn-success"
+          [disabled]="!form.valid"
+          (click)="calculateGDA()"
+        >
           Calculate GDA <i class="fa-solid fa-calculator"></i>
         </button>
         <button type="submit" class="btn btn-dark" [disabled]="!form.valid">

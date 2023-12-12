@@ -4,7 +4,13 @@ import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
 import { SignupComponent } from '../signup/signup.component';
 import { HttpClientModule, HttpParams } from '@angular/common/http';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators  } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { AppConstants } from '../common/app.constants';
 import { UserService } from '../_services/user.service';
@@ -25,7 +31,6 @@ declare const $: any;
   styleUrls: ['./signin.component.css'],
 })
 export class SigninComponent {
-
   form: any = {};
   isLoggedIn = false;
   isLoginFailed = false;
@@ -33,7 +38,16 @@ export class SigninComponent {
   currentUser: any;
   googleURL = AppConstants.GOOGLE_AUTH_URL;
 
-  constructor(private shared: Shared, private userservice: UserService, private coachservice: CoachService, private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router, private route: ActivatedRoute, private pop_service:ModalPopServiceService) { }
+  constructor(
+    private shared: Shared,
+    private userservice: UserService,
+    private coachservice: CoachService,
+    private authService: AuthService,
+    private tokenStorage: TokenStorageService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private pop_service: ModalPopServiceService
+  ) {}
 
   ngOnInit(): void {
     const token = this.route.snapshot.queryParamMap.get('token');
@@ -41,22 +55,20 @@ export class SigninComponent {
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.currentUser = this.tokenStorage.getUser();
-      console.log(this.currentUser)
-    }
-    else if (token) {
+      console.log(this.currentUser);
+    } else if (token) {
       this.tokenStorage.saveToken(token);
-      console.log(token)
+      console.log(token);
       this.userservice.getCurrentUser().subscribe(
-        data => {
+        (data) => {
           this.login(data);
         },
-        err => {
+        (err) => {
           this.errorMessage = err.error.message;
           this.isLoginFailed = true;
         }
       );
-    }
-    else if (error) {
+    } else if (error) {
       this.errorMessage = error;
       this.isLoginFailed = true;
     }
@@ -70,118 +82,109 @@ export class SigninComponent {
     this.isLoginFailed = false;
     this.isLoggedIn = true;
     this.currentUser = this.tokenStorage.getUser();
-    console.log(this.currentUser)
-    console.log("LOGIN SUCCESS");
+    console.log(this.currentUser);
+    console.log('LOGIN SUCCESS');
     // window.location.reload();
   }
   email: any;
-  password : any;
-  role=this.shared.selectedrole;
+  password: any;
+  role = this.shared.selectedrole;
   flag_show_login = false;
   flag_btn_login = true;
 
-  flag_forget_spinner =false;
-  onSubmit(event: any){
-  
+  flag_forget_spinner = false;
+  onSubmit(event: any) {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) {
       alert('Invalid email format');
-    }
-   
-    else if(this.role=='user') {
-    this.userservice.checksignin(this.email,this.password).subscribe(data => {
-      console.log(data);
-      if(data==null) alert('wrong email or password');
-      else{
-        this.shared.loggedIn=true;
-      this.router.navigate(['/home']);
-      }
-    });
-    }
-    else if (this.role == 'coach') {
-      this.coachservice.checksignin(this.email, this.password).subscribe(data => {
-        console.log(data);
-        if (data == null) alert('wrong email or password');
-        else {
-          let coach: Coach = data;
-          if(coach.isapproved==0){
-             alert('Sorry, Your account is not approved yet');
+    } else if (this.role == 'user') {
+      this.userservice
+        .checksignin(this.email, this.password)
+        .subscribe((data) => {
+          console.log(data);
+          if (data == null) alert('wrong email or password');
+          else {
+            this.shared.loggedIn = true;
+            this.router.navigate(['/userpage']);
           }
-          else{
-          this.shared.loggedIn = true;
-          this.tokenStorage.saveCoach(coach);
-          this.router.navigate(['/coach-page']);
+        });
+    } else if (this.role == 'coach') {
+      this.coachservice
+        .checksignin(this.email, this.password)
+        .subscribe((data) => {
+          console.log(data);
+          if (data == null) alert('wrong email or password');
+          else {
+            let coach: Coach = data;
+            if (coach.isapproved == 0) {
+              alert('Sorry, Your account is not approved yet');
+            } else {
+              this.shared.loggedIn = true;
+              this.tokenStorage.saveCoach(coach);
+              this.router.navigate(['/coach-page']);
+            }
           }
-
-        }
-      });
-    }
-    else if(this.role=='admin'){
+        });
+    } else if (this.role == 'admin') {
       this.router.navigate(['/adminpage']);
     }
-
   }
   forget_pass_first_step(email: any) {
-    this.flag_forget_spinner=true
-    this.authService.forgetPassword(email,this.role).subscribe(
-      (res)=>{
-        this.flag_forget_spinner=false
-        this.email=email;
+    this.flag_forget_spinner = true;
+    this.authService.forgetPassword(email, this.role).subscribe(
+      (res) => {
+        this.flag_forget_spinner = false;
+        this.email = email;
         $('#forget_pass_send_email').modal('hide');
         $('#verify_email_to_change').modal('show');
       },
-      (err)=>{
-        this.flag_forget_spinner=false
+      (err) => {
+        this.flag_forget_spinner = false;
         $('#forget_pass_send_email').modal('hide');
-        this.pop_service.pop_up("Email is not registered","Forget Password");
-
+        this.pop_service.pop_up('Email is not registered', 'Forget Password');
       }
-
     );
-       
   }
   forget_pass_second_step(verify_code: any) {
-    this.flag_forget_spinner=true
-    this.flag_forget_spinner=false
-    this.authService.checkOtp(verify_code,this.email).subscribe(
-      (res)=>{
-        this.flag_forget_spinner=false
+    this.flag_forget_spinner = true;
+    this.flag_forget_spinner = false;
+    this.authService.checkOtp(verify_code, this.email).subscribe(
+      (res) => {
+        this.flag_forget_spinner = false;
         $('#verify_email_to_change').modal('hide');
         $('#change_pass').modal('show');
       },
-      (err)=>{
-        this.flag_forget_spinner=false
+      (err) => {
+        this.flag_forget_spinner = false;
         $('#verify_email_to_change').modal('hide');
-        this.pop_service.pop_up("Code is invalid","Forget Password");
+        this.pop_service.pop_up('Code is invalid', 'Forget Password');
       }
     );
   }
   forget_pass_final_step(new_pass: any) {
-    this.flag_forget_spinner=true
-     if(new_pass.length<8){
-      this.flag_forget_spinner=false
-        this.pop_service.pop_up("Password must be at least 8 characters","Forget Password");
+    this.flag_forget_spinner = true;
+    if (new_pass.length < 8) {
+      this.flag_forget_spinner = false;
+      this.pop_service.pop_up(
+        'Password must be at least 8 characters',
+        'Forget Password'
+      );
+      return;
+    }
+    this.authService.resetPassword(this.email, new_pass, this.role).subscribe(
+      (res) => {
+        this.flag_forget_spinner = false;
+        $('#change_pass').modal('hide');
+      },
+      (err) => {
+        this.flag_forget_spinner = false;
+        this.pop_service.pop_up('Error : Try Again', 'Forget password');
         return;
       }
-      this.authService.resetPassword(this.email,new_pass,this.role).subscribe(
-        (res)=>{
-          this.flag_forget_spinner=false
-          $('#change_pass').modal('hide');
-        },
-        (err)=>{
-          this.flag_forget_spinner=false
-          this.pop_service.pop_up("Error : Try Again",'Forget password');
-          return;
-        }
-      );
-        
-
-
+    );
   }
-  close(){
+  close() {
     $('#forget_pass_send_email').modal('hide');
     $('#verify_email_to_change').modal('hide');
     $('#change_pass').modal('hide');
-
   }
-
 }
