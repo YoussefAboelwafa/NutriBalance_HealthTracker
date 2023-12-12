@@ -19,6 +19,7 @@ import { ModalPopServiceService } from '../_services/modal-pop-service.service';
 
 import { FpPopupComponent } from '../fp-popup/fp-popup.component';
 import { Coach } from '../Objects/Coach';
+import { User } from '../Objects/User';
 declare const $: any;
 @Component({
   selector: 'app-signin',
@@ -98,16 +99,7 @@ export class SigninComponent {
       alert('Invalid email format');
     }
 
-    else if (this.role == 'user') {
-      this.userservice.checksignin(this.email, this.password).subscribe(data => {
-        console.log(data);
-        if (data == null) alert('wrong email or password');
-        else {
-          this.shared.loggedIn = true;
-          this.router.navigate(['/home']);
-        }
-      });
-    }
+
     else if (this.role == 'coach') {
       this.coachservice.checksignin(this.email, this.password).subscribe(data => {
         console.log(data);
@@ -117,26 +109,21 @@ export class SigninComponent {
           if(coach.isapproved==0){
              alert('Sorry, Your account is not approved yet');
           }
+         }
         });
-    } else if (this.role == 'coach') {
-      this.coachservice
-        .checksignin(this.email, this.password)
-        .subscribe((data) => {
+      
+    } else if (this.role == 'user') {
+      this.userservice.checksignin(this.email, this.password).subscribe((data) => {
           console.log(data);
           if (data == null) alert('wrong email or password');
           else {
-            let coach: Coach = data;
-            if (coach.isapproved == 0) {
-              alert('Sorry, Your account is not approved yet');
-            } else {
-              this.shared.loggedIn = true;
-              this.tokenStorage.saveCoach(coach);
-              this.router.navigate(['/coach-page']);
-            }
+            let user: User = data;
+            this.shared.loggedIn = true;
+            this.tokenStorage.saveUser(user);
+            this.router.navigate(['/userpage']);
           }
 
-        }
-      });
+        });
     }
     else if (this.role == 'admin') {
       this.router.navigate(['/adminpage']);

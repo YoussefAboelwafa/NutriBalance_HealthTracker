@@ -39,6 +39,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSelectModule } from '@angular/material/select';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CoachPlansComponent,
     EditDialogComponent,
     ConfirmDialogComponent,
+    UserProfileComponent,
 
   ],
   imports: [
@@ -77,7 +79,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     ReactiveFormsModule,
     MatSidenavModule,
-    MatSelectModule
+    MatSelectModule,
     NgbModule,
   ],
   providers: [

@@ -148,6 +148,29 @@ public class Service implements Iservice {
         }
         return userRepo.save(user);
     }
+    @Override
+    public User updateUser(User user) {
+        Optional<User> existingUserOpt = userRepo.findById(user.getUser_id());
+        if (existingUserOpt.isEmpty()) {
+            return null;
+        }
+        return userRepo.save(user);
+    }
+
+    @Override
+    public User addImageToUser(String Email, MultipartFile image ){
+        try {
+            User user = userRepo.findByEmail(Email).orElse(null);
+            if (user == null) {
+                return null;
+            }
+            user.setImage(image.getBytes());
+            userRepo.save(user);
+            return user;
+        } catch (Exception e) {
+            throw new RuntimeException("Error while changing user image", e);
+        }
+    }
 
     @Override
     public User usersignin(String email, String password) {
