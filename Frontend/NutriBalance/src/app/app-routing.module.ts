@@ -57,32 +57,31 @@ export const routes: Routes = [
         path: 'coachprofile',
         component: CoachProfileComponent,
       },
-    ]
+      {
+        path: 'createplan',
+        component: CreateplanComponent,
+      },
+      {
+        path: 'view-subscriptions',
+        component: ViewSubscriptionsComponent,
+      },
+    ],
   },
+
   {
-    path: 'createplan',
-    component: CreateplanComponent,
-
+    path: 'userpage',
+    component: UserpageComponent,
+    children: [
+      {
+        path: 'calculator',
+        component: CalculatorComponent,
+      },
+    ],
   },
-
-  {
-
-    path: 'view-subscriptions',
-    component: ViewSubscriptionsComponent,
-  },
-
- { path: 'userpage',
-  component: UserpageComponent,
-  children: [
-    {
-      path: 'calculator',
-      component: CalculatorComponent,
-    },
-  ],}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
