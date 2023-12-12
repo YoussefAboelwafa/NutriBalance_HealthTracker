@@ -19,6 +19,11 @@ export class CalculatorComponent implements OnInit {
   bmr = 0;
   tdee = 0;
   bmi = 0;
+  protein = 0;
+  carb = 0;
+  fat = 0;
+
+  pos = '0%';
 
   ngOnInit(): void {}
 
@@ -67,6 +72,31 @@ export class CalculatorComponent implements OnInit {
       Math.round(
         (this.userGDA.weight / (this.userGDA.height / 100) ** 2) * 100
       ) / 100;
+    let pointPosition = (this.bmi / 60) * 100; // Assuming BMI scale is from 0 to 40
+    if (pointPosition > 100) pointPosition = 100; // Cap at 100%
+    if (pointPosition < 0) pointPosition = 0; // Cap at 0%
+    this.pos = `${pointPosition}%`;
+
+    // Protein
+    this.protein = Math.round(this.userGDA.weight * 0.8 * 100) / 100;
+
+    // Carbohydrates
+    this.carb = Math.round(((this.tdee * 0.55) / 4) * 100) / 100;
+
+    // Fat
+    this.fat = Math.round(((this.tdee * 0.2) / 9) * 100) / 100;
+  }
+
+  getPointColor() {
+    if (this.bmi < 18.5) {
+      return 'lightgreen'; // Color for Underweight
+    } else if (this.bmi >= 18.5 && this.bmi < 25) {
+      return 'green'; // Color for Normal weight
+    } else if (this.bmi >= 25 && this.bmi < 30) {
+      return 'yellow'; // Color for Overweight
+    } else {
+      return 'red'; // Color for Obesity
+    }
   }
   close_result() {
     this.show_table = true;

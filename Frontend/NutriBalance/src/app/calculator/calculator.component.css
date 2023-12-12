@@ -82,8 +82,55 @@ i {
 }
 .result-header i {
   font-size: 32px;
-  color: #28a745;
+  transition: 0.4s;
 }
-.result_element{
+.result_element {
   font-size: 16px;
+}
+.line-container {
+  width: 100%;
+  position: relative;
+}
+
+.line {
+  height: 2px;
+  background: #000;
+}
+
+.point {
+  width: 18px;
+  height: 18px;
+  background: #28a745;
+  border-radius: 50%;
+  border: 3px solid #000;
+  position: absolute;
+  top: -8px;
+}
+
+.labels {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+
+a .fa-circle-info {
+  color: #2931c6b6;
+}
+a .fa-circle-xmark {
+  color: #d31919;
+}
+a i:hover {
+  color: #000;
+}
+.fa-left-long{
+  font-size: 34px;
+  font-weight: 900;
+  transition: 0.5s;
+  cursor: pointer;
+  color: #333;
+}
+a .fa-left-long:hover{
+  color: #a6a6a6;
+  margin-right: 10px;
+  font-size: 36px;
 }

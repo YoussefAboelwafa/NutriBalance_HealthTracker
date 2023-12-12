@@ -183,21 +183,55 @@
       <a (click)="close_result()"><i class="fa-solid fa-circle-xmark"></i></a>
     </div>
     <label class="result_element">
-      <strong>BMR</strong> (Basal Metabolic Rate) = {{ bmr }} kcal/day
+      <strong>BMR</strong> (Basal Metabolic Rate) =
+      <strong>{{ bmr }}</strong> kcal/day
     </label>
     <hr />
     <label class="result_element">
       <strong>TDEE</strong> (Total Daily Energy Expenditure) =
-      {{ tdee }} kcal/day
+      <strong>{{ tdee }}</strong> kcal/day
     </label>
     <hr />
     <label class="result_element">
-      <strong>BMI</strong> (Body Mass Index) = {{ bmi }} kg/m<sup>2</sup>
+      <strong>BMI</strong> (Body Mass Index) =
+      <strong>{{ bmi }}</strong> kg/m<sup>2</sup>
+    </label>
+    <div class="line-container">
+      <div class="line">
+        <div
+          class="point"
+          [style.left]="pos"
+          [style.background]="getPointColor()"
+        ></div>
+        <!-- Adjust the left style to position the point -->
+      </div>
+      <div class="labels">
+        <span>Underweight</span>
+        <span>Normal</span>
+        <span>Overweight</span>
+        <span>Obesity</span>
+      </div>
+    </div>
+    <hr />
+    <label class="result_element">
+      <strong>Protein Intake</strong> (minimum amount) =
+      <strong>{{ protein }}</strong> grams/day
+    </label>
+    <hr />
+    <label class="result_element">
+      <strong>Carbohydrate Intake</strong> (minimum amount) =
+      <strong>{{ carb }}</strong> grams/day
+    </label>
+    <hr />
+    <label class="result_element">
+      <strong>Fat Intake</strong> (minimum amount) =
+      <strong>{{ fat }}</strong> grams/day
     </label>
   </div>
 </div>
 
 <!-- Info Section -->
 <div class="info-section" *ngIf="show_info">
-  <a (click)="close_info()"><i class="fa-solid fa-left-long"></i></a>
+  <a (click)="close_info()"><i class="fa-solid fa-left-long"></i> Back</a>
+  <hr>
 </div>
