@@ -10,10 +10,13 @@
 }
 
 html {
+  height: 100%;
+  margin: 0;
   font-size: 14px;
 }
 
 body {
+  height: 100%;
   width: 100%;
   font-family: sans-serif;
   margin: 0;
@@ -26,6 +29,7 @@ body {
 }
 
 #container {
+  height: 100%;
   display: flex;
   flex: 1;
 }
@@ -41,7 +45,7 @@ body {
   background-color: #333;
   color: #fff;
   padding-top: 20px;
-  height: 100vh; /* 100% of the viewport height */
+  /* height: 100vh;  */
 }
 
 .top a {
@@ -56,6 +60,7 @@ body {
 #content {
   flex: 1;
   padding: 20px;
+  overflow: auto; /* Add a scrollbar if content is too large */
 }
 
 #menu {
@@ -98,7 +103,12 @@ body {
 }
 #sidebar-end-block a:hover {
   margin-left: 30px;
+  cursor: pointer;
 }
 i {
   margin-right: 10px;
+}
+
+.active {
+  background-color: rgba(127, 255, 212, 0.25);
 }

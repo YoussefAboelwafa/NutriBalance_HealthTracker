@@ -26,6 +26,8 @@ export class WaitingCoachesComponent implements OnInit{
       }
     );
   }
+
+
   view_cv(i:number){
      var cv = this.coaches[i]?.cv;
     if (cv) {
@@ -35,6 +37,7 @@ export class WaitingCoachesComponent implements OnInit{
       this.cvBlobUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
     }
   }
+
   approve(i:number){
     this.coachservice.approveCoach(this.coaches[i].coach_id).subscribe(
       (data) => {

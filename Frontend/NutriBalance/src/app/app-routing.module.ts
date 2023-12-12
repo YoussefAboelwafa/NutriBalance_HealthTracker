@@ -32,11 +32,7 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-  },
-  {
-    path: 'waiting-coaches',
-    component: WaitingCoachesComponent,
-  },
+  },  
   {
     path: 'coach-signup',
     component: CoachSignupComponent,
@@ -48,6 +44,12 @@ export const routes: Routes = [
   {
     path: 'adminpage',
     component: AdminpageComponent,
+    children: [
+      {
+        path: 'waiting-coaches',
+        component: WaitingCoachesComponent,
+      },
+    ]
   },
   {
     path: 'coach-page',

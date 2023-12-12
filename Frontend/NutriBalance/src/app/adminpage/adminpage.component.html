@@ -17,19 +17,18 @@
             <a href="#"><i class="fas fa-home icon"></i> Home</a>
             <a href="#"><i class="fas fa-user-edit icon"></i> Edit Profile</a>
 
-            <a routerLink="/waiting-coaches"><i class="fas fa-clock icon"></i> Pending Requests</a>
+            <a routerLink="waiting-coaches" routerLinkActive="active"><i class="fas fa-clock icon"></i> Pending Requests</a>
 
             <a href="#"><i class="fas fa-chart-bar icon"></i> Reports</a>
             </div>
 
             <div id="sidebar-end-block">
-              <a><i class="fas fa-sign-out-alt icon"></i> Logout</a>
+              <a (click)="logout()"><i class="fas fa-sign-out-alt icon"></i> Logout</a>
             </div>
         </div>
     
         <div id="content">
-            <h1>Main Content</h1>
-            <p>This is the main content area.</p>
+          <router-outlet></router-outlet>
         </div>
     </div>
 
