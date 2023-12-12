@@ -19,6 +19,7 @@ import { ModalPopServiceService } from '../_services/modal-pop-service.service';
 
 import { FpPopupComponent } from '../fp-popup/fp-popup.component';
 import { Coach } from '../Objects/Coach';
+import { User } from '../Objects/User';
 declare const $: any;
 @Component({
   selector: 'app-signin',

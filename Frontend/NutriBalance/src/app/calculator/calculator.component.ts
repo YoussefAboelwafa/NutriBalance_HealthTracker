@@ -2,7 +2,6 @@ import { validateHorizontalPosition } from '@angular/cdk/overlay';
 import { Component, NgModule, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
-// import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-calculator',
@@ -10,15 +9,16 @@ import { MatDialogModule } from '@angular/material/dialog';
   styleUrls: ['./calculator.component.css'],
 })
 export class CalculatorComponent implements OnInit {
-  constructor(private dialog: MatDialog){}
+  constructor(private dialog: MatDialog) {}
 
-  show_table: boolean = false;
-  show_result: boolean = true;
+  show_table: boolean = true;
+  show_result: boolean = false;
   show_info: boolean = false;
 
   bmr = 0;
   tdee = 0;
   bmi = 0;
+
   protein = 0;
   carb = 0;
   fat = 0;
@@ -28,11 +28,11 @@ export class CalculatorComponent implements OnInit {
   ngOnInit(): void {}
 
   userGDA: any = {
-    weight: 75,
-    height: 170,
-    age: 21,
+    weight: null,
+    height: null,
+    age: null,
     gender: 'male',
-    activity: 'medium',
+    activity: 'low',
   };
   calculateGDA() {
     this.show_table = false;
@@ -72,9 +72,9 @@ export class CalculatorComponent implements OnInit {
       Math.round(
         (this.userGDA.weight / (this.userGDA.height / 100) ** 2) * 100
       ) / 100;
-    let pointPosition = (this.bmi / 60) * 100; // Assuming BMI scale is from 0 to 40
-    if (pointPosition > 100) pointPosition = 100; // Cap at 100%
-    if (pointPosition < 0) pointPosition = 0; // Cap at 0%
+    let pointPosition = (this.bmi / 55) * 100;
+    if (pointPosition > 100) pointPosition = 100;
+    if (pointPosition < 0) pointPosition = 0;
     this.pos = `${pointPosition}%`;
 
     // Protein
@@ -88,11 +88,11 @@ export class CalculatorComponent implements OnInit {
   }
 
   getPointColor() {
-    if (this.bmi < 18.5) {
+    if (this.bmi < 18) {
       return 'lightgreen'; // Color for Underweight
-    } else if (this.bmi >= 18.5 && this.bmi < 25) {
+    } else if (this.bmi >= 18 && this.bmi < 25) {
       return 'green'; // Color for Normal weight
-    } else if (this.bmi >= 25 && this.bmi < 30) {
+    } else if (this.bmi >= 25 && this.bmi < 35) {
       return 'yellow'; // Color for Overweight
     } else {
       return 'red'; // Color for Obesity
