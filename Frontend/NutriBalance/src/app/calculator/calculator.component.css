@@ -137,3 +137,14 @@ a .fa-left-long:hover {
   margin-right: 10px;
   font-size: 36px;
 }
+.info-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60%;
+  overflow: auto;
+  margin-left: 50px;
+}
+.info-section p {
+  font-size: 16px;
+}
