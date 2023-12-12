@@ -45,7 +45,7 @@ h1 {
   height: 50px;
 }
 #choose-role {
-  margin-top: 1%;
+  margin-top: 2%;
   text-decoration: solid;
   font-size: 36px;
   color: aliceblue;
@@ -53,7 +53,7 @@ h1 {
   margin-left: 1.5%;
 }
 #inner {
-  margin-top: 0%;
+  margin-top: 2%;
   display: flex;
   flex-direction: row;
   gap: 50px;

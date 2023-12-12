@@ -1,6 +1,6 @@
-import { Component, NgModule } from '@angular/core';
+import { Component} from '@angular/core';
 
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { Router} from '@angular/router';
 
 
 @Component({
@@ -12,12 +12,10 @@ export class AppComponent {
   title = 'NutriBalance';
 
   constructor(private router: Router) {
-
-
-    const previousUrl = localStorage.getItem('previousUrl');
-    if (previousUrl) {
-      router.navigateByUrl(previousUrl);
-      localStorage.removeItem('previousUrl');
-    }
+    // const previousUrl = localStorage.getItem('previousUrl');
+    // if (previousUrl) {
+    //   this.router.navigateByUrl(previousUrl);
+    //   localStorage.removeItem('previousUrl');
+    // }
   }
 }

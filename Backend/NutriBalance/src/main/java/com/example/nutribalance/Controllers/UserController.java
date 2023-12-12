@@ -40,6 +40,14 @@ public class UserController {
     public User addImageToUser(@PathVariable String Email, @RequestParam("file") MultipartFile image) {
         return service.addImageToUser(Email, image);
     }
+    @GetMapping("/verify")
+    public ResponseEntity<?> verifyUser(@Param("code") String code) {
+        if (service.verify(code)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().body("Error: Verification code is invalid!");
+        }
+    }
 
 }
 

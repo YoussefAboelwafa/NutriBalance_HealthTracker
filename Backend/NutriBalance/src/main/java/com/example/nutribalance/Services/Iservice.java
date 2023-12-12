@@ -15,13 +15,12 @@ public interface Iservice {
     //todo: add methods
     //------------------------------coach methods--------------------------------
     Coach savecoach(Coach coach);
-
     User usersignin(String email, String password);
+
 
     User updateUser(User user);
 
     User addImageToUser(String Email, MultipartFile image );
-
 
     List<Coach> get_waiting_coaches();
 
@@ -62,4 +61,6 @@ public interface Iservice {
     Plan updatePlan(Plan plan);
 
     String deletePlan(String planName);
+
+    boolean verify(String code);
 }

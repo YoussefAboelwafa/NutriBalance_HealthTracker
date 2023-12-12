@@ -3,12 +3,12 @@ body{
 }
 .emp-profile{
     padding: 3%;
-    margin-top: 3%;
-    margin-left: 10%;
+    margin-top: 6%;
+    margin-left: 6%;
     margin-bottom: 3%;
     border-radius: 0.5rem;
     background: #fff;
-    width: 65rem;
+    width: 62rem;
 }
 #popup {
     display: none;

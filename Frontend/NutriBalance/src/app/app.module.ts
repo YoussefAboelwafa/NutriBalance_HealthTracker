@@ -38,8 +38,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { MatSelectModule } from '@angular/material/select';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+
+import { VerifiedComponent } from './verified/verified.component';
+
 
 
 @NgModule({
@@ -63,7 +65,11 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     CoachPlansComponent,
     EditDialogComponent,
     ConfirmDialogComponent,
+
     UserProfileComponent,
+
+    VerifiedComponent,
+
 
   ],
   imports: [
@@ -80,7 +86,12 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     ReactiveFormsModule,
     MatSidenavModule,
     MatSelectModule,
-    NgbModule,
+
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatSelectModule,
   ],
   providers: [
     AuthService,
@@ -88,9 +99,9 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     Shared,
     ModalPopServiceService,
     FpPopupComponent,
-    
+
 
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

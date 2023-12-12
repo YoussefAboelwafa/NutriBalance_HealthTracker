@@ -6,8 +6,8 @@ import com.example.nutribalance.Mails.EmailService;
 import com.example.nutribalance.Repositries.*;
 import com.example.nutribalance.dto.LoginRequest;
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +15,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.mail.internet.MimeMessage;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -91,7 +93,7 @@ public class Service implements Iservice {
 
     @Override
     public String deletePlan(String planName) {
-        Plan plan =planRepositry.findById(planName).orElse(null);
+        Plan plan = planRepositry.findById(planName).orElse(null);
         assert plan != null;
         if (!plan.getUsers().isEmpty()) {
             return "There are users subscribed to this plan";
@@ -139,15 +141,18 @@ public class Service implements Iservice {
         return null;
     }
 
+
     @Override
     public User saveuser(User user) {
         Optional<User> old_user_1 = userRepo.findByEmail(user.getEmail());
-        Optional<User> old_user_2 = userRepo.findByUsername(user.getUsername());
-        if (old_user_1.isPresent() || old_user_2.isPresent()) {
+        if (old_user_1.isPresent()) {
             return null;
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        sendVerificationMail(user);
         return userRepo.save(user);
     }
+
     @Override
     public User updateUser(User user) {
         Optional<User> existingUserOpt = userRepo.findById(user.getUser_id());
@@ -171,11 +176,73 @@ public class Service implements Iservice {
             throw new RuntimeException("Error while changing user image", e);
         }
     }
+    public boolean verify(String verificationCode) {
+        ResetPassword resetPassword = resetPasswordRepository.findByToken(verificationCode);
+        if (resetPassword == null ) {
+            return false;
+        }
+        User user = userRepo.findByEmail(resetPassword.getEmail()).orElse(null);
+        if (user == null) {
+            return false;
+        }
+        user.setEnabled(true);
+        userRepo.save(user);
+        return true;
+    }
+
+
+    private void sendVerificationMail(User user) {
+        Optional<ResetPassword> old_reset_password = Optional.ofNullable(resetPasswordRepository.findByEmail(user.getEmail()));
+        old_reset_password.ifPresent(password -> resetPasswordRepository.deleteById(password.getId()));
+        ResetPassword resetPassword = new ResetPassword();
+        resetPassword.setEmail(user.getEmail());
+        resetPassword.setUsername(user.getUsername());
+        String token = RandomString.make(64);
+        resetPassword.setToken(token);
+        user.setEnabled(false);
+        String toAddress = user.getEmail();
+        String subject = "Please verify your registration";
+        String content = "Dear [[name]],<br>"
+                + "Thank you for signing up with Galaxy!<br>"
+                + " To complete your registration and ensure the security of your account, please click on the following verification link:<br>"
+                + "<h3><a href=\"[[URL]]\" onclick=\"return handleLinkClick(event);\">VERIFY</a></h3>"
+                + "<br>If you didn't request this confirmation code, please ignore this email. "
+                + "<br>Your account will remain inactive until you confirm your email address."
+                + "Thank you for choosing NutriBalance!<br>"
+                + "NutriBalance team";
+        String siteURL = "http://localhost:4200/verify";
+        content = content.replace("[[name]]", user.getUsername());
+        String verifyURL = siteURL + "/" + token;
+        content = content.replace("[[URL]]", verifyURL);
+        String script = "<script type=\"text/javascript\">\n"
+                + "    function handleLinkClick(event) {\n"
+                + "        event.preventDefault(); // Prevent the link from opening in a new tab\n"
+                + "        window.location.href = event.target.getAttribute(\"href\"); // Navigate to the link's URL\n"
+                + "        return false;\n"
+                + "    }\n"
+                + "</script>\n";
+        content = script + content;
+        EmailDetails mail = new EmailDetails();
+        mail.setMsgBody(content);
+        mail.setRecipient(toAddress);
+        mail.setSubject(subject);
+        emailService.sendSimpleMail(mail);
+
+    }
+
 
     @Override
     public User usersignin(String email, String password) {
         Optional<User> user = userRepo.findByEmail(email);
-        if (user.isPresent() && user.get().getPassword().equals(password)) return user.get();
+        if (user.isPresent() ) {
+            if (user.get().isEnabled()) {
+                if (passwordEncoder.matches(password, user.get().getPassword())) {
+                    return user.get();
+                } else {
+                    return null;
+                }
+            }
+        }
         return null;
     }
 

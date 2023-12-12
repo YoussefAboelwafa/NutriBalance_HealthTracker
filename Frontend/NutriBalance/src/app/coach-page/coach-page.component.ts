@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { Coach } from '../Objects/Coach';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-coach-page',
   templateUrl: './coach-page.component.html',
@@ -8,7 +9,9 @@ import { Coach } from '../Objects/Coach';
 })
 export class CoachPageComponent implements OnInit {
 
-  constructor(private el: ElementRef,private renderer: Renderer2,private tokenstorage: TokenStorageService) { }
+  constructor(private router:Router,private el: ElementRef,private renderer: Renderer2,private tokenstorage: TokenStorageService) { 
+    
+  }
 
 
   public menuItems!: any[];
@@ -26,6 +29,10 @@ export class CoachPageComponent implements OnInit {
   }
   onRemoveButtonClick() {
     this.removeBodyModificationClass();
+  }
+  logout() {
+    this.tokenstorage.signOut();
+    this.router.navigateByUrl('/'); // Navigate to the home page
   }
   
 

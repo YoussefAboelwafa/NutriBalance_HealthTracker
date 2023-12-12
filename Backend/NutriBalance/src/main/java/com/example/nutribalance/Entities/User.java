@@ -29,6 +29,8 @@ public class User {
     @Column
 
     private String contact_number;
+    @Column
+    boolean isEnabled=false;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Weight> weights;
     @Lob

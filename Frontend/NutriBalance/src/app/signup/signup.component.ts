@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { User } from '../Objects/User';
 import { UserService } from '../_services/user.service';
 import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-signup',
@@ -14,7 +15,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-  constructor(private router: Router, private userservice: UserService) {}
+  constructor(private router: Router, private userservice: UserService,private dialog:MatDialog) {}
 
   user = new User();
   confirmedPassword: any;
@@ -30,15 +31,17 @@ export class SignupComponent {
       alert('Invalid email format');
     } else if (!/^[+]?[\d]+$/.test(this.user.contact_number)) {
       alert('Invalid contact number');
-    } else if (!/^[a-zA-Z0-9_]+$/.test(this.user.username)) {
-      alert('Invalid username format (only letters, numbers, and _)');
-    } else {
+    } 
+    else {
       this.userservice.saveUser(this.user).subscribe((data) => {
         if (data == null) {
           alert('Email or Username already exists');
         }
+        else{
+          alert("You have successfully sign up, please verify your mail!");
+        }
+        this.router.navigate(['/home']);
       });
-      this.router.navigate(['/home']);
     }
   }
 }
