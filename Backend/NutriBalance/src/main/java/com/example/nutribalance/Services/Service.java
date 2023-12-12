@@ -91,7 +91,6 @@ public class Service implements Iservice {
 
     @Override
     public String deletePlan(String planName) {
-        //check if there are users subscribed to this plan
         Plan plan =planRepositry.findById(planName).orElse(null);
         assert plan != null;
         if (!plan.getUsers().isEmpty()) {

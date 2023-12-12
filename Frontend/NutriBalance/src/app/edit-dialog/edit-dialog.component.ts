@@ -21,8 +21,8 @@ export class EditDialogComponent {
   
 
   goalOptions = [
-    { label: 'Cut', value: 'Cut' },
-    { label: 'Bulk', value: 'Bulk' },
+    { label: 'Cut', value: 'cut' },
+    { label: 'Bulk', value: 'bulk' },
     // Add more options as needed
   ];
 

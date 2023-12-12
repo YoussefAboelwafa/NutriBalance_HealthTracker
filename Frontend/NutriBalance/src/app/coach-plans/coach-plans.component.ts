@@ -40,13 +40,13 @@ export class CoachPlansComponent implements OnInit {
       if (result == "confirm") {
         // let data="Plan deleted"
         this.service.deletePlan(plan.planName).subscribe(data => {
-          if (data == "Plan deleted") {
+          if (data.success) {
             //remove the plan from plans array
             this.plans = this.plans.filter(p => p.planName != plan.planName)
             window.location.reload()
           }
           else {
-            console.log(result)
+            alert(data.message)
           }
         })
       }

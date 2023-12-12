@@ -6,6 +6,7 @@ import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.Mails.EmailDetails;
 import com.example.nutribalance.Mails.EmailService;
 import com.example.nutribalance.Services.Iservice;
+import com.example.nutribalance.dto.ApiResponse;
 import com.example.nutribalance.dto.CoachDto;
 import com.example.nutribalance.dto.PlanDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -130,8 +131,10 @@ public class CoachController {
 
     }
     @DeleteMapping("/deletePlan/{planName}")
-    public String deletePlan(@PathVariable String planName){
-        return iservice.deletePlan(planName);
+    public ApiResponse deletePlan(@PathVariable String planName){
+        String s=iservice.deletePlan(planName);
+        boolean b= s.equals("Plan deleted");
+        return new ApiResponse(b,s);
     }
 
 
