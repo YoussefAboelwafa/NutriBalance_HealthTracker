@@ -88,7 +88,6 @@
 
     </div>
 
-    <!-- Add a click event to update the active tab when the tab is clicked -->
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
         <a
@@ -165,31 +164,7 @@
                 </div>
               </div>
             </div>
-            <div class="row" *ngIf="!isEdit">
-              <div class="col-md-6">
-                <label>Comment</label>
-              </div>
-              <div class="col-md-6">
-                <p *ngIf="!emptyFields.includes('comment')">
-                  {{ user.comment }}
-                </p>
-                <div
-                  *ngIf="emptyFields.includes('comment')"
-                  style="color: red; font-size: small"
-                >
-                  * Please enter comment
-                </div>
-              </div>
-            </div>
-            <div class="row" *ngIf="isEdit">
-              <div class="col-md-6">
-                <label>Comment</label>
-              </div>
-              <div class="col-md-6">
-                <input type="text" [(ngModel)]="user.comment" name="comment" />
-                <!-- <div  *ngIf="emptyFields.includes('address')" style="color: red; font-size: small;">* Please enter address</div> -->
-              </div>
-            </div>
+
             <div class="row" *ngIf="hasPlan">
               <div class="col-md-6">
                 <label>Plan</label>
@@ -207,9 +182,7 @@
     </div>
   </form>
 </div>
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    Launch demo modal
-  </button> -->
+
 <div
   class="modal fade"
   id="exampleModalCenter"

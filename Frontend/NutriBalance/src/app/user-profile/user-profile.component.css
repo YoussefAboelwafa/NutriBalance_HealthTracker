@@ -9,6 +9,9 @@ body{
     border-radius: 0.5rem;
     background: #fff;
     width: 65rem;
+    max-height: 90%;
+    height: auto;
+    
 }
 #popup {
     display: none;

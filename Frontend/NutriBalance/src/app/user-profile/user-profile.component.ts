@@ -91,12 +91,12 @@ export class UserProfileComponent implements OnInit {
   }
 
   saveChanges() {
-    // Check for changes
+   
     this.spinner_flag = true;
     const hasChanges = !this.areObjectsEqual(this.user, this.originalUser);
 
     if (hasChanges) {
-      // Handle empty fields if needed
+     
       this.emptyFields = this.getEmptyFields(this.user);
       console.log('saving');
       console.log(this.user);
@@ -113,14 +113,12 @@ export class UserProfileComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error updating user:', error);
-          // window.location.reload()
+       
         },
       });
-      // } else {
-      // alert('Empty fields:'+ emptyFields);
+
       this.isEdit = false;
-      // Handle empty fields as needed (e.g., display a message to the user)
-      // }
+
     } else {
       console.log('No changes detected');
       this.toggleEditMode();
@@ -132,8 +130,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   areObjectsEqual(obj1: any, obj2: any): boolean {
-    // Implement deep object comparison logic as needed
-    // Example: Compare specific fields for equality
+
     return JSON.stringify(obj1) === JSON.stringify(obj2);
   }
 
