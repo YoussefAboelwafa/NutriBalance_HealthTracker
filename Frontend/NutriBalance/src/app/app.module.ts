@@ -28,6 +28,7 @@ import { CoachPageComponent } from './coach-page/coach-page.component';
 import { CreateplanComponent } from './createplan/createplan.component';
 import { UserpageComponent } from './userpage/userpage.component';
 import { CalculatorComponent } from './calculator/calculator.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { CalculatorComponent } from './calculator/calculator.component';
     MatFormFieldModule,
     CommonModule,
     ReactiveFormsModule,
+    NgbModule,
   ],
   providers: [
     AuthService,

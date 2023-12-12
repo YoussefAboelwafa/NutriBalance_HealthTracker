@@ -1,4 +1,5 @@
-<div class="container">
+<div class="container" *ngIf="!show_info">
+  <!-- Form Section -->
   <div class="form-section">
     <h2>Calculate Your GDA</h2>
     <form #form="ngForm">
@@ -80,6 +81,7 @@
           <option value="low" selected>Low</option>
           <option value="medium">Medium</option>
           <option value="high">High</option>
+          <option value="extreme">Extreme</option>
         </select>
       </div>
       <div class="btns">
@@ -97,7 +99,9 @@
       </div>
     </form>
   </div>
-  <div class="table-section">
+
+  <!-- Table Section -->
+  <div class="table-section" *ngIf="show_table">
     <h2>Average GDA Table</h2>
     <table class="table table-striped table-hover">
       <caption>
@@ -170,4 +174,30 @@
       </tbody>
     </table>
   </div>
+
+  <!-- Result Section -->
+  <div class="table-section result" *ngIf="show_result">
+    <div class="result-header">
+      <h2>Your GDA Result</h2>
+      <a (click)="open_info()"><i class="fa-solid fa-circle-info"></i></a>
+      <a (click)="close_result()"><i class="fa-solid fa-circle-xmark"></i></a>
+    </div>
+    <label class="result_element">
+      <strong>BMR</strong> (Basal Metabolic Rate) = {{ bmr }} kcal/day
+    </label>
+    <hr />
+    <label class="result_element">
+      <strong>TDEE</strong> (Total Daily Energy Expenditure) =
+      {{ tdee }} kcal/day
+    </label>
+    <hr />
+    <label class="result_element">
+      <strong>BMI</strong> (Body Mass Index) = {{ bmi }} kg/m<sup>2</sup>
+    </label>
+  </div>
+</div>
+
+<!-- Info Section -->
+<div class="info-section" *ngIf="show_info">
+  <a (click)="close_info()"><i class="fa-solid fa-left-long"></i></a>
 </div>

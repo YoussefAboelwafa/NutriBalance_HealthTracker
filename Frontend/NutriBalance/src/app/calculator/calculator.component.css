@@ -12,6 +12,7 @@ h2 {
 }
 .table-section {
   border: 3px solid #333;
+  border-radius: 10px;
 }
 input,
 select {
@@ -68,4 +69,21 @@ button {
 }
 i {
   margin-left: 5px;
+}
+.result-header {
+  display: flex;
+  flex-direction: row;
+}
+.result-header h2 {
+  flex: 1;
+}
+.result-header a {
+  cursor: pointer;
+}
+.result-header i {
+  font-size: 32px;
+  color: #28a745;
+}
+.result_element{
+  font-size: 16px;
 }
