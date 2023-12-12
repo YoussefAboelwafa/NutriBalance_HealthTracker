@@ -30,6 +30,9 @@ import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscripti
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
 import { CalculatorComponent } from './calculator/calculator.component';
+import { CoachPlansComponent } from './coach-plans/coach-plans.component';
+import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,9 @@ import { CalculatorComponent } from './calculator/calculator.component';
     CoachProfileComponent,
     UserpageComponent,
     CalculatorComponent,
+    CoachPlansComponent,
+    EditDialogComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +76,6 @@ import { CalculatorComponent } from './calculator/calculator.component';
     ModalPopServiceService,
     FpPopupComponent,
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent,CoachPageComponent,CoachPlansComponent],
 })
 export class AppModule {}

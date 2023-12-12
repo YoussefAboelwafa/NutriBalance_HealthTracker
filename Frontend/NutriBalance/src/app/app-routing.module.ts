@@ -13,6 +13,7 @@ import { CreateplanComponent } from './createplan/createplan.component';
 import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscriptions.component';
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
+import { CoachPlansComponent } from './coach-plans/coach-plans.component';
 
 export const routes: Routes = [
   {
@@ -57,6 +58,10 @@ export const routes: Routes = [
         path: 'coachprofile',
         component: CoachProfileComponent,
       },
+      {
+        path: 'showplans',
+        component: CoachPlansComponent,
+      }
     ]
   },
   {
@@ -66,19 +71,20 @@ export const routes: Routes = [
   },
 
   {
-
     path: 'view-subscriptions',
     component: ViewSubscriptionsComponent,
   },
 
- { path: 'userpage',
-  component: UserpageComponent,
-  children: [
-    {
-      path: 'calculator',
-      component: CalculatorComponent,
-    },
-  ],}
+  {
+    path: 'userpage',
+    component: UserpageComponent,
+    children: [
+      {
+        path: 'calculator',
+        component: CalculatorComponent,
+      },
+    ],
+  }
 ];
 
 @NgModule({

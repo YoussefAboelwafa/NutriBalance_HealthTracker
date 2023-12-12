@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,6 +69,36 @@ public class Service implements Iservice {
             return coachRepo.save(coach.get());
         }
         return null;
+    }
+
+    @Override
+    public List<Plan> getPlans(Long coachId) {
+        Optional<Coach> coach = coachRepo.findById(coachId);
+        return coach.map(value -> (List<Plan>) value.getPlans()).orElse(null);
+    }
+
+    @Override
+    public Plan updatePlan(Plan plan) {
+        Optional<Plan> existingPlanOpt = planRepositry.findById(plan.getPlanName());
+        if (existingPlanOpt.isEmpty()) {
+            return null;
+        }
+        Plan existingPlan = existingPlanOpt.get();
+        existingPlan.setDescription(plan.getDescription());
+        existingPlan.setGoal(plan.getGoal());
+        return planRepositry.save(existingPlan);
+    }
+
+    @Override
+    public String deletePlan(String planName) {
+        //check if there are users subscribed to this plan
+        Plan plan =planRepositry.findById(planName).orElse(null);
+        assert plan != null;
+        if (!plan.getUsers().isEmpty()) {
+            return "There are users subscribed to this plan";
+        }
+        planRepositry.deleteById(planName);
+        return "Plan deleted";
     }
 
     @Override
