@@ -117,8 +117,9 @@ export class SigninComponent {
           if(coach.isapproved==0){
              alert('Sorry, Your account is not approved yet');
           }
-        });
-    } else if (this.role == 'coach') {
+        }
+      });} 
+      else if (this.role == 'coach') {
       this.coachservice
         .checksignin(this.email, this.password)
         .subscribe((data) => {
@@ -136,8 +137,8 @@ export class SigninComponent {
           }
 
         }
-      });
-    }
+      );
+      }
     else if (this.role == 'admin') {
       this.router.navigate(['/adminpage']);
     }

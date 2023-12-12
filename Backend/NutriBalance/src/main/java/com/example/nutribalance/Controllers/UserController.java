@@ -29,5 +29,14 @@ public class UserController {
     public User subscribe(@Param("planName") String planName, @Param("user_id") Long user_id) {
         return service.subscribe_to_plan(planName, user_id);
     }
+    @GetMapping("/verify")
+    public ResponseEntity<?> verifyUser(@Param("code") String code) {
+        if (service.verify(code)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().body("Error: Verification code is invalid!");
+        }
+    }
+
 }
 

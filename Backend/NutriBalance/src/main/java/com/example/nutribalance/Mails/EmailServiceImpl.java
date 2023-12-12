@@ -31,33 +31,37 @@ public class EmailServiceImpl implements EmailService {
 //    @Value("${email1.username}") private String sender;
 
         // Method 1
-        // To send a simple email
-    public String sendSimpleMail(EmailDetails details)
-    {
-        // Try block to check for exceptions
-        try {
+        public String sendSimpleMail(EmailDetails details) {
+            int maxRetries = 3; // Set the maximum number of retries
+            int currentAttempt = 0;
 
-            // Creating a simple mail message
-            SimpleMailMessage mailMessage
-                    = new SimpleMailMessage();
-            // Setting up necessary details
-            System.out.println("details.getRecipient(): " + details.getRecipient());
-            mailMessage.setTo(details.getRecipient());
-            mailMessage.setText(details.getMsgBody());
-            mailMessage.setSubject(details.getSubject());
-            // Sending the mail
-            javaMailSender.send(mailMessage);
-            return "Mail Sent Successfully...";
+            do {
+                try {
+                    SimpleMailMessage mailMessage = new SimpleMailMessage();
+                    mailMessage.setTo(details.getRecipient());
+                    mailMessage.setText(details.getMsgBody());
+                    mailMessage.setSubject(details.getSubject());
+
+                    javaMailSender.send(mailMessage);
+
+                    return "Mail Sent Successfully...";
+                } catch (Exception e) {
+                    System.out.println("Error while sending mail: " + e.getMessage());
+                    currentAttempt++;
+
+                    if (currentAttempt >= maxRetries) {
+                        return "Failed to send mail after multiple attempts.";
+                    }
+
+                    // Introduce a delay before retrying (e.g., 5 seconds)
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            } while (true);
         }
-
-        // Catch block to handle the exceptions
-        catch (Exception e) {
-            System.out.println(e.getMessage()
-
-            );
-            return "Error while Sending Mail";
-        }
-    }
 
     // Method 2
     // To send an email with attachment

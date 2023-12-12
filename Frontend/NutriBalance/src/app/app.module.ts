@@ -37,8 +37,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { MatSelectModule } from '@angular/material/select';
-
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { VerifiedComponent } from './verified/verified.component';
 
 
 @NgModule({
@@ -62,6 +61,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CoachPlansComponent,
     EditDialogComponent,
     ConfirmDialogComponent,
+    VerifiedComponent,
 
   ],
   imports: [
@@ -77,8 +77,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     ReactiveFormsModule,
     MatSidenavModule,
-    MatSelectModule
-    NgbModule,
+    MatSelectModule,
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatSelectModule,
+    // NgbModule,
   ],
   providers: [
     AuthService,
@@ -86,9 +91,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     Shared,
     ModalPopServiceService,
     FpPopupComponent,
-    
+
 
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

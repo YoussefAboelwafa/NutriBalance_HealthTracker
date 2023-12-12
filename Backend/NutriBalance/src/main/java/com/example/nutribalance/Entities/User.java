@@ -28,6 +28,8 @@ public class User {
     private String password;
     @Column
     private String contact_number;
+    @Column
+    boolean isEnabled=false;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Weight> weights;
 

@@ -46,6 +46,8 @@ public class Coach {
     private int no_users_subscribed;
     @Column
     private int isapproved;
+    @Column
+    boolean isEnabled=false;
     @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL)
     @JsonIgnore
     List<User> users=new ArrayList<>();
@@ -61,6 +63,8 @@ public class Coach {
     @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL)
     @JsonIgnore
     List<Plan> plans;
+
+
 
 
 
