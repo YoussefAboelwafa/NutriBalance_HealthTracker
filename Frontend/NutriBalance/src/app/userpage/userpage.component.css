@@ -39,6 +39,8 @@ body {
 }
 
 #sidebar {
+  position: fixed;
+  overflow: auto;
   width: 250px;
   background-color: #333;
   color: #fff;
@@ -58,6 +60,7 @@ body {
 #content {
   flex: 1;
   padding: 20px;
+  margin-left: 250px;
 }
 
 #menu {
