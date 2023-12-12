@@ -37,7 +37,11 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { MatSelectModule } from '@angular/material/select';
+
+import { UserProfileComponent } from './user-profile/user-profile.component';
+
 import { VerifiedComponent } from './verified/verified.component';
+
 
 
 @NgModule({
@@ -61,7 +65,11 @@ import { VerifiedComponent } from './verified/verified.component';
     CoachPlansComponent,
     EditDialogComponent,
     ConfirmDialogComponent,
+
+    UserProfileComponent,
+
     VerifiedComponent,
+
 
   ],
   imports: [
@@ -78,12 +86,12 @@ import { VerifiedComponent } from './verified/verified.component';
     ReactiveFormsModule,
     MatSidenavModule,
     MatSelectModule,
+
     BrowserModule,
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatSelectModule,
-    // NgbModule,
   ],
   providers: [
     AuthService,

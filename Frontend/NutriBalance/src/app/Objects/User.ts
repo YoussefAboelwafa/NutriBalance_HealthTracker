@@ -8,6 +8,8 @@ export class User {
   password: any;
   contact_number: any;
   comment: any;
+  image:any
   plan:Plan|undefined;
   coaches:Coach|undefined;
+  [key: string]: any;
 }

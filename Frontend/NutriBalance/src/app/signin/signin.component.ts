@@ -103,22 +103,13 @@ export class SigninComponent {
         console.log(data);
         if (data == null) alert('wrong email or password');
         else {
-          this.shared.loggedIn = true;
-          this.router.navigate(['/home']);
+          let user: User = data;
+            this.shared.loggedIn = true;
+            this.tokenStorage.saveUser(user);
+            this.router.navigate(['/userpage']);
         }
       });
     }
-    else if (this.role == 'coach') {
-      this.coachservice.checksignin(this.email, this.password).subscribe(data => {
-        console.log(data);
-        if (data == null) alert('wrong email or password');
-        else {
-          let coach: Coach = data;
-          if(coach.isapproved==0){
-             alert('Sorry, Your account is not approved yet');
-          }
-        }
-      });} 
       else if (this.role == 'coach') {
       this.coachservice
         .checksignin(this.email, this.password)
