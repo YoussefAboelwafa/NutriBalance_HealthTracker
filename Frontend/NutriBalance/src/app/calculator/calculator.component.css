@@ -3,6 +3,7 @@
 }
 h2 {
   font-weight: 800;
+  font-size: 32px;
   margin-bottom: 20px;
 }
 .form-section,
@@ -13,6 +14,8 @@ h2 {
 .table-section {
   border: 3px solid #333;
   border-radius: 10px;
+  background-color: #fff;
+  padding: 50px;
 }
 input,
 select {
@@ -122,14 +125,14 @@ a .fa-circle-xmark {
 a i:hover {
   color: #000;
 }
-.fa-left-long{
+.fa-left-long {
   font-size: 34px;
   font-weight: 900;
   transition: 0.5s;
   cursor: pointer;
   color: #333;
 }
-a .fa-left-long:hover{
+a .fa-left-long:hover {
   color: #a6a6a6;
   margin-right: 10px;
   font-size: 36px;

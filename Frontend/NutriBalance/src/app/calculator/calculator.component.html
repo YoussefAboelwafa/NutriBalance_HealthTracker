@@ -13,7 +13,6 @@
           class="form-control"
           placeholder="Enter your weight in (kg)"
           min="0"
-          max="300"
           required
         />
       </div>
@@ -27,7 +26,6 @@
           class="form-control"
           placeholder="Enter your height in (cm)"
           min="0"
-          max="300"
           required
         />
       </div>
@@ -41,7 +39,6 @@
           class="form-control"
           placeholder="Enter your age"
           min="0"
-          max="120"
           required
         />
       </div>
@@ -101,7 +98,7 @@
   </div>
 
   <!-- Table Section -->
-  <div class="table-section" *ngIf="show_table">
+  <div class="table-section table-success" *ngIf="show_table">
     <h2>Average GDA Table</h2>
     <table class="table table-striped table-hover">
       <caption>
@@ -206,10 +203,10 @@
         <!-- Adjust the left style to position the point -->
       </div>
       <div class="labels">
-        <span>Underweight</span>
-        <span>Normal</span>
-        <span>Overweight</span>
-        <span>Obesity</span>
+        <span>Underweight [0:18]</span>
+        <span>Normal [18:25]</span>
+        <span>Overweight [25:35]</span>
+        <span>Obesity [35:55]</span>
       </div>
     </div>
     <hr />
@@ -233,5 +230,5 @@
 <!-- Info Section -->
 <div class="info-section" *ngIf="show_info">
   <a (click)="close_info()"><i class="fa-solid fa-left-long"></i> Back</a>
-  <hr>
+  <hr />
 </div>
