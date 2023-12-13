@@ -1,0 +1,54 @@
+.top{
+height: 100%;
+}
+
+.container{
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 90%;
+    display: flex;
+}
+.chart{
+    width: 90%;
+    height: 90%;
+}
+
+p{
+    font-size: 30px;
+    font-weight: 700;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-left: 40px;
+}
+@keyframes glow {
+    0% {
+      text-shadow: 0 0 15px rgba(71, 135, 71, 0.7); /* Initial glow color and size */
+    }
+    50% {
+      text-shadow: 0 0 30px rgba(71, 135, 71, 0.7);/* Midpoint glow color and size */
+    }
+    100% {
+      text-shadow: 0 0 15px rgba(71, 135, 71, 0.7); /* Final glow color and size */
+    }
+  }
+
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0); /* Bounce at the top and bottom */
+    }
+    40% {
+      transform: translateY(-10px); /* Move up during the bounce */
+    }
+    60% {
+      transform: translateY(-5px); /* Move down during the bounce */
+    }
+  }
+  
+  /* Apply the glow animation to the text inside the <p> element */
+  p {
+    display: inline; /* Ensures the animation only applies to the text, not the whole block */
+    animation: bounce 1.5s infinite; /* 2s duration, infinite loop */
+  }
+  
+  

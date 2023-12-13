@@ -30,6 +30,7 @@ import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscripti
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
 import { CalculatorComponent } from './calculator/calculator.component';
+import { SubscribeComponent } from './subscribe/subscribe.component';
 
 import { CoachPlansComponent } from './coach-plans/coach-plans.component';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
@@ -41,8 +42,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
 import { VerifiedComponent } from './verified/verified.component';
+import { FoodCaloriesComponent } from './food-calories/food-calories.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
+import { ProgressComponent } from './progress/progress.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +67,9 @@ import { VerifiedComponent } from './verified/verified.component';
     CoachProfileComponent,
     UserpageComponent,
     CalculatorComponent,
+
+    SubscribeComponent,
+
     CoachPlansComponent,
     EditDialogComponent,
     ConfirmDialogComponent,
@@ -69,8 +77,11 @@ import { VerifiedComponent } from './verified/verified.component';
     UserProfileComponent,
 
     VerifiedComponent,
+      FoodCaloriesComponent,
 
 
+
+    ProgressComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,6 +103,8 @@ import { VerifiedComponent } from './verified/verified.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
   providers: [
     AuthService,

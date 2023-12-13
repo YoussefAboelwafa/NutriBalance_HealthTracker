@@ -105,7 +105,9 @@ export class SigninComponent {
         console.log(data);
         if (data == null) alert('wrong email or password');
         else {
-          let user: User = data;
+
+          let user:User=data;
+
           this.shared.loggedIn = true;
           this.tokenStorage.saveUser(user);
           this.loading=false

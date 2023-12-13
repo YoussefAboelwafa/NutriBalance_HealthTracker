@@ -1,0 +1,225 @@
+
+.card-container{
+    margin-top: 20px;
+    margin-left: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: fit-content;
+    width: 90%;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    position: relative;   
+}
+.div1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    width: 40%;
+    padding-left: 1rem;
+    box-sizing: border-box;
+    padding-right: 1rem;
+   border-right: 1px solid #ccc;
+}
+.div1 p{
+    font-size: 20px;
+    font-weight: 500;
+    color: #008081;
+    width: 100%;
+    word-wrap: break-word;
+   
+
+}
+.div1 span{
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+}
+.div1 .unique{
+    font-size: 35px;
+    font-weight: 600;
+    color: #008081;
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.div2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    box-sizing: border-box;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    width: 40%;
+  
+}
+.vertical-line {
+    border-left: 1px solid #ccc;
+    height: 100%;
+    background-color: #c34141; /* Add background color to make the line visible */
+    margin: 0 10px;
+  }
+.div2 p{
+    font-size: 20px;
+    font-weight: 500;
+    color: #008081;
+    width: 100%;
+   
+
+}
+.div2 span{
+    color: black;
+    font-size: 20px;
+    font-weight: 500;
+}
+.div2 .unique{
+    font-size: 35px;
+    font-weight: 600;
+    color: #008081;
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.div3{
+    height:  100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    padding-right: 1rem;
+}
+.div3 img{
+    width: 14vw; /* Adjust the width as needed */
+    height: 14vw; /* Adjust the height as needed */
+    border-radius: 50%; /* Make the border-radius half of the width/height to create a circular shape */
+    object-fit: cover; /* Maintain aspect ratio while covering the container */
+    margin-bottom: 2rem;
+  
+}
+button{
+    margin-bottom: 1rem;
+}
+#popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  .outer_button {
+    border: none;
+    border-radius: 10px;
+    background-color: #fff;
+    width: 25px;
+    height: 25px;
+    margin-left: 3px;
+  }
+  .modal-title {
+    color: #008081;
+    font-size: 30px;
+    font-family: Montserrat;
+    font-weight: 700;
+    line-height: 100%;
+  }
+  
+  .modal-content {
+    border-radius: 15px;
+    background-color: #efefef;
+    box-shadow: 0px 0px 25px 0px white
+  }
+  
+  .modal-footer button {
+    background: #008081;
+    box-shadow: 0px 0px 7px 0px rgba(0, 129, 130, 0.16);
+    color: #fff;
+    width: 200px;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 8px 10px;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+  }
+  
+  .modal-body {
+    color: #008081;
+    font-size: 16px;
+    font-family: Montserrat;
+    font-weight: 500;
+  }
+  
+  .modal-footer button:hover {
+    background: #fff;
+    color: #008081;
+    border: 1px solid #008081;
+    transition: 1s;
+  }
+  
+  .modal-backdrop {
+    background-color: transparent !important;
+    pointer-events: none !important;
+  }
+  .loading-spinner {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    color: #008081;
+  }
+  
+  .spinner-border {
+    color: white;
+    font-size: 16px;
+    margin-left: 6px;
+    width: 18px;
+    height: 18px;
+  }
+  .spinner-border2 {
+    color: #008081;
+    font-size: 40px;
+    margin-left: 6px;
+    width: 25px;
+    height: 25px;
+  }
+  #popup.show {
+    display: block;
+  }
+  .subscribed{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: #008081;
+    font-size: 40px;
+    font-weight: 600;
+
+  }
+  .subscribed a{
+    color: black;
+  }

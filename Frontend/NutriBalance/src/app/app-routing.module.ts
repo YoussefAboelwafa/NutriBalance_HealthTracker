@@ -13,9 +13,16 @@ import { CreateplanComponent } from './createplan/createplan.component';
 import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscriptions.component';
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
+
+import { SubscribeComponent } from './subscribe/subscribe.component';
+
 import { CoachPlansComponent } from './coach-plans/coach-plans.component';
 import { VerifiedComponent } from './verified/verified.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { FoodCalorie } from './Objects/FoodCalorie';
+import { FoodCaloriesComponent } from './food-calories/food-calories.component';
+
+import { ProgressComponent } from './progress/progress.component';
 
 export const routes: Routes = [
   {
@@ -91,9 +98,24 @@ export const routes: Routes = [
         component: CalculatorComponent,
       },
       {
+
+        path: 'subscribe',
+        component: SubscribeComponent,
+      },
+      {
         path: 'userprofile',
         component: UserProfileComponent,
       },
+      {
+
+      path: 'Progress',
+      component: ProgressComponent,
+    },
+      {
+        path: 'foodcalories',
+        component: FoodCaloriesComponent,
+      },
+
     ],
   },
 ];

@@ -13,8 +13,11 @@ const httpOptions = {
 })
 export class PlanService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   savePlan(plan: Plan): Observable<any> {
     return this.http.post<any>(`${baseUrl}/save`, plan);
+  }
+  getAllPlans(): Observable<any> {
+    return this.http.get<any>(`${baseUrl}/getall`);
   }
 }

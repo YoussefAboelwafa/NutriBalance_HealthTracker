@@ -35,7 +35,8 @@ public class Service implements Iservice {
     private EmailService emailService;
     @Autowired
     private PlanRepositry planRepositry;
-
+    @Autowired
+    private FoodCalorieRepositry foodCalorieRepositry;
     @Override
     public Coach savecoach(Coach coach) {
         return coachRepo.save(coach);
@@ -67,6 +68,10 @@ public class Service implements Iservice {
     }
 
     @Override
+
+    public List<Plan> getallplans() {
+        return planRepositry.findAll();
+    }
     public List<Plan> getPlans(Long coachId) {
         Optional<Coach> coach = coachRepo.findById(coachId);
         return coach.map(value -> (List<Plan>) value.getPlans()).orElse(null);
@@ -93,6 +98,7 @@ public class Service implements Iservice {
         }
         planRepositry.deleteById(planName);
         return "Plan deleted";
+
     }
 
     @Override
@@ -225,7 +231,6 @@ public class Service implements Iservice {
         }
         return coachRepo.save(coach);
     }
-
 
     private boolean sendVerificationMail(Object user, String role) {
         if (role.equals("user")) {
@@ -442,7 +447,10 @@ public class Service implements Iservice {
             throw new RuntimeException("Error while changing user image", e);
         }
     }
-
+    @Override
+    public List<FoodCalorie> getFoodCalorie(){
+        return foodCalorieRepositry.findAll();
+    }
 
 }
 
