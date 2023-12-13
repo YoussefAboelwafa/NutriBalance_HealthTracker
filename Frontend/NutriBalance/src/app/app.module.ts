@@ -42,6 +42,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
 import { VerifiedComponent } from './verified/verified.component';
+import { FoodCaloriesComponent } from './food-calories/food-calories.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 import { ProgressComponent } from './progress/progress.component';
@@ -74,6 +77,7 @@ import { ProgressComponent } from './progress/progress.component';
     UserProfileComponent,
 
     VerifiedComponent,
+      FoodCaloriesComponent,
 
 
 
@@ -99,6 +103,8 @@ import { ProgressComponent } from './progress/progress.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
   providers: [
     AuthService,
