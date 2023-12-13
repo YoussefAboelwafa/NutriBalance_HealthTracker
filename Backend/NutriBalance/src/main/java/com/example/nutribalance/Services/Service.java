@@ -71,6 +71,11 @@ public class Service implements Iservice {
     }
 
     @Override
+    public List<Plan> getallplans() {
+        return planRepositry.findAll();
+    }
+
+    @Override
     public List<Coach> get_waiting_coaches() {
         return coachRepo.findByisapproved(0);
     }

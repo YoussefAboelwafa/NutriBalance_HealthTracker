@@ -18,6 +18,7 @@ import { ModalPopServiceService } from '../_services/modal-pop-service.service';
 
 import { FpPopupComponent } from '../fp-popup/fp-popup.component';
 import { Coach } from '../Objects/Coach';
+import { User } from '../Objects/User';
 declare const $: any;
 @Component({
   selector: 'app-signin',
@@ -103,8 +104,10 @@ export class SigninComponent {
         console.log(data);
         if (data == null) alert('wrong email or password');
         else {
+          let user:User=data;
           this.shared.loggedIn = true;
-          this.router.navigate(['/home']);
+          this.tokenStorage.saveUser(user);
+          this.router.navigate(['/userpage']);
         }
       });
     }

@@ -24,7 +24,6 @@ public class UserController {
         return service.usersignin(email, password);
     }
 
-    // to @aboelwafa, @medany, @ayman this is for you
     @GetMapping("/subscribe")
     public User subscribe(@Param("planName") String planName, @Param("user_id") Long user_id) {
         return service.subscribe_to_plan(planName, user_id);

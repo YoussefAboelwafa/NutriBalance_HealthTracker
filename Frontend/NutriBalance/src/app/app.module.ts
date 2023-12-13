@@ -30,6 +30,7 @@ import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscripti
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
 import { CalculatorComponent } from './calculator/calculator.component';
+import { SubscribeComponent } from './subscribe/subscribe.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { CalculatorComponent } from './calculator/calculator.component';
     CoachProfileComponent,
     UserpageComponent,
     CalculatorComponent,
+    SubscribeComponent,
   ],
   imports: [
     BrowserModule,

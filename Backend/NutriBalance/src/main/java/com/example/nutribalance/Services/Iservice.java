@@ -49,5 +49,5 @@ public interface Iservice {
 
 
     Coach updateCoachCV(String email, byte[] bytes);
-
+   List<Plan> getallplans();
 }

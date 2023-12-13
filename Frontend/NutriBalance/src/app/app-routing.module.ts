@@ -13,6 +13,7 @@ import { CreateplanComponent } from './createplan/createplan.component';
 import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscriptions.component';
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
+import { SubscribeComponent } from './subscribe/subscribe.component';
 
 export const routes: Routes = [
   {
@@ -76,6 +77,11 @@ export const routes: Routes = [
         path: 'calculator',
         component: CalculatorComponent,
       },
+      {
+        path: 'subscribe',
+        component: SubscribeComponent,
+      },
+
     ],
   },
 ];
