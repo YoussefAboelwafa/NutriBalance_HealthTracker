@@ -77,7 +77,7 @@ export class UserProfileComponent implements OnInit {
       this.userservices.addImage(this.user.email, formData).subscribe({
         next: (response: any) => {
           this.storage.saveUser(response);
-          this.imageUrl = this.convertToImage(this.selectedImage);
+          this.imageUrl = this.convertToImage(response.image);
         },
         error: (error: any) => {
           console.log(error);

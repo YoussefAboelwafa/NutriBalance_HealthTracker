@@ -39,6 +39,7 @@ export class SigninComponent {
   flag_show_login = false;
   flag_btn_login = true;
   isUser = true
+  loading=false;
 
 
   constructor(private shared: Shared, private userservice: UserService, private coachservice: CoachService, private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router, private route: ActivatedRoute, private pop_service: ModalPopServiceService, private shred: Shared) { }
@@ -94,7 +95,7 @@ export class SigninComponent {
 
   flag_forget_spinner = false;
   onSubmit(event: any) {
-
+    this.loading=true
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) {
       alert('Invalid email format');
     }
@@ -109,6 +110,7 @@ export class SigninComponent {
 
           this.shared.loggedIn = true;
           this.tokenStorage.saveUser(user);
+          this.loading=false
           this.router.navigate(['/userpage']);
         }
       });
@@ -134,6 +136,7 @@ export class SigninComponent {
         );
     }
     else if (this.role == 'admin') {
+      this.loading=false
       this.router.navigate(['/adminpage']);
     }
   }
@@ -179,6 +182,7 @@ export class SigninComponent {
       this.pop_service.pop_up("Password must be at least 8 characters", "Forget Password");
       return;
     }
+    
     this.authService.resetPassword(this.email, new_pass, this.role).subscribe(
       (res) => {
         this.flag_forget_spinner = false

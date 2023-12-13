@@ -22,6 +22,7 @@ export class CoachSignupComponent {
   coach = new Coach();
   confirmedPassword: any;
   selectedFile !: File;
+  loading=false;
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
     this.label = event.target.files[0]?.name || 'upload cv';
@@ -31,6 +32,7 @@ export class CoachSignupComponent {
   }
   signup() {
     this.coach.isapproved = 0;
+    this.loading=true;
 
     if (this.coach.password != this.confirmedPassword) {
       alert('Passwords do not match');
@@ -49,6 +51,7 @@ export class CoachSignupComponent {
     this.coachservice.saveCoach(formData).subscribe
       (data => {
         alert("You have successfully sign up, please verify your mail!");
+        this.loading=false
       },
         error => {
           alert('Username or email already exists');

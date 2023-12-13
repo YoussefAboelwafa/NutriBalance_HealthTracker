@@ -41,13 +41,15 @@
 
           <tr>
             <td>
-                <button id="btn" class="signinbtn" type="submit" (click)="onSubmit($event)" [disabled]="!form.valid">Sign in</button>
+                  <button id="btn" type="submit" (click)="onSubmit($event)"  [disabled]="!form.valid || loading">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Sign in
+                </button>
                 <div class="form-group" *ngIf="isUser">
                   <p class="social-login text-center">
                     <span>or</span>
                       Sign in with:
-                      <a  href="{{ googleURL }}" class="ml-2">
-                                  <i class="fa-brands fa-google" style="font-size: 2rem;"></i>
+                      <a  href="{{ googleURL }}" class="ml-2"><i class="fa-brands fa-google" style="font-size: 2rem;"></i>
                       </a>
                   </p>
               </div>

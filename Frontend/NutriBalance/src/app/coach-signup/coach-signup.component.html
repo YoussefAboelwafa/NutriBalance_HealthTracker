@@ -120,7 +120,10 @@
 
         <tr>
           <td colspan="2">
-            <button id="btn" type="submit" (click)="signup()" [disabled]="!form.valid">Sign up</button>
+              <button id="btn" type="submit" (click)="signup()" [disabled]="!form.valid || loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Sign up
+            </button>
             <p id="signup">
               Already a member?
               <a (click)="signin()">Sign in now</a>

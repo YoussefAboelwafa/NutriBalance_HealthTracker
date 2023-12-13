@@ -2,18 +2,18 @@
 // Service implementation class
 package com.example.nutribalance.Mails;
 
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
 
 // Annotation
 @Service
@@ -22,6 +22,10 @@ public class EmailServiceImpl implements EmailService {
 
 
     private final JavaMailSender javaMailSender;
+
+    @Qualifier("email1Sender")
+    @Autowired
+    MailSender mailSender;
 
 
     @Autowired
@@ -42,9 +46,9 @@ public class EmailServiceImpl implements EmailService {
                     mailMessage.setText(details.getMsgBody());
                     mailMessage.setSubject(details.getSubject());
 
-                    javaMailSender.send(mailMessage);
+                     mailSender.send(mailMessage);
 
-                    return "Mail Sent Successfully...";
+                    return "done";
                 } catch (Exception e) {
                     System.out.println("Error while sending mail: " + e.getMessage());
                     currentAttempt++;
@@ -61,6 +65,8 @@ public class EmailServiceImpl implements EmailService {
                 }
             } while (true);
         }
+
+//        @Async("emailThreadPool")
         @Override
         public String sendMemeMail(EmailDetails details) {
             int maxRetries = 3;
@@ -74,7 +80,7 @@ public class EmailServiceImpl implements EmailService {
                     helper.setText(details.getMsgBody(), true);
                     helper.setSubject(details.getSubject());
                     javaMailSender.send(message);
-                    return "Mail Sent Successfully...";
+                    return "done";
                 } catch (Exception e) {
                     System.out.println("Error while sending mail: " + e.getMessage());
                     currentAttempt++;

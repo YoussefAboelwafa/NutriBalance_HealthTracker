@@ -19,12 +19,14 @@ export class SignupComponent {
 
   user = new User();
   confirmedPassword: any;
+  loading = false;
 
   signin() {
     this.router.navigate(['/home']);
   }
 
   submit() {
+    this.loading = true;
     if (this.user.password != this.confirmedPassword) {
       alert('Passwords do not match');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.user.email)) {
@@ -40,6 +42,7 @@ export class SignupComponent {
         else{
           alert("You have successfully sign up, please verify your mail!");
         }
+        this.loading = false;
         this.router.navigate(['/home']);
       });
     }
