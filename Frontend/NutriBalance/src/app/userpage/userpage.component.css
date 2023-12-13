@@ -11,9 +11,11 @@
 
 html {
   font-size: 14px;
+  height: 100%;
 }
 
 body {
+  height: 100%;
   width: 100%;
   font-family: sans-serif;
   margin: 0;
@@ -30,6 +32,7 @@ body {
 #container {
   display: flex;
   flex: 1;
+  height: 100%;
 }
 
 #header-img {
@@ -39,13 +42,10 @@ body {
 }
 
 #sidebar {
-  position: fixed;
-  overflow: auto;
   width: 250px;
   background-color: #333;
   color: #fff;
   padding-top: 20px;
-  height: 100vh; /* 100% of the viewport height */
 }
 
 .top a {
@@ -60,8 +60,7 @@ body {
 #content {
   flex: 1;
   padding: 20px;
-  margin-left: 250px;
-
+  overflow: auto;
 }
 
 #menu {
@@ -80,9 +79,13 @@ body {
 
 #menu a:hover {
   background-color: rgba(127, 255, 212, 0.25);
+  transition: 0.7s;
+  margin-left: 10px;
+
 }
 .active {
   background-color: rgba(127, 255, 212, 0.25);
+  margin-left: 10px;
 }
 
 #sidebar-end-block {
@@ -107,6 +110,7 @@ body {
 }
 #sidebar-end-block a:hover {
   margin-left: 30px;
+  
 }
 i {
   margin-right: 10px;

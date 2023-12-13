@@ -47,6 +47,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 
+import { ProgressComponent } from './progress/progress.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 
+    ProgressComponent,
   ],
   imports: [
     BrowserModule,

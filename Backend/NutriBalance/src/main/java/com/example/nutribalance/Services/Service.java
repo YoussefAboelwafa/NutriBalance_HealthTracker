@@ -217,6 +217,7 @@ public class Service implements Iservice {
 
 
     private void sendVerificationMail(Object user, String role) {
+
        Optional<ResetPassword> old_reset_password = Optional.ofNullable(resetPasswordRepository.findByEmail((role=="user")? ((User)user).getEmail():((Coach)user).getEmail()));
        old_reset_password.ifPresent(password -> resetPasswordRepository.deleteById(password.getId()));
         if (role.equals("user")) {

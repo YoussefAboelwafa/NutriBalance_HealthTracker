@@ -22,6 +22,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FoodCalorie } from './Objects/FoodCalorie';
 import { FoodCaloriesComponent } from './food-calories/food-calories.component';
 
+import { ProgressComponent } from './progress/progress.component';
 
 export const routes: Routes = [
   {
@@ -105,6 +106,11 @@ export const routes: Routes = [
         path: 'userprofile',
         component: UserProfileComponent,
       },
+      {
+
+      path: 'Progress',
+      component: ProgressComponent,
+    },
       {
         path: 'foodcalories',
         component: FoodCaloriesComponent,
