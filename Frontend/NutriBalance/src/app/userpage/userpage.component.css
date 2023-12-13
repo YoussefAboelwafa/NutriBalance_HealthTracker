@@ -107,6 +107,7 @@ body {
   color: white;
   text-decoration: none;
   transition: 0.4s;
+  cursor: pointer;
 }
 #sidebar-end-block a:hover {
   margin-left: 30px;

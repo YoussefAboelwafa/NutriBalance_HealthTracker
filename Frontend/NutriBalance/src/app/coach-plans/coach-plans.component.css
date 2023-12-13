@@ -6,7 +6,7 @@
     flex-wrap: wrap;
   }
   .card {
-    width: 45%;
+    width: 70%;
     margin: 20px;
     border: 4px solid black;
     border-radius: 20px;
@@ -25,6 +25,7 @@
     padding: 10px;
     cursor: pointer;
     transition: 0.4s;
+    width: 10vw;
   }
   button:hover {
     background-color: rgb(255, 255, 255);

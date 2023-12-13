@@ -56,7 +56,7 @@ export class CreateplanComponent implements OnInit {
     $('#exampleModalCenter').modal('hide');
     $('#notify').modal('hide');
     //todo: navigate to view-plans page
-    this.router.navigate(['/coach-page']);
+    this.router.navigate(['/coach-plans']);
   }
   closeError() {
     $('#exampleModalCenter').modal('hide');

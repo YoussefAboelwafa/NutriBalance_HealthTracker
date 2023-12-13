@@ -60,11 +60,11 @@ export class CoachPlansComponent implements OnInit {
     const dialogRef = this.dialog.open(EditDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((data: any) => {
       if (data) {
-        this.openConfirmDialog("Are you sure you want to update this information?")
+        this.openConfirmDialog("Are you sure you want to update this information?",plan)
       }
     });
   }
-  openConfirmDialog(data: any): void {
+  openConfirmDialog(data: any,plan:any): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '300px',
       data: {
@@ -74,10 +74,10 @@ export class CoachPlansComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == "confirm") {
-        this.service.updatePlan(data).subscribe(data => {
+        this.service.updatePlan(plan).subscribe(data => {
           let index = this.plans.findIndex(x => x.planName === data.planName);
           this.plans[index] = data
-          window.location.reload()
+         
         })
       }
     });

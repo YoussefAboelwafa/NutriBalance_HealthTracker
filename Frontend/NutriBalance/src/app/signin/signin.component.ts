@@ -103,7 +103,9 @@ export class SigninComponent {
     else if (this.role == 'user') {
       this.userservice.checksignin(this.email, this.password).subscribe(data => {
         console.log(data);
-        if (data == null) alert('wrong email or password');
+        if (data == null) {
+          alert('wrong email or password');
+          this.loading=false}
         else {
 
           let user:User=data;
@@ -116,11 +118,15 @@ export class SigninComponent {
       });
     }
     else if (this.role == 'coach') {
+
       this.coachservice
         .checksignin(this.email, this.password)
         .subscribe((data) => {
           console.log(data);
-          if (data == null) alert('wrong email or password');
+          if (data == null){ 
+            this.loading=false
+            alert('wrong email or password');
+          }
           else {
             let coach: Coach = data;
             if (coach.isapproved == 0) {
@@ -128,6 +134,7 @@ export class SigninComponent {
             } else {
               this.shared.loggedIn = true;
               this.tokenStorage.saveCoach(coach);
+              this.loading=false
               this.router.navigate(['/coach-page']);
             }
           }

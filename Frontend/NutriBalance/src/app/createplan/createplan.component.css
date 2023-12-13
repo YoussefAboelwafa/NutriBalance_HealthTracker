@@ -9,6 +9,11 @@
 .container form textarea {
   width: 50vw;
 }
+label{
+  font-size: 20px;
+  font-weight: 600;
+  
+}
 #popup {
   display: none;
   position: fixed;

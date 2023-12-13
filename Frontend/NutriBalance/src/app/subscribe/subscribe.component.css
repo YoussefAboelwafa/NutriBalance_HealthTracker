@@ -6,12 +6,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: fit-content;
+    height:max-content;
     width: 90%;
     background-color: #fff;
-    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     position: relative;   
+
 }
 .div1{
     display: flex;

@@ -43,7 +43,7 @@ private createChart(): void {
     new Chart(
       document.getElementById('Progress') as HTMLCanvasElement,
       {
-        type: 'bar',
+        type: 'line',
         data: {
           labels: this.data.map(row => row.year),
           datasets: [

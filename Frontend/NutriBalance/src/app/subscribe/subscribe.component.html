@@ -16,19 +16,12 @@
       <p>
         <strong>Description: </strong><span>{{ plan.description }}</span>
       </p>
-      <button
-        class="btn btn-success"
-        data-toggle="modal"
-        data-target="#exampleModalCenter"
-        (click)="updateindex(i)"
-      >
-        Subscribe NOW!
-      </button>
+      
     </div>
     <div class="vertical-line"></div>
     <div class="div2">
       <p>
-        <strong class="unique">Coach {{ plan.coach?.username }}</strong>
+        <strong class="unique">{{ plan.coach?.username }}</strong>
       </p>
       <p>
         <strong>Email: </strong><span>{{ plan.coach?.email }}</span>
@@ -46,9 +39,20 @@
       <p>
         <strong>rating: </strong><span>{{ plan.coach?.rating }}</span>
       </p>
+      <p>
+        <strong>Description: </strong><span>{{ plan.coach?.description }}</span>
+      </p>
     </div>
     <div class="div3">
       <img [src]="images[i]" />
+      <button
+        class="btn btn-success"
+        data-toggle="modal"
+        data-target="#exampleModalCenter"
+        (click)="updateindex(i)"
+      >
+        Subscribe NOW!
+      </button>
     </div>
   </div>
   <div

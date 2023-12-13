@@ -1,41 +1,42 @@
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 :host {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    height: 100vh;
-  }  
-  .mat-elevation-z8 {
-    width:100%;
-    
-  }
-  .mat-cell {
-    
-    text-align: center;
-    width: 50%;
-  }
-  th.mat-header-cell{
-      text-align: center;
-      
-  }
- .table-container {
-    margin-top: 5vh;
-    height: fit-content;
-    width: 40%; 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    margin-right: 10%;
-    
-  }
-  .mat-input-element {
-    height:5vh;
-    background-color:rgb(220, 218, 218);
-    width: 100%;
-    
-  }
-
-  
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+}
+.mat-elevation-z8 {
+  width: 100%;
+}
+.mat-cell {
+  text-align: center;
+  padding: 20px;
+  justify-content: center;
+  width: 50%;
+  font-size: 20px;
+  font-weight: 600;
+  color: black;
+}
+th.mat-header-cell {
+  text-align: center;
+  padding-bottom: 15px;
+  font-size: 25px;
+  font-weight: 600;
+  color: #008081;
+}
+.table-container {
+  margin-top: 5vh;
+  height: fit-content;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-right: 10%;
+}
+.mat-input-element {
+  height: 5vh;
+  background-color: rgb(220, 218, 218);
+  width: 100%;
+}
