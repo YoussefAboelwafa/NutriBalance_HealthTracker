@@ -11,10 +11,11 @@ export class AppComponent {
   title = 'NutriBalance';
 
   constructor(private router: Router) {
-    const previousUrl = localStorage.getItem('previousUrl');
-    if (previousUrl) {
-      router.navigateByUrl(previousUrl);
-      localStorage.removeItem('previousUrl');
-    }
+    // const previousUrl = localStorage.getItem('previousUrl');
+    // if (previousUrl) {
+    //   router.navigateByUrl(previousUrl);
+    //   localStorage.removeItem('previousUrl');
+    // }
+    this.router.navigate(['userpage'])
   }
 }

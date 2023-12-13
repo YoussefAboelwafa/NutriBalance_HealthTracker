@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Chart} from 'chart.js/auto';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { Weight } from '../Objects/Weight';
+import { User } from '../Objects/User';
 @Component({
   selector: 'app-progress',
   templateUrl: './progress.component.html',
@@ -23,8 +24,10 @@ export class ProgressComponent implements OnInit {
 
 
 constructor(private token:TokenStorageService){
-  this.CurrentUser = this.token.getUser();
 
+  const user = this.token.getUser();
+  this.CurrentUser = User.fromJson(user);
+  console.log(this.CurrentUser);
  
   setTimeout(() => {
     this.createChart();
@@ -36,7 +39,7 @@ ngOnInit(): void {
   }
   
 
-  private createChart(): void {
+private createChart(): void {
     new Chart(
       document.getElementById('Progress') as HTMLCanvasElement,
       {
@@ -54,4 +57,7 @@ ngOnInit(): void {
       }
     );
   }
+
+
+
 }

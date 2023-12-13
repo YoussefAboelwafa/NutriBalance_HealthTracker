@@ -100,11 +100,11 @@ export const routes: Routes = [
         path: 'subscribe',
         component: SubscribeComponent,
       },
+      {
 
         path: 'userprofile',
         component: UserProfileComponent,
       },
-
       {
       path: 'Progress',
       component: ProgressComponent,
