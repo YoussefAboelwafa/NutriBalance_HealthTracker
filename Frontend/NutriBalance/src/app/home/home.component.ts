@@ -28,11 +28,11 @@ export class HomeComponent implements OnInit {
   defaultImageUrl: string = '../../assets/images/nophoto.png';
 
   constructor(private router: Router, private userService: UserService, private tokenService: TokenStorageService, private shared: Shared, private sanitizer: DomSanitizer,) {
-    if (this.shared.loggedIn == true) {
-      setTimeout(function () {
-        alert("successfully logged in");
-      }, 1000);
-    }
+    // if (this.shared.loggedIn == true) {
+    //   setTimeout(function () {
+    //     alert("successfully logged in");
+    //   }, 1000);
+    // }
   }
   content!: string;
   ngOnInit(): void {
@@ -99,7 +99,8 @@ export class HomeComponent implements OnInit {
   }
   logout(): void {
     this.tokenService.signOut()
-    this.router.navigate(['/home']);
+    this.shared.loggedIn=false;
+    window.location.reload();
   }
   goToAdminPage() {
     this.router.navigateByUrl('/adminpage');
