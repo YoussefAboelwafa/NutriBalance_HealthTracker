@@ -38,7 +38,8 @@ export class CoachProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.coach = this.storage.getCoach();
-    this.originalCoach = { ...this.coach };
+    if(this.coach)
+    {this.originalCoach = { ...this.coach };
     console.log(this.coach);
     this.emptyFields = [];
     for (const key of Object.keys(this.coach)) {
@@ -60,6 +61,9 @@ export class CoachProfileComponent implements OnInit {
       const blob = new Blob([uint8Array], { type: 'application/pdf' });
       const blobUrl = URL.createObjectURL(blob);
       this.cvBlobUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
+    }}
+    else{
+      this.hasPhoto=false
     }
   }
   convertToImage(string: any) {
@@ -72,7 +76,6 @@ export class CoachProfileComponent implements OnInit {
     const blobUrl = URL.createObjectURL(blob);
     return this.sanitizer.bypassSecurityTrustUrl(blobUrl) as SafeUrl;
   }
-  convertToByteArray(url: any) {}
   handleImageInput(event: any): void {
     const file = event.target.files[0]; // Get the selected file
     if (file) {
@@ -82,7 +85,7 @@ export class CoachProfileComponent implements OnInit {
       this.coachservice.addImage(this.coach.email, formData).subscribe({
         next: (response) => {
           this.storage.saveCoach(response);
-          this.imageUrl = this.convertToImage(this.selectedImage);
+          this.imageUrl = this.convertToImage(response.image);
         },
         error: (error) => {
           console.log(error);
@@ -92,7 +95,6 @@ export class CoachProfileComponent implements OnInit {
   }
 
   toggleEditMode() {
-    // this.originalCoach = { ...this.coach }; // Store a deep copy of the coach when entering edit mode
     this.isEdit = true;
   }
 

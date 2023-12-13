@@ -1,0 +1,24 @@
+<div
+  class="d-flex align-items-center justify-content-center"
+  style="min-height: 100vh"
+  *ngIf="!isVerified"
+>
+  <div class="container text-center">
+    <h2>Email is Verified</h2>
+    <!-- <p>Please click the buttons below to take action.</p> -->
+    <div
+      *ngIf="isVerified == false"
+      class="spinner-border"
+      role="status"
+    ></div>
+  </div>
+</div>
+<div
+  class="d-flex align-items-center justify-content-center"
+  style="min-height: 100vh"
+  *ngIf="isVerified"
+>
+  <div class="container text-center">
+    <h2>Your account has been verified, please close this page.</h2>
+  </div>
+</div>

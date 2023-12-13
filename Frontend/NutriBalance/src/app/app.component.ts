@@ -1,4 +1,5 @@
 import { Component, NgModule } from '@angular/core';
+
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 
 @Component({

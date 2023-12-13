@@ -13,7 +13,13 @@ import { CreateplanComponent } from './createplan/createplan.component';
 import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscriptions.component';
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
+
 import { SubscribeComponent } from './subscribe/subscribe.component';
+
+import { CoachPlansComponent } from './coach-plans/coach-plans.component';
+import { VerifiedComponent } from './verified/verified.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+
 
 export const routes: Routes = [
   {
@@ -33,11 +39,7 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-  },
-  {
-    path: 'waiting-coaches',
-    component: WaitingCoachesComponent,
-  },
+  },  
   {
     path: 'coach-signup',
     component: CoachSignupComponent,
@@ -49,6 +51,12 @@ export const routes: Routes = [
   {
     path: 'adminpage',
     component: AdminpageComponent,
+    children: [
+      {
+        path: 'waiting-coaches',
+        component: WaitingCoachesComponent,
+      },
+    ]
   },
   {
     path: 'coach-page',
@@ -59,6 +67,11 @@ export const routes: Routes = [
         component: CoachProfileComponent,
       },
       {
+        path: 'showplans',
+        component: CoachPlansComponent,
+      }
+      ,
+      {
         path: 'createplan',
         component: CreateplanComponent,
       },
@@ -67,6 +80,10 @@ export const routes: Routes = [
         component: ViewSubscriptionsComponent,
       },
     ],
+  },
+  {
+    path:'verify/:token',
+    component:VerifiedComponent
   },
 
   {
@@ -78,8 +95,13 @@ export const routes: Routes = [
         component: CalculatorComponent,
       },
       {
+
         path: 'subscribe',
         component: SubscribeComponent,
+      },
+
+        path: 'userprofile',
+        component: UserProfileComponent,
       },
 
     ],

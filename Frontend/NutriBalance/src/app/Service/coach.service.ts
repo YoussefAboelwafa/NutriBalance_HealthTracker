@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Coach } from '../Objects/Coach';
 const baseUrl = 'http://localhost:8080/coach';
@@ -7,6 +7,8 @@ const baseUrl = 'http://localhost:8080/coach';
   providedIn: 'root'
 })
 export class CoachService {
+ 
+  
  
   constructor(private http: HttpClient) {}
   saveCoach(formdata:FormData): Observable<any> {
@@ -39,5 +41,15 @@ export class CoachService {
   addCv(email: any, file: any) {
     return this.http.post<any>(`${baseUrl}/updateCV/${email}`, file);
   }
-  
+  getCoachPlans(id: any):Observable<any> {
+    const params = { 'id': id };
+    return this.http.get<any>(`${baseUrl}/getPlans`,{params})
+  }
+  updatePlan(data: any) :Observable<any> {
+    return this.http.put<any>(`${baseUrl}/updatePlan`,data);
+  }
+  deletePlan(id: any) :Observable<any> {
+    return this.http.delete<any>(`${baseUrl}/deletePlan/${id}`);
+  }
+
 }

@@ -32,6 +32,19 @@ import { UserpageComponent } from './userpage/userpage.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 import { SubscribeComponent } from './subscribe/subscribe.component';
 
+import { CoachPlansComponent } from './coach-plans/coach-plans.component';
+import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+
+import { MatSelectModule } from '@angular/material/select';
+
+import { UserProfileComponent } from './user-profile/user-profile.component';
+
+import { VerifiedComponent } from './verified/verified.component';
+
+
+
 @NgModule({
   declarations: [
     SigninComponent,
@@ -50,7 +63,19 @@ import { SubscribeComponent } from './subscribe/subscribe.component';
     CoachProfileComponent,
     UserpageComponent,
     CalculatorComponent,
+
     SubscribeComponent,
+
+    CoachPlansComponent,
+    EditDialogComponent,
+    ConfirmDialogComponent,
+
+    UserProfileComponent,
+
+    VerifiedComponent,
+
+
+
   ],
   imports: [
     BrowserModule,
@@ -64,6 +89,14 @@ import { SubscribeComponent } from './subscribe/subscribe.component';
     MatFormFieldModule,
     CommonModule,
     ReactiveFormsModule,
+    MatSidenavModule,
+    MatSelectModule,
+
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatSelectModule,
   ],
   providers: [
     AuthService,
@@ -71,7 +104,9 @@ import { SubscribeComponent } from './subscribe/subscribe.component';
     Shared,
     ModalPopServiceService,
     FpPopupComponent,
+
+
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

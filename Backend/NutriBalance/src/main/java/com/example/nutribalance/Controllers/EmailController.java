@@ -17,8 +17,8 @@ public class EmailController {
     {
         return ResponseEntity.ok(emailService.sendSimpleMail(details));
     }
-    @PostMapping("/sendMailWithAttachment")
-    public String sendMailWithAttachment(@RequestBody EmailDetails details) {
-        return emailService.sendMailWithAttachment(details);
+    @PostMapping("/sendMemeMail")
+    public ResponseEntity<?> sendMemeMail(@RequestBody EmailDetails details) {
+        return ResponseEntity.ok(emailService.sendMemeMail(details));
     }
 }

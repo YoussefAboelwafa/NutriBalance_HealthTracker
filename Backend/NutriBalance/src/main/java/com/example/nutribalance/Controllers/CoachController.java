@@ -1,11 +1,14 @@
 package com.example.nutribalance.Controllers;
 
 import com.example.nutribalance.Entities.Coach;
+import com.example.nutribalance.Entities.Plan;
 import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.Mails.EmailDetails;
 import com.example.nutribalance.Mails.EmailService;
 import com.example.nutribalance.Services.Iservice;
+import com.example.nutribalance.dto.ApiResponse;
 import com.example.nutribalance.dto.CoachDto;
+import com.example.nutribalance.dto.PlanDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -25,37 +29,15 @@ public class CoachController {
     private EmailService emailService;
 
     @PostMapping("/save")
-//
-//    public ResponseEntity<?> savecoach(
-//            @RequestParam("file") MultipartFile file,
-//            @RequestParam("coach") String coachJson) throws IOException {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        Coach coach = objectMapper.readValue(coachJson, Coach.class);
-////    EmailDetails details = new EmailDetails();
-////    details.setRecipient(coach.getEmail());
-////    details.setSubject("Waiting for approval Email");
-////    details.setMsgBody("Dear "+coach.getUsername()+",\n" +
-////            "Thank you for your interest in joining our team. We have received your application for the position of Nutrition Coach. We are currently reviewing all applications and will be in touch with those who we feel are best suited for the position.\n" +
-////            "Thank you again for your interest in working with us. We wish you the best of luck with your job search.\n" +
-////            "Sincerely,\n" +
-////            "NutriBalance Team");
-////    emailService.sendSimpleMail(details);
-
     public ResponseEntity<?> savecoach(@RequestParam("file") MultipartFile file, @RequestParam("coach") String coachJson) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         Coach coach = objectMapper.readValue(coachJson, Coach.class);
-        EmailDetails details = new EmailDetails();
-        details.setRecipient(coach.getEmail());
-        details.setSubject("Waiting for approval Email");
-        details.setMsgBody("Dear " + coach.getUsername() + ",\n" +
-                "Thank you for your interest in joining our team. We have received your application for the position of Nutrition Coach. We are currently reviewing all applications and will be in touch with those who we feel are best suited for the position.\n" +
-                "Thank you again for your interest in working with us. We wish you the best of luck with your job search.\n" +
-                "Sincerely,\n" +
-                "NutriBalance Team");
-        emailService.sendSimpleMail(details);
-
         coach.setCv(file.getBytes());
-        return ResponseEntity.ok().body(iservice.savecoach(coach));
+        coach.setIsapproved(0);
+        coach.setEnabled(false);
+
+
+        return ResponseEntity.ok().body(iservice.registerCoach(coach));
     }
 
     @GetMapping("/get_waiting_coaches")
@@ -87,6 +69,7 @@ public class CoachController {
     public User update_comment(@PathVariable String comment, @PathVariable Long user_id) {
         return iservice.update_comment(comment, user_id);
     }
+
     @PostMapping("/addImageToCoach/{Email}")
     public Coach addImageToCoach(@PathVariable String Email, @RequestParam("file") MultipartFile image) {
         return iservice.addImageToCoach(Email, image);
@@ -96,10 +79,42 @@ public class CoachController {
     public Coach updateCaoch(@RequestBody Coach coach) {
         return iservice.updateCoach(coach);
     }
+
     @PostMapping("/updateCV/{email}")
-    public Coach updateCV(@PathVariable("email") String email,@RequestParam("file") MultipartFile file) throws IOException {
-        return iservice.updateCoachCV(email,file.getBytes());
+    public Coach updateCV(@PathVariable("email") String email, @RequestParam("file") MultipartFile file) throws IOException {
+        return iservice.updateCoachCV(email, file.getBytes());
     }
+
+    @GetMapping("/getPlans")
+    public List<PlanDto> getPlans(@RequestParam("id") Long coach_id) {
+        List<Plan> plans = iservice.getPlans(coach_id);
+        ArrayList<PlanDto> planDtos = new ArrayList<>();
+        for (Plan plan : plans) {
+            planDtos.add(
+                    PlanDto.builder()
+                            .planName(plan.getPlanName())
+                            .description(plan.getDescription())
+                            .Goal(plan.getGoal()).build());
+        }
+        return planDtos;
+
+    }
+    @PutMapping("/updatePlan")
+    public PlanDto updatePlan(@RequestBody Plan plan){
+        Plan p=iservice.updatePlan(plan);
+        return PlanDto.builder()
+                .planName(p.getPlanName())
+                .description(p.getDescription())
+                .Goal(p.getGoal()).build();
+
+    }
+    @DeleteMapping("/deletePlan/{planName}")
+    public ApiResponse deletePlan(@PathVariable String planName){
+        String s=iservice.deletePlan(planName);
+        boolean b= s.equals("Plan deleted");
+        return new ApiResponse(b,s);
+    }
+
 
 }
 

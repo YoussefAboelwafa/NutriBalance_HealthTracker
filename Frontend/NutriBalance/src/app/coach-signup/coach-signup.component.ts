@@ -46,8 +46,13 @@ export class CoachSignupComponent {
     formData.append('file', this.selectedFile, this.selectedFile.name);
     formData.append('coach', JSON.stringify(this.coach));
 
-    this.coachservice.saveCoach(formData).subscribe(data => {
-      console.log(data);
-    });
+    this.coachservice.saveCoach(formData).subscribe
+      (data => {
+        alert("You have successfully sign up, please verify your mail!");
+      },
+        error => {
+          alert('Username or email already exists');
+        }
+      );
   }
 }

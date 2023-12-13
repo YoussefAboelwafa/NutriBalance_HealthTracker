@@ -60,7 +60,7 @@ public class Authentication {
         service.create_reset_password(resetPassword);
         return ResponseEntity.ok().build();
     }
-    @GetMapping("/w")
+    @GetMapping("/checkOtp")
     public ResponseEntity<?> checkOtp(@Param("otp") String otp,@Param("email") String email) {
         ResetPassword user = service.get_reset_password(email);
         if (user == null) {

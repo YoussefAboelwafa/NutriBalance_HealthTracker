@@ -27,10 +27,15 @@ public class User {
     @Column
     private String password;
     @Column
+
     private String contact_number;
+    @Column
+    boolean isEnabled=false;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Weight> weights;
-
+    @Lob
+    @Column(name = "image", columnDefinition = "longblob")
+    private byte[] image;
     @ManyToOne
     @JoinColumn(name = "planName")
     private Plan plan;

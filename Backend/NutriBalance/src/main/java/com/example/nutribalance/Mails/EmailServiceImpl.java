@@ -23,81 +23,72 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender javaMailSender;
 
+
     @Autowired
     public EmailServiceImpl(@Qualifier("email2Sender") JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
 
-//    @Value("${email1.username}") private String sender;
 
         // Method 1
-        // To send a simple email
-    public String sendSimpleMail(EmailDetails details)
-    {
-        // Try block to check for exceptions
-        try {
+        public String sendSimpleMail(EmailDetails details) {
+            int maxRetries = 3;
+            int currentAttempt = 0;
 
-            // Creating a simple mail message
-            SimpleMailMessage mailMessage
-                    = new SimpleMailMessage();
-            // Setting up necessary details
-            System.out.println("details.getRecipient(): " + details.getRecipient());
-            mailMessage.setTo(details.getRecipient());
-            mailMessage.setText(details.getMsgBody());
-            mailMessage.setSubject(details.getSubject());
-            // Sending the mail
-            javaMailSender.send(mailMessage);
-            return "Mail Sent Successfully...";
+            do {
+                try {
+                    SimpleMailMessage mailMessage = new SimpleMailMessage();
+                    mailMessage.setTo(details.getRecipient());
+                    mailMessage.setText(details.getMsgBody());
+                    mailMessage.setSubject(details.getSubject());
+
+                    javaMailSender.send(mailMessage);
+
+                    return "Mail Sent Successfully...";
+                } catch (Exception e) {
+                    System.out.println("Error while sending mail: " + e.getMessage());
+                    currentAttempt++;
+
+                    if (currentAttempt >= maxRetries) {
+                        return "Failed to send mail after multiple attempts.";
+                    }
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            } while (true);
         }
+        @Override
+        public String sendMemeMail(EmailDetails details) {
+            int maxRetries = 3;
+            int currentAttempt = 0;
 
-        // Catch block to handle the exceptions
-        catch (Exception e) {
-            System.out.println(e.getMessage()
+            do {
+                try {
+                    MimeMessage message = javaMailSender.createMimeMessage();
+                    MimeMessageHelper helper = new MimeMessageHelper(message, true);
+                    helper.setTo(details.getRecipient());
+                    helper.setText(details.getMsgBody(), true);
+                    helper.setSubject(details.getSubject());
+                    javaMailSender.send(message);
+                    return "Mail Sent Successfully...";
+                } catch (Exception e) {
+                    System.out.println("Error while sending mail: " + e.getMessage());
+                    currentAttempt++;
 
-            );
-            return "Error while Sending Mail";
+                    if (currentAttempt >= maxRetries) {
+                        return "Failed to send mail after multiple attempts.";
+                    }
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            } while (true);
         }
-    }
-
-    // Method 2
-    // To send an email with attachment
-    public String
-    sendMailWithAttachment(EmailDetails details)
-    {
-        return "Not implemented";
-        // Creating a mime message
-//        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-//        MimeMessageHelper mimeMessageHelper;
-//
-//        try {
-//
-//            // Setting multipart as true for attachments to
-//            // be send
-//            mimeMessageHelper
-//                    = new MimeMessageHelper(mimeMessage, true);
-//            mimeMessageHelper.setTo(sender);
-//            mimeMessageHelper.setText(details.getMsgBody());
-//            mimeMessageHelper.setSubject(
-//                    details.getSubject());
-//
-//            // Adding the attachment
-//            FileSystemResource file
-//                    = new FileSystemResource(
-//                    new File(details.getAttachment()));
-//
-//            mimeMessageHelper.addAttachment(
-//                    file.getFilename(), file);
-//
-//            // Sending the mail
-//            javaMailSender.send(mimeMessage);
-//            return "Mail sent Successfully";
-//        }
-//
-//        // Catch block to handle MessagingException
-//        catch (MessagingException e) {
-//
-//            // Display message when exception occurred
-//            return "Error while sending mail!!!";
-//        }
-    }
 }

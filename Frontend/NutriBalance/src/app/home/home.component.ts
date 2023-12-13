@@ -6,6 +6,11 @@ import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http'
 import { TokenStorageService } from '../_services/token-storage.service';
 import { authInterceptorProviders } from '../_helpers/auth.interceptor';
 import { Shared } from '../common/shared';
+import {
+  DomSanitizer,
+  SafeResourceUrl,
+  SafeUrl,
+} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -13,71 +18,97 @@ import { Shared } from '../common/shared';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit{
-  curuser:any
-  isLogin=false;
-  
-  constructor(private router: Router,private userService: UserService, private tokenService:TokenStorageService,private shared:Shared) {
-    if(this.shared.loggedIn==true){
-    setTimeout(function() {
-      alert("successfully logged in");
-    }, 1000);
+export class HomeComponent implements OnInit {
+
+  curuser: any
+  role: string = ''
+  isLogin = false;
+  hasPhoto = false
+  imageUrl: any
+  defaultImageUrl: string = '../../assets/images/nophoto.png';
+
+  constructor(private router: Router, private userService: UserService, private tokenService: TokenStorageService, private shared: Shared, private sanitizer: DomSanitizer,) {
+    if (this.shared.loggedIn == true) {
+      setTimeout(function () {
+        alert("successfully logged in");
+      }, 1000);
+    }
   }
-   }
   content!: string;
   ngOnInit(): void {
-    this.curuser=this.tokenService.getUser();
+    this.curuser = this.tokenService.getUser();
     console.log(this.curuser)
-    if(this.curuser){
-      this.isLogin=true
+    if (this.curuser) {
+      this.isLogin = true
+      this.role = "user"
     }
-    this.userService.getPublicContent().subscribe(
-      data => {
-        this.content = data;
-      },
-      err => {
-        this.content = JSON.parse(err.error).message;
+    else {
+      this.curuser = this.tokenService.getCoach();
+      if (this.curuser) {
+        this.isLogin = true
+        this.role = "coach"
       }
-    );
+    }
+    if (this.curuser) {
+      if (this.curuser.image) {
+        this.hasPhoto = true
+        this.imageUrl = this.convertToImage(this.curuser.image)
+      }
+    }
+
   }
 
-  signin(){
-    this.shared.signin_flag=true;
+  signin() {
+    this.shared.signin_flag = true;
     this.router.navigate(['/role-type']);
   }
-  signup(){
-    this.shared.signin_flag=false;
+  signup() {
+    this.shared.signin_flag = false;
     this.router.navigate(['/role-type']);
   }
 
   onMenuClick(option: string) {
     console.log(option);
-    if(option=="Sign In"){
-      this.shared.signin_flag=true;
-    this.router.navigate(['/role-type']);
+    if (option == "Sign In") {
+      this.shared.signin_flag = true;
+      this.router.navigate(['/role-type']);
     }
-    else if(option=="SignUp")
-    { this.shared.signin_flag=false;
+    else if (option == "SignUp") {
+      this.shared.signin_flag = false;
       this.router.navigate(['/role-type']);
 
     }
-    // You can add your custom logic here based on the selected option
+  }
+  convertToImage(string: any) {
+    const binaryString = atob(string);
+    const binaryData = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      binaryData[i] = binaryString.charCodeAt(i);
+    }
+    const blob = new Blob([binaryData], { type: 'application/image' });
+    const blobUrl = URL.createObjectURL(blob);
+    return this.sanitizer.bypassSecurityTrustUrl(blobUrl) as SafeUrl;
   }
 
   isUserSidebarOpen = false;
   toggleUserSidebar() {
     this.isUserSidebarOpen = !this.isUserSidebarOpen;
-    if (this.curuser != null) {
-      if (this.curuser.role[0] == 'COACH') {
-        // this.isCoach = true;
-      }
-    }
   }
   closeUserSidebar() {
     this.isUserSidebarOpen = false;
   }
   logout(): void {
     this.tokenService.signOut()
+    this.router.navigate(['/home']);
+  }
+  goToAdminPage() {
+    this.router.navigateByUrl('/adminpage');
+  }
+  goToCoachPage() {
+    this.router.navigateByUrl('/coach-page');
+  }
+  goToUserPage() {
+    this.router.navigateByUrl('/userpage');
   }
 
 }
