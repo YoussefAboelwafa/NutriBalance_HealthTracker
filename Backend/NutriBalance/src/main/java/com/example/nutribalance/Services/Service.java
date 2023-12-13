@@ -77,7 +77,7 @@ public class Service implements Iservice {
 
     public List<Plan> getallplans() {
         return planRepositry.findAll();
-
+    }
     public List<Plan> getPlans(Long coachId) {
         Optional<Coach> coach = coachRepo.findById(coachId);
         return coach.map(value -> (List<Plan>) value.getPlans()).orElse(null);
@@ -216,8 +216,8 @@ public class Service implements Iservice {
 
 
     private void sendVerificationMail(Object user, String role) {
-       Optional<ResetPassword> old_reset_password = Optional.ofNullable(resetPasswordRepository.findByEmail(user.getEmail()));
-       old_reset_password.ifPresent(password -> resetPasswordRepository.deleteById(password.getId()));
+//       Optional<ResetPassword> old_reset_password = Optional.ofNullable(resetPasswordRepository.findByEmail(user.getEmail()));
+//       old_reset_password.ifPresent(password -> resetPasswordRepository.deleteById(password.getId()));
         if (role.equals("user")) {
             User user1 = (User) user;
             ResetPassword resetPassword = new ResetPassword();
