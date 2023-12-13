@@ -16,7 +16,7 @@ public interface Iservice {
     //------------------------------coach methods--------------------------------
     Coach savecoach(Coach coach);
     User usersignin(String email, String password);
-
+    List<FoodCalorie> getFoodCalorie();
 
     User updateUser(User user);
 

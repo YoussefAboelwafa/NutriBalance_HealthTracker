@@ -47,4 +47,7 @@ export class UserService {
   updateUser(user: any):Observable<any> {
     return this.http.put<any>(`${baseUrl}/updateUser`,user);
   }
+  getFoodCalorie(): Observable<any> {
+    return this.http.get<any>(`${baseUrl}/food_calorie`);
+  }
 }

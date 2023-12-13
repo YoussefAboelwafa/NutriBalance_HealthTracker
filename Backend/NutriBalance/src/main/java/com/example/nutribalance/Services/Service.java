@@ -43,6 +43,8 @@ public class Service implements Iservice {
     @Autowired
     private PlanRepositry planRepositry;
 
+    @Autowired
+    private FoodCalorieRepositry foodCalorieRepositry;
     @Override
     public Coach savecoach(Coach coach) {
         return coachRepo.save(coach);
@@ -211,7 +213,8 @@ public class Service implements Iservice {
 
 
     private void sendVerificationMail(Object user, String role) {
-       Optional<ResetPassword> old_reset_password = Optional.ofNullable(resetPasswordRepository.findByEmail(user.getEmail()));
+
+       Optional<ResetPassword> old_reset_password = Optional.ofNullable(resetPasswordRepository.findByEmail((role=="user")? ((User)user).getEmail():((Coach)user).getEmail()));
        old_reset_password.ifPresent(password -> resetPasswordRepository.deleteById(password.getId()));
         if (role.equals("user")) {
             User user1 = (User) user;
@@ -426,7 +429,10 @@ public class Service implements Iservice {
             throw new RuntimeException("Error while changing user image", e);
         }
     }
-
+    @Override
+    public List<FoodCalorie> getFoodCalorie(){
+        return foodCalorieRepositry.findAll();
+    }
 
 }
 

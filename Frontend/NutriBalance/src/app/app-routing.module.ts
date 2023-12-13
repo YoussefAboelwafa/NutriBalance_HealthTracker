@@ -16,6 +16,7 @@ import { UserpageComponent } from './userpage/userpage.component';
 import { CoachPlansComponent } from './coach-plans/coach-plans.component';
 import { VerifiedComponent } from './verified/verified.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { FoodCaloriesComponent } from './food-calories/food-calories.component';
 
 export const routes: Routes = [
   {
@@ -93,6 +94,10 @@ export const routes: Routes = [
       {
         path: 'userprofile',
         component: UserProfileComponent,
+      },
+      {
+        path:'foodcalories',
+        component:FoodCaloriesComponent,
       },
     ],
   },
