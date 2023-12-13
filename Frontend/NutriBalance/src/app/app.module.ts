@@ -44,6 +44,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { VerifiedComponent } from './verified/verified.component';
 
 
+import { ProgressComponent } from './progress/progress.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { VerifiedComponent } from './verified/verified.component';
 
 
 
+    ProgressComponent,
   ],
   imports: [
     BrowserModule,

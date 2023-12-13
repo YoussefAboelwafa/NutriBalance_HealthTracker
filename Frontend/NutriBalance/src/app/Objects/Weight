@@ -1,0 +1,6 @@
+import { User } from "./User";
+
+export class Weight{
+    date:Date;
+    weight: string;
+}

@@ -19,7 +19,7 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   font-size: 0.88rem;
   user-select: none;
   background-color: rgba(150, 213, 192, 0.22);
@@ -45,7 +45,6 @@ body {
   background-color: #333;
   color: #fff;
   padding-top: 20px;
-  height: 100vh; /* 100% of the viewport height */
 }
 
 .top a {
@@ -60,8 +59,7 @@ body {
 #content {
   flex: 1;
   padding: 20px;
-  margin-left: 250px;
-
+  overflow: auto;
 }
 
 #menu {
@@ -80,9 +78,13 @@ body {
 
 #menu a:hover {
   background-color: rgba(127, 255, 212, 0.25);
+  transition: 0.7s;
+  margin-left: 10px;
+
 }
 .active {
   background-color: rgba(127, 255, 212, 0.25);
+  margin-left: 10px;
 }
 
 #sidebar-end-block {
@@ -107,6 +109,7 @@ body {
 }
 #sidebar-end-block a:hover {
   margin-left: 30px;
+  
 }
 i {
   margin-right: 10px;

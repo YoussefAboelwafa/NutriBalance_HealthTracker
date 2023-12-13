@@ -20,6 +20,7 @@ import { CoachPlansComponent } from './coach-plans/coach-plans.component';
 import { VerifiedComponent } from './verified/verified.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
+import { ProgressComponent } from './progress/progress.component';
 
 export const routes: Routes = [
   {
@@ -104,7 +105,11 @@ export const routes: Routes = [
         component: UserProfileComponent,
       },
 
-    ],
+      {
+      path: 'Progress',
+      component: ProgressComponent,
+    },
+  ],
   },
 ];
 
