@@ -1,0 +1,41 @@
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+  }  
+  .mat-elevation-z8 {
+    width:100%;
+    
+  }
+  .mat-cell {
+    
+    text-align: center;
+    width: 50%;
+  }
+  th.mat-header-cell{
+      text-align: center;
+      
+  }
+ .table-container {
+    margin-top: 5vh;
+    height: fit-content;
+    width: 40%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-right: 10%;
+    
+  }
+  .mat-input-element {
+    height:5vh;
+    background-color:rgb(220, 218, 218);
+    width: 100%;
+    
+  }
+
+  
+  
