@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Chart} from 'chart.js/auto';
 import { TokenStorageService } from '../_services/token-storage.service';
-import { Weight } from './Objects/Weight';
+import { Weight } from '../Objects/Weight';
 @Component({
   selector: 'app-progress',
   templateUrl: './progress.component.html',
@@ -9,7 +9,8 @@ import { Weight } from './Objects/Weight';
 })
 export class ProgressComponent implements OnInit {
   CurrentUser :any
-  Weights: Weight[]
+  Weights: Weight[] | undefined
+  
   data = [
     { year: 2010, count: 10 },
     { year: 2011, count: 20 },
