@@ -19,6 +19,8 @@ import { SubscribeComponent } from './subscribe/subscribe.component';
 import { CoachPlansComponent } from './coach-plans/coach-plans.component';
 import { VerifiedComponent } from './verified/verified.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { FoodCalorie } from './Objects/FoodCalorie';
+import { FoodCaloriesComponent } from './food-calories/food-calories.component';
 
 
 export const routes: Routes = [
@@ -99,9 +101,13 @@ export const routes: Routes = [
         path: 'subscribe',
         component: SubscribeComponent,
       },
-
+      {
         path: 'userprofile',
         component: UserProfileComponent,
+      },
+      {
+        path: 'foodcalories',
+        component: FoodCaloriesComponent,
       },
 
     ],
