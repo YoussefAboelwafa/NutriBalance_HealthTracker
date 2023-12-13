@@ -74,6 +74,10 @@ public class Service implements Iservice {
     }
 
     @Override
+
+    public List<Plan> getallplans() {
+        return planRepositry.findAll();
+
     public List<Plan> getPlans(Long coachId) {
         Optional<Coach> coach = coachRepo.findById(coachId);
         return coach.map(value -> (List<Plan>) value.getPlans()).orElse(null);
@@ -100,6 +104,7 @@ public class Service implements Iservice {
         }
         planRepositry.deleteById(planName);
         return "Plan deleted";
+
     }
 
     @Override

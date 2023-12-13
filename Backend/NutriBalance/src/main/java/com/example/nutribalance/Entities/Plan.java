@@ -17,7 +17,7 @@ public class Plan {
     @Id
     @Column(unique = true, nullable = false)
     private String planName;
-    @Column
+    @Column(length = 10000)
     private String description;
     @Column
     private String Goal;

@@ -56,6 +56,9 @@ public interface Iservice {
 
     Coach updateCoachCV(String email, byte[] bytes);
 
+   List<Plan> getallplans();
+
+
     List<Plan> getPlans(Long coachId);
 
     Plan updatePlan(Plan plan);
@@ -65,4 +68,5 @@ public interface Iservice {
     boolean verify(String code);
 
     Coach registerCoach(Coach coach);
+
 }
