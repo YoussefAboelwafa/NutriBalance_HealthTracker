@@ -14,7 +14,7 @@ export class Coach{
     image?: any;
     rating:any
     isapproved:any;
-  
+    no_users_subscribed:any;  
     users:User[]=[];
     plans:Plan[]=[];
     [key: string]: any;

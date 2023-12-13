@@ -33,7 +33,7 @@ public class Coach {
     private String contact_number;
     @Column
     private String address;
-    @Column
+    @Column(length = 10000)
     private String description;
     @Lob
     @Column(name = "cv", length = 2147483647)

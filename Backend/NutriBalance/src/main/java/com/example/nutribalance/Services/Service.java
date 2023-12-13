@@ -1,15 +1,9 @@
 package com.example.nutribalance.Services;
 
-import com.example.nutribalance.Entities.Coach;
-import com.example.nutribalance.Entities.Plan;
-import com.example.nutribalance.Entities.ResetPassword;
-import com.example.nutribalance.Entities.User;
+import com.example.nutribalance.Entities.*;
 import com.example.nutribalance.Mails.EmailDetails;
 import com.example.nutribalance.Mails.EmailService;
-import com.example.nutribalance.Repositries.CoachRepositry;
-import com.example.nutribalance.Repositries.PlanRepositry;
-import com.example.nutribalance.Repositries.ResetPasswordRepository;
-import com.example.nutribalance.Repositries.UserRepositry;
+import com.example.nutribalance.Repositries.*;
 import com.example.nutribalance.dto.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
@@ -407,6 +401,8 @@ public class Service implements Iservice {
         if (plan != null && user != null) {
             Long coach_id = plan.getCoach().getCoach_id();
             Coach coach = coachRepo.findById(coach_id).orElse(null);
+            coach.setNo_users_subscribed(coach.getNo_users_subscribed() + 1);
+            coachRepo.save(coach);
             user.setCoach(coach);
             user.setPlan(plan);
             return userRepo.save(user);

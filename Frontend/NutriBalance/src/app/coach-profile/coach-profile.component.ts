@@ -39,7 +39,8 @@ export class CoachProfileComponent implements OnInit {
   ngOnInit(): void {
     this.coach = this.storage.getCoach();
     if(this.coach)
-    {this.originalCoach = { ...this.coach };
+    { 
+      this.originalCoach = { ...this.coach };
     console.log(this.coach);
     this.emptyFields = [];
     for (const key of Object.keys(this.coach)) {
@@ -131,7 +132,10 @@ export class CoachProfileComponent implements OnInit {
       // }
     } else {
       console.log('No changes detected');
-      this.toggleEditMode();
+      this.spinner_flag = false;
+      $('#exampleModalCenter').modal('hide');
+          $('#notify').modal('show');
+      this.isEdit = false;
     }
   }
   close() {

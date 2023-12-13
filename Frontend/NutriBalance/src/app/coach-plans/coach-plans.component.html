@@ -1,37 +1,36 @@
 <!-- <body></body> -->
-<div *ngIf="plans.length>0" class="container text-center align-items-center justify-content-center">
-    <div class="card" *ngFor="let plan of plans; let i = index">
-        <div class="card-body">
-            <h5 class="card-title">
-                <strong> {{ plan.planName }}</strong>
-            </h5>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <strong>Description: </strong> {{ plan.description }}
-            </li>
-            <li class="list-group-item">
-                <strong>Goal: </strong> {{ plan.goal }}
-            </li>
-        </ul>
-        <div class="card-body">
-            <button class="btn btn-danger" (click)="delete_plan(plan)">
-                Delete</button>
-            <button class="btn btn-success" (click)="openEditDialog(plan)" >Edit</button>
-        </div>
+<div
+  *ngIf="plans.length > 0"
+  class="container text-center align-items-center justify-content-center"
+>
+  <div class="card" *ngFor="let plan of plans; let i = index">
+    <div class="card-body">
+      <h5 class="card-title">
+        <strong> {{ plan.planName }}</strong>
+      </h5>
     </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><strong>Goal: </strong> {{ plan.goal }}</li>
+      <li class="list-group-item">
+        <strong>Description: </strong> {{ plan.description }}
+      </li>
+    </ul>
+    <div class="card-body">
+      <button class="btn btn-danger" (click)="delete_plan(plan)">Delete</button>
+      <button class="btn btn-success" (click)="openEditDialog(plan)">
+        Edit
+      </button>
+    </div>
+  </div>
 </div>
-
 
 <!-- <body> -->
 <!-- show a message if there is no plans to ask the coach for add new plan -->
-<div *ngIf="plans.length==0">
-    <h5 style="
-                margin-top: 20rem;
-                text-align: center;
-                font-size: 24px;
-                color: #333;">
-        <strong> There is no plans yet</strong>
-    </h5>
+<div *ngIf="plans.length == 0">
+  <h5
+    style="margin-top: 20rem; text-align: center; font-size: 24px; color: #333"
+  >
+    <strong> There is no plans yet</strong>
+  </h5>
 </div>
 <!-- </body> -->
