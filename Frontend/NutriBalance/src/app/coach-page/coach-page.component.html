@@ -5,7 +5,6 @@
 </head>
 
 <div id="container">
-        <aside class="holder">
         <div id="sidebar">
             <div class="top" style="display: flex;">
               <img id="header-img" src="../../assets/images/leaf.png" alt="Header Image">
@@ -25,13 +24,10 @@
               <a (click)="logout()" > <i class="fas fa-sign-out-alt icon" ></i> Logout</a>
             </div>
           </div>
-        </aside>
         
-        <body>
-        <main style="height:100vh;">
+        <div id="content">
             <router-outlet></router-outlet>
-        </main>
-      </body>
+        </div>
     </div>
 
 </html>
