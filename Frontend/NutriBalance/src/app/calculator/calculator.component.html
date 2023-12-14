@@ -90,7 +90,7 @@
         >
           Calculate GDA <i class="fa-solid fa-calculator"></i>
         </button>
-        <button type="submit" class="btn btn-dark" [disabled]="!form.valid">
+        <button type="submit" class="btn btn-dark" [disabled]="!form.valid" (click)="saveWeight()">
           Save Your Weight <i class="fa-solid fa-floppy-disk"></i>
         </button>
       </div>

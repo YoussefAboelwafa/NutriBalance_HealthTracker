@@ -2,6 +2,10 @@ import { validateHorizontalPosition } from '@angular/cdk/overlay';
 import { Component, NgModule, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
+import { User } from '../Objects/User';
+import { TokenStorageService } from '../_services/token-storage.service';
+import { Weight } from '../Objects/Weight';
+import { UserService } from '../_services/user.service';
 
 @Component({
   selector: 'app-calculator',
@@ -9,11 +13,15 @@ import { MatDialogModule } from '@angular/material/dialog';
   styleUrls: ['./calculator.component.css'],
 })
 export class CalculatorComponent implements OnInit {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private token:TokenStorageService,
+    private userservices: UserService) {}
 
   show_table: boolean = true;
   show_result: boolean = false;
   show_info: boolean = false;
+  
+  loggeduser!  :User;
+  newuserr!  :User;
 
   bmr = 0;
   tdee = 0;
@@ -86,6 +94,24 @@ export class CalculatorComponent implements OnInit {
     // Fat
     this.fat = Math.round(((this.tdee * 0.2) / 9) * 100) / 100;
   }
+
+  saveWeight(){
+     this.loggeduser = this.token.getUser();
+    const currentDate = new Date(2023, 11, 31);    
+
+    console.log(this.loggeduser);
+
+    this.userservices.AddWeight(currentDate, this.userGDA.weight, this.loggeduser['user_id']).subscribe({
+      next: (response: any) => {
+        console.log('User updated successfully:', response);
+        this.token.saveUser(response);
+      },
+      error: (error) => {
+        console.error('Error updating user:', error);    
+      },
+    });
+  }
+
 
   getPointColor() {
     if (this.bmi < 18) {

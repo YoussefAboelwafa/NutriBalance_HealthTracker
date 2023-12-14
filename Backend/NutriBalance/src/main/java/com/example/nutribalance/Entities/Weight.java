@@ -1,12 +1,17 @@
 package com.example.nutribalance.Entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Entity
+@NoArgsConstructor
+@Data
 @Table(name = "weights")
 @IdClass(WeightId.class)
+
 public class Weight {
 @Id
 @Temporal(TemporalType.DATE)
@@ -16,5 +21,5 @@ public class Weight {
     @JoinColumn(name = "user_id")
     private User user;
     @Column
-    private String weight;
+    private double weight;
 }

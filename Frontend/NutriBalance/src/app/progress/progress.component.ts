@@ -9,7 +9,7 @@ import { User } from '../Objects/User';
   styleUrls: ['./progress.component.css']
 })
 export class ProgressComponent implements OnInit {
-  CurrentUser :any
+  CurrentUser! :User;
   Weights: Weight[] | undefined
   
   data = [
@@ -25,8 +25,7 @@ export class ProgressComponent implements OnInit {
 
 constructor(private token:TokenStorageService){
 
-  const user = this.token.getUser();
-  this.CurrentUser = User.fromJson(user);
+  this.CurrentUser = this.token.getUser();
   console.log(this.CurrentUser);
  
   setTimeout(() => {

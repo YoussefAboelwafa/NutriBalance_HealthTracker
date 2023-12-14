@@ -2,14 +2,13 @@ package com.example.nutribalance.Services;
 
 import com.example.nutribalance.Entities.*;
 import com.example.nutribalance.dto.LoginRequest;
-import com.example.nutribalance.dto.PlanDto;
 import jakarta.mail.MessagingException;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public interface Iservice {
     //todo: add methods
@@ -68,5 +67,6 @@ public interface Iservice {
     boolean verify(String code);
 
     Coach registerCoach(Coach coach);
-
+    User AddWeight(Long id, Double weight, Date date);
+    List<Weight> GetWeights(Long id);
 }
