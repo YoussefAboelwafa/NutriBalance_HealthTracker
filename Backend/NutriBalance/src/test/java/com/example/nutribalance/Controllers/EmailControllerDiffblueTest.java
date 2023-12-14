@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ContextConfiguration(classes = {EmailController.class})
 @ExtendWith(SpringExtension.class)
-class EmailControllerTest {
+class EmailControllerDiffblueTest {
     @Autowired
     private EmailController emailController;
 
@@ -49,5 +49,29 @@ class EmailControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
                 .andExpect(MockMvcResultMatchers.content().string("Send Simple Mail"));
+    }
+
+    /**
+     * Method under test:  {@link EmailController#sendMemeMail(EmailDetails)}
+     */
+    @Test
+    void testSendMemeMail() throws Exception {
+        when(emailService.sendMemeMail(Mockito.<EmailDetails>any())).thenReturn("Send Meme Mail");
+
+        EmailDetails emailDetails = new EmailDetails();
+        emailDetails.setAttachment("Attachment");
+        emailDetails.setMsgBody("Not all who wander are lost");
+        emailDetails.setRecipient("Recipient");
+        emailDetails.setSubject("Hello from the Dreaming Spires");
+        String content = (new ObjectMapper()).writeValueAsString(emailDetails);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/sendMemeMail")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+        MockMvcBuilders.standaloneSetup(emailController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
+                .andExpect(MockMvcResultMatchers.content().string("Send Meme Mail"));
     }
 }

@@ -52,6 +52,8 @@ public class CoachServiceTest {
     private EmailService emailService;
     @MockBean
     private PlanRepositry planRepositry;
+    @MockBean
+    private FoodCalorieRepositry foodCalorieRepositry;
 
     @BeforeEach
     public void init() {
@@ -62,6 +64,7 @@ public class CoachServiceTest {
         Coach coach = new Coach();
         coach.setCoach_id(1L);
         coach.setUsername("janedoe");
+        coach.setEmail("jane.doe@example.org");
         when(coachRepo.findByEmail(Mockito.<String>any())).thenReturn(Optional.of(coach));
         when(coachRepo.save(Mockito.<Coach>any())).thenReturn(coach);
         Coach result = service.updateCoachCV("jane.doe@example.org", new byte[0]);
@@ -72,6 +75,7 @@ public class CoachServiceTest {
         Coach coach = new Coach();
         coach.setCoach_id(1L);
         coach.setUsername("janedoe");
+        coach.setEmail("jane.doe1@example.org");
         when(coachRepo.findByEmail(Mockito.<String>any())).thenReturn(Optional.empty());
         when(coachRepo.save(Mockito.<Coach>any())).thenReturn(coach);
         Coach result = service.updateCoachCV("jane.doe@example.org", new byte[0]);

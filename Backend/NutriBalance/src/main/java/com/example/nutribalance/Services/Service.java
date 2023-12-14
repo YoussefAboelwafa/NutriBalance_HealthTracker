@@ -35,6 +35,7 @@ public class Service implements Iservice {
     private PlanRepositry planRepositry;
     @Autowired
     private FoodCalorieRepositry foodCalorieRepositry;
+
     @Override
     public Coach savecoach(Coach coach) {
         return coachRepo.save(coach);
@@ -66,10 +67,10 @@ public class Service implements Iservice {
     }
 
     @Override
-
     public List<Plan> getallplans() {
         return planRepositry.findAll();
     }
+
     public List<Plan> getPlans(Long coachId) {
         Optional<Coach> coach = coachRepo.findById(coachId);
         return coach.map(value -> (List<Plan>) value.getPlans()).orElse(null);
@@ -121,26 +122,23 @@ public class Service implements Iservice {
         }
         return null;
     }
-
     private EmailDetails getApprovedCoachEmail(Coach coach) {
         EmailDetails details = new EmailDetails();
         details.setRecipient(coach.getEmail());
         details.setSubject("Approved Coach Email");
         details.setMsgBody(
-                "Dear" +coach.getUsername()+",\n" +
-                "\n" +
-                "We are pleased to inform you that your coaching account with NutriBalance has been approved. Your extensive experience and qualifications have been recognized, and we believe that your expertise will greatly contribute to the success of our platform.\n" +
-                "\n" +
-                "You can now access your account and start providing valuable coaching services to our users. If you have any questions or need further assistance, please feel free to reach out to our support team.\n" +
-                "\n" +
-                "Thank you for joining NutriBalance. We look forward to a successful collaboration.\n" +
-                "\n" +
-                "Best regards,\n" +
-                "NutriBalance Team");
+                "Dear" + coach.getUsername() + ",\n" +
+                        "\n" +
+                        "We are pleased to inform you that your coaching account with NutriBalance has been approved. Your extensive experience and qualifications have been recognized, and we believe that your expertise will greatly contribute to the success of our platform.\n" +
+                        "\n" +
+                        "You can now access your account and start providing valuable coaching services to our users. If you have any questions or need further assistance, please feel free to reach out to our support team.\n" +
+                        "\n" +
+                        "Thank you for joining NutriBalance. We look forward to a successful collaboration.\n" +
+                        "\n" +
+                        "Best regards,\n" +
+                        "NutriBalance Team");
         return details;
     }
-
-
     @Override
     public User saveuser(User user) {
         Optional<User> old_user_1 = userRepo.findByEmail(user.getEmail());
@@ -148,8 +146,8 @@ public class Service implements Iservice {
             return null;
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        boolean sent =sendVerificationMail(user, "user");
-        if(!sent){
+        boolean sent = sendVerificationMail(user, "user");
+        if (!sent) {
             return null;
         }
         return userRepo.save(user);
@@ -223,8 +221,8 @@ public class Service implements Iservice {
             return null;
         }
         coach.setPassword(passwordEncoder.encode(coach.getPassword()));
-        boolean sent= sendVerificationMail(coach, "coach");
-        if(!sent){
+        boolean sent = sendVerificationMail(coach, "coach");
+        if (!sent) {
             return null;
         }
         return coachRepo.save(coach);
@@ -245,7 +243,7 @@ public class Service implements Iservice {
             EmailDetails mail = getEmailDetails(user1.getEmail(), user1.getUsername(), token);
             return emailService.sendMemeMail(mail).equals("done");
 
-        } else{
+        } else {
             Coach coach = (Coach) user;
             Optional<ResetPassword> old_reset_password = Optional.ofNullable(resetPasswordRepository.findByEmail(coach.getEmail()));
             old_reset_password.ifPresent(password -> resetPasswordRepository.deleteById(password.getId()));
@@ -292,7 +290,6 @@ public class Service implements Iservice {
         return mail;
     }
 
-
     @Override
     public User usersignin(String email, String password) {
         Optional<User> user = userRepo.findByEmail(email);
@@ -321,7 +318,7 @@ public class Service implements Iservice {
     }
 
     @Override
-    public void sendForgetPasswordEmail(ResetPassword resetPassword){
+    public void sendForgetPasswordEmail(ResetPassword resetPassword) {
         String toAddress = resetPassword.getEmail();
         String subject = "Please verify your registration";
         String content = "Dear [[name]],<br>" + "Here is the OTP code to forget password :<br>" + "<h3>[[URL]]</h3>" + "Thank you,<br>" + "NutriBalance team";
@@ -398,6 +395,7 @@ public class Service implements Iservice {
         }
         return planRepositry.save(plan);
     }
+
     @Override
     public User subscribe_to_plan(String planName, Long user_id) {
         Plan plan = planRepositry.findByPlanName(planName);
@@ -447,8 +445,9 @@ public class Service implements Iservice {
             throw new RuntimeException("Error while changing user image", e);
         }
     }
+
     @Override
-    public List<FoodCalorie> getFoodCalorie(){
+    public List<FoodCalorie> getFoodCalorie() {
         return foodCalorieRepositry.findAll();
     }
 
