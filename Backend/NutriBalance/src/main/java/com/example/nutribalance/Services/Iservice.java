@@ -69,4 +69,5 @@ public interface Iservice {
     Coach registerCoach(Coach coach);
     User AddWeight(Long id, Double weight, Date date);
     List<Weight> GetWeights(Long id);
+    User deletesubscription(Long id);
 }

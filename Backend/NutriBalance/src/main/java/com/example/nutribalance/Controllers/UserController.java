@@ -64,6 +64,10 @@ public class UserController {
     public List<Weight> GetWeights(@PathVariable Long id){
         return service.GetWeights(id);
     }
+    @DeleteMapping("/deletesubscription/{id}")
+    public User deleteSubscription(@PathVariable Long id){
+        return service.deletesubscription(id);
+    }
 
 }
 

@@ -48,6 +48,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 import { ProgressComponent } from './progress/progress.component';
+import { UserPlanComponent } from './user-plan/user-plan.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { ProgressComponent } from './progress/progress.component';
 
 
     ProgressComponent,
+          UserPlanComponent,
   ],
   imports: [
     BrowserModule,

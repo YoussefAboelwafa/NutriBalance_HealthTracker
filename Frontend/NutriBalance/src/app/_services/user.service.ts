@@ -66,5 +66,8 @@ export class UserService {
     return this.http.get<any>(`${baseUrl}/getweights/${id}`);
 
   }
+  deletesubscription(id:any):Observable<any>{
+    return this.http.delete<any>(`${baseUrl}/deletesubscription/${id}`);
+  }
 
 }

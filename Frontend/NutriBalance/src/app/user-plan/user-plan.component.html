@@ -1,61 +1,57 @@
-<div *ngIf="user.plan!=null" class="subscribed"><h1>You are already subscribed to a plan<br>If you want to unsubscribe go to <a href="userpage/userplan">my plan</a></h1></div>
+<div *ngIf="isnull" class="subscribed"><h1>You aren't subscribed to any plan<br>If you want to subscribe go to <a href="userpage/subscribe">Subscribe</a></h1></div>
 
-<div class="input-group" style="display: flex;align-items: center;justify-content: center;height: 100%;" *ngIf="user.plan==null">
-  <div *ngIf="loading_spinner" class="loading-spinner">loading plans <div
-    class="spinner-border text-dark"
-    role="status"
-  ></div></div>
-  <div class="card-container" *ngFor="let plan of plans; let i = index">
+<div class="container" *ngIf="!isnull">
+<div class="card-container">
     <div class="div1">
       <p>
-        <strong class="unique">{{ plan.planName }}</strong>
+        <strong class="unique">{{ user.plan?.planName }}</strong>
       </p>
       <p>
-        <strong>Goal: </strong><span>{{ plan.goal }}</span>
+        <strong>Goal: </strong><span>{{ user.plan?.goal }}</span>
       </p>
       <p>
-        <strong>Description: </strong><span>{{ plan.description }}</span>
+        <strong>Description: </strong><span>{{ user.plan?.description }}</span>
       </p>
       
     </div>
     <div class="vertical-line"></div>
     <div class="div2">
       <p>
-        <strong class="unique">{{ plan.coach?.username }}</strong>
+        <strong class="unique">{{ user.coach?.username }}</strong>
       </p>
       <p>
-        <strong>Email: </strong><span>{{ plan.coach?.email }}</span>
+        <strong>Email: </strong><span>{{ user.coach?.email }}</span>
       </p>
       <p>
         <strong>Phone number: </strong
-        ><span>{{ plan.coach?.contact_number }}</span>
+        ><span>{{ user.coach?.contact_number }}</span>
       </p>
       <p>
-        <strong>Address: </strong><span>{{ plan.coach?.address }}</span>
+        <strong>Address: </strong><span>{{ user.coach?.address }}</span>
       </p>
       <p>
-        <strong>Price: </strong><span>{{ plan.coach?.price }}</span>
+        <strong>Price: </strong><span>{{ user.coach?.price }}</span>
       </p>
       <p>
-        <strong>rating: </strong><span>{{ plan.coach?.rating }}</span>
+        <strong>rating: </strong><span>{{ user.coach?.rating }}</span>
       </p>
       <p>
-        <strong>Description: </strong><span>{{ plan.coach?.description }}</span>
+        <strong>Description: </strong><span>{{ user.coach?.description }}</span>
       </p>
     </div>
     <div class="div3">
-      <img [src]="images[i]" />
+      <img [src]="coachimage" />
       <button
-        class="btn btn-success"
+        class="btn btn-danger"
         data-toggle="modal"
         data-target="#exampleModalCenter"
-        (click)="updateindex(i)"
       >
-        Subscribe NOW!
+        Delete Subscription
       </button>
     </div>
   </div>
-  <div
+</div>
+<div
     class="modal fade"
     id="exampleModalCenter"
     tabindex="-1"
@@ -67,7 +63,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">
-            Are you sure you want to subscribe to this plan?
+            Are you sure you want to Delete Subscription
           </h5>
           <button class="outer_button" (click)="close()">
             <button
@@ -81,8 +77,8 @@
           </button>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="subscribe()">
-            Subscribe
+          <button type="button" class="btn btn-primary" (click)="Delete()">
+            Delete
             <div
               class="spinner-border text-light"
               role="status"
@@ -106,7 +102,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">
-            subscribed successfully
+            Deleted successfully
           </h5>
           <button class="outer_button" (click)="close()">
             <button
@@ -122,4 +118,4 @@
       </div>
     </div>
   </div>
-</div>
+
