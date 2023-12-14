@@ -21,8 +21,9 @@ import { VerifiedComponent } from './verified/verified.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FoodCalorie } from './Objects/FoodCalorie';
 import { FoodCaloriesComponent } from './food-calories/food-calories.component';
-
 import { ProgressComponent } from './progress/progress.component';
+import { UserPlanComponent } from './user-plan/user-plan.component';
+
 
 export const routes: Routes = [
   {
@@ -114,6 +115,10 @@ export const routes: Routes = [
       {
         path: 'foodcalories',
         component: FoodCaloriesComponent,
+      },
+      {
+        path: 'userplan',
+        component: UserPlanComponent,
       },
 
     ],

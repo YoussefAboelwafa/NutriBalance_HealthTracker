@@ -474,5 +474,17 @@ public class Service implements Iservice {
         }
         return null;
     }
+
+    @Override
+    public User deletesubscription(Long id) {
+        User user = userRepo.findById(id).orElse(null);
+        if(user!=null) {
+            user.setCoach(null);
+            user.setPlan(null);
+            return userRepo.save(user);
+        }
+        return null;
+    }
+
 }
 
