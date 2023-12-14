@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
+const DATE_KEY = 'auth-date'
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
 const COACH_KEY = 'auth-coach';
@@ -23,6 +24,15 @@ export class TokenStorageService {
 
   public getToken(): string | null {
     return sessionStorage.getItem(TOKEN_KEY) as string;
+  }
+
+  public savedate(date: any): void {
+    window.sessionStorage.removeItem(DATE_KEY);
+    window.sessionStorage.setItem(DATE_KEY, date);
+  }
+
+  public getdate(): any | null {
+    return sessionStorage.getItem(DATE_KEY);
   }
 
   public saveUser(user: any) {

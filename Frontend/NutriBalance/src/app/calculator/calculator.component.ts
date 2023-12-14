@@ -96,8 +96,8 @@ export class CalculatorComponent implements OnInit {
   }
 
   saveWeight(){
-     this.loggeduser = this.token.getUser();
-    const currentDate = new Date(2023, 11, 31);    
+    this.loggeduser = this.token.getUser();
+    const currentDate = new Date();    
 
     console.log(this.loggeduser);
 
@@ -105,11 +105,20 @@ export class CalculatorComponent implements OnInit {
       next: (response: any) => {
         console.log('User updated successfully:', response);
         this.token.saveUser(response);
+        this.loggeduser=this.token.getUser();
+        const lastdate = new Date(this.token.getdate());
+        const newdate = currentDate
+        
+        if(lastdate.getFullYear() === newdate.getFullYear() && lastdate.getMonth() === newdate.getMonth() && lastdate.getDate() === newdate.getDate()){
+          alert("You have Updated your Today's Weight!");
+        }
+        this.token.savedate(currentDate);
       },
       error: (error) => {
         console.error('Error updating user:', error);    
       },
     });
+
   }
 
 
