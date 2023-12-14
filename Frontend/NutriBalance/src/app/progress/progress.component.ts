@@ -3,6 +3,8 @@ import {Chart} from 'chart.js/auto';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { Weight } from '../Objects/Weight';
 import { User } from '../Objects/User';
+import { UserService } from '../_services/user.service';
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-progress',
   templateUrl: './progress.component.html',
@@ -10,52 +12,94 @@ import { User } from '../Objects/User';
 })
 export class ProgressComponent implements OnInit {
   CurrentUser! :User;
-  Weights: Weight[] | undefined
-  
-  data = [
-    { year: 2010, count: 10 },
-    { year: 2011, count: 20 },
-    { year: 2012, count: 15 },
-    { year: 2013, count: 25 },
-    { year: 2014, count: 22 },
-    { year: 2015, count: 30 },
-    { year: 2016, count: 28 },
-  ];
+  Weights!: Weight[];
+  dateArray!:any[];
+  WeightsArray!:any[];
+  formattedDates!:any[];
 
 
-constructor(private token:TokenStorageService){
 
+constructor(private token:TokenStorageService, private userservices:UserService){
   this.CurrentUser = this.token.getUser();
-  console.log(this.CurrentUser);
  
-  setTimeout(() => {
-    this.createChart();
-  });
 }
 
 ngOnInit(): void {
+  this.userservices.GetWeights(this.CurrentUser['user_id']).subscribe({
+    next: (response: any) => {
+      this.Weights = response;
+      this.dateArray = this.Weights.map((weight: { date: any }) => weight.date);
+      this.WeightsArray = this.Weights.map((weight: { weight: any }) => weight.weight);
+      
+      this.formattedDates = this.dateArray.map((dateString: string) => {
+        const inputDate = new Date(dateString);
+        return inputDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+      });
 
+      this.createChart()
+    },
+    error: (error: any) => {
+      console.error('Error updating user:', error);
+   
+    },
+  });
+
+}
+
+
+chartOptions = {
+  scales: {
+    x: {
+      ticks: {
+        color: 'black',
+        font: {
+          weight: 'bold',
+          style: 'italic'
+        },
+        beginAtZero: false,
+      }
+    },
+    y: {
+      ticks: {
+        font: {
+          weight: 'bold'
+        },
+        color: 'black'
+      }
+    }
   }
-  
+};
+
+chart:any;
+
+
 
 private createChart(): void {
-    new Chart(
-      document.getElementById('Progress') as HTMLCanvasElement,
-      {
-        type: 'line',
-        data: {
-          labels: this.data.map(row => row.year),
-          datasets: [
-            {
-              label: 'Weight',
-              data: this.data.map(row => row.count)
-            }
-          ]
-        }
-        
-      }
-    );
-  }
+  this.chart = new Chart(
+    document.getElementById('Progress') as HTMLCanvasElement,
+    {
+      type: 'line',
+      data: {
+        labels: this.formattedDates,
+        datasets: [
+          {
+            label: 'Weight (KG)',
+            data: this.WeightsArray,
+            borderColor: 'rgb(210,125,10)',
+            borderWidth: 2 
+          }
+        ]
+      },
+      options: {}
+});
+
+this.chart.options = this.chartOptions;
+this.chart.update();
+
+
+}
+
+
 
 
 
