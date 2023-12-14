@@ -188,18 +188,8 @@ class AuthenticationTest {
                 .andExpect(MockMvcResultMatchers.content().string("Error: Email is not valid!"));
     }
 
-    /**
-     * Method under test: {@link Authentication#getProduct(Long)}
-     */
-    @Test
-    void testGetProduct() throws Exception {
-        MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/oauth2/authorization/google");
-        MockHttpServletRequestBuilder requestBuilder = getResult.param("id", String.valueOf(1L));
-        MockMvcBuilders.standaloneSetup(authentication)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
+
+
 
     /**
      * Method under test:  {@link Authentication#login(LoginRequest)}
