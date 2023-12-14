@@ -51,7 +51,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 	}
 
 	@Override
-	protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+	public String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 		Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME).map(Cookie::getValue);
 
 		if (redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
@@ -69,7 +69,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 		return UriComponentsBuilder.fromUriString(targetUrl).queryParam("token", token).build().toUriString();
 	}
 
-	protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
+	public void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
 		super.clearAuthenticationAttributes(request);
 		httpCookieOAuth2AuthorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
 	}
