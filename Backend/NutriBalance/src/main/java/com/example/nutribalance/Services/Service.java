@@ -9,8 +9,10 @@ import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +29,8 @@ public class Service implements Iservice {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private WeightRepositry weightRepositry;
     @Autowired
     private PlanRepositry planRepositry;
     @Autowired
@@ -448,5 +452,28 @@ public class Service implements Iservice {
         return foodCalorieRepositry.findAll();
     }
 
+    @Override
+    public User AddWeight(Long id, Double weight, Date date)
+    {
+        User user = userRepo.findById(id).orElse(null);
+        if(user!=null) {
+            Weight newWeight = new Weight();
+            newWeight.setDate(date);
+            newWeight.setUser(user);
+            newWeight.setWeight(weight);
+            weightRepositry.save(newWeight);
+
+            return user;
+        }
+        return null;
+    }
+
+    public List<Weight> GetWeights(Long id){
+        User user = userRepo.findById(id).orElse(null);
+        if(user!=null) {
+            return user.getWeights();
+        }
+        return null;
+    }
 }
 

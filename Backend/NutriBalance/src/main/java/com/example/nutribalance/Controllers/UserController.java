@@ -2,6 +2,7 @@ package com.example.nutribalance.Controllers;
 
 import com.example.nutribalance.Entities.FoodCalorie;
 import com.example.nutribalance.Entities.User;
+import com.example.nutribalance.Entities.Weight;
 import com.example.nutribalance.Services.Iservice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -52,6 +54,15 @@ public class UserController {
     @GetMapping("/food_calorie")
     public List<FoodCalorie> getFoodCalorie(){
         return service.getFoodCalorie();
+    }
+
+    @PostMapping("/addweight/{id}")
+    public User AddWeight(@PathVariable Long id, @RequestParam("weight") Double weight, @RequestBody Date date){
+        return service.AddWeight(id, weight, date);
+    }
+    @GetMapping("/getweights/{id}")
+    public List<Weight> GetWeights(@PathVariable Long id){
+        return service.GetWeights(id);
     }
 
 }

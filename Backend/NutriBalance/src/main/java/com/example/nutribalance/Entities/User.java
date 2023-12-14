@@ -1,5 +1,6 @@
 package com.example.nutribalance.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -32,6 +33,7 @@ public class User {
     @Column
     boolean isEnabled=false;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Weight> weights;
     @Lob
     @Column(name = "image", columnDefinition = "longblob")
