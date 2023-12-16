@@ -31,9 +31,8 @@ export class AuthService {
       socialProvider: 'LOCAL'
     }, httpOptions);
   }
-
   verify(token: any): Observable<any> {
-    return this.http.get(AppConstants.AUTH_API + "/verify", {params: {'code': token}});
+    return this.http.get(AppConstants.USER_URL + "/verify", {params: {'code': token}});
   }
 
   forgetPassword(email: any, role: any): Observable<any> {

@@ -1,16 +1,152 @@
-<!-- app.component.html -->
 <div>
+<!-- app.component.html -->
+<div id="container">
   <!-- The menu bar container -->
   <div id="top">
-    <img id="header-img" src="../../assets/images/leaf.png" alt="Header Image">
+    <div>
+      <img
+        id="header-img"
+        src="../../assets/images/leaf.png"
+        alt="Header Image"
+      />
 
-    <a>NutriBalance</a>
+      <label class="title">NutriBalance</label>
+    </div>
     <ul id="mainMenuBar">
-      <li *ngFor="let option of menuOptions">
-        <a (click)="onMenuClick(option)">{{ option }}</a>
+      
+      <li *ngIf="!isLogin">
+        <a (click)="onMenuClick('Sign In')">SignIn</a>
       </li>
+      <li *ngIf="!isLogin">
+        <a (click)="onMenuClick('SignUp')">SignUp</a>
+      </li>
+    
+      <!-- <a class="nav-link"> -->
+        <div class="user-link" (click)="toggleUserSidebar()">
+          <i class="fa-regular fa-circle-user fa-2x" style="cursor: pointer;" ></i>
+        </div>
+        <div class="user-sidebar" [ngClass]="{ 'open': isUserSidebarOpen }">
+          <button class="close-button" (click)="closeUserSidebar()" >
+            <i class="fa-solid fa-xmark fa-2x" id="red-icon"></i></button>
+          <ng-container *ngIf="!isLogin">
+            <div class="not-logged">
+              <p style="color: white;font-size: 25px;font-weight: 600;">You are not logged in.</p>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="isLogin">
+            <div class="logged-in">
+              <div class="photo-container" *ngIf="hasPhoto">
+                <div class="photo-wrapper">
+                  <img
+                    [src]="imageUrl"
+                    alt="Photo"
+                    class="rounded-circle-container"
+                  />
+                </div>
+              </div>
+              <div class="photo-container" *ngIf="!hasPhoto">
+                <div class="photo-wrapper">
+                  <img
+                    src={{defaultImageUrl}}
+                    alt="Photo"
+                    class="rounded-circle-container"
+                  />
+                </div>
+              </div>
+              <br>
+              <div class="title">
+                <p style="color: white;font-size: 40px;">Hey</p>
+                <p style="color: white;font-size: 40px;display: flex;justify-content: center;align-items: center;"><span> {{curuser.username}}</span></p>
+              </div>
+              <!-- <div class="user-info">
+                <div class="left">
+
+                  <p>Email: <span>{{ user.email }}</span></p>
+                  <p>Country: <span>{{user.country}}</span></p>
+                  <p>Company Name: <span>{{ user.company_name }}</span></p>
+
+                </div>
+                <div class="right">
+                  <img src="{{user.img}}">
+                </div>
+
+              </div> -->
+              <div class="buttons">
+              <button (click)="goToUserPage()" *ngIf="role=='user'" >Go To User Page</button>
+              <button (click)="goToCoachPage()" *ngIf="role=='coach'" >Go To Coach Page</button>
+              <button (click)="goToAdminPage()" *ngIf="role=='admin'" >Go To Admin Page</button>
+
+            </div>
+              <div class="logout">
+                <button (click)="logout()" class="fa fa-sign-out" >logout</button>
+
+              </div>
+            </div>
+          </ng-container>
+
+        </div>
+
+      <!-- </a> -->
     </ul>
-
   </div>
+  <div class="content">
+    <h1>Welcome to NutriBalance <i class="fa fa-leaf"></i></h1>
+    <p>
+      NutriBalance is your personal health tracker application. Our mission is
+      to help you maintain a balanced and healthy lifestyle. With NutriBalance,
+      you can calculate your Guideline Daily Amount (GDA), choose from a variety
+      of diet plans, and track your weight progress.
+    </p>
+    <p>
+      Our application provides a personalized experience, tailored to your
+      unique health needs and goals. Whether you're looking to lose weight, gain
+      muscle, or simply maintain a healthy lifestyle, NutriBalance is here to
+      support you on your journey.
+    </p>
+    <div class="features">
+      <h2>Features</h2>
+      <ul>
+        <li>
+          <strong>Guideline Daily Amount (GDA) Calculator:</strong> Understand
+          your daily nutritional needs based on your age, gender, weight, and
+          activity level.
+        </li>
+        <li>
+          <strong>Diet Plans:</strong> Choose from a variety of diet plans
+          created by nutrition experts. Whether you're vegan, gluten-free, or
+          looking to build muscle, we have a plan for you.
+        </li>
+        <li>
+          <strong>Weight Tracker:</strong> Keep track of your weight progress
+          over time. Our intuitive graphs make it easy to see your progress and
+          stay motivated.
+        </li>
+        <li>
+          <strong>Personalized Experience:</strong> Get recommendations tailored
+          to your unique health needs and goals. We help you make informed
+          decisions about your health.
+        </li>
+      </ul>
+    </div>
 
+    <div class="testimonials">
+      <h2>What Our Users Say</h2>
+      <blockquote>
+        "I've tried many health apps, but NutriBalance is by far the best. It's
+        easy to use and has helped me stay on track with my health goals."
+        <cite>~ Marwan ElTorky</cite>
+      </blockquote>
+      <blockquote>
+        "NutriBalance has changed my life. The GDA calculator and diet plans
+        have helped me understand my nutritional needs and make healthier
+        choices."
+        <cite>~ Noha Adly</cite>
+      </blockquote>
+    </div>
+    <hr />
+    <p class="signuptoday">
+      <a routerLink="/signup">SignUp</a> today and start your journey towards a
+      healthier, balanced lifestyle <i class="fa fa-leaf"></i>
+    </p>
+  </div>
 </div>

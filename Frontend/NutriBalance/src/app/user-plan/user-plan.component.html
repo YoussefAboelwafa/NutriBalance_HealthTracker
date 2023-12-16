@@ -1,0 +1,121 @@
+<div *ngIf="isnull" class="subscribed"><h1>You aren't subscribed to any plan<br>If you want to subscribe go to <a href="userpage/subscribe">Subscribe</a></h1></div>
+
+<div class="container" *ngIf="!isnull">
+<div class="card-container">
+    <div class="div1">
+      <p>
+        <strong class="unique">{{ user.plan?.planName }}</strong>
+      </p>
+      <p>
+        <strong>Goal: </strong><span>{{ user.plan?.goal }}</span>
+      </p>
+      <p>
+        <strong>Description: </strong><span>{{ user.plan?.description }}</span>
+      </p>
+      
+    </div>
+    <div class="vertical-line"></div>
+    <div class="div2">
+      <p>
+        <strong class="unique">{{ user.coach?.username }}</strong>
+      </p>
+      <p>
+        <strong>Email: </strong><span>{{ user.coach?.email }}</span>
+      </p>
+      <p>
+        <strong>Phone number: </strong
+        ><span>{{ user.coach?.contact_number }}</span>
+      </p>
+      <p>
+        <strong>Address: </strong><span>{{ user.coach?.address }}</span>
+      </p>
+      <p>
+        <strong>Price: </strong><span>{{ user.coach?.price }}</span>
+      </p>
+      <p>
+        <strong>rating: </strong><span>{{ user.coach?.rating }}</span>
+      </p>
+      <p>
+        <strong>Description: </strong><span>{{ user.coach?.description }}</span>
+      </p>
+    </div>
+    <div class="div3">
+      <img [src]="coachimage" />
+      <button
+        class="btn btn-danger"
+        data-toggle="modal"
+        data-target="#exampleModalCenter"
+      >
+        Delete Subscription
+      </button>
+    </div>
+  </div>
+</div>
+<div
+    class="modal fade"
+    id="exampleModalCenter"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">
+            Are you sure you want to Delete Subscription
+          </h5>
+          <button class="outer_button" (click)="close()">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="Delete()">
+            Delete
+            <div
+              class="spinner-border text-light"
+              role="status"
+              *ngIf="spinner_flag == true"
+            ></div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="notify"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">
+            Deleted successfully
+          </h5>
+          <button class="outer_button" (click)="close()">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+

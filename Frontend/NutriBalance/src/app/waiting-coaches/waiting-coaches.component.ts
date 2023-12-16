@@ -26,18 +26,18 @@ export class WaitingCoachesComponent implements OnInit{
       }
     );
   }
+
+
   view_cv(i:number){
      var cv = this.coaches[i]?.cv;
     if (cv) {
-      const uint8Array = new Uint8Array(atob(cv).split('').map(char => char.charCodeAt(0)));
-
+      const uint8Array = new Uint8Array(atob(cv).split('').map(char => char.charCodeAt(0)))
       const blob = new Blob([uint8Array], { type: 'application/pdf' });
-
-      // Create a Blob URL for the Blob
       const blobUrl = URL.createObjectURL(blob);
       this.cvBlobUrl = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
     }
   }
+
   approve(i:number){
     this.coachservice.approveCoach(this.coaches[i].coach_id).subscribe(
       (data) => {

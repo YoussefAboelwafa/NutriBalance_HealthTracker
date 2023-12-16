@@ -1,0 +1,280 @@
+<div class="container" *ngIf="!show_info">
+  <!-- Form Section -->
+  <div class="form-section">
+    <h2>Calculate Your GDA</h2>
+    <form #form="ngForm">
+      <div class="form-group">
+        <label for="weight">Weight (Kg):</label>
+        <input
+          type="number"
+          id="weight"
+          name="weight"
+          [(ngModel)]="userGDA.weight"
+          class="form-control"
+          placeholder="Enter your weight in (kg)"
+          min="0"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="height">Height (cm):</label>
+        <input
+          type="number"
+          id="height"
+          name="height"
+          [(ngModel)]="userGDA.height"
+          class="form-control"
+          placeholder="Enter your height in (cm)"
+          min="0"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="age">Age:</label>
+        <input
+          type="number"
+          id="age"
+          name="age"
+          [(ngModel)]="userGDA.age"
+          class="form-control"
+          placeholder="Enter your age"
+          min="0"
+          required
+        />
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="male"
+          name="gender"
+          [(ngModel)]="userGDA.gender"
+          value="male"
+          required
+        />
+        <label class="form-check-label custom-radio" for="male">Male</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="female"
+          name="gender"
+          [(ngModel)]="userGDA.gender"
+          value="female"
+          required
+        />
+        <label class="form-check-label custom-radio" for="female">Female</label>
+      </div>
+      <div class="form-group">
+        <label for="activity">Activity Level:</label>
+        <select
+          id="activity"
+          name="activity"
+          [(ngModel)]="userGDA.activity"
+          class="form-control"
+          required
+        >
+          <option value="low" selected>Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+          <option value="extreme">Extreme</option>
+        </select>
+      </div>
+      <div class="btns">
+        <button
+          type="submit"
+          class="btn btn-success"
+          [disabled]="!form.valid"
+          (click)="calculateGDA()"
+        >
+          Calculate GDA <i class="fa-solid fa-calculator"></i>
+        </button>
+        <button type="submit" class="btn btn-dark" [disabled]="!form.valid" (click)="saveWeight()">
+          Save Your Weight <i class="fa-solid fa-floppy-disk"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Table Section -->
+  <div class="table-section table-success" *ngIf="show_table">
+    <h2>Average GDA Table</h2>
+    <table class="table table-striped table-hover">
+      <caption>
+        <strong>Guideline Daily Amount Values</strong>
+      </caption>
+      <thead>
+        <tr>
+          <th width="96" align="left" class="toplevel_th" scope="col">
+            Typical values
+          </th>
+          <th width="75" align="center" class="toplevel_th" scope="col">
+            Women
+          </th>
+          <th width="78" align="center" class="toplevel_th" scope="col">Men</th>
+          <th width="116" align="center" class="toplevel_th" scope="col">
+            Children <br />
+            (5-10 years)
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left" scope="row"><strong>Calories</strong></td>
+          <td align="center">2,000 kcal</td>
+          <td align="center">2,500 kcal</td>
+          <td align="center">1,800 kcal</td>
+        </tr>
+        <tr>
+          <td align="left" scope="row"><strong>Protein</strong></td>
+          <td align="center">45 g</td>
+          <td align="center">55 g</td>
+          <td align="center">24 g</td>
+        </tr>
+        <tr>
+          <td align="left" scope="row"><strong>Carbohydrate</strong></td>
+          <td align="center">230 g</td>
+          <td align="center">300g</td>
+          <td align="center">220 g</td>
+        </tr>
+        <tr>
+          <td align="left" scope="row"><strong>Sugars</strong></td>
+          <td align="center">90 g</td>
+          <td align="center">120 g</td>
+          <td align="center">85 g</td>
+        </tr>
+        <tr>
+          <td align="left" scope="row"><strong>Fat</strong></td>
+          <td align="center">70 g</td>
+          <td align="center">95 g</td>
+          <td align="center">70 g</td>
+        </tr>
+        <tr>
+          <td align="left" scope="row"><strong>Saturates</strong></td>
+          <td align="center">20 g</td>
+          <td align="center">30 g</td>
+          <td align="center">20 g</td>
+        </tr>
+        <tr>
+          <td align="left" scope="row"><strong>Fibre</strong></td>
+          <td align="center">24 g</td>
+          <td align="center">24 g</td>
+          <td align="center">15 g</td>
+        </tr>
+        <tr>
+          <td align="left" scope="row"><strong>Salt</strong></td>
+          <td align="center">6 g</td>
+          <td align="center">6 g</td>
+          <td align="center">4 g</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Result Section -->
+  <div class="table-section result" *ngIf="show_result">
+    <div class="result-header">
+      <h2>Your GDA Result</h2>
+      <a (click)="open_info()"><i class="fa-solid fa-circle-info"></i></a>
+      <a (click)="close_result()"><i class="fa-solid fa-circle-xmark"></i></a>
+    </div>
+    <label class="result_element">
+      <strong>BMR</strong> (Basal Metabolic Rate) =
+      <strong>{{ bmr }}</strong> kcal/day
+    </label>
+    <hr />
+    <label class="result_element">
+      <strong>TDEE</strong> (Total Daily Energy Expenditure) =
+      <strong>{{ tdee }}</strong> kcal/day
+    </label>
+    <hr />
+    <label class="result_element">
+      <strong>BMI</strong> (Body Mass Index) =
+      <strong>{{ bmi }}</strong> kg/m<sup>2</sup>
+    </label>
+    <div class="line-container">
+      <div class="line">
+        <div
+          class="point"
+          [style.left]="pos"
+          [style.background]="getPointColor()"
+        ></div>
+        <!-- Adjust the left style to position the point -->
+      </div>
+      <div class="labels">
+        <span>Underweight [0:18]</span>
+        <span>Normal [18:25]</span>
+        <span>Overweight [25:35]</span>
+        <span>Obesity [35:55]</span>
+      </div>
+    </div>
+    <hr />
+    <label class="result_element">
+      <strong>Protein Intake</strong> (minimum amount) =
+      <strong>{{ protein }}</strong> grams/day
+    </label>
+    <hr />
+    <label class="result_element">
+      <strong>Carbohydrate Intake</strong> (minimum amount) =
+      <strong>{{ carb }}</strong> grams/day
+    </label>
+    <hr />
+    <label class="result_element">
+      <strong>Fat Intake</strong> (minimum amount) =
+      <strong>{{ fat }}</strong> grams/day
+    </label>
+  </div>
+</div>
+
+<!-- Info Section -->
+<div class="info-section" *ngIf="show_info">
+  <a (click)="close_info()"><i class="fa-solid fa-left-long"></i> Back</a>
+  <hr />
+  <h2>What is GDA?</h2>
+  <p>
+    GDA stands for Guideline Daily Amounts. It is a term used in the United
+    Kingdom and Ireland for the amount of a nutrient (e.g. calories, fat, salt,
+    protein, etc.) that a person should consume in a day. <br />The GDA values
+    are displayed on food labels and are also used to provide information on the
+    nutritional composition of foods.
+  </p>
+  <hr />
+  <h2>What is BMR?</h2>
+  <p>
+    The basal metabolic rate (BMR) is the amount of energy needed while resting
+    in a temperate environment when the digestive system is inactive. It is the
+    equivalent of figuring out how much gas an idle car consumes while parked.
+    In such a state, energy will be used only to maintain vital organs, which
+    include the heart, brain, kidneys, nervous system, intestines, liver, lungs,
+    sex organs, muscles, and skin. For most people, upwards of ~70% of total
+    energy (calories) burned each day is due to upkeep. Physical activity makes
+    up ~20% of expenditure and ~10% is used for the digestion of food, also
+    known as thermogenesis.
+  </p>
+  <p>
+    The BMR is measured under very restrictive circumstances while awake. An
+    accurate BMR measurement requires that a person's sympathetic nervous system
+    is inactive, which means the person must be completely rested. Basal
+    metabolism is usually the largest component of a person's total caloric
+    needs. The daily caloric need is the BMR value multiplied by a factor with a
+    value between 1.2 and 1.9, depending on activity level.
+  </p>
+  <hr />
+  <h2>What is TDEE?</h2>
+  <p>
+    Total Daily Energy Expenditure (TDEE) is an estimation of how many calories
+    you burn per day when exercise is taken into account. It is calculated by
+    first figuring out your Basal Metabolic Rate, then multiplying that value by
+    an activity multiplier.
+  </p>
+  <hr />
+  <h2>What is BMI?</h2>
+  <p>
+    Body mass index (BMI) is a value derived from the mass (weight) and height
+    of a person. The BMI is defined as the body mass divided by the square of
+    the body height, and is universally expressed in units of kg/m<sup>2</sup>,
+    resulting from mass in kilograms and height in metres.
+  </p>
+  <hr />
+</div>

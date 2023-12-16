@@ -1,0 +1,34 @@
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<div id="container">
+        <div id="sidebar">
+            <div class="top" style="display: flex;">
+              <img id="header-img" src="../../assets/images/leaf.png" alt="Header Image">
+              <a id="Name" >NutriBalance</a>
+            </div>
+            
+            <div id="menu">
+              <a routerLink="coachprofile" routerLinkActive="active"
+                ><i class="fa fa-user-edit icon"></i> Profile</a
+              >
+              <a routerLink="createplan" routerLinkActive="active"><i class="fa fa-plus-circle icon"></i> Create Plan</a>
+              <a routerLink="view-subscriptions" routerLinkActive="active"><i class="fa fa-eye icon"></i> View Subscriptions</a>
+              <a routerLink="showplans" routerLinkActive="active"><i class="fa fa-list icon"></i> Show Plans</a>
+            </div>
+
+            <div id="sidebar-end-block">
+              <a (click)="logout()" > <i class="fas fa-sign-out-alt icon" ></i> Logout</a>
+            </div>
+          </div>
+        
+        <div id="content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+</html>
+

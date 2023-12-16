@@ -1,0 +1,29 @@
+<div>
+    <h2 mat-dialog-title>Edit Plan</h2>
+    <mat-dialog-content>
+        <form>
+            <div class="row">
+                <label for="planName" class="col-5">Plan Name: </label>
+                <strong>{{data.planName}}</strong>
+            </div>
+            <label for="description">Description</label>
+            <textarea type="text" id="description" [(ngModel)]="data.description" [ngModelOptions]="{standalone: true}">
+
+            </textarea>
+            <!-- <label for="goal">Goal</label> -->
+            <!-- <div class="row"> -->
+                <label for="goal">Goal</label>
+                <mat-select id="goal" [(ngModel)]="data.goal" [ngModelOptions]="{ standalone: true }">
+                  <mat-option *ngFor="let goalOption of goalOptions" [value]="goalOption.value">
+                    {{ goalOption.label }}
+                  </mat-option>
+                </mat-select>
+            <!-- </div> -->
+            <!-- <input type="text" id="goal" [(ngModel)]="data.goal" [ngModelOptions]="{standalone: true}" /> -->
+        </form>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button class="btn btn-danger" (click)="onNoClick()">Cancel</button>
+        <button mat-button class="btn btn-success" [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+    </mat-dialog-actions>
+</div>

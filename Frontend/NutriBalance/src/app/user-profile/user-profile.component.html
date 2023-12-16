@@ -1,0 +1,252 @@
+<link
+  href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+  rel="stylesheet"
+  id="bootstrap-css"
+/>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<div class="container emp-profile">
+  <form method="post">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="photo-container" *ngIf="hasPhoto">
+          <div class="photo-wrapper">
+            <img
+              [src]="imageUrl"
+              alt="Photo"
+              class="rounded-circle-container"
+            />
+            <div class="button-container">
+              <label for="formFile" class="custom-file-upload">
+                <input
+                  type="file"
+                  id="formFile"
+                  class="input-file"
+                  (change)="handleImageInput($event)"
+                  accept="image/*"
+                />
+                Edit Photo
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="photo-container" *ngIf="!hasPhoto">
+          <div
+            *ngIf="emptyFields.includes('image')"
+            style="color: red; font-size: small"
+          >
+            * Please upload image
+          </div>
+          <div class="photo-wrapper">
+            <img [src]="defaultImageUrl" alt="Photo" />
+            <div class="button-container">
+              <label for="formFile" class="custom-file-upload">
+                <input
+                  type="file"
+                  id="formFile"
+                  class="input-file"
+                  (change)="handleImageInput($event)"
+                  accept="image/*"
+                />
+                Upload Photo
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="profile-head">
+          <h1>
+            <h1>{{ user.username }}</h1>
+          </h1>
+
+        </div>
+      </div>
+      <div
+        class="col-md-2"
+        *ngIf="activeTab === 'about'"
+        aria-labelledby="home-tab"
+      >
+        <button
+          class="profile-edit-btn"
+          (click)="toggleEditMode()"
+          *ngIf="!isEdit"
+        >
+          Edit
+        </button>
+        <button
+          class="profile-edit-btn"
+          *ngIf="isEdit"
+          data-toggle="modal"
+          data-target="#exampleModalCenter"
+        >
+          Save Changes
+        </button>
+      </div>
+
+    </div>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a
+          class="nav-link active"
+          id="home-tab"
+          data-toggle="tab"
+          href="#home"
+          role="tab"
+          aria-controls="home"
+          aria-selected="true"
+          (click)="setActiveTab('about')"
+          >About</a
+        >
+      </li>
+
+    </ul>
+    <br />
+    <div class="row">
+      <div class="col-md-8">
+        <div class="tab-content profile-tab" id="myTabContent">
+          <div
+            class="tab-pane fade show active"
+            id="home"
+            role="tabpanel"
+            aria-labelledby="home-tab"
+          >
+            <div class="row">
+              <div class="col-md-6">
+                <label>User name</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ user.username }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Email</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ user.email }}</p>
+              </div>
+            </div>
+            <div class="row" *ngIf="!isEdit">
+              <div class="col-md-6">
+                <label>Phone</label>
+              </div>
+              <div class="col-md-6">
+                <p *ngIf="!emptyFields.includes('contact_number')">
+                  {{ user.contact_number }}
+                </p>
+                <div
+                  *ngIf="emptyFields.includes('contact_number')"
+                  style="color: red; font-size: small"
+                >
+                  * Please enter phone number
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="isEdit">
+              <div class="col-md-6">
+                <label>Phone</label>
+              </div>
+              <div class="col-md-6">
+                <input
+                  type="text"
+                  [(ngModel)]="user.contact_number"
+                  name="phone"
+                />
+                <div
+                  *ngIf="emptyFields.includes('contact_number')"
+                  style="color: red; font-size: small"
+                >
+                  * Please enter phone number
+                </div>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="hasPlan">
+              <div class="col-md-6">
+                <label>Plan</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ user.plan?.planName }}</p>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          Are you sure you want to save changes
+        </h5>
+        <button class="outer_button" (click)="close()">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="saveChanges()">
+          Save changes
+          <div
+            class="spinner-border text-light"
+            role="status"
+            *ngIf="spinner_flag == true"
+          ></div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="notify"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">
+          successfuly updated
+        </h5>
+        <button class="outer_button" (click)="close()">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

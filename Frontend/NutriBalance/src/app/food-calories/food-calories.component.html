@@ -1,0 +1,32 @@
+
+
+    
+    <div class="form-group">
+      <input id="filterInput" class="form-control" placeholder="{{ filter }}" [(ngModel)]="filterValue" (input)="applyFilter()">
+    </div>
+    
+      
+
+      <div class="table-responsive" style="height: 100%;width: 70%;">
+        <table class="table table-striped table-bordered" mat-table [dataSource]="dataSource">
+          <!-- Name Column -->
+          <ng-container matColumnDef="food_name" >
+            <th mat-header-cell *matHeaderCellDef >Food Name</th>
+            <td mat-cell *matCellDef="let element">{{element.food_name}}</td>
+          </ng-container>
+        
+          <!-- Calories Column -->
+          <ng-container matColumnDef="calorie">
+            <th mat-header-cell *matHeaderCellDef>Calorie per 100gm</th>
+            <td mat-cell *matCellDef="let element">{{element.calorie}}</td>
+          </ng-container>
+        
+          <!-- Header and Row Definitions -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+      
+  
+  <mat-paginator #paginator pageSize="8" showFirstLastButtons></mat-paginator>
+  

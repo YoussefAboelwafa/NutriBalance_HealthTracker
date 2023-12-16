@@ -1,25 +1,32 @@
+<link
+  href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
+  rel="stylesheet"
+/>
 <div id="outer">
+  <div id="title">
+    <h1 style="font-family: 'Montserrat', sans serif">
+      NutriBalance
+      <img class="logo" src="../../assets/images/leaf.png" alt="" />
+    </h1>
+  </div>
+  <div class="text-center">
+    <p style="font-family: 'Permanent Marker', cursive">
+      <i class="fa-solid fa-apple-whole"></i>
+      <span class="gradient-text"> Your Wellness Partner </span
+      ><i class="fa-solid fa-handshake"></i>
+    </p>
+  </div>
 
-<div id="title">
-  <h1>NutriBalance <i class="fa-solid fa-leaf"></i></h1>
-  <p id="quote">your wellness partner</p>
-</div>
-<div id="header-images">
-
-  <div id="cover-image1"></div>
-  <div id="cover-image2"></div>
-  <div id="cover-image3"></div>
-</div>
   <label id="choose-role">Choose role</label>
-<div id="inner">
-    <label >
-      <input  type="radio" name="role" value="admin" [(ngModel)]="selected_role" (change)="onSelection()"> Admin
-    </label>
-    <label>
-      <input  type="radio" name="role" value="coach" [(ngModel)]="selected_role" (change)="onSelection()"> Coach
-    </label>
-    <label>
-      <input  type="radio" name="role" value="user" [(ngModel)]="selected_role" (change)="onSelection()"> User
-    </label>
-</div>
+  <div id="inner">
+    <button
+      *ngIf="hide_admin_signup"
+      class="role_btn"
+      (click)="selectRole('admin')"
+    >
+      Admin
+    </button>
+    <button class="role_btn" (click)="selectRole('coach')">Coach</button>
+    <button class="role_btn" (click)="selectRole('user')">User</button>
+  </div>
 </div>

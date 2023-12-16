@@ -67,7 +67,6 @@ class NutriBalanceApplicationTests {
 
 
     @Test
-
     public void testSaveUser() {
         User user = new User();
         user.setUsername("user1");
@@ -95,7 +94,6 @@ class NutriBalanceApplicationTests {
 
     @Test
     public void testUserSignin() {
-
         User user = new User();
         user.setUsername("user1");
         user.setUser_id(1);

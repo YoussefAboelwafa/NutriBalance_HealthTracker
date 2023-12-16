@@ -1,0 +1,16 @@
+/* Default styling for the buttons */
+.spinner-border {
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    margin-left: 10px;
+    width: 30px;
+    height: 30px;
+  }
+  
+  /* Media query for screens less than 1024px */
+  @media (max-width: 1023px) {
+    .btn {
+      width: 100%; /* Make buttons take 100% width on screens less than 1024px */
+    }
+  }
+  

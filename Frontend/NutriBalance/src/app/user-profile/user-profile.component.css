@@ -1,0 +1,248 @@
+body{
+    background: -webkit-linear-gradient(left, #3931af, #00c6ff);
+}
+.emp-profile{
+    padding: 3%;
+    margin-top: 3%;
+    margin-left: 10%;
+    margin-bottom: 3%;
+    border-radius: 0.5rem;
+    background: #fff;
+    width: 65rem;
+    max-height: 90%;
+    height: auto;
+    
+}
+#popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  .outer_button {
+    border: none;
+    border-radius: 10px;
+    background-color: #fff;
+    width: 25px;
+    height: 25px;
+    margin-left: 3px;
+  }
+  .modal-title {
+    color: #008081;
+    font-size: 30px;
+    font-family: Montserrat;
+    font-weight: 700;
+    line-height: 100%;
+  }
+  
+  .modal-content {
+    border-radius: 15px;
+    background-color: #efefef;
+    box-shadow: 0px 0px 25px 0px white
+  }
+  
+  .modal-footer button {
+    background: #008081;
+    box-shadow: 0px 0px 7px 0px rgba(0, 129, 130, 0.16);
+    color: #fff;
+    width: 200px;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 8px 10px;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+  }
+  
+  .modal-body {
+    color: #008081;
+    font-size: 16px;
+    font-family: Montserrat;
+    font-weight: 500;
+  }
+  
+  .modal-footer button:hover {
+    background: #fff;
+    color: #008081;
+    border: 1px solid #008081;
+    transition: 1s;
+  }
+  
+  .modal-backdrop {
+    background-color: transparent !important;
+    pointer-events: none !important;
+  }
+  
+  .spinner-border {
+    color: white;
+    font-size: 16px;
+    margin-left: 6px;
+    width: 18px;
+    height: 18px;
+  }
+  #popup.show {
+    display: block;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  
+.profile-img{
+    text-align: center;
+}
+.profile-img img{
+    width: 100;
+    height: 100%;
+    border-radius: 0.5rem;
+}
+.profile-img .file {
+    position: relative;
+    overflow: hidden;
+    margin-top: -20%;
+    width: 70%;
+    border: none;
+    border-radius: 0.1rem;
+    font-size: 15px;
+    background: #212529b8;
+}
+.profile-img .file input {
+    position: absolute;
+    opacity: 0;
+    right: 0;
+    top: 0;
+}
+.profile-head h5{
+    color: #333;
+}
+.profile-head h6{
+    color: #0062cc;
+}
+.profile-edit-btn{
+    border: none;
+    border-radius: 1.5rem;
+    width: 70%;
+    padding: 2%;
+    font-weight: 600;
+    color: #6c757d;
+    cursor: pointer;
+}
+.proile-rating{
+    font-size: 12px;
+    color: #818182;
+    margin-top: 5%;
+}
+.proile-rating span{
+    color: #495057;
+    font-size: 15px;
+    font-weight: 600;
+}
+.profile-head .nav-tabs{
+    margin-bottom:5%;
+}
+.profile-head .nav-tabs .nav-link{
+    font-weight:600;
+    border: none;
+}
+.profile-head .nav-tabs .nav-link.active{
+    border: none;
+    border-bottom:2px solid #0062cc;
+}
+.profile-work{
+    padding: 14%;
+    margin-top: -15%;
+}
+.profile-work p{
+    font-size: 12px;
+    color: #818182;
+    font-weight: 600;
+    margin-top: 10%;
+}
+.profile-work a{
+    text-decoration: none;
+    color: #495057;
+    font-weight: 600;
+    font-size: 14px;
+}
+.profile-work ul{
+    list-style: none;
+}
+.profile-tab label{
+    font-weight: 600;
+}
+.profile-tab p{
+    font-weight: 600;
+    color: #0062cc;
+}
+
+.photo-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .photo-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+  .rounded-circle-container {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid #000;
+  }
+  .rounded-circle {
+    width: 100%;
+    height: 100%;
+  /* To ensure the image covers the entire circular container */
+  }
+  
+  
+  .photo {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Adjust shadow properties as needed */
+  }
+  
+  .button-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+  }
+  
+  .photo-container:hover .button-container {
+    display: block;
+  }
+  
+  .custom-file-upload {
+    /* border: 1px solid #ccc; */
+    display: inline-block;
+    /* padding: 6px 12px; */
+    cursor: pointer;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+  }
+  .input-file {
+    display: none; /* Hide the actual file input element */
+  }
