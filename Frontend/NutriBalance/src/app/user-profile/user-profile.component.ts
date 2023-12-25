@@ -9,6 +9,12 @@ import {
 import { UserService } from '../_services/user.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { ModalPopServiceService } from '../_services/modal-pop-service.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { AuthService } from '../_services/auth.service';
+import { error } from 'jquery';
+import { LoadingService } from '../_services/loading-service.service';
 declare const $: any;
 @Component({
   selector: 'app-user-profile',
@@ -17,6 +23,7 @@ declare const $: any;
 })
 
 export class UserProfileComponent implements OnInit {
+
 
   user! :User;
   flag: boolean = true;
@@ -30,13 +37,15 @@ export class UserProfileComponent implements OnInit {
   activeTab: string = 'about';
   defaultImageUrl: string = '../../assets/images/nophoto.png';
   spinner_flag: boolean = false;
-
   constructor(
     private storage: TokenStorageService,
     private userservices: UserService,
     private sanitizer: DomSanitizer,
     private modalpopup: ModalPopServiceService,
-    private shared:Shared
+    private authService:AuthService,
+    private shared:Shared,
+    private dialog: MatDialog,
+    private loadingService:LoadingService
   ) {}
 
   ngOnInit(): void {
@@ -87,14 +96,14 @@ export class UserProfileComponent implements OnInit {
   }
 
   toggleEditMode() {
-    this.isEdit = true;
+    this.isEdit = !this.isEdit;
+    this.originalUser={...this.user}
   }
 
   saveChanges() {
    
     this.spinner_flag = true;
     const hasChanges = !this.areObjectsEqual(this.user, this.originalUser);
-
     if (hasChanges) {
      
       this.emptyFields = this.getEmptyFields(this.user);
@@ -116,12 +125,12 @@ export class UserProfileComponent implements OnInit {
        
         },
       });
-
-      this.isEdit = false;
-
+      this.toggleEditMode();
     } else {
       console.log('No changes detected');
       this.toggleEditMode();
+      this.spinner_flag=false;
+      this.close()
     }
   }
   close() {
@@ -130,7 +139,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   areObjectsEqual(obj1: any, obj2: any): boolean {
-
     return JSON.stringify(obj1) === JSON.stringify(obj2);
   }
 
@@ -149,5 +157,44 @@ export class UserProfileComponent implements OnInit {
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
+  }
+
+  changePassword() {
+    const dialogRef = this.dialog.open(ChangePasswordDialogComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.openConfirmDialog("Are you sure you want to update your password?",result)
+      }
+    });
+ 
+  }
+  openConfirmDialog(data: any,pasword:any): void {
+    this.loadingService.setLoading(true);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: {
+        title: "Confirm Change Password",
+        body: data,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "confirm") {
+        this.authService.updatePassword(this.user.email,'user',pasword.currentPassword,pasword.newPassword).subscribe(
+          res => {
+          if(res.success){
+            alert(res.message)
+          }
+          else{
+            alert(res.message)
+          }
+        },
+        )
+        this.loadingService.setLoading(false);
+      }
+    });
   }
 }

@@ -9,6 +9,11 @@ import {
 import { CoachService } from '../Service/coach.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { ModalPopServiceService } from '../_services/modal-pop-service.service';
+import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../_services/auth.service';
+import { LoadingService } from '../_services/loading-service.service';
 declare const $: any;
 @Component({
   selector: 'app-coach-profile',
@@ -16,6 +21,7 @@ declare const $: any;
   styleUrls: ['./coach-profile.component.css'],
 })
 export class CoachProfileComponent implements OnInit {
+
   coach!: Coach;
   cvBlobUrl?: SafeResourceUrl;
   flag: boolean = true;
@@ -33,7 +39,11 @@ export class CoachProfileComponent implements OnInit {
     private storage: TokenStorageService,
     private coachservice: CoachService,
     private sanitizer: DomSanitizer,
-    private modalpopup: ModalPopServiceService
+    private modalpopup: ModalPopServiceService,
+    private dialog:MatDialog,
+    private authService:AuthService,
+    private loadingService:LoadingService
+    
   ) {}
 
   ngOnInit(): void {
@@ -189,5 +199,46 @@ export class CoachProfileComponent implements OnInit {
 
   setActiveTab(tab: string) {
     this.activeTab = tab;
+  }
+
+
+
+  
+  changePassword() {
+    const dialogRef = this.dialog.open(ChangePasswordDialogComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.openConfirmDialog("Are you sure you want to update your password?",result)
+      }
+    });
+ 
+  }
+  openConfirmDialog(data: any,pasword:any): void {
+    this.loadingService.setLoading(true); 
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '300px',
+      data: {
+        title: "Confirm Change Password",
+        body: data,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "confirm") {
+        this.authService.updatePassword(this.coach.email,'coach',pasword.currentPassword,pasword.newPassword).subscribe((res) => {
+          if(res.success){
+            alert(res.message)
+          }
+          else{
+            alert(res.message)
+          }
+        },
+        )
+        this.loadingService.setLoading(false);
+      }
+    });
   }
 }

@@ -10,8 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
@@ -492,6 +492,7 @@ public class Service implements Iservice {
         return null;
     }
 
+
     //----------------------    Chat    ----------------------//
     @Override
     public Chat savechat(ChatDto chatDto) {
@@ -537,5 +538,35 @@ public class Service implements Iservice {
         if (user != null && !chats.isEmpty())
           chatRepositry.deleteByUser(user_id);
     }
+
+    @Override
+    public String changePassword(String email, String oldPassword, String password, String role) {
+        if (role.equals("user")) {
+            User user = userRepo.findByEmail(email).orElse(null);
+            if (user == null) {
+                return "Email is not valid!";
+            }
+            if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+                return "Old Password is not valid!";
+            }
+            user.setPassword(passwordEncoder.encode(password));
+            userRepo.save(user);
+            return "success";
+        } else if (role.equals("coach")) {
+            Coach coach = coachRepo.findByEmail(email).orElse(null);
+            if (coach == null) {
+                return "Email is not valid!";
+            }
+            if (!passwordEncoder.matches(oldPassword, coach.getPassword())) {
+                return "Old Password is not valid!";
+            }
+            coach.setPassword(passwordEncoder.encode(password));
+            coachRepo.save(coach);
+            return "success";
+        }
+        return "Email is not valid!";
+    }
+
+
 }
 
