@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import com.example.nutribalance.Entities.ResetPassword;
 import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.Services.Iservice;
+import com.example.nutribalance.dto.ChangePasswordDto;
 import com.example.nutribalance.dto.LocalUser;
 import com.example.nutribalance.dto.LoginRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -189,8 +190,6 @@ class AuthenticationTest {
     }
 
 
-
-
     /**
      * Method under test:  {@link Authentication#login(LoginRequest)}
      */
@@ -212,5 +211,28 @@ class AuthenticationTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
                 .andExpect(MockMvcResultMatchers.content().string("Principal"));
+    }
+
+    /**
+     * Method under test:  {@link Authentication#changePassword(ChangePasswordDto)}
+     */
+    @Test
+    void testChangePassword() throws Exception {
+        when(iservice.changePassword(Mockito.<String>any(), Mockito.<String>any(), Mockito.<String>any(), Mockito.<String>any()))
+                .thenReturn("foo");
+        ChangePasswordDto changePasswordDto = new ChangePasswordDto();
+        changePasswordDto.setOldPassword("iloveyou");
+        changePasswordDto.setNewPassword("helloworld");
+        changePasswordDto.setEmail("jane.doe@example.org");
+        changePasswordDto.setRole("foo");
+        String content = (new ObjectMapper()).writeValueAsString(changePasswordDto);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/changePassword")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+        MockMvcBuilders.standaloneSetup(authentication)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
     }
 }

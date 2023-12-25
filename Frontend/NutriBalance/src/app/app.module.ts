@@ -49,6 +49,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { ProgressComponent } from './progress/progress.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
+import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -68,28 +70,29 @@ import { UserPlanComponent } from './user-plan/user-plan.component';
     CoachProfileComponent,
     UserpageComponent,
     CalculatorComponent,
-
     SubscribeComponent,
-
+    
     CoachPlansComponent,
     EditDialogComponent,
     ConfirmDialogComponent,
-
+    
     UserProfileComponent,
-
+    
     VerifiedComponent,
       FoodCaloriesComponent,
 
-
+      
 
     ProgressComponent,
-          UserPlanComponent,
+    UserPlanComponent,
+          ChangePasswordDialogComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule,
     MatDialogModule,
     MatInputModule,
