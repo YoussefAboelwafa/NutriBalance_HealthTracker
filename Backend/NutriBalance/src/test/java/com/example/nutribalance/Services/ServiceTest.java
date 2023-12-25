@@ -3,13 +3,17 @@ package com.example.nutribalance.Services;
 import com.example.nutribalance.Entities.*;
 import com.example.nutribalance.Mails.EmailService;
 import com.example.nutribalance.Repositries.*;
+import com.example.nutribalance.dto.ApiResponse;
+import com.example.nutribalance.dto.ChangePasswordDto;
 import com.example.nutribalance.dto.LoginRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -52,6 +56,10 @@ class ServiceTest {
 
     @MockBean
     private UserRepositry userRepositry;
+
+    @MockBean
+    private WeightRepositry weightRepositry;
+
 
     /**
      * Method under test: {@link Service#savecoach(Coach)}
@@ -3863,5 +3871,133 @@ class ServiceTest {
         when(foodCalorieRepositry.findAll()).thenThrow(new RuntimeException("foo"));
         assertThrows(RuntimeException.class, () -> service.getFoodCalorie());
         verify(foodCalorieRepositry).findAll();
+    }
+    /**
+     * Method under test:  {@link Service#changePassword(String, String, String, String)}
+     */
+    @Test
+    void testChangePasswordForUserSuccess() {
+
+        String email = "user@example.com";
+        String oldPassword = "oldPassword";
+        String newPassword = "newPassword";
+        String role = "user";
+
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(new BCryptPasswordEncoder(10).encode(oldPassword));
+        when(passwordEncoder.matches(oldPassword, user.getPassword())).thenReturn( new BCryptPasswordEncoder(10).matches(oldPassword, user.getPassword()));
+        when(userRepositry.findByEmail(email)).thenReturn(Optional.of(user));
+
+
+        String result = service.changePassword(email, oldPassword, newPassword, role);
+
+
+        assertEquals("success", result);
+        verify(userRepositry, times(1)).findByEmail(email);
+        verify(userRepositry, times(1)).save(any(User.class));
+    }
+    /**
+     * Method under test:  {@link Service#changePassword(String, String, String, String)}
+     */
+    @Test
+    void testChangePasswordForUserNotFound() {
+
+        String email = "nonexistent@example.com";
+        String oldPassword = "oldPassword";
+        String newPassword = "newPassword";
+        String role = "user";
+
+        when(userRepositry.findByEmail(email)).thenReturn(Optional.empty());
+
+        String result = service.changePassword(email, oldPassword, newPassword, role);
+        assertEquals("Email is not valid!", result);
+        verify(userRepositry, times(1)).findByEmail(email);
+        verify(userRepositry, never()).save(any(User.class));
+    }
+
+    /**
+     * Method under test:  {@link Service#changePassword(String, String, String, String)}
+     */
+    @Test
+    void testChangePasswordForUserIncorrectOldPassword() {
+
+        String email = "user@example.com";
+        String oldPassword = "incorrectOldPassword";
+        String newPassword = "newPassword";
+        String role = "user";
+
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(new BCryptPasswordEncoder(10).encode("oldPassword"));
+
+        when(userRepositry.findByEmail(email)).thenReturn(Optional.of(user));
+
+        String result = service.changePassword(email, oldPassword, newPassword, role);
+        assertEquals("Old Password is not valid!", result);
+        verify(userRepositry, times(1)).findByEmail(email);
+        verify(userRepositry, never()).save(any(User.class));
+    }
+    /**
+     * Method under test:  {@link Service#changePassword(String, String, String, String)}
+     */
+
+    @Test
+    void testChangePasswordForCoachSuccess() {
+
+        String email = "coach@example.com";
+        String oldPassword = "oldPassword";
+        String newPassword = "newPassword";
+        String role = "coach";
+
+        Coach coach = new Coach();
+        coach.setEmail(email);
+        coach.setPassword(new BCryptPasswordEncoder(10).encode(oldPassword));
+
+        when(passwordEncoder.matches(oldPassword, coach.getPassword())).thenReturn( new BCryptPasswordEncoder(10).matches(oldPassword, coach.getPassword()));
+        when(coachRepositry.findByEmail(email)).thenReturn(Optional.of(coach));
+
+        String result = service.changePassword(email, oldPassword, newPassword, role);
+
+        assertEquals("success", result);
+        verify(coachRepositry, times(1)).findByEmail(email);
+        verify(coachRepositry, times(1)).save(any(Coach.class));
+    }
+
+    /**
+     * Method under test:  {@link Service#changePassword(String, String, String, String)}
+     */
+    @Test
+    void testChangePasswordForCoachNotFound() {
+
+        String email = "nonexistentcoach@example.com";
+        String oldPassword = "oldPassword";
+        String newPassword = "newPassword";
+        String role = "coach";
+
+        when(coachRepositry.findByEmail(email)).thenReturn(Optional.empty());
+
+        String result = service.changePassword(email, oldPassword, newPassword, role);
+        assertEquals("Email is not valid!", result);
+        verify(coachRepositry, times(1)).findByEmail(email);
+        verify(coachRepositry, never()).save(any(Coach.class));
+    }
+
+    /**
+     * Method under test:  {@link Service#changePassword(String, String, String, String)}
+     */
+    @Test
+    void testChangePasswordInvalidRole() {
+        String email = "user@example.com";
+        String oldPassword = "oldPassword";
+        String newPassword = "newPassword";
+        String role = "invalidRole";
+
+        String result = service.changePassword(email, oldPassword, newPassword, role);
+        assertEquals("Email is not valid!", result);
+        verify(userRepositry, never()).findByEmail(anyString());
+        verify(userRepositry, never()).save(any(User.class));
+        verify(coachRepositry, never()).findByEmail(anyString());
+        verify(coachRepositry, never()).save(any(Coach.class));
     }
 }

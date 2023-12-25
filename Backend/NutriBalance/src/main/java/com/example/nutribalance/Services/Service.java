@@ -8,8 +8,8 @@ import com.example.nutribalance.dto.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -122,6 +122,7 @@ public class Service implements Iservice {
         }
         return null;
     }
+
     private EmailDetails getApprovedCoachEmail(Coach coach) {
         EmailDetails details = new EmailDetails();
         details.setRecipient(coach.getEmail());
@@ -139,6 +140,7 @@ public class Service implements Iservice {
                         "NutriBalance Team");
         return details;
     }
+
     @Override
     public User saveuser(User user) {
         Optional<User> old_user_1 = userRepo.findByEmail(user.getEmail());
@@ -452,10 +454,9 @@ public class Service implements Iservice {
     }
 
     @Override
-    public User AddWeight(Long id, Double weight, Date date)
-    {
+    public User AddWeight(Long id, Double weight, Date date) {
         User user = userRepo.findById(id).orElse(null);
-        if(user!=null) {
+        if (user != null) {
             Weight newWeight = new Weight();
             newWeight.setDate(date);
             newWeight.setUser(user);
@@ -467,9 +468,9 @@ public class Service implements Iservice {
         return null;
     }
 
-    public List<Weight> GetWeights(Long id){
+    public List<Weight> GetWeights(Long id) {
         User user = userRepo.findById(id).orElse(null);
-        if(user!=null) {
+        if (user != null) {
             return user.getWeights();
         }
         return null;
@@ -478,13 +479,42 @@ public class Service implements Iservice {
     @Override
     public User deletesubscription(Long id) {
         User user = userRepo.findById(id).orElse(null);
-        if(user!=null) {
+        if (user != null) {
             user.setCoach(null);
             user.setPlan(null);
             return userRepo.save(user);
         }
         return null;
     }
+
+    @Override
+    public String changePassword(String email, String oldPassword, String password, String role) {
+        if (role.equals("user")) {
+            User user = userRepo.findByEmail(email).orElse(null);
+            if (user == null) {
+                return "Email is not valid!";
+            }
+            if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+                return "Old Password is not valid!";
+            }
+            user.setPassword(passwordEncoder.encode(password));
+            userRepo.save(user);
+            return "success";
+        } else if (role.equals("coach")) {
+            Coach coach = coachRepo.findByEmail(email).orElse(null);
+            if (coach == null) {
+                return "Email is not valid!";
+            }
+            if (!passwordEncoder.matches(oldPassword, coach.getPassword())) {
+                return "Old Password is not valid!";
+            }
+            coach.setPassword(passwordEncoder.encode(password));
+            coachRepo.save(coach);
+            return "success";
+        }
+        return "Email is not valid!";
+    }
+
 
 }
 
