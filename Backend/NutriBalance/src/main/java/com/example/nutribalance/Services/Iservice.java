@@ -72,7 +72,7 @@ public interface Iservice {
     List<Weight> GetWeights(Long id);
     User deletesubscription(Long id);
     Chat savechat(ChatDto chatDto);
-    List<Chat> getOrderedChats();
     List<Chat> getUserChats(Long user_id);
     List<Chat> getCoachChats(Long coach_id);
+    void deleteChatByUser(Long user_id);
 }

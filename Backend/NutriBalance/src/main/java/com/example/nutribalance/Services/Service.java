@@ -6,6 +6,7 @@ import com.example.nutribalance.Mails.EmailService;
 import com.example.nutribalance.Repositries.*;
 import com.example.nutribalance.dto.ChatDto;
 import com.example.nutribalance.dto.LoginRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -515,16 +516,26 @@ public class Service implements Iservice {
 
     }
     @Override
-    public List<Chat> getOrderedChats() {
-        return chatRepositry.findAllByOrderByLocalDateTimeAsc();
-    }
-    @Override
     public List<Chat> getUserChats(Long user_id) {
-        return chatRepositry.findByUserOrderByLocalDateTimeAsc(user_id);
+        User user = userRepo.findById(user_id).orElse(null);
+        if (user != null)
+         return chatRepositry.findByUserOrderByLocalDateTimeAsc(user_id);
+        return null;
     }
     @Override
     public List<Chat> getCoachChats(Long coach_id) {
-        return chatRepositry.findByCoachOrderByLocalDateTimeAsc(coach_id);
+     Coach coach = coachRepo.findById(coach_id).orElse(null);
+        if (coach != null)
+          return chatRepositry.findByCoachOrderByLocalDateTimeAsc(coach_id);
+        return null;
+    }
+    @Transactional
+    @Override
+    public void deleteChatByUser(Long user_id) {
+        User user = userRepo.findById(user_id).orElse(null);
+        List<Chat> chats = chatRepositry.findByUserOrderByLocalDateTimeAsc(user_id);
+        if (user != null && !chats.isEmpty())
+          chatRepositry.deleteByUser(user_id);
     }
 }
 

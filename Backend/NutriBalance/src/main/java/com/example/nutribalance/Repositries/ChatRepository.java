@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ChatRepository extends JpaRepository<Chat, ChatID> {
-    List<Chat> findAllByOrderByLocalDateTimeAsc();
     List<Chat> findByUserOrderByLocalDateTimeAsc(Long user);
     List<Chat> findByCoachOrderByLocalDateTimeAsc(Long coach);
+    void deleteByUser(Long userId);
 }
