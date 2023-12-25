@@ -23,7 +23,7 @@ import { FoodCalorie } from './Objects/FoodCalorie';
 import { FoodCaloriesComponent } from './food-calories/food-calories.component';
 import { ProgressComponent } from './progress/progress.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
-
+import { UserChatComponent } from './user-chat/user-chat.component';
 
 export const routes: Routes = [
   {
@@ -119,6 +119,10 @@ export const routes: Routes = [
       {
         path: 'userplan',
         component: UserPlanComponent,
+      },
+      {
+        path: 'userchat',
+        component: UserChatComponent,
       },
 
     ],

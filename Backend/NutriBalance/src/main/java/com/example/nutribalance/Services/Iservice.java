@@ -1,6 +1,7 @@
 package com.example.nutribalance.Services;
 
 import com.example.nutribalance.Entities.*;
+import com.example.nutribalance.dto.ChatDto;
 import com.example.nutribalance.dto.LoginRequest;
 import jakarta.mail.MessagingException;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,4 +71,8 @@ public interface Iservice {
     User AddWeight(Long id, Double weight, Date date);
     List<Weight> GetWeights(Long id);
     User deletesubscription(Long id);
+    Chat savechat(ChatDto chatDto);
+    List<Chat> getOrderedChats();
+    List<Chat> getUserChats(Long user_id);
+    List<Chat> getCoachChats(Long coach_id);
 }
