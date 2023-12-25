@@ -49,7 +49,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { ProgressComponent } from './progress/progress.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
+
 import { UserChatComponent } from './user-chat/user-chat.component';
+
+import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 @NgModule({
   declarations: [
@@ -69,29 +74,34 @@ import { UserChatComponent } from './user-chat/user-chat.component';
     CoachProfileComponent,
     UserpageComponent,
     CalculatorComponent,
-
     SubscribeComponent,
-
+    
     CoachPlansComponent,
     EditDialogComponent,
     ConfirmDialogComponent,
-
+    
     UserProfileComponent,
-
+    
     VerifiedComponent,
       FoodCaloriesComponent,
 
-
+      
 
     ProgressComponent,
+
           UserPlanComponent,
           UserChatComponent,
+
+    UserPlanComponent,
+          ChangePasswordDialogComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule,
     MatDialogModule,
     MatInputModule,

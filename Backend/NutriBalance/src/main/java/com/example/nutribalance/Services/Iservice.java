@@ -4,7 +4,6 @@ import com.example.nutribalance.Entities.*;
 import com.example.nutribalance.dto.ChatDto;
 import com.example.nutribalance.dto.LoginRequest;
 import jakarta.mail.MessagingException;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.UnsupportedEncodingException;
@@ -53,6 +52,7 @@ public interface Iservice {
     Coach updateCoach(Coach coach);
 
 
+    String changePassword(String email, String oldPassword, String password, String role);
 
     Coach updateCoachCV(String email, byte[] bytes);
 

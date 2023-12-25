@@ -3,6 +3,8 @@ package com.example.nutribalance.Controllers;
 
 import com.example.nutribalance.Entities.ResetPassword;
 import com.example.nutribalance.Services.Iservice;
+import com.example.nutribalance.dto.ApiResponse;
+import com.example.nutribalance.dto.ChangePasswordDto;
 import com.example.nutribalance.dto.LoginRequest;
 import jakarta.servlet.http.HttpSession;
 import net.bytebuddy.utility.RandomString;
@@ -75,5 +77,19 @@ public class Authentication {
     public ResponseEntity<?> resetPassword(@RequestBody LoginRequest loginRequest,@Param("role") String role) {
         service.resetPassword(loginRequest,role);
         return ResponseEntity.ok().build();
+    }
+    @PostMapping("/changePassword")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDto loginRequest){
+        String email = loginRequest.getEmail();
+        String oldPassword = loginRequest.getOldPassword();
+        String password = loginRequest.getNewPassword();
+        String role = loginRequest.getRole();
+        String message = service.changePassword(email,oldPassword,password,role);
+        if(message.equals("success")){
+            return ResponseEntity.ok().body(new ApiResponse(true, message));
+        }
+        else{
+            return ResponseEntity.ok().body(new ApiResponse(false, message));
+        }
     }
 }
