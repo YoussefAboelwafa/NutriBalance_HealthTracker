@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { TokenStorageService } from '../_services/token-storage.service';
-import { Coach } from '../Objects/Coach';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-coach-page',
@@ -9,10 +10,21 @@ import { Router } from '@angular/router';
 })
 export class CoachPageComponent implements OnInit {
 
-  constructor(private router:Router,private el: ElementRef,private renderer: Renderer2,private tokenstorage: TokenStorageService) { 
-    
-  }
 
+  hasNewNotifications = true;
+  constructor(private router:Router,private el: ElementRef,private renderer: Renderer2,private tokenstorage: TokenStorageService) {  
+  }
+  notifications: { message: string; route: string }[] = [
+    { message: 'New message 1', route: '/component1'},
+    { message: 'New message 2', route: '/component2'},
+  ];
+
+  clearNotification(index: number): void {
+    this.notifications.splice(index, 1);
+  }
+  onMenuOpened() {
+    this.hasNewNotifications = false;
+  }
 
   public menuItems!: any[];
   ngOnInit() {

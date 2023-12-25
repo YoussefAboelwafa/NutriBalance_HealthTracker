@@ -26,6 +26,29 @@
           </div>
         
         <div id="content">
+          <button mat-icon-button class="bell-icon" [matMenuTriggerFor]="notificationMenu" [class.new-notifications]="hasNewNotifications"  (menuOpened)="onMenuOpened()">
+            <mat-icon>notifications</mat-icon>
+            <div *ngIf="hasNewNotifications" class="new-notifications-alert"></div>
+          </button>
+          <mat-menu #notificationMenu="matMenu">
+            <div *ngIf="notifications.length">
+
+              <button mat-menu-item  *ngFor="let notification of notifications; let i = index" >
+                <a [routerLink]="notification.route" (click)="clearNotification(i)">
+                  {{ notification.message }}
+                </a>
+                <button mat-icon-button class="clear-button" (click)="clearNotification(i)">
+                  <mat-icon>clear</mat-icon>
+                </button>
+              </button>
+            </div>
+            <div *ngIf="!notifications.length">
+              <h6 mat-menu-item>
+                No new notifications
+              </h6>
+            </div>
+          </mat-menu>
+          
             <router-outlet></router-outlet>
         </div>
     </div>

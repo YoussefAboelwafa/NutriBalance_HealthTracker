@@ -38,19 +38,18 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { MatSelectModule } from '@angular/material/select';
-
 import { UserProfileComponent } from './user-profile/user-profile.component';
-
 import { VerifiedComponent } from './verified/verified.component';
 import { FoodCaloriesComponent } from './food-calories/food-calories.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
-
 import { ProgressComponent } from './progress/progress.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
 import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 @NgModule({
   declarations: [
@@ -71,21 +70,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     UserpageComponent,
     CalculatorComponent,
     SubscribeComponent,
-    
     CoachPlansComponent,
     EditDialogComponent,
     ConfirmDialogComponent,
-    
     UserProfileComponent,
-    
     VerifiedComponent,
-      FoodCaloriesComponent,
-
-      
-
+    FoodCaloriesComponent,
     ProgressComponent,
     UserPlanComponent,
-          ChangePasswordDialogComponent,
+    ChangePasswordDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -102,7 +95,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ReactiveFormsModule,
     MatSidenavModule,
     MatSelectModule,
-
+    MatTableModule,
+    MatPaginatorModule,
+    MatIconModule,
+    MatMenuModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
