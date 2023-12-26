@@ -76,4 +76,6 @@ public interface Iservice {
     List<NotificationDto> getNotifications(Long id, String role);
 
     String deleteNotification(Long notificationId);
+
+    User getUser(Long id);
 }

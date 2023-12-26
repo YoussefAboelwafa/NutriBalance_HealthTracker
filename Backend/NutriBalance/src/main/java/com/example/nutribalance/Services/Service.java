@@ -545,6 +545,11 @@ public class Service implements Iservice {
 
     }
 
+    @Override
+    public User getUser(Long id) {
+        return userRepo.findById(id).orElse(null);
+    }
+
 
     private void addNotification(String message, int type, Object coach) {
         Notification notification = new Notification();

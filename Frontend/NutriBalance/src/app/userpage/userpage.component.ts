@@ -39,6 +39,20 @@ export class UserpageComponent implements OnInit {
   user: User = this.tokenstorage.getUser();
   view_subscribe: boolean = true;
   ngOnInit(): void {
+    this.service.getUser(this.user.user_id).subscribe(
+      {
+        next:
+          data => {
+            this.user = data;
+            this.tokenstorage.saveUser(this.user);
+          },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+
+      }
+    )
+    
     if (this.user.plan != null) {
       this.view_subscribe = false;
     }
@@ -47,11 +61,11 @@ export class UserpageComponent implements OnInit {
         next: data => {
           console.log(data)
           data.forEach((element:any) => {
-            if(element.type==0){
-              this.notifications.push({id:element.notificationId,message:element.message,date:element.date,type:element.type,route:"/"})
+            if(element.type==4){
+              this.notifications.push({id:element.notificationId,message:element.message,date:element.date,type:element.type,route:"/userpage/userplan"})
             }
             else{
-              this.notifications.push({id:element.notificationId,message:element.message,date:element.date,type:element.type,route:"/"})
+              this.notifications.push({id:element.notificationId,message:element.message,date:element.date,type:element.type,route:"/userpage/userplan"})
             }
           });
         },
