@@ -28,4 +28,12 @@ public class ChatController {
     public void deletechat(@Param("user_id") Long user_id){
          iservice.deleteChatByUser(user_id);
     }
+    @GetMapping("/get_unseen_chats")
+    public int get_unseen_chats(@Param("user_id") Long user_id, @Param("coach_id") Long coach_id){
+        return iservice.getUnseenChats(user_id, coach_id);
+    }
+    @GetMapping("/set_seen")
+    public void update_seen(@Param("user_id") Long user_id, @Param("coach_id") Long coach_id){
+        iservice.setSeen(user_id, coach_id);
+    }
 }

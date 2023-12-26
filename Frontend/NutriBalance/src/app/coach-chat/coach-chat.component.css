@@ -1,49 +1,71 @@
 #chat3 .form-control {
-    border-color: transparent;
-    }
-    
-    #chat3 .form-control:focus {
-    border-color: transparent;
-    box-shadow: inset 0px 0px 0px 1px transparent;
-    }
-    
-    .badge-dot {
-    border-radius: 50%;
-    height: 10px;
-    width: 10px;
-    margin-left: 2.9rem;
-    margin-top: -.75rem;
-    }
-     /* Scrollbar Track */
-  ::-webkit-scrollbar {
-    width: 10px; /* Adjust the width of the scrollbar */
-  }
+  border-color: transparent;
+}
 
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #a0a0a0; /* Change the color on hover */
-  }
+#chat3 .form-control:focus {
+  border-color: transparent;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+}
 
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background-color: #d3d3d3; /* Scrollbar handle color */
-    border-radius: 5px; /* Rounded corners for the handle */
-  }
+.badge-dot {
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  margin-left: 2.9rem;
+  margin-top: -0.75rem;
+}
+/* Scrollbar Track */
+::-webkit-scrollbar {
+  width: 10px; /* Adjust the width of the scrollbar */
+}
 
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Track color */
-  }
-   a {
-     cursor: pointer;
-   }
-    .ms-3{
-    color: blue;
-   }
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0; /* Change the color on hover */
+}
 
-   li.active{
-     background-color: #ccc;
-   }
-   li.active p{
-    color: #333;
-  }
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #d3d3d3; /* Scrollbar handle color */
+  border-radius: 5px; /* Rounded corners for the handle */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+}
+.loading-spinner {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  color: #008081;
+}
+a {
+  cursor: pointer;
+}
+.ms-3 {
+  color: blue;
+}
+
+li.active {
+  background-color: #ccc;
+}
+li.active p {
+  color: #333;
+}
+.spinner-border {
+  color: white;
+  font-size: 16px;
+  margin-left: 6px;
+  width: 18px;
+  height: 18px;
+}
+.spinner-border2 {
+  color: #008081;
+  font-size: 40px;
+  margin-left: 6px;
+  width: 25px;
+  height: 25px;
+}

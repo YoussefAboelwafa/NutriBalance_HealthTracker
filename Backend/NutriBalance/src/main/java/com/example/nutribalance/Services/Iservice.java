@@ -75,4 +75,6 @@ public interface Iservice {
     List<Chat> getUserChats(Long user_id);
     List<Chat> getCoachChats(Long coach_id);
     void deleteChatByUser(Long user_id);
+    int getUnseenChats(Long user_id, Long coach_id);
+    void setSeen(Long user_id, Long coach_id);
 }

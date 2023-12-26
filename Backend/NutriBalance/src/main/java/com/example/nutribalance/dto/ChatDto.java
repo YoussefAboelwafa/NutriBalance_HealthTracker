@@ -8,4 +8,5 @@ public class ChatDto {
     Long coach_id;
     String message;
     String sent_by;
+    int seen;
 }
