@@ -114,7 +114,10 @@ public class CoachController {
         boolean b= s.equals("Plan deleted");
         return new ApiResponse(b,s);
     }
-
+    @GetMapping("/getcoaches")
+    public  List<Coach> getCoaches(){
+        return iservice.getCoaches();
+    }
 
 }
 

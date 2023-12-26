@@ -40,7 +40,8 @@ public class Service implements Iservice {
     private FoodCalorieRepositry foodCalorieRepositry;
     @Autowired
     private ChatRepository chatRepositry;
-
+    @Autowired
+    private ReportRepositry reportRepositry;
     @Override
     public Coach savecoach(Coach coach) {
         return coachRepo.save(coach);
@@ -566,7 +567,22 @@ public class Service implements Iservice {
         }
         return "Email is not valid!";
     }
+    @Override
+    public List<Coach> getCoaches(){
+        return coachRepo.findAll();
+    }
+    @Override
+    public Report addReport(Long user_id,Long coach_id,String message,String author){
+        Report report=new Report();
+        Optional<User> user=userRepo.findById(user_id);
+        Optional<Coach> coach=coachRepo.findById(coach_id);
+        report.setUser(user.get());
+        report.setCoach(coach.get());
+        report.setMessage(message);
+        report.setAuthor(author);
+        return reportRepositry.save(report);
 
+    }
 
 }
 

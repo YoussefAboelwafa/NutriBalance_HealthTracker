@@ -1,6 +1,7 @@
 package com.example.nutribalance.Controllers;
 
 import com.example.nutribalance.Entities.FoodCalorie;
+import com.example.nutribalance.Entities.Report;
 import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.Entities.Weight;
 import com.example.nutribalance.Services.Iservice;
@@ -69,5 +70,9 @@ public class UserController {
         return service.deletesubscription(id);
     }
 
+    @PostMapping("/report/{id}")
+    public Report addReport(@PathVariable Long id, @RequestParam("coach_id") Long coach_id, @RequestBody String message){
+        return service.addReport(id,coach_id,message,"user");
+    }
 }
 
