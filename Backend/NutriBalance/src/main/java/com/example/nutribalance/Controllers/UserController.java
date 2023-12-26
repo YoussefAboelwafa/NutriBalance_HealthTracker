@@ -74,5 +74,10 @@ public class UserController {
     public Report addReport(@PathVariable Long id, @RequestParam("coach_id") Long coach_id, @RequestBody String message){
         return service.addReport(id,coach_id,message,"user");
     }
+    @GetMapping("/deleteuser")
+    public void deleteUser(@RequestBody User user){
+         service.deleteUser(user);
+    }
+
 }
 

@@ -119,5 +119,9 @@ public class CoachController {
         return iservice.getCoaches();
     }
 
+    @GetMapping("/deletecoach")
+    public void deleteCoach(@RequestBody Coach coach){
+        iservice.deleteCoach(coach);
+    }
 }
 

@@ -583,6 +583,17 @@ public class Service implements Iservice {
         return reportRepositry.save(report);
 
     }
-
+    @Override
+    public List<Report> getReports(){
+        return reportRepositry.findAll();
+    }
+    @Override
+    public void deleteUser(User user){
+        userRepo.deleteById(user.getUser_id());
+    }
+    @Override
+    public void deleteCoach(Coach coach){
+        coachRepo.deleteById(coach.getCoach_id());
+    }
 }
 

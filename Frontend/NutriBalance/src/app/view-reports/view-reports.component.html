@@ -1,0 +1,38 @@
+
+<div
+  *ngIf="reports.length > 0"
+  class="container text-center align-items-center justify-content-center"
+>
+  <div class="card" *ngFor="let report of reports; let i = index">
+    <div class="card-body">
+      <h5 class="card-title">
+        <strong> From: {{ report.author }}</strong>
+      </h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><strong>User: </strong> {{ report.user.username }}</li>
+      <li class="list-group-item"><strong>Coach: </strong> {{ report.coach.username }}</li>
+        
+    </ul>
+    <div class="card-body">
+      <li class="list-group-item">
+       <strong>Report: </strong> {{ report.message }}
+      </li>
+      </div>
+    <div class="card-body">
+      <button class="btn btn-danger" (click)="delete_user(i)">Delete User</button>
+      <button class="btn btn-danger" (click)="delete_coach(i)">
+        Delete Coach
+      </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="reports.length == 0">
+  <h5
+    style="margin-top: 20rem; text-align: center; font-size: 24px; color: #333"
+  >
+    <strong> There is no reports yet</strong>
+  </h5>
+</div>
+
