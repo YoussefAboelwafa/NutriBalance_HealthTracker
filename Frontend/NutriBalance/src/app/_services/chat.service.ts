@@ -14,7 +14,17 @@ export class ChatService {
       message: message,
       sent_by: 'user',
     });
+  
   }
+  saveChatByCoach(user_id: any, coach_id: any, message: any): Observable<any> {
+    return this.http.post<any>(`${baseUrl}/save`, {
+      user_id: user_id,
+      coach_id: coach_id,
+      message: message,
+      sent_by: 'coach',
+    });
+  }
+
   get_user_chat(user_id: any): Observable<any> {
     return this.http.get<any>(`${baseUrl}/get_ordered_user_chats`, {
       params: { user_id: user_id },
