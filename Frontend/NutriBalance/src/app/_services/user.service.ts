@@ -14,7 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class UserService {
-  
+
   constructor(private http: HttpClient) { }
  
   saveUser(user:User): Observable<any> {
@@ -69,6 +69,13 @@ export class UserService {
   }
   deletesubscription(id:any):Observable<any>{
     return this.http.delete<any>(`${baseUrl}/deletesubscription/${id}`);
+  }
+
+  getNotification(id:any):Observable<any> {
+    return this.http.get<any>(`http://localhost:8080/notification/getNotifications`,{params:{id:id,role:"user"}})
+  }
+  deleteNotification(id: any) :Observable<any> {
+    return this.http.delete<any>(`http://localhost:8080/notification/deleteNotification`,{params:{notification_id:id}});
   }
 
 }

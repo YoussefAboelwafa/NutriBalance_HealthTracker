@@ -33,19 +33,18 @@
           <mat-menu #notificationMenu="matMenu">
             <div *ngIf="notifications.length">
 
-              <button mat-menu-item  *ngFor="let notification of notifications; let i = index" >
-                <a [routerLink]="notification.route" (click)="clearNotification(i)">
-                  {{ notification.message }}
+              <button mat-menu-item  *ngFor="let notification of notifications; let i = index" style="height: fit-content;" >
+                <a [routerLink]="notification.route" (click)="clearNotification(i)" style="word-wrap: break-word; max-width: 10;">
+                  <span style="white-space:pre-wrap;line-height:0.2rem;font-size: small;">{{ notification.message }}</span>
+
+                  <small style="font-size: x-small;">  ---{{ notification.date | date: 'medium' }}</small>
                 </a>
-                <button mat-icon-button class="clear-button" (click)="clearNotification(i)">
-                  <mat-icon>clear</mat-icon>
-                </button>
               </button>
             </div>
             <div *ngIf="!notifications.length">
-              <h6 mat-menu-item>
+              <h4 mat-menu-item>
                 No new notifications
-              </h6>
+              </h4>
             </div>
           </mat-menu>
           

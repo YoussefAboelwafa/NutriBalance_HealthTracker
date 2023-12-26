@@ -152,6 +152,12 @@
     background-color: rgba(127, 255, 212, 0.25);
     transition: 0.7s;
   }
+  .clear-button{
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-left: 10px;
+  }
 
 
   .new-notifications-alert {
@@ -162,4 +168,19 @@
   height: 10px;
   background-color: red;
   border-radius: 50%;
+}
+
+#notificationMenu {
+  max-width: 300px; /* Adjust the max-width as needed */
+}
+
+.mat-menu-content {
+  overflow-y: auto;
+  max-height: 300px; /* Adjust the max-height as needed */
+}
+
+.mat-menu-item {
+  /* white-space: normal; */
+  word-wrap: break-word;
+  
 }

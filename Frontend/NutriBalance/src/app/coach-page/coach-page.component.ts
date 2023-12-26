@@ -3,6 +3,8 @@ import { TokenStorageService } from '../_services/token-storage.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { CoachService } from '../Service/coach.service';
+import { Coach } from '../Objects/Coach';
 @Component({
   selector: 'app-coach-page',
   templateUrl: './coach-page.component.html',
@@ -12,23 +14,48 @@ export class CoachPageComponent implements OnInit {
 
 
   hasNewNotifications = true;
-  constructor(private router:Router,private el: ElementRef,private renderer: Renderer2,private tokenstorage: TokenStorageService) {  
+  constructor(private router:Router,private el: ElementRef,private renderer: Renderer2,private tokenstorage: TokenStorageService,private service: CoachService) {  
   }
-  notifications: { message: string; route: string }[] = [
-    { message: 'New message 1', route: '/component1'},
-    { message: 'New message 2', route: '/component2'},
+  notifications: {id:number, message:string,date:Date,type:number,route:string }[] = [
   ];
-
+  coach!:Coach
   clearNotification(index: number): void {
-    this.notifications.splice(index, 1);
+    this.service.deleteNotification(this.notifications[index].id).subscribe(
+      {
+        next: data => {
+          console.log(data)
+          this.notifications.splice(index, 1);
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      }
+    )
   }
   onMenuOpened() {
     this.hasNewNotifications = false;
   }
-
-  public menuItems!: any[];
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.coach=this.tokenstorage.getCoach()  
+    this.service.getNotification(this.coach.coach_id).subscribe(
+      {
+        next: data => {
+          console.log(data)
+          data.forEach((element:any) => {
+            //if type 0 route to subscriptions and if type 1 route to messages
+            if(element.type==2 || element.type){
+              this.notifications.push({id:element.notificationId,message:element.message,date:element.date,type:element.type,route:"/coach-page/view-subscriptions"})
+            }
+            else{
+              this.notifications.push({id:element.notificationId,message:element.message,date:element.date,type:element.type,route:"/messages"})
+            }
+          });
+        },
+        error: error => {
+          console.error('There was an error!', error);
+        }
+      }
+    )
   }
   addBodyModificationClass() {
     this.renderer.addClass(this.el.nativeElement.ownerDocument.body, 'body-modification');

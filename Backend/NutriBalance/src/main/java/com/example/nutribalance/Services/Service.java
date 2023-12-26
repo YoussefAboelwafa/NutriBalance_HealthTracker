@@ -1,20 +1,26 @@
 package com.example.nutribalance.Services;
 
 import com.example.nutribalance.Entities.*;
+import com.example.nutribalance.Entities.Notification;
 import com.example.nutribalance.Mails.EmailDetails;
 import com.example.nutribalance.Mails.EmailService;
 import com.example.nutribalance.Repositries.*;
 import com.example.nutribalance.dto.LoginRequest;
+import com.example.nutribalance.dto.NotificationDto;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @org.springframework.stereotype.Service
@@ -35,6 +41,10 @@ public class Service implements Iservice {
     private PlanRepositry planRepositry;
     @Autowired
     private FoodCalorieRepositry foodCalorieRepositry;
+    @Autowired
+    private NotificationRepository notificationRepository;
+
+    private final Message message = new Message();
 
     @Override
     public Coach savecoach(Coach coach) {
@@ -85,6 +95,11 @@ public class Service implements Iservice {
         Plan existingPlan = existingPlanOpt.get();
         existingPlan.setDescription(plan.getDescription());
         existingPlan.setGoal(plan.getGoal());
+        Coach coach = existingPlan.getCoach();
+        List<User> users = coach.getUsers();
+        for (User user : users) {
+            addNotification(message.getMessage(coach.getUsername(),NotificationType.UPDATE_PLAN), NotificationType.UPDATE_PLAN.ordinal(), user);
+        }
         return planRepositry.save(existingPlan);
     }
 
@@ -392,8 +407,17 @@ public class Service implements Iservice {
     @Override
     public Plan saveplan(Plan plan) {
         Plan existingPlan = planRepositry.findByPlanName(plan.getPlanName());
+        Coach coach = coachRepo.findById(plan.getCoach().getCoach_id()).orElse(null);
+        if (coach == null) {
+            return null;
+        }
         if (existingPlan != null) {
             return null;
+        }
+        //for all users subscribed to this coach send notification that he added new plan
+        List<User> users = coach.getUsers();
+        for (User user : users) {
+            addNotification(message.getMessage(coach.getUsername(),NotificationType.NEW_PLAN), NotificationType.NEW_PLAN.ordinal(), user);
         }
         return planRepositry.save(plan);
     }
@@ -404,11 +428,13 @@ public class Service implements Iservice {
         User user = userRepo.findById(user_id).orElse(null);
         if (plan != null && user != null) {
             Long coach_id = plan.getCoach().getCoach_id();
+
             Coach coach = coachRepo.findById(coach_id).orElse(null);
             coach.setNo_users_subscribed(coach.getNo_users_subscribed() + 1);
             coachRepo.save(coach);
             user.setCoach(coach);
             user.setPlan(plan);
+            addNotification(message.getMessage(user.getUsername(),NotificationType.NEW_SUBSCRIPTION), NotificationType.NEW_SUBSCRIPTION.ordinal(), coach);
             return userRepo.save(user);
         }
         return null;
@@ -480,12 +506,61 @@ public class Service implements Iservice {
     public User deletesubscription(Long id) {
         User user = userRepo.findById(id).orElse(null);
         if (user != null) {
+            Coach coach = user.getCoach();
+            coach.setNo_users_subscribed(coach.getNo_users_subscribed() - 1);
+            coachRepo.save(coach);
+            addNotification(message.getMessage(user.getUsername(),NotificationType.DELETE_SUBSCRIPTION), NotificationType.DELETE_SUBSCRIPTION.ordinal(), coach);
             user.setCoach(null);
             user.setPlan(null);
             return userRepo.save(user);
         }
         return null;
     }
+
+    @Override
+    public List<NotificationDto> getNotifications(Long id, String role) {
+        List<Notification> notifications;
+        if ("coach".equalsIgnoreCase(role)) {
+            Coach coach = coachRepo.findById(id).orElse(null);
+            notifications = notificationRepository.findByCoach_Coach_id(coach.getCoach_id());
+        } else if ("user".equalsIgnoreCase(role)) {
+            User user = userRepo.findById(id).orElse(null);
+            notifications = notificationRepository.findByUser_User_id(user.getUser_id());
+        } else {
+            throw new IllegalArgumentException("Invalid role: " + role);
+        }
+        return notifications.stream()
+                .map(NotificationDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String deleteNotification(Long notificationId) {
+        try {
+            notificationRepository.deleteById(notificationId);
+            return "Notification deleted";
+        } catch (Exception e) {
+            return "Notification not found";
+        }
+
+    }
+
+
+    private void addNotification(String message, int type, Object coach) {
+        Notification notification = new Notification();
+        notification.setMessage(message);
+        notification.setType(type);
+        notification.setDate(LocalDateTime.now());
+        if (coach instanceof Coach) {
+            notification.setCoach((Coach) coach);
+        } else {
+            notification.setUser((User) coach);
+        }
+        notificationRepository.save(notification);
+    }
+
+
+
 
     @Override
     public String changePassword(String email, String oldPassword, String password, String role) {
@@ -517,4 +592,7 @@ public class Service implements Iservice {
 
 
 }
+
+
+
 

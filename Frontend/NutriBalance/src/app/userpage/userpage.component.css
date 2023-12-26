@@ -116,3 +116,73 @@ body {
 i {
   margin-right: 10px;
 }
+
+
+
+#content {
+  position: relative;
+}
+
+.bell-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  margin-left:0% ;
+  padding-left: 0%;
+  border-left:0%;
+  color: #333;
+}
+a button {
+  margin-left: 10px;
+  color: #333; /* Adjust the color as needed */
+}
+a button:hover {
+  color: #fff;
+  background-color: rgba(127, 255, 212, 0.25);
+  transition: 0.7s;
+}
+.btn {
+  background-color: #333;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: rgba(127, 255, 212, 0.25);
+  transition: 0.7s;
+}
+.clear-button{
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+
+.new-notifications-alert {
+position: absolute;
+top: 5px;
+right: 5px;
+width: 10px;
+height: 10px;
+background-color: red;
+border-radius: 50%;
+}
+
+#notificationMenu {
+max-width: 300px; /* Adjust the max-width as needed */
+}
+
+.mat-menu-content {
+overflow-y: auto;
+max-height: 300px; /* Adjust the max-height as needed */
+}
+
+.mat-menu-item {
+/* white-space: normal; */
+word-wrap: break-word;
+
+}
