@@ -23,8 +23,8 @@ import { FoodCalorie } from './Objects/FoodCalorie';
 import { FoodCaloriesComponent } from './food-calories/food-calories.component';
 import { ProgressComponent } from './progress/progress.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
-
-
+import { UserChatComponent } from './user-chat/user-chat.component';
+import { CoachChatComponent } from './coach-chat/coach-chat.component';
 export const routes: Routes = [
   {
     path: '',
@@ -83,6 +83,10 @@ export const routes: Routes = [
         path: 'view-subscriptions',
         component: ViewSubscriptionsComponent,
       },
+      {
+        path:'coachchat',
+        component:CoachChatComponent,
+      }
     ],
   },
   {
@@ -119,6 +123,10 @@ export const routes: Routes = [
       {
         path: 'userplan',
         component: UserPlanComponent,
+      },
+      {
+        path: 'userchat',
+        component: UserChatComponent,
       },
 
     ],

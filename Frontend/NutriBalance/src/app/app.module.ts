@@ -31,12 +31,10 @@ import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 import { SubscribeComponent } from './subscribe/subscribe.component';
-
 import { CoachPlansComponent } from './coach-plans/coach-plans.component';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
-
 import { MatSelectModule } from '@angular/material/select';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { VerifiedComponent } from './verified/verified.component';
@@ -45,10 +43,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProgressComponent } from './progress/progress.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
+import { UserChatComponent } from './user-chat/user-chat.component';
 import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { CoachChatComponent } from './coach-chat/coach-chat.component';
+
 
 
 @NgModule({
@@ -78,7 +79,11 @@ import { MatMenuModule } from '@angular/material/menu';
     FoodCaloriesComponent,
     ProgressComponent,
     UserPlanComponent,
+    UserChatComponent,
+    UserPlanComponent,
     ChangePasswordDialogComponent,
+    ChangePasswordDialogComponent,
+    CoachChatComponent,
   ],
   imports: [
     BrowserModule,

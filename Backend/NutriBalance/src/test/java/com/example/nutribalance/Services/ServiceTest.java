@@ -3,8 +3,12 @@ package com.example.nutribalance.Services;
 import com.example.nutribalance.Entities.*;
 import com.example.nutribalance.Mails.EmailService;
 import com.example.nutribalance.Repositries.*;
+
+import com.example.nutribalance.dto.ChatDto;
+
 import com.example.nutribalance.dto.ApiResponse;
 import com.example.nutribalance.dto.ChangePasswordDto;
+
 import com.example.nutribalance.dto.LoginRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,9 +27,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -56,9 +59,11 @@ class ServiceTest {
 
     @MockBean
     private UserRepositry userRepositry;
-
     @MockBean
-    private WeightRepositry weightRepositry;
+    private ChatRepository chatRepository;
+    @MockBean
+    private WeightRepositry weightRepository;
+
 
 
     /**
@@ -3872,6 +3877,134 @@ class ServiceTest {
         assertThrows(RuntimeException.class, () -> service.getFoodCalorie());
         verify(foodCalorieRepositry).findAll();
     }
+
+
+    @Test
+    void savechat() {
+        User user = new User();
+        user.setUser_id(1L);
+        user.setUsername("username");
+        user.setPassword("password");
+        user.setPlan(new Plan());
+        user.setCoaches_reports(new ArrayList<>());
+        user.setWeights(new ArrayList<>());
+        user.setEnabled(true);
+        user.setEmail("kk@gmail.com");
+        Coach coach = new Coach();
+        coach.setCoach_id(2L);
+        coach.setUsername("username");
+        coach.setPassword("password");
+        coach.setUsers(new ArrayList<>());
+        coach.setUsers_reports(new ArrayList<>());
+        coach.setPlans(new ArrayList<>());
+        coach.setNo_users_subscribed(0);
+        coach.setIsapproved(1);
+        Chat chat = new Chat();
+        chat.setUser(1L);
+        chat.setCoach(2L);
+        chat.setMessage("message");
+        ChatDto chatDto = new ChatDto();
+        chatDto.setUser_id(1L);
+        chatDto.setCoach_id(2L);
+        chatDto.setMessage("message");
+
+        //happy case
+   when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
+   when(coachRepositry.findById(2L)).thenReturn(Optional.of(coach));
+   when(chatRepository.save(chat)).thenReturn(chat);
+    Chat actual = service.savechat(chatDto);
+    chat.setLocalDateTime(actual.getLocalDateTime());
+    assertEquals(chat,actual);
+
+    //user not found
+    when(userRepositry.findById(1L)).thenReturn(Optional.empty());
+    assertNull(service.savechat(chatDto));
+   // coach not found
+    when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
+    when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
+    assertNull(service.savechat(chatDto));
+    // coach and user not found
+    when(userRepositry.findById(1L)).thenReturn(Optional.empty());
+    when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
+    assertNull(service.savechat(chatDto));
+
+    }
+
+    @Test
+    void getUserChats() {
+        User user = new User();
+        user.setUser_id(1L);
+        user.setUsername("username");
+        user.setPassword("password");
+        user.setPlan(new Plan());
+        user.setCoaches_reports(new ArrayList<>());
+        user.setWeights(new ArrayList<>());
+        user.setEnabled(true);
+        user.setEmail("coach@gmail.com");
+        //test the oredering of the chats
+        Chat chat = new Chat();
+        chat.setUser(1L);
+        chat.setCoach(2L);
+        chat.setMessage("message");
+        chat.setLocalDateTime(LocalDateTime.now());
+        Chat chat2 = new Chat();
+        chat2.setUser(1L);
+        chat2.setCoach(2L);
+        chat2.setMessage("message");
+        chat2.setLocalDateTime(LocalDateTime.now());
+        Chat chat3 = new Chat();
+        chat3.setUser(1L);
+        chat3.setCoach(2L);
+        chat3.setMessage("message");
+        chat3.setLocalDateTime(LocalDateTime.now());
+        List<Chat> chats = new ArrayList<>();
+        chats.add(chat);
+        chats.add(chat2);
+        chats.add(chat3);
+        when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
+        when(chatRepository.findByUserOrderByLocalDateTimeAsc(1L)).thenReturn(chats);
+        List<Chat> actual = service.getUserChats(1L);
+        assertEquals(chats,actual);
+        //user not found
+        when(userRepositry.findById(1L)).thenReturn(Optional.empty());
+        assertNull(service.getUserChats(1L));
+
+
+    }
+
+    @Test
+    void getCoachChats() {
+        Coach coach = new Coach();
+        coach.setCoach_id(1L);
+        Chat chat = new Chat();
+        chat.setUser(2L);
+        chat.setCoach(1L);
+        chat.setMessage("message");
+        chat.setLocalDateTime(LocalDateTime.now());
+        Chat chat2 = new Chat();
+        chat2.setUser(2L);
+        chat2.setCoach(1L);
+        chat2.setMessage("message");
+        chat2.setLocalDateTime(LocalDateTime.now());
+        Chat chat3 = new Chat();
+        chat3.setUser(2L);
+        chat3.setCoach(1L);
+        chat3.setMessage("message");
+        chat3.setLocalDateTime(LocalDateTime.now());
+        List<Chat> chats = new ArrayList<>();
+        chats.add(chat);
+        chats.add(chat2);
+        chats.add(chat3);
+        when(coachRepositry.findById(1L)).thenReturn(Optional.of(coach));
+        when(chatRepository.findByCoachOrderByLocalDateTimeAsc(1L)).thenReturn(chats);
+        List<Chat> actual = service.getCoachChats(1L);
+        assertEquals(chats,actual);
+        //coach not found
+        when(coachRepositry.findById(1L)).thenReturn(Optional.empty());
+        assertNull(service.getCoachChats(1L));
+    }
+
+
     /**
      * Method under test:  {@link Service#changePassword(String, String, String, String)}
      */
@@ -4000,4 +4133,82 @@ class ServiceTest {
         verify(coachRepositry, never()).findByEmail(anyString());
         verify(coachRepositry, never()).save(any(Coach.class));
     }
+
+    @Test
+    void getUnseenChats() {
+        User user = new User();
+        user.setUser_id(1L);
+        Coach coach = new Coach();
+        coach.setCoach_id(2L);
+        Chat chat1 = new Chat();
+        chat1.setUser(1L);
+        chat1.setCoach(2L);
+        chat1.setMessage("message");
+        chat1.setLocalDateTime(LocalDateTime.now());
+        chat1.setSeen(1);
+        Chat chat2 = new Chat();
+        chat2.setUser(1L);
+        chat2.setCoach(2L);
+        chat2.setMessage("message");
+        chat2.setLocalDateTime(LocalDateTime.now());
+        chat2.setSeen(1);
+        Chat chat3 = new Chat();
+        chat3.setUser(1L);
+        chat3.setCoach(2L);
+        chat3.setMessage("message");
+        chat3.setLocalDateTime(LocalDateTime.now());
+        chat3.setSeen(1);
+        Chat chat4 = new Chat();
+        chat4.setUser(1L);
+        chat4.setCoach(2L);
+        chat4.setMessage("message");
+        chat4.setLocalDateTime(LocalDateTime.now());
+        chat4.setSeen(0);
+        Chat chat5 = new Chat();
+        chat5.setUser(1L);
+        chat5.setCoach(2L);
+        chat5.setMessage("message");
+        chat5.setLocalDateTime(LocalDateTime.now());
+        chat5.setSeen(0);
+        List<Chat> chats = new ArrayList<>();
+        chats.add(chat1);
+        chats.add(chat2);
+        chats.add(chat3);
+        chats.add(chat4);
+        chats.add(chat5);
+        when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
+        when(coachRepositry.findById(2L)).thenReturn(Optional.of(coach));
+        when(chatRepository.findByUserAndCoachOrderByLocalDateTimeAsc(1L,2L)).thenReturn(chats);
+        int actual = service.getUnseenChats(1L,2L);
+        assertEquals(2,actual);
+        //all seen
+        chat4.setSeen(1);
+        chat5.setSeen(1);
+        List<Chat> chats1 = new ArrayList<>();
+        chats1.add(chat1);
+        chats1.add(chat2);
+        chats1.add(chat3);
+        chats1.add(chat4);
+        chats1.add(chat5);
+        when(chatRepository.findByUserAndCoachOrderByLocalDateTimeAsc(1L,2L)).thenReturn(chats1);
+        actual = service.getUnseenChats(1L,2L);
+        assertEquals(0,actual);
+        // user not found
+        when(userRepositry.findById(1L)).thenReturn(Optional.empty());
+        actual = service.getUnseenChats(1L,2L);
+        assertEquals(-1,actual);
+        // coach not found
+        when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
+        when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
+        actual = service.getUnseenChats(1L,2L);
+        assertEquals(-1,actual);
+        // user and coach not found
+        when(userRepositry.findById(1L)).thenReturn(Optional.empty());
+        when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
+        actual = service.getUnseenChats(1L,2L);
+        assertEquals(-1,actual);
+
+
+    }
+
 }

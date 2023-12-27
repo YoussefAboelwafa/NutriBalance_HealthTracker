@@ -1,0 +1,97 @@
+<div *ngIf="user.plan == null" class="subscribed">
+  <h1>You don't have a coach yet!</h1>
+</div>
+
+<section *ngIf="user.plan != null">
+  <div class="container py-5">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-8 col-lg-6 col-xl-4" style="width: 100%">
+        <div class="card" id="chat1">
+          <div
+            class="card-header d-flex justify-content-center align-items-center p-3 bg-info text-white border-bottom-0"
+            style="border-top-left-radius: 15px; border-top-right-radius: 15px"
+          >
+            <p class="mb-0 fw-bold" style="font-size: 25px">
+              Chat Now With Your Coach!
+            </p>
+          </div>
+          <div style="height: 65vh; overflow-y: auto">
+            <div class="card-body" *ngFor="let chat of chats; let i = index">
+              <div
+                class="d-flex flex-row justify-content-start mb-4"
+                *ngIf="chat.sent_by == 'coach'"
+              >
+                <img
+                  [src]="coachimage"
+                  alt="avatar 1"
+                  style="height: 60px; border-radius: 50%"
+                />
+                <div
+                  class="p-3 ms-3"
+                  style="
+                    border-radius: 15px;
+                    background-color: rgba(57, 192, 237, 0.2);
+                  "
+                >
+                  <p
+                    class="small mb-0"
+                    style="font-size: 15px; font-weight: 600"
+                  >
+                    {{ chat.message }}
+                  </p>
+                </div>
+              </div>
+
+              <div
+                class="d-flex flex-row justify-content-end mb-4"
+                *ngIf="chat.sent_by == 'user'"
+              >
+                <div
+                  class="p-3 me-3 border"
+                  style="border-radius: 15px; background-color: #fbfbfb"
+                >
+                  <p
+                    class="small mb-0"
+                    style="font-size: 15px; font-weight: 600"
+                  >
+                    {{ chat.message }}
+                  </p>
+                </div>
+                <img
+                  [src]="userimage"
+                  alt="avatar 1"
+                  style="height: 60px; border-radius: 50%"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group mb-3" style="padding: 20px">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="type a message"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+              [(ngModel)]="msg"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-success"
+                type="button"
+                (click)="sendmessage()"
+              >
+                Send
+                <div
+                  class="spinner-border text-light"
+                  role="status"
+                  *ngIf="spinner_flag == true"
+                ></div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

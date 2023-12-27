@@ -1,6 +1,7 @@
 package com.example.nutribalance.Services;
 
 import com.example.nutribalance.Entities.*;
+import com.example.nutribalance.dto.ChatDto;
 import com.example.nutribalance.dto.LoginRequest;
 import com.example.nutribalance.dto.NotificationDto;
 import jakarta.mail.MessagingException;
@@ -71,11 +72,15 @@ public interface Iservice {
     User AddWeight(Long id, Double weight, Date date);
     List<Weight> GetWeights(Long id);
     User deletesubscription(Long id);
-
-
     List<NotificationDto> getNotifications(Long id, String role);
-
     String deleteNotification(Long notificationId);
-
     User getUser(Long id);
+
+    Chat savechat(ChatDto chatDto);
+    List<Chat> getUserChats(Long user_id);
+    List<Chat> getCoachChats(Long coach_id);
+    void deleteChatByUser(Long user_id);
+    int getUnseenChats(Long user_id, Long coach_id);
+    void setSeen(Long user_id, Long coach_id);
+
 }

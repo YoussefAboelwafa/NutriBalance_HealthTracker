@@ -5,16 +5,20 @@ import com.example.nutribalance.Entities.Notification;
 import com.example.nutribalance.Mails.EmailDetails;
 import com.example.nutribalance.Mails.EmailService;
 import com.example.nutribalance.Repositries.*;
+import com.example.nutribalance.dto.ChatDto;
 import com.example.nutribalance.dto.LoginRequest;
 import com.example.nutribalance.dto.NotificationDto;
+
+import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -43,8 +47,9 @@ public class Service implements Iservice {
     private FoodCalorieRepositry foodCalorieRepositry;
     @Autowired
     private NotificationRepository notificationRepository;
-
     private final Message message = new Message();
+    private ChatRepository chatRepositry;
+
 
     @Override
     public Coach savecoach(Coach coach) {
@@ -517,6 +522,86 @@ public class Service implements Iservice {
         return null;
     }
 
+
+    //----------------------    Chat    ----------------------//
+    @Override
+    public Chat savechat(ChatDto chatDto) {
+        Long user_id = chatDto.getUser_id();
+        Long coach_id = chatDto.getCoach_id();
+        String message = chatDto.getMessage();
+        String sent_by = chatDto.getSent_by();
+        int seen = chatDto.getSeen();
+        User user = userRepo.findById(user_id).orElse(null);
+        Coach coach = coachRepo.findById(coach_id).orElse(null);
+        if (user != null && coach != null) {
+            Chat chat = new Chat();
+           chat.setUser(user_id);
+              chat.setCoach(coach_id);
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            chat.setLocalDateTime(currentDateTime);
+            chat.setMessage(message);
+            chat.setSent_by(sent_by);
+            chat.setSeen(seen);
+            chatRepositry.save(chat);
+            return chat;
+        }
+        return null;
+
+    }
+    @Override
+    public List<Chat> getUserChats(Long user_id) {
+        User user = userRepo.findById(user_id).orElse(null);
+        if (user != null)
+         return chatRepositry.findByUserOrderByLocalDateTimeAsc(user_id);
+        return null;
+    }
+    @Override
+    public List<Chat> getCoachChats(Long coach_id) {
+     Coach coach = coachRepo.findById(coach_id).orElse(null);
+        if (coach != null)
+          return chatRepositry.findByCoachOrderByLocalDateTimeAsc(coach_id);
+        return null;
+    }
+    @Transactional
+    @Override
+    public void deleteChatByUser(Long user_id) {
+        User user = userRepo.findById(user_id).orElse(null);
+        List<Chat> chats = chatRepositry.findByUserOrderByLocalDateTimeAsc(user_id);
+        if (user != null && !chats.isEmpty())
+          chatRepositry.deleteByUser(user_id);
+    }
+@Override
+    public int getUnseenChats(Long user_id, Long coach_id) {
+        User user = userRepo.findById(user_id).orElse(null);
+        Coach coach = coachRepo.findById(coach_id).orElse(null);
+        int unseen=0;
+        if (user != null && coach != null){
+            List<Chat> chats = chatRepositry.findByUserAndCoachOrderByLocalDateTimeAsc(user_id,coach_id);
+            for(int i=chats.size()-1;i>=0;i--){
+                if(chats.get(i).getSeen()==0){
+                    unseen++;
+                }
+                else{
+                    break;
+                }
+            }
+            return unseen;
+        }
+
+        return -1;
+    }
+    @Override
+    public void setSeen(Long user_id, Long coach_id) {
+        User user = userRepo.findById(user_id).orElse(null);
+        Coach coach = coachRepo.findById(coach_id).orElse(null);
+        if (user != null && coach != null){
+            List<Chat> chats = chatRepositry.findByUserAndCoachOrderByLocalDateTimeAsc(user_id,coach_id);
+           if(!chats.isEmpty()) {
+               chats.get(chats.size() - 1).setSeen(1);
+               chatRepositry.save(chats.get(chats.size() - 1));
+           }
+        }
+    }
     @Override
     public List<NotificationDto> getNotifications(Long id, String role) {
         List<Notification> notifications;
