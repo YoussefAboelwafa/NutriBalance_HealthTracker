@@ -44,11 +44,14 @@ td {
 .fa-leaf {
   color: #008081;
 }
+.fa-google {
+  margin-top: 10px;
+}
 
 .image {
   width: 80vh;
   height: 100vh;
-  background: url('/assets/images/joe.jpg');
+  background: url("/assets/images/joe.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -146,7 +149,6 @@ a {
   cursor: pointer;
 }
 
-
 .outer_button {
   border: none;
   border-radius: 10px;
@@ -167,7 +169,7 @@ a {
 .modal-content {
   border-radius: 15px;
   background-color: #efefef;
-  box-shadow: 0px 0px 25px 0px white
+  box-shadow: 0px 0px 25px 0px white;
 }
 
 .modal-footer button {
@@ -224,7 +226,7 @@ a {
   color: #000;
   font-weight: 500;
 }
-.signinbtn{
+.signinbtn {
   margin-bottom: 20px;
 }
 
