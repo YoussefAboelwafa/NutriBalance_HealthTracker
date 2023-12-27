@@ -64,8 +64,6 @@ class ServiceTest {
     @MockBean
     private WeightRepositry weightRepository;
 
-    @MockBean
-    private WeightRepositry weightRepositry;
 
 
     /**
@@ -4134,6 +4132,83 @@ class ServiceTest {
         verify(userRepositry, never()).save(any(User.class));
         verify(coachRepositry, never()).findByEmail(anyString());
         verify(coachRepositry, never()).save(any(Coach.class));
+    }
+
+    @Test
+    void getUnseenChats() {
+        User user = new User();
+        user.setUser_id(1L);
+        Coach coach = new Coach();
+        coach.setCoach_id(2L);
+        Chat chat1 = new Chat();
+        chat1.setUser(1L);
+        chat1.setCoach(2L);
+        chat1.setMessage("message");
+        chat1.setLocalDateTime(LocalDateTime.now());
+        chat1.setSeen(1);
+        Chat chat2 = new Chat();
+        chat2.setUser(1L);
+        chat2.setCoach(2L);
+        chat2.setMessage("message");
+        chat2.setLocalDateTime(LocalDateTime.now());
+        chat2.setSeen(1);
+        Chat chat3 = new Chat();
+        chat3.setUser(1L);
+        chat3.setCoach(2L);
+        chat3.setMessage("message");
+        chat3.setLocalDateTime(LocalDateTime.now());
+        chat3.setSeen(1);
+        Chat chat4 = new Chat();
+        chat4.setUser(1L);
+        chat4.setCoach(2L);
+        chat4.setMessage("message");
+        chat4.setLocalDateTime(LocalDateTime.now());
+        chat4.setSeen(0);
+        Chat chat5 = new Chat();
+        chat5.setUser(1L);
+        chat5.setCoach(2L);
+        chat5.setMessage("message");
+        chat5.setLocalDateTime(LocalDateTime.now());
+        chat5.setSeen(0);
+        List<Chat> chats = new ArrayList<>();
+        chats.add(chat1);
+        chats.add(chat2);
+        chats.add(chat3);
+        chats.add(chat4);
+        chats.add(chat5);
+        when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
+        when(coachRepositry.findById(2L)).thenReturn(Optional.of(coach));
+        when(chatRepository.findByUserAndCoachOrderByLocalDateTimeAsc(1L,2L)).thenReturn(chats);
+        int actual = service.getUnseenChats(1L,2L);
+        assertEquals(2,actual);
+        //all seen
+        chat4.setSeen(1);
+        chat5.setSeen(1);
+        List<Chat> chats1 = new ArrayList<>();
+        chats1.add(chat1);
+        chats1.add(chat2);
+        chats1.add(chat3);
+        chats1.add(chat4);
+        chats1.add(chat5);
+        when(chatRepository.findByUserAndCoachOrderByLocalDateTimeAsc(1L,2L)).thenReturn(chats1);
+        actual = service.getUnseenChats(1L,2L);
+        assertEquals(0,actual);
+        // user not found
+        when(userRepositry.findById(1L)).thenReturn(Optional.empty());
+        actual = service.getUnseenChats(1L,2L);
+        assertEquals(-1,actual);
+        // coach not found
+        when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
+        when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
+        actual = service.getUnseenChats(1L,2L);
+        assertEquals(-1,actual);
+        // user and coach not found
+        when(userRepositry.findById(1L)).thenReturn(Optional.empty());
+        when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
+        actual = service.getUnseenChats(1L,2L);
+        assertEquals(-1,actual);
+
+
     }
 
 }

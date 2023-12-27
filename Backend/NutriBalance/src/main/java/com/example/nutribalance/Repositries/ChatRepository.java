@@ -9,5 +9,6 @@ import java.util.List;
 public interface ChatRepository extends JpaRepository<Chat, ChatID> {
     List<Chat> findByUserOrderByLocalDateTimeAsc(Long user);
     List<Chat> findByCoachOrderByLocalDateTimeAsc(Long coach);
+    List<Chat> findByUserAndCoachOrderByLocalDateTimeAsc(Long user, Long coach);
     void deleteByUser(Long userId);
 }

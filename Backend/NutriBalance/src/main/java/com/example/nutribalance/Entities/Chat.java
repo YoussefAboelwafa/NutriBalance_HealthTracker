@@ -25,5 +25,7 @@ public class Chat {
     private String message;
     @Column
     private String sent_by;
+    @Column
+    private int seen;
 
 }

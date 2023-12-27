@@ -15,49 +15,57 @@
               Chat Now With Your Coach!
             </p>
           </div>
-          <div style="height: 30vh" *ngIf="chats.length == 0"></div>
-          <div class="card-body" *ngFor="let chat of chats; let i = index">
-            <div
-              class="d-flex flex-row justify-content-start mb-4"
-              *ngIf="chat.sent_by == 'coach'"
-            >
-              <img
-                [src]="coachimage"
-                alt="avatar 1"
-                style="height: 60px; border-radius: 50%"
-              />
+          <div style="height: 65vh; overflow-y: auto">
+            <div class="card-body" *ngFor="let chat of chats; let i = index">
               <div
-                class="p-3 ms-3"
-                style="
-                  border-radius: 15px;
-                  background-color: rgba(57, 192, 237, 0.2);
-                "
+                class="d-flex flex-row justify-content-start mb-4"
+                *ngIf="chat.sent_by == 'coach'"
               >
-                <p class="small mb-0" style="font-size: 15px; font-weight: 600">
-                  {{ chat.message }}
-                </p>
+                <img
+                  [src]="coachimage"
+                  alt="avatar 1"
+                  style="height: 60px; border-radius: 50%"
+                />
+                <div
+                  class="p-3 ms-3"
+                  style="
+                    border-radius: 15px;
+                    background-color: rgba(57, 192, 237, 0.2);
+                  "
+                >
+                  <p
+                    class="small mb-0"
+                    style="font-size: 15px; font-weight: 600"
+                  >
+                    {{ chat.message }}
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <div
-              class="d-flex flex-row justify-content-end mb-4"
-              *ngIf="chat.sent_by == 'user'"
-            >
               <div
-                class="p-3 me-3 border"
-                style="border-radius: 15px; background-color: #fbfbfb"
+                class="d-flex flex-row justify-content-end mb-4"
+                *ngIf="chat.sent_by == 'user'"
               >
-                <p class="small mb-0" style="font-size: 15px; font-weight: 600">
-                  {{ chat.message }}
-                </p>
+                <div
+                  class="p-3 me-3 border"
+                  style="border-radius: 15px; background-color: #fbfbfb"
+                >
+                  <p
+                    class="small mb-0"
+                    style="font-size: 15px; font-weight: 600"
+                  >
+                    {{ chat.message }}
+                  </p>
+                </div>
+                <img
+                  [src]="userimage"
+                  alt="avatar 1"
+                  style="height: 60px; border-radius: 50%"
+                />
               </div>
-              <img
-                [src]="userimage"
-                alt="avatar 1"
-                style="height: 60px; border-radius: 50%"
-              />
             </div>
           </div>
+
           <div class="input-group mb-3" style="padding: 20px">
             <input
               type="text"
