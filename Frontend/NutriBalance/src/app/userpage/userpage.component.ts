@@ -1,3 +1,4 @@
+import { Shared } from './../common/shared';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../Objects/User';
 import { TokenStorageService } from '../_services/token-storage.service';
@@ -14,8 +15,11 @@ export class UserpageComponent implements OnInit {
   constructor(
     private tokenstorage: TokenStorageService,
     private router: Router,
+     private Shared: Shared
     private service: UserService
-  ) { }
+  ) {
+      this.Shared.home = false;
+    }
 
   notifications: { id: number, message: string, date: Date, type: number, route: string }[] = [
   ];
@@ -49,10 +53,8 @@ export class UserpageComponent implements OnInit {
         error: error => {
           console.error('There was an error!', error);
         }
-
       }
-    )
-    
+    );
     if (this.user.plan != null) {
       this.view_subscribe = false;
     }
@@ -73,12 +75,11 @@ export class UserpageComponent implements OnInit {
           console.error('There was an error!', error);
         }
       }
-    )
-
-
+    );
   }
   logout() {
     this.tokenstorage.signOut();
+    this.Shared.home = true;
     this.router.navigateByUrl('/'); // Navigate to the home page
   }
 }

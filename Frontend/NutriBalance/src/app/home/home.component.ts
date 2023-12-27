@@ -28,12 +28,10 @@ export class HomeComponent implements OnInit {
   defaultImageUrl: string = '../../assets/images/nophoto.png';
 
   constructor(private router: Router, private userService: UserService, private tokenService: TokenStorageService, private shared: Shared, private sanitizer: DomSanitizer,) {
-    // if (this.shared.loggedIn == true) {
-    //   setTimeout(function () {
-    //     alert("successfully logged in");
-    //   }, 1000);
-    // }
+    this.shared.loggedIn = false;
+    this.shared.home = true;
   }
+  show_calculator: boolean = false;
   content!: string;
   ngOnInit(): void {
     this.curuser = this.tokenService.getUser();
@@ -110,6 +108,9 @@ export class HomeComponent implements OnInit {
   }
   goToUserPage() {
     this.router.navigateByUrl('/userpage');
+  }
+  tryNow() {
+    this.show_calculator = true;
   }
 
 }

@@ -48,6 +48,8 @@ import { ChangePasswordDialogComponent } from './change-password-dialog/change-p
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { UserReportComponent } from './user-report/user-report.component';
+import { ViewReportsComponent } from './view-reports/view-reports.component';
 import { CoachChatComponent } from './coach-chat/coach-chat.component';
 
 
@@ -83,6 +85,10 @@ import { CoachChatComponent } from './coach-chat/coach-chat.component';
     UserPlanComponent,
     ChangePasswordDialogComponent,
     ChangePasswordDialogComponent,
+    CoachChatComponent,
+    ChangePasswordDialogComponent,
+    UserReportComponent,
+    ViewReportsComponent,
     CoachChatComponent,
   ],
   imports: [

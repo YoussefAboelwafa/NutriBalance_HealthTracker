@@ -58,5 +58,8 @@ export class CoachService {
   deleteNotification(id: any) :Observable<any> {
     return this.http.delete<any>(`http://localhost:8080/notification/deleteNotification`,{params:{notification_id:id}});
   }
+  getCoaches():Observable<any>{
+    return this.http.get<any>(`${baseUrl}/getcoaches`);
+  }
 
 }

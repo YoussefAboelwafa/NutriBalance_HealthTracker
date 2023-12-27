@@ -80,6 +80,16 @@ public interface Iservice {
     List<Chat> getUserChats(Long user_id);
     List<Chat> getCoachChats(Long coach_id);
     void deleteChatByUser(Long user_id);
+  
+    List<Coach> getCoaches();
+    Report addReport(Long user_id,Long coach_id,String message,String author);
+    List<Report> getReports();
+
+    void deleteUser(Long id);
+    void deleteCoach(Long id);
+
+    void deleteReport(Long user_id,Long coach_id);
+
     int getUnseenChats(Long user_id, Long coach_id);
     void setSeen(Long user_id, Long coach_id);
 

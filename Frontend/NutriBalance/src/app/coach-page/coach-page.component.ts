@@ -1,3 +1,4 @@
+import { Shared } from './../common/shared';
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { MatMenuModule } from '@angular/material/menu';
@@ -8,13 +9,15 @@ import { Coach } from '../Objects/Coach';
 @Component({
   selector: 'app-coach-page',
   templateUrl: './coach-page.component.html',
-  styleUrls: ['./coach-page.component.css']
+  styleUrls: ['./coach-page.component.css'],
 })
 export class CoachPageComponent implements OnInit {
-
-
   hasNewNotifications = true;
-  constructor(private router:Router,private el: ElementRef,private renderer: Renderer2,private tokenstorage: TokenStorageService,private service: CoachService) {  
+  public menuItems!: any[];
+  constructor(private router:Router,private el: ElementRef,private renderer: Renderer2,private tokenstorage: TokenStorageService,private service: CoachService,
+    private Shared: Shared) {  
+    
+    this.Shared.home = false;
   }
   notifications: {id:number, message:string,date:Date,type:number,route:string }[] = [
   ];
@@ -36,7 +39,8 @@ export class CoachPageComponent implements OnInit {
     this.hasNewNotifications = false;
   }
   ngOnInit() {
-    this.coach=this.tokenstorage.getCoach()  
+    this.coach=this.tokenstorage.getCoach() 
+    this.menuItems = ROUTES.filter((menuItem) => menuItem);
     this.service.getNotification(this.coach.coach_id).subscribe(
       {
         next: data => {
@@ -55,13 +59,18 @@ export class CoachPageComponent implements OnInit {
           console.error('There was an error!', error);
         }
       }
-    )
-  }
+    );
   addBodyModificationClass() {
-    this.renderer.addClass(this.el.nativeElement.ownerDocument.body, 'body-modification');
+    this.renderer.addClass(
+      this.el.nativeElement.ownerDocument.body,
+      'body-modification'
+    );
   }
   removeBodyModificationClass() {
-    this.renderer.removeClass(this.el.nativeElement.ownerDocument.body, 'body-modification');
+    this.renderer.removeClass(
+      this.el.nativeElement.ownerDocument.body,
+      'body-modification'
+    );
   }
   onAddButtonClick() {
     this.addBodyModificationClass();
@@ -71,13 +80,10 @@ export class CoachPageComponent implements OnInit {
   }
   logout() {
     this.tokenstorage.signOut();
-    this.router.navigateByUrl('/'); // Navigate to the home page
+    this.router.navigateByUrl('/');
+    this.Shared.home = false;
   }
-  
-
-
 }
-
 
 export interface RouteInfo {
   path: string;
@@ -87,11 +93,22 @@ export interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-
-  { path: 'coachprofile', title: 'Profile', icon: 'fa fa-user-edit icon', class: '' },
-  { path: 'createplan', title: 'Create Plan', icon: 'fa fa-plus-circle icon', class: '' },
-  { path: 'view-subscriptions', title: 'View Subscriptions', icon: 'fa fa-eye icon', class: ''}
+  {
+    path: 'coachprofile',
+    title: 'Profile',
+    icon: 'fa fa-user-edit icon',
+    class: '',
+  },
+  {
+    path: 'createplan',
+    title: 'Create Plan',
+    icon: 'fa fa-plus-circle icon',
+    class: '',
+  },
+  {
+    path: 'view-subscriptions',
+    title: 'View Subscriptions',
+    icon: 'fa fa-eye icon',
+    class: '',
+  },
 ];
-
-
-

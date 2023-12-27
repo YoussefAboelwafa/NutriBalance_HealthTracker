@@ -12,4 +12,7 @@ public interface CoachRepositry extends JpaRepository<Coach, Long> {
 
     boolean existsByEmail(String email);
     List<Coach> findByisapproved(int isApproved);
+
+    @Override
+    void deleteById(Long aLong);
 }

@@ -1,9 +1,11 @@
 package com.example.nutribalance.Controllers;
 
 import com.example.nutribalance.Entities.FoodCalorie;
+import com.example.nutribalance.Entities.Report;
 import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.Entities.Weight;
 import com.example.nutribalance.Services.Iservice;
+import com.example.nutribalance.dto.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
@@ -71,6 +73,16 @@ public class UserController {
     @DeleteMapping("/deletesubscription/{id}")
     public User deleteSubscription(@PathVariable Long id){
         return service.deletesubscription(id);
+    }
+
+    @PostMapping("/report/{id}")
+    public Report addReport(@PathVariable Long id, @RequestParam("coach_id") Long coach_id, @RequestBody String message){
+        return service.addReport(id,coach_id,message,"user");
+    }
+    @DeleteMapping("/deleteuser/{id}")
+    public ApiResponse deleteUser(@PathVariable Long id){
+          service.deleteUser(id);
+          return new ApiResponse(true,"user deleted");
     }
 
 }
