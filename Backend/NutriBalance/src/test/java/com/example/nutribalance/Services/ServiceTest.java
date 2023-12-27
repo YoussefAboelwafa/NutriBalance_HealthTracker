@@ -3165,6 +3165,9 @@ class ServiceTest {
      */
     @Test
     void testSubscribe_to_plan() throws UnsupportedEncodingException {
+
+        // when add notification function in service is called do nothing
+        doNothing().when(service).addNotification(Mockito.any(), Mockito.any(), Mockito.any());
         Coach coach = new Coach();
         coach.setAddress("42 Main St");
         coach.setCoach_id(1L);
@@ -3205,6 +3208,7 @@ class ServiceTest {
         coach2.setUsers_reports(new ArrayList<>());
         when(coachRepositry.save(Mockito.any())).thenReturn(coach2);
         when(coachRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
+
 
         Coach coach3 = new Coach();
         coach3.setAddress("42 Main St");
@@ -3504,11 +3508,44 @@ class ServiceTest {
         verify(userRepositry).save(Mockito.any());
     }
 
+
     /**
      * Method under test: {@link Service#get_subscribed_users(Long)}
      */
+
     @Test
-    void testGet_subscribed_users() throws UnsupportedEncodingException {
+    void testDeleteSubscriptionUserNotFound() {
+        Long userId = 1L;
+        when(userRepositry.findById(userId)).thenReturn(Optional.empty());
+        User result = service.deletesubscription(userId);
+        assertNull(result);
+        verify(coachRepositry, never()).save(any());
+        verify(userRepositry, never()).save(any());
+        verify(notificationRepository, never()).save(any());
+    }
+
+
+    @Test
+    void testDeleteSubscriptionUserWithCoach() {
+        Long userId = 1L;
+        User user = new User();
+        user.setUser_id(userId);
+        Coach coach = new Coach();
+        coach.setNo_users_subscribed(3);
+        user.setCoach(coach);
+        when(userRepositry.findById(userId)).thenReturn(Optional.of(user));
+        when(userRepositry.save(any())).thenReturn(user);
+        User result = service.deletesubscription(userId);
+        assertNotNull(result);
+        assertNull(result.getCoach());
+        assertNull(result.getPlan());
+        assertEquals(2, coach.getNo_users_subscribed());
+        verify(coachRepositry, times(1)).save(coach);
+        verify(userRepositry, times(1)).save(user);
+        verify(notificationRepository, times(1)).save(any());
+    }
+    @Test
+    void testGet_subscribed_users()  {
         Coach coach = new Coach();
         coach.setAddress("42 Main St");
         coach.setCoach_id(1L);

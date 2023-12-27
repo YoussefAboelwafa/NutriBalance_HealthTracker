@@ -191,14 +191,12 @@ a button:hover {
   max-height: 300px;
   /* Adjust the max-height as needed */
 }
-
 .mat-menu-item {
   white-space: normal;
   height: fit-content;
   line-height: 1.5 !important;
 
 }
-
 .notification-message {
   white-space: pre-wrap;
   font-size: small;
