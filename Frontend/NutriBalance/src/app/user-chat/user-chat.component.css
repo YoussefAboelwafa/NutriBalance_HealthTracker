@@ -110,3 +110,22 @@
   width: 25px;
   height: 25px;
 }
+::-webkit-scrollbar {
+  width: 10px; /* Adjust the width of the scrollbar */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0; /* Change the color on hover */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #d3d3d3; /* Scrollbar handle color */
+  border-radius: 5px; /* Rounded corners for the handle */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+}

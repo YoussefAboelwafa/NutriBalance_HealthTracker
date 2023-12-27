@@ -26,6 +26,7 @@ export class SubscribeComponent implements OnInit {
   spinner_flag: boolean = false;
   i: number = 0;
   loading_spinner: boolean = false;
+  
   ngOnInit(): void {
     this.loading_spinner = true;
     this.planservice.getAllPlans().subscribe((data: any) => {
@@ -37,6 +38,7 @@ export class SubscribeComponent implements OnInit {
       this.loading_spinner = false;
     });
   }
+
   convertToImage(string: any) {
     const binaryString = atob(string);
     const binaryData = new Uint8Array(binaryString.length);
@@ -50,7 +52,7 @@ export class SubscribeComponent implements OnInit {
   updateindex(i: number) {
     this.i = i;
   }
-  subscribe() {
+  subscribe(opt:any) {
     this.spinner_flag = true;
     console.log(this.user);
     this.userservice
@@ -61,8 +63,13 @@ export class SubscribeComponent implements OnInit {
           let newuser: User = data;
           this.tokenstorage.saveUser(data);
           this.spinner_flag = false;
-          $('#exampleModalCenter').modal('hide');
-          $('#notify').modal('show');
+          if(opt==1){
+          $('#exampleModalCenter1').modal('hide');
+          $('#notify1').modal('show');}
+          else{
+            $('#exampleModalCenter2').modal('hide');
+            $('#notify2').modal('show');
+          }
         },
         error: (err) => {
           console.log(err);
@@ -71,8 +78,10 @@ export class SubscribeComponent implements OnInit {
       });
   }
   close() {
-    $('#exampleModalCenter').modal('hide');
-    $('#notify').modal('hide');
+    $('#exampleModalCenter1').modal('hide');
+    $('#notify1').modal('hide');
+    $('#exampleModalCenter2').modal('hide');
+    $('#notify2').modal('hide');
     window.location.reload();
   }
 }

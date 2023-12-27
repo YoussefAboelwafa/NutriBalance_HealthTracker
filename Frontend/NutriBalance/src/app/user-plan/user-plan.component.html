@@ -1,4 +1,4 @@
-<div *ngIf="isnull" class="subscribed"><h1>You aren't subscribed to any plan<br>If you want to subscribe go to <a href="userpage/subscribe">Subscribe</a></h1></div>
+<div *ngIf="isnull" class="subscribed"><h1>You aren't subscribed to a plan yet!</h1><a href="userpage/subscribe">Subscribe Here</a></div>
 
 <div class="container" *ngIf="!isnull">
 <div class="card-container">
@@ -62,8 +62,8 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">
-            Are you sure you want to Delete Subscription
+          <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 20px;">
+            Are you sure you want to delete your current Subscription?
           </h5>
           <button class="outer_button" (click)="close()">
             <button
@@ -101,8 +101,8 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">
-            Deleted successfully
+          <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 20px">
+            Your plan has been deleted Succesfully!
           </h5>
           <button class="outer_button" (click)="close()">
             <button

@@ -45,17 +45,17 @@ import { VerifiedComponent } from './verified/verified.component';
 import { FoodCaloriesComponent } from './food-calories/food-calories.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
-
 import { ProgressComponent } from './progress/progress.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
-
 import { UserChatComponent } from './user-chat/user-chat.component';
-
 import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserReportComponent } from './user-report/user-report.component';
+
 import { ViewReportsComponent } from './view-reports/view-reports.component';
+
+import { CoachChatComponent } from './coach-chat/coach-chat.component';
+
 
 
 @NgModule({
@@ -97,7 +97,11 @@ import { ViewReportsComponent } from './view-reports/view-reports.component';
     UserPlanComponent,
           ChangePasswordDialogComponent,
           UserReportComponent,
+
           ViewReportsComponent,
+
+          CoachChatComponent,
+
 
   ],
   imports: [

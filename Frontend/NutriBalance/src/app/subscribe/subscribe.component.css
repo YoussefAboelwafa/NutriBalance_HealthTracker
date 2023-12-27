@@ -130,6 +130,7 @@ button{
     width: 25px;
     height: 25px;
     margin-left: 3px;
+    padding-top: 0px;
   }
   .modal-title {
     color: #008081;
