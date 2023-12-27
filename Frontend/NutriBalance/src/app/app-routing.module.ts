@@ -22,7 +22,11 @@ import { ProgressComponent } from './progress/progress.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
 import { UserChatComponent } from './user-chat/user-chat.component';
 import { UserReportComponent } from './user-report/user-report.component';
+
+import { ViewReportsComponent } from './view-reports/view-reports.component';
+
 import { CoachChatComponent } from './coach-chat/coach-chat.component';
+
 
 export const routes: Routes = [
   {
@@ -63,7 +67,11 @@ export const routes: Routes = [
         path: 'waiting-coaches',
         component: WaitingCoachesComponent,
       },
-    ],
+      {
+        path:'viewreports',
+        component:ViewReportsComponent,
+      },
+    ]
   },
   {
     path: 'coach-page',
@@ -133,7 +141,10 @@ export const routes: Routes = [
         component: UserReportComponent,
       },
     ],
+    
   },
+
+
 ];
 
 @NgModule({

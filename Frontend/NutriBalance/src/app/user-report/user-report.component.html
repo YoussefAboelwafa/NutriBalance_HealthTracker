@@ -18,9 +18,8 @@
         <span *ngIf="loading && !isdisabled(i)" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
     </button>
 
-      <textarea type="text" id="box" [(ngModel)]="reports[i]"></textarea>
+      <textarea (click)="writing(i)" type="text" id="box" [(ngModel)]="reports[i]"></textarea>
     </div>
     
   </div>
 </div>
-

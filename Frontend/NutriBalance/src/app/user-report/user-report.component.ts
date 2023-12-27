@@ -17,6 +17,7 @@ coaches: Coach[] = [];
  user! :User;
  reports :string[]=[];
  loading! :boolean
+ buttonEnabled:boolean[]=[]
   constructor(private userservice: UserService,private coachservice:CoachService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
@@ -31,27 +32,41 @@ coaches: Coach[] = [];
       }
     );
     this.loading=false;
+    for(var i=0;i<this.reports.length;i++){
+      this.buttonEnabled[i]=false
+    }
   }
   isdisabled(i:number){
-    return   this.reports[i]==undefined ||  /^\s*$/.test(this.reports[i])
+    return   this.reports[i]==undefined ||  /^\s*$/.test(this.reports[i]) || !this.buttonEnabled[i]
   }
 report(i:number){
+
   this.loading=true;
   this.userservice.addReport(this.user.user_id,this.coaches[i].coach_id,this.reports[i]).subscribe({
     next: (response: any) => {
-     
       this.loading=false;
+      for(var j=0;j<this.reports.length;j++){
+        this.buttonEnabled[j]=false
+      }
     },
     error: (error: any) => {
       console.log(error)
-      
       this.loading=false;
+      for(var j=0;j<this.reports.length;j++){
+        this.buttonEnabled[j]=false
+      }
     },
-})
-
-
-
-}
-
+  })
+ 
+ }
+ writing(i:number){
+    this.buttonEnabled[i]=true
+   for( var j=0;j<this.reports.length;j++){
+    if(j==i) {
+      continue
+    }
+    this.buttonEnabled[j]=false
+   }
+ }
 
 }

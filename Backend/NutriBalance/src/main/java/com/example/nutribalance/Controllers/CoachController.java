@@ -119,5 +119,12 @@ public class CoachController {
         return iservice.getCoaches();
     }
 
+    @DeleteMapping("/deletecoach/{id}")
+    public ApiResponse deleteCoach(@PathVariable Long id){
+
+        iservice.deleteCoach(id);
+
+        return new ApiResponse(true,"coach deleted");
+    }
 }
 

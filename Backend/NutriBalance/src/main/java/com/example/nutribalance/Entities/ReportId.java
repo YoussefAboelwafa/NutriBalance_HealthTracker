@@ -1,8 +1,12 @@
 package com.example.nutribalance.Entities;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.util.Objects;
-
+@Data
+@NoArgsConstructor
 public class ReportId implements Serializable {
     private Long user;
     private Long coach;
