@@ -29,10 +29,15 @@ public class Authentication {
     @PostMapping("/adminLogin")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         System.out.println("loginRequest: " + loginRequest);
+        try {
         org.springframework.security.core.Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return ResponseEntity.ok().body(authentication.getPrincipal());
+        }
+        catch (Exception e){
+            return ResponseEntity.ok().body(null);
+        }
     }
 
 

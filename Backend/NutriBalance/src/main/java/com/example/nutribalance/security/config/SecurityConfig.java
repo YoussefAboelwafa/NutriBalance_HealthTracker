@@ -182,13 +182,6 @@ public class SecurityConfig {
         return tokenResponseClient;
     }
 
-
-    //    @Bean
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication().withUser("mado").password(passwordEncoder.encode("mohamed2002")).roles("ADMIN");
-//        auth.inMemoryAuthentication().withUser("ahmed").password(passwordEncoder.encode("ahmed1234")).roles("USER");
-//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-//    }
     @Bean
     public AuthenticationManager authenticationManager(@Qualifier("userDetails") UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -204,35 +197,35 @@ public class SecurityConfig {
         InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager();
         inMemoryUserDetailsManager.createUser(
                 User.builder()
-                        .username("ahmed")
+                        .username("ahmed@gmail.com")
                         .password(passwordEncoder.encode("ahmed1234"))
                         .roles("ADMIN")
                         .build()
         );
         inMemoryUserDetailsManager.createUser(
                 User.builder()
-                        .username("mohamed")
+                        .username("mohamed@gmail.com")
                         .password(passwordEncoder.encode("mohamed2002"))
                         .roles("ADMIN")
                         .build()
         );
         inMemoryUserDetailsManager.createUser(
                 User.builder()
-                        .username("aboelwafa")
+                        .username("aboelwafa@gmail.com")
                         .password(passwordEncoder.encode("aboelwafa2001"))
                         .roles("ADMIN")
                         .build()
         );
         inMemoryUserDetailsManager.createUser(
                 User.builder()
-                        .username("medany")
+                        .username("medany@gmail.com")
                         .password(passwordEncoder.encode("medany1234"))
                         .roles("ADMIN")
                         .build()
         );
         inMemoryUserDetailsManager.createUser(
                 User.builder()
-                        .username("ayman")
+                        .username("ayman@gmail.com")
                         .password(passwordEncoder.encode("ayman9999"))
                         .roles("ADMIN")
                         .build()
