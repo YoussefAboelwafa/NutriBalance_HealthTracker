@@ -5,6 +5,7 @@ import com.example.nutribalance.Entities.Report;
 import com.example.nutribalance.Entities.User;
 import com.example.nutribalance.Entities.Weight;
 import com.example.nutribalance.Services.Iservice;
+import com.example.nutribalance.dto.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
@@ -74,9 +75,10 @@ public class UserController {
     public Report addReport(@PathVariable Long id, @RequestParam("coach_id") Long coach_id, @RequestBody String message){
         return service.addReport(id,coach_id,message,"user");
     }
-    @GetMapping("/deleteuser")
-    public void deleteUser(@RequestBody User user){
-         service.deleteUser(user);
+    @DeleteMapping("/deleteuser/{id}")
+    public ApiResponse deleteUser(@PathVariable Long id){
+          service.deleteUser(id);
+          return new ApiResponse(true,"user deleted");
     }
 
 }

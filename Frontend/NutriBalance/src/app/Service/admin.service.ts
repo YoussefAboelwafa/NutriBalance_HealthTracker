@@ -15,10 +15,10 @@ export class AdminService {
   getReports(){
     return this.http.get<any>(`${'http://localhost:8080/report'}/get_reports`);
   }
-  deleteUser(user:any){
-    this.http.get<any>(`${'http://localhost:8080/user'}/deleteuser`,user)
+  deleteUser(id:any):Observable<any>{
+    return this.http.delete<any>(`${'http://localhost:8080/user'}/deleteuser/${id}`)
   }
-  deleteCoach(coach:any){
-    this.http.get<any>(`${'http://localhost:8080/coach'}/deletecoach`,coach)
+  deleteCoach(id:any):Observable<any>{
+    return this.http.delete<any>(`${'http://localhost:8080/coach'}/deletecoach/${id}`)
   }
 }

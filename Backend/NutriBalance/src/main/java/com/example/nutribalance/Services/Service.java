@@ -588,12 +588,14 @@ public class Service implements Iservice {
         return reportRepositry.findAll();
     }
     @Override
-    public void deleteUser(User user){
-        userRepo.deleteById(user.getUser_id());
+    public void deleteUser(Long id){
+        userRepo.deleteById(id);
+        return;
     }
     @Override
-    public void deleteCoach(Coach coach){
-        coachRepo.deleteById(coach.getCoach_id());
+    public void deleteCoach(Long id){
+        coachRepo.deleteById(id);
+        return;
     }
 }
 

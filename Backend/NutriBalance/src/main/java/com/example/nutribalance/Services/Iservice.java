@@ -80,6 +80,6 @@ public interface Iservice {
     Report addReport(Long user_id,Long coach_id,String message,String author);
     List<Report> getReports();
 
-    void deleteUser(User user);
-    void deleteCoach(Coach coach);
+    void deleteUser(Long id);
+    void deleteCoach(Long id);
 }

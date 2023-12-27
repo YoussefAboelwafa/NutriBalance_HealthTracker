@@ -20,19 +20,22 @@
       </li>
       </div>
     <div class="card-body">
-      <button class="btn btn-danger" (click)="delete_user(i)">Delete User</button>
+      <button class="btn btn-danger" (click)="delete_user(i)">Delete User
+        <span *ngIf="user_spinner[i]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      </button>
       <button class="btn btn-danger" (click)="delete_coach(i)">
         Delete Coach
+        <span *ngIf="coach_spinner[i]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       </button>
     </div>
   </div>
 </div>
 
-<div *ngIf="reports.length == 0">
+<div *ngIf="reports.length == 0 && loaded">
   <h5
     style="margin-top: 20rem; text-align: center; font-size: 24px; color: #333"
   >
-    <strong> There is no reports yet</strong>
+    <strong> There are no reports yet</strong>
   </h5>
 </div>
 
