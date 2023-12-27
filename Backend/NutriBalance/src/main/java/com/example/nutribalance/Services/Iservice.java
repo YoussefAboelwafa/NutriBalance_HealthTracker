@@ -82,4 +82,6 @@ public interface Iservice {
 
     void deleteUser(Long id);
     void deleteCoach(Long id);
+
+    void deleteReport(Long user_id,Long coach_id);
 }

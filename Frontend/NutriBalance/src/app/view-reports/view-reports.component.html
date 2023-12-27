@@ -27,6 +27,10 @@
         Delete Coach
         <span *ngIf="coach_spinner[i]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
       </button>
+      <button class="btn btn-success" (click)="discard(i)">
+        Discard
+        <span *ngIf="discard_spinner[i]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      </button>
     </div>
   </div>
 </div>

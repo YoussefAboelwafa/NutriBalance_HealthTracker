@@ -21,4 +21,7 @@ export class AdminService {
   deleteCoach(id:any):Observable<any>{
     return this.http.delete<any>(`${'http://localhost:8080/coach'}/deletecoach/${id}`)
   }
+  deleteReport(user_id:any,coach_id:any):Observable<any>{
+    return this.http.delete<any>(`${'http://localhost:8080/report'}/deletereport`,{params:{user_id:user_id,coach_id:coach_id}})
+  }
 }

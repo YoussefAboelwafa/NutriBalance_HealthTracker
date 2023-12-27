@@ -15,9 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @org.springframework.stereotype.Service
@@ -589,13 +587,91 @@ public class Service implements Iservice {
     }
     @Override
     public void deleteUser(Long id){
+        List<Report> reports=reportRepositry.findAll();
+        List<Report> reports_delete=new ArrayList<>();
+        for(Report report:reports){
+            if(report.getUser().getUser_id()==id){
+                reports_delete.add(report);
+            }
+        }
+        for(Report report:reports_delete){
+            reportRepositry.delete(report);
+        }
+        List<Weight> weights=weightRepositry.findAll();
+        List<Weight> weights_delete=new ArrayList<>();
+        for(Weight weight:weights){
+            if(weight.getUser().getUser_id()==id){
+                weights_delete.add(weight);
+            }
+        }
+        for(Weight weight:weights_delete){
+            weightRepositry.delete(weight);
+        }
+        List<Plan> plans=planRepositry.findAll();
+        for(Plan plan:plans){
+            for(int i=0;i<plan.getUsers().size();i++){
+                if(plan.getUsers().get(i).getUser_id()==id){
+                    plan.getUsers().remove(i);
+                    break;
+                }
+            }
+        }
+        List<Chat> chats=chatRepositry.findAll();
+        List<Chat> chats_delete=new ArrayList<>();
+        for(Chat chat:chats){
+            if(chat.getUser()==id){
+                chats_delete.add(chat);
+            }
+        }
+        for(Chat chat:chats_delete){
+            chatRepositry.delete(chat);
+        }
         userRepo.deleteById(id);
         return;
     }
     @Override
     public void deleteCoach(Long id){
+
+        List<Plan> plans=planRepositry.findAll();
+        List<Plan> plans_delete=new ArrayList<>();
+        for(Plan plan:plans){
+            if(plan.getCoach().getCoach_id()==id){
+                plans_delete.add(plan);
+            }
+        }
+      for (Plan plan:plans_delete){
+          planRepositry.delete(plan);
+      }
+        List<Report> reports=reportRepositry.findAll();
+        List<Report> reports_delete=new ArrayList<>();
+        for(Report report:reports){
+            if(report.getCoach().getCoach_id()==id){
+                reports_delete.add(report);
+            }
+        }
+        for(Report report:reports_delete){
+            reportRepositry.delete(report);
+        }
+        List<Chat> chats=chatRepositry.findAll();
+        List<Chat> chats_delete=new ArrayList<>();
+        for(Chat chat:chats){
+            if(chat.getCoach()==id){
+                chats_delete.add(chat);
+            }
+        }
+        for(Chat chat:chats_delete){
+            chatRepositry.delete(chat);
+        }
         coachRepo.deleteById(id);
         return;
+    }
+    @Override
+    public void deleteReport(Long user_id,Long coach_id){
+       ReportId reportId=new ReportId();
+       reportId.setUser(user_id);
+       reportId.setCoach(coach_id);
+       reportRepositry.deleteById(reportId);
+       return;
     }
 }
 
