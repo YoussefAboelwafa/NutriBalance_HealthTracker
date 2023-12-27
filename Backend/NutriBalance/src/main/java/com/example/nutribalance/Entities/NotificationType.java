@@ -5,5 +5,6 @@ public enum NotificationType {
     MESSAGE,
     NEW_SUBSCRIPTION,
     DELETE_SUBSCRIPTION,
-    UPDATE_PLAN, REPORT
+    UPDATE_PLAN,
+    REPORT
 }
