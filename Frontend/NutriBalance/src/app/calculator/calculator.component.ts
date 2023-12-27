@@ -1,11 +1,9 @@
-import { validateHorizontalPosition } from '@angular/cdk/overlay';
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatDialogModule } from '@angular/material/dialog';
 import { User } from '../Objects/User';
 import { TokenStorageService } from '../_services/token-storage.service';
-import { Weight } from '../Objects/Weight';
 import { UserService } from '../_services/user.service';
+import { Shared } from '../common/shared';
 
 @Component({
   selector: 'app-calculator',
@@ -13,15 +11,20 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./calculator.component.css'],
 })
 export class CalculatorComponent implements OnInit {
-  constructor(private dialog: MatDialog, private token:TokenStorageService,
-    private userservices: UserService) {}
+  constructor(
+    private dialog: MatDialog,
+    private token: TokenStorageService,
+    private userservices: UserService,
+    private shared: Shared,
+  ) {}
 
+  home_flag = this.shared.home;
   show_table: boolean = true;
   show_result: boolean = false;
   show_info: boolean = false;
-  
-  loggeduser!  :User;
-  newuserr!  :User;
+
+  loggeduser!: User;
+  newuserr!: User;
 
   bmr = 0;
   tdee = 0;
@@ -95,32 +98,36 @@ export class CalculatorComponent implements OnInit {
     this.fat = Math.round(((this.tdee * 0.2) / 9) * 100) / 100;
   }
 
-  saveWeight(){
+  saveWeight() {
     this.loggeduser = this.token.getUser();
-    const currentDate = new Date();    
+    const currentDate = new Date();
 
     console.log(this.loggeduser);
 
-    this.userservices.AddWeight(currentDate, this.userGDA.weight, this.loggeduser['user_id']).subscribe({
-      next: (response: any) => {
-        console.log('User updated successfully:', response);
-        this.token.saveUser(response);
-        this.loggeduser=this.token.getUser();
-        const lastdate = new Date(this.token.getdate());
-        const newdate = currentDate
-        
-        if(lastdate.getFullYear() === newdate.getFullYear() && lastdate.getMonth() === newdate.getMonth() && lastdate.getDate() === newdate.getDate()){
-          alert("You have Updated your Today's Weight!");
-        }
-        this.token.savedate(currentDate);
-      },
-      error: (error) => {
-        console.error('Error updating user:', error);    
-      },
-    });
+    this.userservices
+      .AddWeight(currentDate, this.userGDA.weight, this.loggeduser['user_id'])
+      .subscribe({
+        next: (response: any) => {
+          console.log('User updated successfully:', response);
+          this.token.saveUser(response);
+          this.loggeduser = this.token.getUser();
+          const lastdate = new Date(this.token.getdate());
+          const newdate = currentDate;
 
+          if (
+            lastdate.getFullYear() === newdate.getFullYear() &&
+            lastdate.getMonth() === newdate.getMonth() &&
+            lastdate.getDate() === newdate.getDate()
+          ) {
+            alert("You have Updated your Today's Weight!");
+          }
+          this.token.savedate(currentDate);
+        },
+        error: (error) => {
+          console.error('Error updating user:', error);
+        },
+      });
   }
-
 
   getPointColor() {
     if (this.bmi < 18) {

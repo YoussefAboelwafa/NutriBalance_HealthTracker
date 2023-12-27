@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit {
     this.shared.loggedIn = false;
     this.shared.home = true;
   }
+  show_calculator: boolean = false;
   content!: string;
   ngOnInit(): void {
     this.curuser = this.tokenService.getUser();
@@ -109,7 +110,7 @@ export class HomeComponent implements OnInit {
     this.router.navigateByUrl('/userpage');
   }
   tryNow() {
-    this.router.navigateByUrl('/calculator');
+    this.show_calculator = true;
   }
 
 }
