@@ -1,3 +1,4 @@
+import { Shared } from './../common/shared';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../Objects/User';
 import { TokenStorageService } from '../_services/token-storage.service';
@@ -11,8 +12,11 @@ export class UserpageComponent implements OnInit {
 
   constructor(
     private tokenstorage: TokenStorageService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private Shared: Shared
+  ) {
+    this.Shared.home = false;
+   }
   user: User = this.tokenstorage.getUser();
   view_subscribe: boolean = true;
   ngOnInit(): void {
@@ -23,6 +27,7 @@ export class UserpageComponent implements OnInit {
 }
 logout() {
   this.tokenstorage.signOut();
-  this.router.navigateByUrl('/'); // Navigate to the home page
+  this.router.navigateByUrl('/');
+  this.Shared.home = false;
 }
 }
