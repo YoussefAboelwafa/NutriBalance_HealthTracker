@@ -1,21 +1,20 @@
+import { Shared } from './../common/shared';
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-adminpage',
   templateUrl: './adminpage.component.html',
-  styleUrls: ['./adminpage.component.css']
+  styleUrls: ['./adminpage.component.css'],
 })
 export class AdminpageComponent {
-
-  constructor(private router:Router){}
-
-  logout(){
-    alert("Logged Out Successfully")
-    this.router.navigate(['home'])
+  constructor(private router: Router, private shared: Shared) {
+    this.shared.home = false;
   }
 
-
-
+  logout() {
+    alert('Logged Out Successfully');
+    this.shared.home = false;
+    this.router.navigate(['home']);
+  }
 }

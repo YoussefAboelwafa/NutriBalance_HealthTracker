@@ -13,13 +13,10 @@ import { CreateplanComponent } from './createplan/createplan.component';
 import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscriptions.component';
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
-
 import { SubscribeComponent } from './subscribe/subscribe.component';
-
 import { CoachPlansComponent } from './coach-plans/coach-plans.component';
 import { VerifiedComponent } from './verified/verified.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { FoodCalorie } from './Objects/FoodCalorie';
 import { FoodCaloriesComponent } from './food-calories/food-calories.component';
 import { ProgressComponent } from './progress/progress.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
@@ -30,6 +27,10 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+  {
+    path: 'calculator',
+    component: CalculatorComponent,
   },
 
   {
@@ -43,7 +44,7 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-  },  
+  },
   {
     path: 'coach-signup',
     component: CoachSignupComponent,
@@ -60,7 +61,7 @@ export const routes: Routes = [
         path: 'waiting-coaches',
         component: WaitingCoachesComponent,
       },
-    ]
+    ],
   },
   {
     path: 'coach-page',
@@ -73,8 +74,7 @@ export const routes: Routes = [
       {
         path: 'showplans',
         component: CoachPlansComponent,
-      }
-      ,
+      },
       {
         path: 'createplan',
         component: CreateplanComponent,
@@ -84,14 +84,14 @@ export const routes: Routes = [
         component: ViewSubscriptionsComponent,
       },
       {
-        path:'coachchat',
-        component:CoachChatComponent,
-      }
+        path: 'coachchat',
+        component: CoachChatComponent,
+      },
     ],
   },
   {
-    path:'verify/:token',
-    component:VerifiedComponent
+    path: 'verify/:token',
+    component: VerifiedComponent,
   },
 
   {
@@ -103,7 +103,6 @@ export const routes: Routes = [
         component: CalculatorComponent,
       },
       {
-
         path: 'subscribe',
         component: SubscribeComponent,
       },
@@ -112,10 +111,9 @@ export const routes: Routes = [
         component: UserProfileComponent,
       },
       {
-
-      path: 'Progress',
-      component: ProgressComponent,
-    },
+        path: 'Progress',
+        component: ProgressComponent,
+      },
       {
         path: 'foodcalories',
         component: FoodCaloriesComponent,
@@ -128,7 +126,6 @@ export const routes: Routes = [
         path: 'userchat',
         component: UserChatComponent,
       },
-
     ],
   },
 ];

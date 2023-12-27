@@ -58,19 +58,6 @@
                 <p style="color: white;font-size: 40px;">Hey</p>
                 <p style="color: white;font-size: 40px;display: flex;justify-content: center;align-items: center;"><span> {{curuser.username}}</span></p>
               </div>
-              <!-- <div class="user-info">
-                <div class="left">
-
-                  <p>Email: <span>{{ user.email }}</span></p>
-                  <p>Country: <span>{{user.country}}</span></p>
-                  <p>Company Name: <span>{{ user.company_name }}</span></p>
-
-                </div>
-                <div class="right">
-                  <img src="{{user.img}}">
-                </div>
-
-              </div> -->
               <div class="buttons">
               <button (click)="goToUserPage()" *ngIf="role=='user'" >Go To User Page</button>
               <button (click)="goToCoachPage()" *ngIf="role=='coach'" >Go To Coach Page</button>
@@ -142,11 +129,16 @@
         choices."
         <cite>~ Noha Adly</cite>
       </blockquote>
+      <blockquote>
+        "Application gamed fash5 elsara7a."
+        <cite>~ Ahmed ElNaggar</cite>
+      </blockquote>
     </div>
     <hr />
     <p class="signuptoday">
       <a routerLink="/signup">SignUp</a> today and start your journey towards a
       healthier, balanced lifestyle <i class="fa fa-leaf"></i>
     </p>
+    <button class="btn btn-success" (click)="tryNow()">or TRY IT NOW without SignUp <i class="fa-solid fa-check"></i></button>
   </div>
 </div>
