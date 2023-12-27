@@ -51,7 +51,11 @@ import { UserChatComponent } from './user-chat/user-chat.component';
 import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserReportComponent } from './user-report/user-report.component';
+
+import { ViewReportsComponent } from './view-reports/view-reports.component';
+
 import { CoachChatComponent } from './coach-chat/coach-chat.component';
+
 
 
 @NgModule({
@@ -93,7 +97,11 @@ import { CoachChatComponent } from './coach-chat/coach-chat.component';
     UserPlanComponent,
           ChangePasswordDialogComponent,
           UserReportComponent,
+
+          ViewReportsComponent,
+
           CoachChatComponent,
+
 
   ],
   imports: [
