@@ -51,5 +51,8 @@ export class CoachService {
   deletePlan(id: any) :Observable<any> {
     return this.http.delete<any>(`${baseUrl}/deletePlan/${id}`);
   }
+  getCoaches():Observable<any>{
+    return this.http.get<any>(`${baseUrl}/getcoaches`);
+  }
 
 }
