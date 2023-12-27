@@ -501,6 +501,7 @@ public class Service implements Iservice {
         Long coach_id = chatDto.getCoach_id();
         String message = chatDto.getMessage();
         String sent_by = chatDto.getSent_by();
+        int seen = chatDto.getSeen();
         User user = userRepo.findById(user_id).orElse(null);
         Coach coach = coachRepo.findById(coach_id).orElse(null);
         if (user != null && coach != null) {
@@ -511,6 +512,7 @@ public class Service implements Iservice {
             chat.setLocalDateTime(currentDateTime);
             chat.setMessage(message);
             chat.setSent_by(sent_by);
+            chat.setSeen(seen);
             chatRepositry.save(chat);
             return chat;
         }
@@ -539,7 +541,38 @@ public class Service implements Iservice {
         if (user != null && !chats.isEmpty())
           chatRepositry.deleteByUser(user_id);
     }
+@Override
+    public int getUnseenChats(Long user_id, Long coach_id) {
+        User user = userRepo.findById(user_id).orElse(null);
+        Coach coach = coachRepo.findById(coach_id).orElse(null);
+        int unseen=0;
+        if (user != null && coach != null){
+            List<Chat> chats = chatRepositry.findByUserAndCoachOrderByLocalDateTimeAsc(user_id,coach_id);
+            for(int i=chats.size()-1;i>=0;i--){
+                if(chats.get(i).getSeen()==0){
+                    unseen++;
+                }
+                else{
+                    break;
+                }
+            }
+            return unseen;
+        }
 
+        return -1;
+    }
+    @Override
+    public void setSeen(Long user_id, Long coach_id) {
+        User user = userRepo.findById(user_id).orElse(null);
+        Coach coach = coachRepo.findById(coach_id).orElse(null);
+        if (user != null && coach != null){
+            List<Chat> chats = chatRepositry.findByUserAndCoachOrderByLocalDateTimeAsc(user_id,coach_id);
+           if(!chats.isEmpty()) {
+               chats.get(chats.size() - 1).setSeen(1);
+               chatRepositry.save(chats.get(chats.size() - 1));
+           }
+        }
+    }
     @Override
     public String changePassword(String email, String oldPassword, String password, String role) {
         if (role.equals("user")) {

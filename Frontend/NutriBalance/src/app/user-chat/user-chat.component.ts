@@ -48,6 +48,7 @@ export class UserChatComponent implements OnInit {
         let ct = new chat();
         ct.message = this.msg;
         ct.sent_by = 'user';
+        ct.seen = 0;
         this.chats.push(ct);
         this.msg = '';
         this.spinner_flag = false;
@@ -57,4 +58,5 @@ export class UserChatComponent implements OnInit {
 class chat {
   message: any;
   sent_by: any;
+  seen: any;
 }

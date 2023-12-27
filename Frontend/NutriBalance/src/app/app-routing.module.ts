@@ -25,6 +25,7 @@ import { ProgressComponent } from './progress/progress.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
 import { UserChatComponent } from './user-chat/user-chat.component';
 import { UserReportComponent } from './user-report/user-report.component';
+import { CoachChatComponent } from './coach-chat/coach-chat.component';
 
 export const routes: Routes = [
   {
@@ -84,6 +85,10 @@ export const routes: Routes = [
         path: 'view-subscriptions',
         component: ViewSubscriptionsComponent,
       },
+      {
+        path:'coachchat',
+        component:CoachChatComponent,
+      }
     ],
   },
   {
