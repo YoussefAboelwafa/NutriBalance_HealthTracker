@@ -43,11 +43,11 @@ export class CoachPageComponent implements OnInit {
           console.log(data)
           data.forEach((element:any) => {
             //if type 0 route to subscriptions and if type 1 route to messages
-            if(element.type==2 || element.type){
+            if(element.type==3||element.type==4){
               this.notifications.push({id:element.notificationId,message:element.message,date:element.date,type:element.type,route:"/coach-page/view-subscriptions"})
             }
-            else{
-              this.notifications.push({id:element.notificationId,message:element.message,date:element.date,type:element.type,route:"/messages"})
+            else if (element.type==1||element.type==2){
+              this.notifications.push({id:element.notificationId,message:element.message,date:element.date,type:element.type,route:"/coach-page/coachchat"})
             }
           });
         },

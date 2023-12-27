@@ -43,7 +43,7 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-  },  
+  },
   {
     path: 'coach-signup',
     component: CoachSignupComponent,
@@ -84,14 +84,14 @@ export const routes: Routes = [
         component: ViewSubscriptionsComponent,
       },
       {
-        path:'coachchat',
-        component:CoachChatComponent,
+        path: 'coachchat',
+        component: CoachChatComponent,
       }
     ],
   },
   {
-    path:'verify/:token',
-    component:VerifiedComponent
+    path: 'verify/:token',
+    component: VerifiedComponent
   },
 
   {
@@ -112,10 +112,9 @@ export const routes: Routes = [
         component: UserProfileComponent,
       },
       {
-
-      path: 'Progress',
-      component: ProgressComponent,
-    },
+        path: 'Progress',
+        component: ProgressComponent,
+      },
       {
         path: 'foodcalories',
         component: FoodCaloriesComponent,
@@ -137,4 +136,4 @@ export const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

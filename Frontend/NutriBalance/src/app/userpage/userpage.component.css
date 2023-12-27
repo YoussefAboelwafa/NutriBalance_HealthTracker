@@ -83,6 +83,7 @@ body {
   margin-left: 10px;
 
 }
+
 .active {
   background-color: rgba(127, 255, 212, 0.25);
   margin-left: 10px;
@@ -109,10 +110,12 @@ body {
   transition: 0.4s;
   cursor: pointer;
 }
+
 #sidebar-end-block a:hover {
   margin-left: 30px;
-  
+
 }
+
 i {
   margin-right: 10px;
 }
@@ -128,20 +131,24 @@ i {
   top: 10px;
   right: 10px;
   font-size: 24px;
-  margin-left:0% ;
+  margin-left: 0%;
   padding-left: 0%;
-  border-left:0%;
+  border-left: 0%;
   color: #333;
 }
+
 a button {
   margin-left: 10px;
-  color: #333; /* Adjust the color as needed */
+  color: #333;
+  /* Adjust the color as needed */
 }
+
 a button:hover {
   color: #fff;
   background-color: rgba(127, 255, 212, 0.25);
   transition: 0.7s;
 }
+
 .btn {
   background-color: #333;
   border: none;
@@ -150,11 +157,13 @@ a button:hover {
   font-size: 16px;
   cursor: pointer;
 }
+
 .btn:hover {
   background-color: rgba(127, 255, 212, 0.25);
   transition: 0.7s;
 }
-.clear-button{
+
+.clear-button {
   border: none;
   color: white;
   cursor: pointer;
@@ -163,26 +172,34 @@ a button:hover {
 
 
 .new-notifications-alert {
-position: absolute;
-top: 5px;
-right: 5px;
-width: 10px;
-height: 10px;
-background-color: red;
-border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
 }
 
 #notificationMenu {
-max-width: 300px; /* Adjust the max-width as needed */
+  max-width: 300px;
+  /* Adjust the max-width as needed */
 }
 
 .mat-menu-content {
-overflow-y: auto;
-max-height: 300px; /* Adjust the max-height as needed */
+  overflow-y: auto;
+  max-height: 300px;
+  /* Adjust the max-height as needed */
 }
 
 .mat-menu-item {
-/* white-space: normal; */
-word-wrap: break-word;
+  white-space: normal;
+  height: fit-content;
+  line-height: 1.5 !important;
 
+}
+
+.notification-message {
+  white-space: pre-wrap;
+  font-size: small;
 }

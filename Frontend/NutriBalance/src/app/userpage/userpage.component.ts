@@ -64,8 +64,8 @@ export class UserpageComponent implements OnInit {
             if(element.type==4){
               this.notifications.push({id:element.notificationId,message:element.message,date:element.date,type:element.type,route:"/userpage/userplan"})
             }
-            else{
-              this.notifications.push({id:element.notificationId,message:element.message,date:element.date,type:element.type,route:"/userpage/userplan"})
+            else if (element.type==2){
+              this.notifications.push({id:element.notificationId,message:element.message,date:element.date,type:element.type,route:"/userpage/userchat"})
             }
           });
         },

@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
-
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -47,9 +45,10 @@ public class Service implements Iservice {
     private FoodCalorieRepositry foodCalorieRepositry;
     @Autowired
     private NotificationRepository notificationRepository;
-    private final Message message = new Message();
+    @Autowired
     private ChatRepository chatRepositry;
 
+    private final Message messagehandler = new Message();
 
     @Override
     public Coach savecoach(Coach coach) {
@@ -103,7 +102,7 @@ public class Service implements Iservice {
         Coach coach = existingPlan.getCoach();
         List<User> users = coach.getUsers();
         for (User user : users) {
-            addNotification(message.getMessage(coach.getUsername(),NotificationType.UPDATE_PLAN), NotificationType.UPDATE_PLAN.ordinal(), user);
+            addNotification(messagehandler.getMessage(coach.getUsername(), NotificationType.UPDATE_PLAN), NotificationType.UPDATE_PLAN.ordinal(), user);
         }
         return planRepositry.save(existingPlan);
     }
@@ -422,7 +421,7 @@ public class Service implements Iservice {
         //for all users subscribed to this coach send notification that he added new plan
         List<User> users = coach.getUsers();
         for (User user : users) {
-            addNotification(message.getMessage(coach.getUsername(),NotificationType.NEW_PLAN), NotificationType.NEW_PLAN.ordinal(), user);
+            addNotification(messagehandler.getMessage(coach.getUsername(), NotificationType.NEW_PLAN), NotificationType.NEW_PLAN.ordinal(), user);
         }
         return planRepositry.save(plan);
     }
@@ -439,7 +438,7 @@ public class Service implements Iservice {
             coachRepo.save(coach);
             user.setCoach(coach);
             user.setPlan(plan);
-            addNotification(message.getMessage(user.getUsername(),NotificationType.NEW_SUBSCRIPTION), NotificationType.NEW_SUBSCRIPTION.ordinal(), coach);
+            addNotification(messagehandler.getMessage(user.getUsername(), NotificationType.NEW_SUBSCRIPTION), NotificationType.NEW_SUBSCRIPTION.ordinal(), coach);
             return userRepo.save(user);
         }
         return null;
@@ -514,7 +513,7 @@ public class Service implements Iservice {
             Coach coach = user.getCoach();
             coach.setNo_users_subscribed(coach.getNo_users_subscribed() - 1);
             coachRepo.save(coach);
-            addNotification(message.getMessage(user.getUsername(),NotificationType.DELETE_SUBSCRIPTION), NotificationType.DELETE_SUBSCRIPTION.ordinal(), coach);
+            addNotification(messagehandler.getMessage(user.getUsername(), NotificationType.DELETE_SUBSCRIPTION), NotificationType.DELETE_SUBSCRIPTION.ordinal(), coach);
             user.setCoach(null);
             user.setPlan(null);
             return userRepo.save(user);
@@ -535,53 +534,61 @@ public class Service implements Iservice {
         Coach coach = coachRepo.findById(coach_id).orElse(null);
         if (user != null && coach != null) {
             Chat chat = new Chat();
-           chat.setUser(user_id);
-              chat.setCoach(coach_id);
+            chat.setUser(user_id);
+            chat.setCoach(coach_id);
             LocalDateTime currentDateTime = LocalDateTime.now();
             chat.setLocalDateTime(currentDateTime);
             chat.setMessage(message);
             chat.setSent_by(sent_by);
             chat.setSeen(seen);
+            if ("user".equalsIgnoreCase(sent_by)) {
+                addNotification(messagehandler.getMessage(user.getUsername(), NotificationType.COACH_MESSAGE), NotificationType.COACH_MESSAGE.ordinal(), coach);
+            } else {
+                addNotification(messagehandler.getMessage(coach.getUsername(), NotificationType.USER_MESSAGE), NotificationType.USER_MESSAGE.ordinal(), user);
+            }
             chatRepositry.save(chat);
             return chat;
         }
         return null;
 
     }
+
     @Override
     public List<Chat> getUserChats(Long user_id) {
         User user = userRepo.findById(user_id).orElse(null);
         if (user != null)
-         return chatRepositry.findByUserOrderByLocalDateTimeAsc(user_id);
+            return chatRepositry.findByUserOrderByLocalDateTimeAsc(user_id);
         return null;
     }
+
     @Override
     public List<Chat> getCoachChats(Long coach_id) {
-     Coach coach = coachRepo.findById(coach_id).orElse(null);
+        Coach coach = coachRepo.findById(coach_id).orElse(null);
         if (coach != null)
-          return chatRepositry.findByCoachOrderByLocalDateTimeAsc(coach_id);
+            return chatRepositry.findByCoachOrderByLocalDateTimeAsc(coach_id);
         return null;
     }
+
     @Transactional
     @Override
     public void deleteChatByUser(Long user_id) {
         User user = userRepo.findById(user_id).orElse(null);
         List<Chat> chats = chatRepositry.findByUserOrderByLocalDateTimeAsc(user_id);
         if (user != null && !chats.isEmpty())
-          chatRepositry.deleteByUser(user_id);
+            chatRepositry.deleteByUser(user_id);
     }
-@Override
+
+    @Override
     public int getUnseenChats(Long user_id, Long coach_id) {
         User user = userRepo.findById(user_id).orElse(null);
         Coach coach = coachRepo.findById(coach_id).orElse(null);
-        int unseen=0;
-        if (user != null && coach != null){
-            List<Chat> chats = chatRepositry.findByUserAndCoachOrderByLocalDateTimeAsc(user_id,coach_id);
-            for(int i=chats.size()-1;i>=0;i--){
-                if(chats.get(i).getSeen()==0){
+        int unseen = 0;
+        if (user != null && coach != null) {
+            List<Chat> chats = chatRepositry.findByUserAndCoachOrderByLocalDateTimeAsc(user_id, coach_id);
+            for (int i = chats.size() - 1; i >= 0; i--) {
+                if (chats.get(i).getSeen() == 0) {
                     unseen++;
-                }
-                else{
+                } else {
                     break;
                 }
             }
@@ -590,18 +597,20 @@ public class Service implements Iservice {
 
         return -1;
     }
+
     @Override
     public void setSeen(Long user_id, Long coach_id) {
         User user = userRepo.findById(user_id).orElse(null);
         Coach coach = coachRepo.findById(coach_id).orElse(null);
-        if (user != null && coach != null){
-            List<Chat> chats = chatRepositry.findByUserAndCoachOrderByLocalDateTimeAsc(user_id,coach_id);
-           if(!chats.isEmpty()) {
-               chats.get(chats.size() - 1).setSeen(1);
-               chatRepositry.save(chats.get(chats.size() - 1));
-           }
+        if (user != null && coach != null) {
+            List<Chat> chats = chatRepositry.findByUserAndCoachOrderByLocalDateTimeAsc(user_id, coach_id);
+            if (!chats.isEmpty()) {
+                chats.get(chats.size() - 1).setSeen(1);
+                chatRepositry.save(chats.get(chats.size() - 1));
+            }
         }
     }
+
     @Override
     public List<NotificationDto> getNotifications(Long id, String role) {
         List<Notification> notifications;
@@ -636,20 +645,20 @@ public class Service implements Iservice {
     }
 
 
-    private void addNotification(String message, int type, Object coach) {
+    public void addNotification(String message, int type, Object obj) {
         Notification notification = new Notification();
         notification.setMessage(message);
         notification.setType(type);
         notification.setDate(LocalDateTime.now());
-        if (coach instanceof Coach) {
-            notification.setCoach((Coach) coach);
+        if (obj instanceof Coach) {
+            notification.setCoach((Coach) obj);
+        } else if (obj instanceof User) {
+            notification.setUser((User) obj);
         } else {
-            notification.setUser((User) coach);
+            throw new IllegalArgumentException("Invalid object type: " + obj.getClass().getName());
         }
         notificationRepository.save(notification);
     }
-
-
 
 
     @Override

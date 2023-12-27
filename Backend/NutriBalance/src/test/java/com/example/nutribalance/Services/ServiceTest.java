@@ -4,12 +4,8 @@ import com.example.nutribalance.Entities.*;
 import com.example.nutribalance.Mails.EmailService;
 import com.example.nutribalance.Repositries.*;
 
-import com.example.nutribalance.dto.ChatDto;
+import com.example.nutribalance.dto.*;
 
-import com.example.nutribalance.dto.ApiResponse;
-import com.example.nutribalance.dto.ChangePasswordDto;
-
-import com.example.nutribalance.dto.LoginRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -38,31 +34,26 @@ import static org.mockito.Mockito.*;
 class ServiceTest {
     @MockBean
     private CoachRepositry coachRepositry;
-
     @MockBean
     private EmailService emailService;
-
     @MockBean
     private FoodCalorieRepositry foodCalorieRepositry;
-
     @MockBean
     private PasswordEncoder passwordEncoder;
-
     @MockBean
     private PlanRepositry planRepositry;
-
     @MockBean
     private ResetPasswordRepository resetPasswordRepository;
-
     @Autowired
     private Service service;
-
     @MockBean
     private UserRepositry userRepositry;
     @MockBean
     private ChatRepository chatRepository;
     @MockBean
     private WeightRepositry weightRepository;
+    @MockBean
+    private NotificationRepository notificationRepository;
 
 
 
@@ -4207,8 +4198,87 @@ class ServiceTest {
         when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
         actual = service.getUnseenChats(1L,2L);
         assertEquals(-1,actual);
-
-
     }
+
+    @Test
+    void getNotificationsCoachRoleReturnsNotifications() {
+        Long coachId = 1L;
+        List<Notification> expectedNotifications = Collections.singletonList(new Notification());
+        Coach coach = new Coach();
+        coach.setCoach_id(coachId);
+        when(coachRepositry.findById(coachId)).thenReturn(java.util.Optional.of(coach));
+        when(notificationRepository.findByCoach_Coach_id(coachId)).thenReturn(expectedNotifications);
+        List<NotificationDto> result = service.getNotifications(coachId, "coach");
+        assertEquals(expectedNotifications.size(), result.size());
+        verify(coachRepositry, times(1)).findById(coachId);
+        verify(notificationRepository, times(1)).findByCoach_Coach_id(coachId);
+    }
+    @Test
+    void getNotificationsUserRoleReturnsNotifications() {
+        Long userId = 1L;
+        List<Notification> expectedNotifications = Collections.singletonList(new Notification());
+        User user = new User();
+        user.setUser_id(userId);
+        when(userRepositry.findById(userId)).thenReturn(java.util.Optional.of(user));
+        when(notificationRepository.findByUser_User_id(userId)).thenReturn(expectedNotifications);
+        List<NotificationDto> result = service.getNotifications(userId, "user");
+        assertEquals(expectedNotifications.size(), result.size());
+        verify(userRepositry, times(1)).findById(userId);
+        verify(notificationRepository, times(1)).findByUser_User_id(userId);
+    }
+
+    @Test
+    void getNotificationsInvalidRoleThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.getNotifications(1L, "invalid_role");
+        });
+    }
+
+
+
+    @Test
+    void deleteNotificationNotificationExistsDeletesNotification() {
+        Long notificationId = 1L;
+        Notification notification = new Notification();
+        notification.setNotification_id(notificationId);
+        when(notificationRepository.findById(notificationId)).thenReturn(Optional.of(notification));
+        String result = service.deleteNotification(notificationId);
+        assertEquals("Notification deleted", result);
+        verify(notificationRepository, times(1)).deleteById(notificationId);
+    }
+
+    @Test
+    void deleteNotificationNotificationNotFoundReturnsErrorMessage() {
+        Long notificationId = 1L;
+        doThrow(new IllegalArgumentException("Notification not found")).when(notificationRepository)
+                .deleteById(notificationId);
+        String result = service.deleteNotification(notificationId);
+        assertEquals("Notification not found", result);
+    }
+
+    @Test
+    void addNotification_Coach_AddsNotification() {
+        Coach coach = new Coach();
+        String message = "Test message";
+        int type = 1;
+        service.addNotification(message, type, coach);
+        verify(notificationRepository, times(1)).save(any(Notification.class));
+    }
+
+    @Test
+    void addNotificationUserAddsNotification() {
+        User user = new User();
+        String message = "Test message";
+        int type = 1;
+        service.addNotification(message, type, user);
+        verify(notificationRepository, times(1)).save(any(Notification.class));
+    }
+    @Test
+    void addNotificationInvalidObjectTypeThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.addNotification("Test message", 1, new Object());
+        });
+    }
+
 
 }
