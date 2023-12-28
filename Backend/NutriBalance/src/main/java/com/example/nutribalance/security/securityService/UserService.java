@@ -1,9 +1,9 @@
-package com.example.nutribalance.service;
+package com.example.nutribalance.security.securityService;
 
 import com.example.nutribalance.dto.LocalUser;
 import com.example.nutribalance.dto.SignUpRequest;
 //import com.example.nutribalance.exception.UserAlreadyExistAuthenticationException;
-import com.example.nutribalance.Entities.User;
+import com.example.nutribalance.entities.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.OidcUserInfo;

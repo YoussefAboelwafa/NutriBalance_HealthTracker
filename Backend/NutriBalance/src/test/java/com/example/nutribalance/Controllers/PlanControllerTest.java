@@ -1,10 +1,10 @@
-package com.example.nutribalance.Controllers;
+package com.example.nutribalance.controllers;
 
 import static org.mockito.Mockito.when;
 
-import com.example.nutribalance.Entities.Coach;
-import com.example.nutribalance.Entities.Plan;
-import com.example.nutribalance.Services.Iservice;
+import com.example.nutribalance.entities.Coach;
+import com.example.nutribalance.entities.Plan;
+import com.example.nutribalance.services.IService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
@@ -26,13 +26,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 @ExtendWith(SpringExtension.class)
 class PlanControllerTest {
     @MockBean
-    private Iservice iservice;
+    private IService iservice;
 
     @Autowired
     private PlanController planController;
 
     /**
-     * Method under test: {@link PlanController#saveplan(Plan)}
+     * Method under test: {@link PlanController#savePlan(Plan)}
      */
     @Test
     void testSaveplan() throws Exception {
@@ -107,11 +107,11 @@ class PlanControllerTest {
     }
 
     /**
-     * Method under test:  {@link PlanController#getallplans()}
+     * Method under test:  {@link PlanController#getAllPlans()}
      */
     @Test
     void testGetallplans() throws Exception {
-        when(iservice.getallplans()).thenReturn(new ArrayList<>());
+        when(iservice.getAllPlans()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/plan/getall");
         MockMvcBuilders.standaloneSetup(planController)
                 .build()

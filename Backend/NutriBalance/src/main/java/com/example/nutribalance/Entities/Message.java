@@ -1,4 +1,4 @@
-package com.example.nutribalance.Entities;
+package com.example.nutribalance.entities;
 public class Message {
     private String COACH_MESSAGE = "You have a new message from user %s";
     private String USER_MESSAGE = "You have a new message from coach %s";

@@ -1,8 +1,8 @@
-package com.example.nutribalance.Services;
+package com.example.nutribalance.services;
 
-import com.example.nutribalance.Entities.*;
-import com.example.nutribalance.Mails.EmailService;
-import com.example.nutribalance.Repositries.*;
+import com.example.nutribalance.entities.*;
+import com.example.nutribalance.mails.EmailService;
+import com.example.nutribalance.repositories.*;
 
 import com.example.nutribalance.dto.*;
 
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,33 +32,33 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 class ServiceTest {
     @MockBean
-    private CoachRepositry coachRepositry;
+    private CoachRepository coachRepository;
     @MockBean
     private EmailService emailService;
     @MockBean
-    private FoodCalorieRepositry foodCalorieRepositry;
+    private FoodCalorieRepository foodCalorieRepository;
     @MockBean
     private PasswordEncoder passwordEncoder;
     @MockBean
-    private PlanRepositry planRepositry;
+    private PlanRepository planRepository;
     @MockBean
     private ResetPasswordRepository resetPasswordRepository;
     @Autowired
     private Service service;
     @MockBean
-    private UserRepositry userRepositry;
+    private UserRepository userRepository;
     @MockBean
     private ChatRepository chatRepository;
     @MockBean
-    private WeightRepositry weightRepository;
+    private WeightRepository weightRepository;
     @MockBean
     private NotificationRepository notificationRepository;
    @MockBean
-private  ReportRepositry reportRepositry;
+private ReportRepository reportRepository;
 
 
     /**
-     * Method under test: {@link Service#savecoach(Coach)}
+     * Method under test: {@link Service#saveCoach(Coach)}
      */
     @Test
     void testSavecoach() throws UnsupportedEncodingException {
@@ -81,7 +80,7 @@ private  ReportRepositry reportRepositry;
         coach.setUsername("janedoe");
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
-        when(coachRepositry.save(Mockito.any())).thenReturn(coach);
+        when(coachRepository.save(Mockito.any())).thenReturn(coach);
 
         Coach coach2 = new Coach();
         coach2.setAddress("42 Main St");
@@ -101,8 +100,8 @@ private  ReportRepositry reportRepositry;
         coach2.setUsername("janedoe");
         coach2.setUsers(new ArrayList<>());
         coach2.setUsers_reports(new ArrayList<>());
-        Coach actualSavecoachResult = service.savecoach(coach2);
-        verify(coachRepositry).save(Mockito.any());
+        Coach actualSavecoachResult = service.saveCoach(coach2);
+        verify(coachRepository).save(Mockito.any());
         assertSame(coach, actualSavecoachResult);
     }
 
@@ -149,8 +148,8 @@ private  ReportRepositry reportRepositry;
         coach2.setUsername("janedoe");
         coach2.setUsers(new ArrayList<>());
         coach2.setUsers_reports(new ArrayList<>());
-        when(coachRepositry.save(Mockito.any())).thenReturn(coach2);
-        when(coachRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        when(coachRepository.save(Mockito.any())).thenReturn(coach2);
+        when(coachRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
 
         Coach coach3 = new Coach();
         coach3.setAddress("42 Main St");
@@ -171,8 +170,8 @@ private  ReportRepositry reportRepositry;
         coach3.setUsers(new ArrayList<>());
         coach3.setUsers_reports(new ArrayList<>());
         Coach actualUpdateCoachResult = service.updateCoach(coach3);
-        verify(coachRepositry).findById(Mockito.<Long>any());
-        verify(coachRepositry).save(Mockito.any());
+        verify(coachRepository).findById(Mockito.<Long>any());
+        verify(coachRepository).save(Mockito.any());
         assertSame(coach2, actualUpdateCoachResult);
     }
 
@@ -200,8 +199,8 @@ private  ReportRepositry reportRepositry;
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
         Optional<Coach> ofResult = Optional.of(coach);
-        when(coachRepositry.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
-        when(coachRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        when(coachRepository.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
+        when(coachRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
 
         Coach coach2 = new Coach();
         coach2.setAddress("42 Main St");
@@ -222,8 +221,8 @@ private  ReportRepositry reportRepositry;
         coach2.setUsers(new ArrayList<>());
         coach2.setUsers_reports(new ArrayList<>());
         assertThrows(RuntimeException.class, () -> service.updateCoach(coach2));
-        verify(coachRepositry).findById(Mockito.<Long>any());
-        verify(coachRepositry).save(Mockito.any());
+        verify(coachRepository).findById(Mockito.<Long>any());
+        verify(coachRepository).save(Mockito.any());
     }
 
     /**
@@ -269,11 +268,11 @@ private  ReportRepositry reportRepositry;
         coach2.setUsername("janedoe");
         coach2.setUsers(new ArrayList<>());
         coach2.setUsers_reports(new ArrayList<>());
-        when(coachRepositry.save(Mockito.any())).thenReturn(coach2);
-        when(coachRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(coachRepository.save(Mockito.any())).thenReturn(coach2);
+        when(coachRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         Coach actualUpdateCoachCVResult = service.updateCoachCV("jane.doe@example.org", "AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        verify(coachRepositry).findByEmail(Mockito.any());
-        verify(coachRepositry).save(Mockito.any());
+        verify(coachRepository).findByEmail(Mockito.any());
+        verify(coachRepository).save(Mockito.any());
         assertSame(coach2, actualUpdateCoachCVResult);
     }
 
@@ -301,35 +300,35 @@ private  ReportRepositry reportRepositry;
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
         Optional<Coach> ofResult = Optional.of(coach);
-        when(coachRepositry.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
-        when(coachRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(coachRepository.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
+        when(coachRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         assertThrows(RuntimeException.class,
                 () -> service.updateCoachCV("jane.doe@example.org", "AXAXAXAX".getBytes(StandardCharsets.UTF_8)));
-        verify(coachRepositry).findByEmail(Mockito.any());
-        verify(coachRepositry).save(Mockito.any());
+        verify(coachRepository).findByEmail(Mockito.any());
+        verify(coachRepository).save(Mockito.any());
     }
 
     /**
-     * Method under test: {@link Service#getallplans()}
+     * Method under test: {@link Service#getAllPlans()}
      */
     @Test
     void testGetallplans() {
         ArrayList<Plan> planList = new ArrayList<>();
-        when(planRepositry.findAll()).thenReturn(planList);
-        List<Plan> actualGetallplansResult = service.getallplans();
-        verify(planRepositry).findAll();
+        when(planRepository.findAll()).thenReturn(planList);
+        List<Plan> actualGetallplansResult = service.getAllPlans();
+        verify(planRepository).findAll();
         assertTrue(actualGetallplansResult.isEmpty());
         assertSame(planList, actualGetallplansResult);
     }
 
     /**
-     * Method under test:  {@link Service#getallplans()}
+     * Method under test:  {@link Service#getAllPlans()}
      */
     @Test
     void testGetallplans2() {
-        when(planRepositry.findAll()).thenThrow(new RuntimeException("foo"));
-        assertThrows(RuntimeException.class, () -> service.getallplans());
-        verify(planRepositry).findAll();
+        when(planRepository.findAll()).thenThrow(new RuntimeException("foo"));
+        assertThrows(RuntimeException.class, () -> service.getAllPlans());
+        verify(planRepository).findAll();
     }
 
     /**
@@ -357,9 +356,9 @@ private  ReportRepositry reportRepositry;
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
         Optional<Coach> ofResult = Optional.of(coach);
-        when(coachRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        when(coachRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
         List<Plan> actualPlans = service.getPlans(1L);
-        verify(coachRepositry).findById(Mockito.<Long>any());
+        verify(coachRepository).findById(Mockito.<Long>any());
         assertTrue(actualPlans.isEmpty());
         assertSame(plans, actualPlans);
     }
@@ -370,9 +369,9 @@ private  ReportRepositry reportRepositry;
     @Test
     void testGetPlans2() {
         Optional<Coach> emptyResult = Optional.empty();
-        when(coachRepositry.findById(Mockito.<Long>any())).thenReturn(emptyResult);
+        when(coachRepository.findById(Mockito.<Long>any())).thenReturn(emptyResult);
         List<Plan> actualPlans = service.getPlans(1L);
-        verify(coachRepositry).findById(Mockito.<Long>any());
+        verify(coachRepository).findById(Mockito.<Long>any());
         assertNull(actualPlans);
     }
 
@@ -381,9 +380,9 @@ private  ReportRepositry reportRepositry;
      */
     @Test
     void testGetPlans3() {
-        when(coachRepositry.findById(Mockito.<Long>any())).thenThrow(new RuntimeException("foo"));
+        when(coachRepository.findById(Mockito.<Long>any())).thenThrow(new RuntimeException("foo"));
         assertThrows(RuntimeException.class, () -> service.getPlans(1L));
-        verify(coachRepositry).findById(Mockito.<Long>any());
+        verify(coachRepository).findById(Mockito.<Long>any());
     }
 
     /**
@@ -443,8 +442,8 @@ private  ReportRepositry reportRepositry;
         plan2.setGoal("Goal");
         plan2.setPlanName("Plan Name");
         plan2.setUsers(new ArrayList<>());
-        when(planRepositry.save(Mockito.any())).thenReturn(plan2);
-        when(planRepositry.findById(Mockito.any())).thenReturn(ofResult);
+        when(planRepository.save(Mockito.any())).thenReturn(plan2);
+        when(planRepository.findById(Mockito.any())).thenReturn(ofResult);
 
         Coach coach3 = new Coach();
         coach3.setAddress("42 Main St");
@@ -472,8 +471,8 @@ private  ReportRepositry reportRepositry;
         plan3.setPlanName("Plan Name");
         plan3.setUsers(new ArrayList<>());
         Plan actualUpdatePlanResult = service.updatePlan(plan3);
-        verify(planRepositry).findById(Mockito.any());
-        verify(planRepositry).save(Mockito.any());
+        verify(planRepository).findById(Mockito.any());
+        verify(planRepository).save(Mockito.any());
         assertSame(plan2, actualUpdatePlanResult);
     }
 
@@ -508,8 +507,8 @@ private  ReportRepositry reportRepositry;
         plan.setPlanName("Plan Name");
         plan.setUsers(new ArrayList<>());
         Optional<Plan> ofResult = Optional.of(plan);
-        when(planRepositry.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
-        when(planRepositry.findById(Mockito.any())).thenReturn(ofResult);
+        when(planRepository.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
+        when(planRepository.findById(Mockito.any())).thenReturn(ofResult);
 
         Coach coach2 = new Coach();
         coach2.setAddress("42 Main St");
@@ -537,8 +536,8 @@ private  ReportRepositry reportRepositry;
         plan2.setPlanName("Plan Name");
         plan2.setUsers(new ArrayList<>());
         assertThrows(RuntimeException.class, () -> service.updatePlan(plan2));
-        verify(planRepositry).findById(Mockito.any());
-        verify(planRepositry).save(Mockito.any());
+        verify(planRepository).findById(Mockito.any());
+        verify(planRepository).save(Mockito.any());
     }
 
     /**
@@ -572,11 +571,11 @@ private  ReportRepositry reportRepositry;
         plan.setPlanName("Plan Name");
         plan.setUsers(new ArrayList<>());
         Optional<Plan> ofResult = Optional.of(plan);
-        doNothing().when(planRepositry).deleteById(Mockito.any());
-        when(planRepositry.findById(Mockito.any())).thenReturn(ofResult);
+        doNothing().when(planRepository).deleteById(Mockito.any());
+        when(planRepository.findById(Mockito.any())).thenReturn(ofResult);
         String actualDeletePlanResult = service.deletePlan("Plan Name");
-        verify(planRepositry).deleteById(Mockito.any());
-        verify(planRepositry).findById(Mockito.any());
+        verify(planRepository).deleteById(Mockito.any());
+        verify(planRepository).findById(Mockito.any());
         assertEquals("Plan deleted", actualDeletePlanResult);
     }
 
@@ -611,11 +610,11 @@ private  ReportRepositry reportRepositry;
         plan.setPlanName("Plan Name");
         plan.setUsers(new ArrayList<>());
         Optional<Plan> ofResult = Optional.of(plan);
-        doThrow(new RuntimeException("Plan deleted")).when(planRepositry).deleteById(Mockito.any());
-        when(planRepositry.findById(Mockito.any())).thenReturn(ofResult);
+        doThrow(new RuntimeException("Plan deleted")).when(planRepository).deleteById(Mockito.any());
+        when(planRepository.findById(Mockito.any())).thenReturn(ofResult);
         assertThrows(RuntimeException.class, () -> service.deletePlan("Plan Name"));
-        verify(planRepositry).deleteById(Mockito.any());
-        verify(planRepositry).findById(Mockito.any());
+        verify(planRepository).deleteById(Mockito.any());
+        verify(planRepository).findById(Mockito.any());
     }
 
     /**
@@ -711,33 +710,33 @@ private  ReportRepositry reportRepositry;
         plan2.setPlanName("Plan Name");
         plan2.setUsers(users);
         Optional<Plan> ofResult = Optional.of(plan2);
-        when(planRepositry.findById(Mockito.any())).thenReturn(ofResult);
+        when(planRepository.findById(Mockito.any())).thenReturn(ofResult);
         String actualDeletePlanResult = service.deletePlan("Plan Name");
-        verify(planRepositry).findById(Mockito.any());
+        verify(planRepository).findById(Mockito.any());
         assertEquals("There are users subscribed to this plan", actualDeletePlanResult);
     }
 
     /**
-     * Method under test: {@link Service#get_waiting_coaches()}
+     * Method under test: {@link Service#getWaitingCoaches()}
      */
     @Test
     void testGet_waiting_coaches() {
         ArrayList<Coach> coachList = new ArrayList<>();
-        when(coachRepositry.findByisapproved(anyInt())).thenReturn(coachList);
-        List<Coach> actualGet_waiting_coachesResult = service.get_waiting_coaches();
-        verify(coachRepositry).findByisapproved(anyInt());
+        when(coachRepository.findByisapproved(anyInt())).thenReturn(coachList);
+        List<Coach> actualGet_waiting_coachesResult = service.getWaitingCoaches();
+        verify(coachRepository).findByisapproved(anyInt());
         assertTrue(actualGet_waiting_coachesResult.isEmpty());
         assertSame(coachList, actualGet_waiting_coachesResult);
     }
 
     /**
-     * Method under test:  {@link Service#get_waiting_coaches()}
+     * Method under test:  {@link Service#getWaitingCoaches()}
      */
     @Test
     void testGet_waiting_coaches2() {
-        when(coachRepositry.findByisapproved(anyInt())).thenThrow(new RuntimeException("foo"));
-        assertThrows(RuntimeException.class, () -> service.get_waiting_coaches());
-        verify(coachRepositry).findByisapproved(anyInt());
+        when(coachRepository.findByisapproved(anyInt())).thenThrow(new RuntimeException("foo"));
+        assertThrows(RuntimeException.class, () -> service.getWaitingCoaches());
+        verify(coachRepository).findByisapproved(anyInt());
     }
 
     /**
@@ -745,9 +744,9 @@ private  ReportRepositry reportRepositry;
      */
     @Test
     void testDeletecoach() {
-        doNothing().when(coachRepositry).deleteById(Mockito.<Long>any());
+        doNothing().when(coachRepository).deleteById(Mockito.<Long>any());
         String actualDeletecoachResult = service.deletecoach(1L);
-        verify(coachRepositry).deleteById(Mockito.<Long>any());
+        verify(coachRepository).deleteById(Mockito.<Long>any());
         assertEquals("coach deleted", actualDeletecoachResult);
     }
 
@@ -756,9 +755,9 @@ private  ReportRepositry reportRepositry;
      */
     @Test
     void testDeletecoach2() {
-        doThrow(new RuntimeException("coach deleted")).when(coachRepositry).deleteById(Mockito.<Long>any());
+        doThrow(new RuntimeException("coach deleted")).when(coachRepository).deleteById(Mockito.<Long>any());
         assertThrows(RuntimeException.class, () -> service.deletecoach(1L));
-        verify(coachRepositry).deleteById(Mockito.<Long>any());
+        verify(coachRepository).deleteById(Mockito.<Long>any());
     }
 
     /**
@@ -804,13 +803,13 @@ private  ReportRepositry reportRepositry;
         coach2.setUsername("janedoe");
         coach2.setUsers(new ArrayList<>());
         coach2.setUsers_reports(new ArrayList<>());
-        when(coachRepositry.save(Mockito.any())).thenReturn(coach2);
-        when(coachRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        when(coachRepository.save(Mockito.any())).thenReturn(coach2);
+        when(coachRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
         when(emailService.sendMemeMail(Mockito.any())).thenReturn("Send Meme Mail");
         Coach actualApprovecoachResult = service.approvecoach(1L);
         verify(emailService).sendMemeMail(Mockito.any());
-        verify(coachRepositry).findById(Mockito.<Long>any());
-        verify(coachRepositry).save(Mockito.any());
+        verify(coachRepository).findById(Mockito.<Long>any());
+        verify(coachRepository).save(Mockito.any());
         assertSame(coach2, actualApprovecoachResult);
     }
 
@@ -838,12 +837,12 @@ private  ReportRepositry reportRepositry;
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
         Optional<Coach> ofResult = Optional.of(coach);
-        when(coachRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        when(coachRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
         when(emailService.sendMemeMail(Mockito.any()))
                 .thenThrow(new RuntimeException("Approved Coach Email"));
         assertThrows(RuntimeException.class, () -> service.approvecoach(1L));
         verify(emailService).sendMemeMail(Mockito.any());
-        verify(coachRepositry).findById(Mockito.<Long>any());
+        verify(coachRepository).findById(Mockito.<Long>any());
     }
 
     /**
@@ -910,7 +909,7 @@ private  ReportRepositry reportRepositry;
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         Optional<User> ofResult = Optional.of(user);
-        when(userRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(userRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
 
         Coach coach3 = new Coach();
         coach3.setAddress("42 Main St");
@@ -971,7 +970,7 @@ private  ReportRepositry reportRepositry;
         user2.setUsername("janedoe");
         user2.setWeights(new ArrayList<>());
         User actualSaveuserResult = service.saveuser(user2);
-        verify(userRepositry).findByEmail(Mockito.any());
+        verify(userRepository).findByEmail(Mockito.any());
         assertNull(actualSaveuserResult);
     }
 
@@ -980,7 +979,7 @@ private  ReportRepositry reportRepositry;
      */
     @Test
     void testSaveuser2() throws UnsupportedEncodingException {
-        when(userRepositry.findByEmail(Mockito.any())).thenThrow(new RuntimeException("user"));
+        when(userRepository.findByEmail(Mockito.any())).thenThrow(new RuntimeException("user"));
 
         Coach coach = new Coach();
         coach.setAddress("42 Main St");
@@ -1041,7 +1040,7 @@ private  ReportRepositry reportRepositry;
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         assertThrows(RuntimeException.class, () -> service.saveuser(user));
-        verify(userRepositry).findByEmail(Mockito.any());
+        verify(userRepository).findByEmail(Mockito.any());
     }
 
     /**
@@ -1167,8 +1166,8 @@ private  ReportRepositry reportRepositry;
         user2.setUser_id(1L);
         user2.setUsername("janedoe");
         user2.setWeights(new ArrayList<>());
-        when(userRepositry.save(Mockito.any())).thenReturn(user2);
-        when(userRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        when(userRepository.save(Mockito.any())).thenReturn(user2);
+        when(userRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
 
         Coach coach5 = new Coach();
         coach5.setAddress("42 Main St");
@@ -1229,8 +1228,8 @@ private  ReportRepositry reportRepositry;
         user3.setUsername("janedoe");
         user3.setWeights(new ArrayList<>());
         User actualUpdateUserResult = service.updateUser(user3);
-        verify(userRepositry).findById(Mockito.<Long>any());
-        verify(userRepositry).save(Mockito.any());
+        verify(userRepository).findById(Mockito.<Long>any());
+        verify(userRepository).save(Mockito.any());
         assertSame(user2, actualUpdateUserResult);
     }
 
@@ -1298,8 +1297,8 @@ private  ReportRepositry reportRepositry;
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         Optional<User> ofResult = Optional.of(user);
-        when(userRepositry.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
-        when(userRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        when(userRepository.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
+        when(userRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
 
         Coach coach3 = new Coach();
         coach3.setAddress("42 Main St");
@@ -1360,8 +1359,8 @@ private  ReportRepositry reportRepositry;
         user2.setUsername("janedoe");
         user2.setWeights(new ArrayList<>());
         assertThrows(RuntimeException.class, () -> service.updateUser(user2));
-        verify(userRepositry).findById(Mockito.<Long>any());
-        verify(userRepositry).save(Mockito.any());
+        verify(userRepository).findById(Mockito.<Long>any());
+        verify(userRepository).save(Mockito.any());
     }
 
     /**
@@ -1487,12 +1486,12 @@ private  ReportRepositry reportRepositry;
         user2.setUser_id(1L);
         user2.setUsername("janedoe");
         user2.setWeights(new ArrayList<>());
-        when(userRepositry.save(Mockito.any())).thenReturn(user2);
-        when(userRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(userRepository.save(Mockito.any())).thenReturn(user2);
+        when(userRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         User actualAddImageToUserResult = service.addImageToUser("jane.doe@example.org",
                 new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes(StandardCharsets.UTF_8))));
-        verify(userRepositry).findByEmail(Mockito.any());
-        verify(userRepositry).save(Mockito.any());
+        verify(userRepository).findByEmail(Mockito.any());
+        verify(userRepository).save(Mockito.any());
         assertSame(user, actualAddImageToUserResult);
         byte[] expectedImage = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedImage, actualAddImageToUserResult.getImage());
@@ -1562,12 +1561,12 @@ private  ReportRepositry reportRepositry;
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         Optional<User> ofResult = Optional.of(user);
-        when(userRepositry.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
-        when(userRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(userRepository.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
+        when(userRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         assertThrows(RuntimeException.class, () -> service.addImageToUser("jane.doe@example.org",
                 new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes(StandardCharsets.UTF_8)))));
-        verify(userRepositry).findByEmail(Mockito.any());
-        verify(userRepositry).save(Mockito.any());
+        verify(userRepository).findByEmail(Mockito.any());
+        verify(userRepository).save(Mockito.any());
     }
 
     /**
@@ -1593,7 +1592,7 @@ private  ReportRepositry reportRepositry;
         coach.setUsername("janedoe");
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
-        when(coachRepositry.save(Mockito.any())).thenReturn(coach);
+        when(coachRepository.save(Mockito.any())).thenReturn(coach);
 
         ResetPassword resetPassword = new ResetPassword();
         resetPassword.setEmail("jane.doe@example.org");
@@ -1721,13 +1720,13 @@ private  ReportRepositry reportRepositry;
         user2.setUser_id(1L);
         user2.setUsername("janedoe");
         user2.setWeights(new ArrayList<>());
-        when(userRepositry.save(Mockito.any())).thenReturn(user2);
-        when(userRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(userRepository.save(Mockito.any())).thenReturn(user2);
+        when(userRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         boolean actualVerifyResult = service.verify("Verification Code");
         verify(resetPasswordRepository).findByToken(Mockito.any());
-        verify(userRepositry).findByEmail(Mockito.any());
+        verify(userRepository).findByEmail(Mockito.any());
         verify(resetPasswordRepository).deleteById(Mockito.<Long>any());
-        verify(userRepositry).save(Mockito.any());
+        verify(userRepository).save(Mockito.any());
         assertTrue(actualVerifyResult);
     }
 
@@ -1754,7 +1753,7 @@ private  ReportRepositry reportRepositry;
         coach.setUsername("janedoe");
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
-        when(coachRepositry.save(Mockito.any())).thenReturn(coach);
+        when(coachRepository.save(Mockito.any())).thenReturn(coach);
 
         ResetPassword resetPassword = new ResetPassword();
         resetPassword.setEmail("jane.doe@example.org");
@@ -1822,12 +1821,12 @@ private  ReportRepositry reportRepositry;
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         Optional<User> ofResult = Optional.of(user);
-        when(userRepositry.save(Mockito.any())).thenThrow(new RuntimeException("user"));
-        when(userRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(userRepository.save(Mockito.any())).thenThrow(new RuntimeException("user"));
+        when(userRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         assertThrows(RuntimeException.class, () -> service.verify("Verification Code"));
         verify(resetPasswordRepository).findByToken(Mockito.any());
-        verify(userRepositry).findByEmail(Mockito.any());
-        verify(userRepositry).save(Mockito.any());
+        verify(userRepository).findByEmail(Mockito.any());
+        verify(userRepository).save(Mockito.any());
     }
 
     /**
@@ -1854,7 +1853,7 @@ private  ReportRepositry reportRepositry;
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
         Optional<Coach> ofResult = Optional.of(coach);
-        when(coachRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(coachRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
 
         Coach coach2 = new Coach();
         coach2.setAddress("42 Main St");
@@ -1875,7 +1874,7 @@ private  ReportRepositry reportRepositry;
         coach2.setUsers(new ArrayList<>());
         coach2.setUsers_reports(new ArrayList<>());
         Coach actualRegisterCoachResult = service.registerCoach(coach2);
-        verify(coachRepositry).findByEmail(Mockito.any());
+        verify(coachRepository).findByEmail(Mockito.any());
         assertNull(actualRegisterCoachResult);
     }
 
@@ -1885,7 +1884,7 @@ private  ReportRepositry reportRepositry;
     @Test
     void testRegisterCoach2() throws UnsupportedEncodingException {
         Optional<Coach> emptyResult = Optional.empty();
-        when(coachRepositry.findByEmail(Mockito.any())).thenReturn(emptyResult);
+        when(coachRepository.findByEmail(Mockito.any())).thenReturn(emptyResult);
         when(emailService.sendMemeMail(Mockito.any())).thenReturn("Send Meme Mail");
 
         ResetPassword resetPassword = new ResetPassword();
@@ -1924,7 +1923,7 @@ private  ReportRepositry reportRepositry;
         coach.setUsers_reports(new ArrayList<>());
         Coach actualRegisterCoachResult = service.registerCoach(coach);
         verify(emailService).sendMemeMail(Mockito.any());
-        verify(coachRepositry).findByEmail(Mockito.any());
+        verify(coachRepository).findByEmail(Mockito.any());
         verify(resetPasswordRepository).findByEmail(Mockito.any());
         verify(resetPasswordRepository).deleteById(Mockito.<Long>any());
         verify(resetPasswordRepository).save(Mockito.any());
@@ -1940,7 +1939,7 @@ private  ReportRepositry reportRepositry;
     @Test
     void testRegisterCoach3() throws UnsupportedEncodingException {
         Optional<Coach> emptyResult = Optional.empty();
-        when(coachRepositry.findByEmail(Mockito.any())).thenReturn(emptyResult);
+        when(coachRepository.findByEmail(Mockito.any())).thenReturn(emptyResult);
         when(passwordEncoder.encode(Mockito.any())).thenThrow(new RuntimeException("coach"));
 
         Coach coach = new Coach();
@@ -1962,7 +1961,7 @@ private  ReportRepositry reportRepositry;
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
         assertThrows(RuntimeException.class, () -> service.registerCoach(coach));
-        verify(coachRepositry).findByEmail(Mockito.any());
+        verify(coachRepository).findByEmail(Mockito.any());
         verify(passwordEncoder).encode(Mockito.any());
     }
 
@@ -1989,9 +1988,9 @@ private  ReportRepositry reportRepositry;
         coach.setUsername("janedoe");
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
-        when(coachRepositry.save(Mockito.any())).thenReturn(coach);
+        when(coachRepository.save(Mockito.any())).thenReturn(coach);
         Optional<Coach> emptyResult = Optional.empty();
-        when(coachRepositry.findByEmail(Mockito.any())).thenReturn(emptyResult);
+        when(coachRepository.findByEmail(Mockito.any())).thenReturn(emptyResult);
         when(emailService.sendMemeMail(Mockito.any())).thenReturn("done");
 
         ResetPassword resetPassword = new ResetPassword();
@@ -2030,10 +2029,10 @@ private  ReportRepositry reportRepositry;
         coach2.setUsers_reports(new ArrayList<>());
         Coach actualRegisterCoachResult = service.registerCoach(coach2);
         verify(emailService).sendMemeMail(Mockito.any());
-        verify(coachRepositry).findByEmail(Mockito.any());
+        verify(coachRepository).findByEmail(Mockito.any());
         verify(resetPasswordRepository).findByEmail(Mockito.any());
         verify(resetPasswordRepository).deleteById(Mockito.<Long>any());
-        verify(coachRepositry).save(Mockito.any());
+        verify(coachRepository).save(Mockito.any());
         verify(resetPasswordRepository).save(Mockito.any());
         verify(passwordEncoder).encode(Mockito.any());
         assertEquals("secret", coach2.getPassword());
@@ -2042,7 +2041,7 @@ private  ReportRepositry reportRepositry;
     }
 
     /**
-     * Method under test: {@link Service#usersignin(String, String)}
+     * Method under test: {@link Service#userSignIn(String, String)}
      */
     @Test
     void testUsersignin() throws UnsupportedEncodingException {
@@ -2105,16 +2104,16 @@ private  ReportRepositry reportRepositry;
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         Optional<User> ofResult = Optional.of(user);
-        when(userRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(userRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         when(passwordEncoder.matches(Mockito.any(), Mockito.any())).thenReturn(true);
-        User actualUsersigninResult = service.usersignin("jane.doe@example.org", "iloveyou");
-        verify(userRepositry).findByEmail(Mockito.any());
+        User actualUsersigninResult = service.userSignIn("jane.doe@example.org", "iloveyou");
+        verify(userRepository).findByEmail(Mockito.any());
         verify(passwordEncoder).matches(Mockito.any(), Mockito.any());
         assertSame(user, actualUsersigninResult);
     }
 
     /**
-     * Method under test: {@link Service#usersignin(String, String)}
+     * Method under test: {@link Service#userSignIn(String, String)}
      */
     @Test
     void testUsersignin2() throws UnsupportedEncodingException {
@@ -2177,16 +2176,16 @@ private  ReportRepositry reportRepositry;
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         Optional<User> ofResult = Optional.of(user);
-        when(userRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(userRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         when(passwordEncoder.matches(Mockito.any(), Mockito.any()))
                 .thenThrow(new RuntimeException("foo"));
-        assertThrows(RuntimeException.class, () -> service.usersignin("jane.doe@example.org", "iloveyou"));
-        verify(userRepositry).findByEmail(Mockito.any());
+        assertThrows(RuntimeException.class, () -> service.userSignIn("jane.doe@example.org", "iloveyou"));
+        verify(userRepository).findByEmail(Mockito.any());
         verify(passwordEncoder).matches(Mockito.any(), Mockito.any());
     }
 
     /**
-     * Method under test: {@link Service#usersignin(String, String)}
+     * Method under test: {@link Service#userSignIn(String, String)}
      */
     @Test
     void testUsersignin3() throws UnsupportedEncodingException {
@@ -2262,8 +2261,8 @@ private  ReportRepositry reportRepositry;
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         Optional<User> ofResult = Optional.of(user);
-        when(userRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
-        assertThrows(RuntimeException.class, () -> service.usersignin("jane.doe@example.org", "iloveyou"));
+        when(userRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
+        assertThrows(RuntimeException.class, () -> service.userSignIn("jane.doe@example.org", "iloveyou"));
         verify(user).getPassword();
         verify(user).isEnabled();
         verify(user).setCoach(Mockito.any());
@@ -2278,11 +2277,11 @@ private  ReportRepositry reportRepositry;
         verify(user).setUser_id(anyLong());
         verify(user).setUsername(Mockito.any());
         verify(user).setWeights(Mockito.any());
-        verify(userRepositry).findByEmail(Mockito.any());
+        verify(userRepository).findByEmail(Mockito.any());
     }
 
     /**
-     * Method under test: {@link Service#usersignin(String, String)}
+     * Method under test: {@link Service#userSignIn(String, String)}
      */
     @Test
     void testUsersignin4() throws UnsupportedEncodingException {
@@ -2357,8 +2356,8 @@ private  ReportRepositry reportRepositry;
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         Optional<User> ofResult = Optional.of(user);
-        when(userRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
-        User actualUsersigninResult = service.usersignin("jane.doe@example.org", "iloveyou");
+        when(userRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
+        User actualUsersigninResult = service.userSignIn("jane.doe@example.org", "iloveyou");
         verify(user).isEnabled();
         verify(user).setCoach(Mockito.any());
         verify(user).setCoaches_reports(Mockito.any());
@@ -2372,7 +2371,7 @@ private  ReportRepositry reportRepositry;
         verify(user).setUser_id(anyLong());
         verify(user).setUsername(Mockito.any());
         verify(user).setWeights(Mockito.any());
-        verify(userRepositry).findByEmail(Mockito.any());
+        verify(userRepository).findByEmail(Mockito.any());
         assertNull(actualUsersigninResult);
     }
 
@@ -2448,9 +2447,9 @@ private  ReportRepositry reportRepositry;
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         Optional<User> ofResult = Optional.of(user);
-        when(userRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(userRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         String actualFindByEmailRoleResult = service.findByEmailRole("jane.doe@example.org", "user");
-        verify(userRepositry).findByEmail(Mockito.any());
+        verify(userRepository).findByEmail(Mockito.any());
         assertEquals("janedoe", actualFindByEmailRoleResult);
     }
 
@@ -2498,7 +2497,7 @@ private  ReportRepositry reportRepositry;
     }
 
     /**
-     * Method under test: {@link Service#create_reset_password(ResetPassword)}
+     * Method under test: {@link Service#createResetPassword(ResetPassword)}
      */
     @Test
     void testCreate_reset_password() {
@@ -2522,7 +2521,7 @@ private  ReportRepositry reportRepositry;
         resetPassword3.setId(1L);
         resetPassword3.setToken("ABC123");
         resetPassword3.setUsername("janedoe");
-        service.create_reset_password(resetPassword3);
+        service.createResetPassword(resetPassword3);
         verify(resetPasswordRepository).findByEmail(Mockito.any());
         verify(resetPasswordRepository).deleteById(Mockito.<Long>any());
         verify(resetPasswordRepository).save(Mockito.any());
@@ -2531,11 +2530,11 @@ private  ReportRepositry reportRepositry;
         assertEquals("janedoe", resetPassword3.getUsername());
         assertEquals(1L, resetPassword3.getId().longValue());
         assertTrue(service.getFoodCalorie().isEmpty());
-        assertTrue(service.getallplans().isEmpty());
+        assertTrue(service.getAllPlans().isEmpty());
     }
 
     /**
-     * Method under test: {@link Service#create_reset_password(ResetPassword)}
+     * Method under test: {@link Service#createResetPassword(ResetPassword)}
      */
     @Test
     void testCreate_reset_password2() {
@@ -2552,13 +2551,13 @@ private  ReportRepositry reportRepositry;
         resetPassword2.setId(1L);
         resetPassword2.setToken("ABC123");
         resetPassword2.setUsername("janedoe");
-        assertThrows(RuntimeException.class, () -> service.create_reset_password(resetPassword2));
+        assertThrows(RuntimeException.class, () -> service.createResetPassword(resetPassword2));
         verify(resetPasswordRepository).findByEmail(Mockito.any());
         verify(resetPasswordRepository).deleteById(Mockito.<Long>any());
     }
 
     /**
-     * Method under test: {@link Service#get_reset_password(String)}
+     * Method under test: {@link Service#getResetPassword(String)}
      */
     @Test
     void testGet_reset_password() {
@@ -2568,18 +2567,18 @@ private  ReportRepositry reportRepositry;
         resetPassword.setToken("ABC123");
         resetPassword.setUsername("janedoe");
         when(resetPasswordRepository.findByEmail(Mockito.any())).thenReturn(resetPassword);
-        ResetPassword actualGet_reset_passwordResult = service.get_reset_password("jane.doe@example.org");
+        ResetPassword actualGet_reset_passwordResult = service.getResetPassword("jane.doe@example.org");
         verify(resetPasswordRepository).findByEmail(Mockito.any());
         assertSame(resetPassword, actualGet_reset_passwordResult);
     }
 
     /**
-     * Method under test:  {@link Service#get_reset_password(String)}
+     * Method under test:  {@link Service#getResetPassword(String)}
      */
     @Test
     void testGet_reset_password2() {
         when(resetPasswordRepository.findByEmail(Mockito.any())).thenThrow(new RuntimeException("foo"));
-        assertThrows(RuntimeException.class, () -> service.get_reset_password("jane.doe@example.org"));
+        assertThrows(RuntimeException.class, () -> service.getResetPassword("jane.doe@example.org"));
         verify(resetPasswordRepository).findByEmail(Mockito.any());
     }
 
@@ -2594,7 +2593,7 @@ private  ReportRepositry reportRepositry;
         assertEquals("iloveyou", loginRequest.getPassword());
         assertEquals("jane.doe@example.org", loginRequest.getEmail());
         assertTrue(service.getFoodCalorie().isEmpty());
-        assertTrue(service.getallplans().isEmpty());
+        assertTrue(service.getAllPlans().isEmpty());
     }
 
     /**
@@ -2604,7 +2603,7 @@ private  ReportRepositry reportRepositry;
     void testResetPassword2() {
         service.resetPassword(mock(LoginRequest.class), "Role");
         assertTrue(service.getFoodCalorie().isEmpty());
-        assertTrue(service.getallplans().isEmpty());
+        assertTrue(service.getAllPlans().isEmpty());
     }
 
     /**
@@ -2738,14 +2737,14 @@ private  ReportRepositry reportRepositry;
         user2.setUser_id(1L);
         user2.setUsername("janedoe");
         user2.setWeights(new ArrayList<>());
-        when(userRepositry.save(Mockito.any())).thenReturn(user2);
-        when(userRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(userRepository.save(Mockito.any())).thenReturn(user2);
+        when(userRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         when(passwordEncoder.encode(Mockito.any())).thenReturn("secret");
         service.resetPassword(new LoginRequest("jane.doe@example.org", "iloveyou"), "user");
         verify(resetPasswordRepository).findByEmail(Mockito.any());
-        verify(userRepositry).findByEmail(Mockito.any());
+        verify(userRepository).findByEmail(Mockito.any());
         verify(resetPasswordRepository).deleteById(Mockito.<Long>any());
-        verify(userRepositry).save(Mockito.any());
+        verify(userRepository).save(Mockito.any());
         verify(passwordEncoder).encode(Mockito.any());
     }
 
@@ -2813,16 +2812,16 @@ private  ReportRepositry reportRepositry;
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         Optional<User> ofResult = Optional.of(user);
-        when(userRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(userRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         when(passwordEncoder.encode(Mockito.any())).thenThrow(new RuntimeException("user"));
         assertThrows(RuntimeException.class,
                 () -> service.resetPassword(new LoginRequest("jane.doe@example.org", "iloveyou"), "user"));
-        verify(userRepositry).findByEmail(Mockito.any());
+        verify(userRepository).findByEmail(Mockito.any());
         verify(passwordEncoder).encode(Mockito.any());
     }
 
     /**
-     * Method under test: {@link Service#coachsignin(String, String)}
+     * Method under test: {@link Service#coachSignIn(String, String)}
      */
     @Test
     void testCoachsignin() throws UnsupportedEncodingException {
@@ -2845,16 +2844,16 @@ private  ReportRepositry reportRepositry;
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
         Optional<Coach> ofResult = Optional.of(coach);
-        when(coachRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(coachRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         when(passwordEncoder.matches(Mockito.any(), Mockito.any())).thenReturn(true);
-        Coach actualCoachsigninResult = service.coachsignin("jane.doe@example.org", "Pass");
-        verify(coachRepositry).findByEmail(Mockito.any());
+        Coach actualCoachsigninResult = service.coachSignIn("jane.doe@example.org", "Pass");
+        verify(coachRepository).findByEmail(Mockito.any());
         verify(passwordEncoder).matches(Mockito.any(), Mockito.any());
         assertSame(coach, actualCoachsigninResult);
     }
 
     /**
-     * Method under test: {@link Service#coachsignin(String, String)}
+     * Method under test: {@link Service#coachSignIn(String, String)}
      */
     @Test
     void testCoachsignin2() throws UnsupportedEncodingException {
@@ -2877,16 +2876,16 @@ private  ReportRepositry reportRepositry;
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
         Optional<Coach> ofResult = Optional.of(coach);
-        when(coachRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(coachRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         when(passwordEncoder.matches(Mockito.any(), Mockito.any()))
                 .thenThrow(new RuntimeException("foo"));
-        assertThrows(RuntimeException.class, () -> service.coachsignin("jane.doe@example.org", "Pass"));
-        verify(coachRepositry).findByEmail(Mockito.any());
+        assertThrows(RuntimeException.class, () -> service.coachSignIn("jane.doe@example.org", "Pass"));
+        verify(coachRepository).findByEmail(Mockito.any());
         verify(passwordEncoder).matches(Mockito.any(), Mockito.any());
     }
 
     /**
-     * Method under test: {@link Service#coachsignin(String, String)}
+     * Method under test: {@link Service#coachSignIn(String, String)}
      */
     @Test
     void testCoachsignin3() throws UnsupportedEncodingException {
@@ -2929,8 +2928,8 @@ private  ReportRepositry reportRepositry;
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
         Optional<Coach> ofResult = Optional.of(coach);
-        when(coachRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
-        assertThrows(RuntimeException.class, () -> service.coachsignin("jane.doe@example.org", "Pass"));
+        when(coachRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
+        assertThrows(RuntimeException.class, () -> service.coachSignIn("jane.doe@example.org", "Pass"));
         verify(coach).getIsapproved();
         verify(coach).getPassword();
         verify(coach).isEnabled();
@@ -2951,11 +2950,11 @@ private  ReportRepositry reportRepositry;
         verify(coach).setUsername(Mockito.any());
         verify(coach).setUsers(Mockito.any());
         verify(coach).setUsers_reports(Mockito.any());
-        verify(coachRepositry).findByEmail(Mockito.any());
+        verify(coachRepository).findByEmail(Mockito.any());
     }
 
     /**
-     * Method under test: {@link Service#coachsignin(String, String)}
+     * Method under test: {@link Service#coachSignIn(String, String)}
      */
     @Test
     void testCoachsignin4() throws UnsupportedEncodingException {
@@ -2997,8 +2996,8 @@ private  ReportRepositry reportRepositry;
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
         Optional<Coach> ofResult = Optional.of(coach);
-        when(coachRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
-        service.coachsignin("jane.doe@example.org", "Pass");
+        when(coachRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
+        service.coachSignIn("jane.doe@example.org", "Pass");
         verify(coach).getIsapproved();
         verify(coach).isEnabled();
         verify(coach).setAddress(Mockito.any());
@@ -3018,11 +3017,11 @@ private  ReportRepositry reportRepositry;
         verify(coach).setUsername(Mockito.any());
         verify(coach).setUsers(Mockito.any());
         verify(coach).setUsers_reports(Mockito.any());
-        verify(coachRepositry).findByEmail(Mockito.any());
+        verify(coachRepository).findByEmail(Mockito.any());
     }
 
     /**
-     * Method under test: {@link Service#coachsignin(String, String)}
+     * Method under test: {@link Service#coachSignIn(String, String)}
      */
     @Test
     void testCoachsignin5() throws UnsupportedEncodingException {
@@ -3063,8 +3062,8 @@ private  ReportRepositry reportRepositry;
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
         Optional<Coach> ofResult = Optional.of(coach);
-        when(coachRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
-        service.coachsignin("jane.doe@example.org", "Pass");
+        when(coachRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
+        service.coachSignIn("jane.doe@example.org", "Pass");
         verify(coach).getIsapproved();
         verify(coach).setAddress(Mockito.any());
         verify(coach).setCoach_id(Mockito.<Long>any());
@@ -3083,19 +3082,19 @@ private  ReportRepositry reportRepositry;
         verify(coach).setUsername(Mockito.any());
         verify(coach).setUsers(Mockito.any());
         verify(coach).setUsers_reports(Mockito.any());
-        verify(coachRepositry).findByEmail(Mockito.any());
+        verify(coachRepository).findByEmail(Mockito.any());
     }
 
     /**
-     * Method under test: {@link Service#coachsignin(String, String)}
+     * Method under test: {@link Service#coachSignIn(String, String)}
      */
     @Test
     void testCoachsignin6() {
         Optional<Coach> emptyResult = Optional.empty();
-        when(coachRepositry.findByEmail(Mockito.any())).thenReturn(emptyResult);
+        when(coachRepository.findByEmail(Mockito.any())).thenReturn(emptyResult);
         new RuntimeException("foo");
-        Coach actualCoachsigninResult = service.coachsignin("jane.doe@example.org", "Pass");
-        verify(coachRepositry).findByEmail(Mockito.any());
+        Coach actualCoachsigninResult = service.coachSignIn("jane.doe@example.org", "Pass");
+        verify(coachRepository).findByEmail(Mockito.any());
         assertNull(actualCoachsigninResult);
     }
 
@@ -3129,7 +3128,7 @@ private  ReportRepositry reportRepositry;
         plan.setGoal("Goal");
         plan.setPlanName("Plan Name");
         plan.setUsers(new ArrayList<>());
-        when(planRepositry.findByPlanName(Mockito.any())).thenReturn(plan);
+        when(planRepository.findByPlanName(Mockito.any())).thenReturn(plan);
 
         Coach coach2 = new Coach();
         coach2.setAddress("42 Main St");
@@ -3157,12 +3156,12 @@ private  ReportRepositry reportRepositry;
         plan2.setPlanName("Plan Name");
         plan2.setUsers(new ArrayList<>());
         Plan actualSaveplanResult = service.saveplan(plan2);
-        verify(planRepositry).findByPlanName(Mockito.any());
+        verify(planRepository).findByPlanName(Mockito.any());
         assertNull(actualSaveplanResult);
     }
 
     /**
-     * Method under test: {@link Service#subscribe_to_plan(String, Long)}
+     * Method under test: {@link Service#subscribeToPlan(String, Long)}
      */
 
     @Test
@@ -3205,8 +3204,8 @@ private  ReportRepositry reportRepositry;
         coach2.setUsername("janedoe");
         coach2.setUsers(new ArrayList<>());
         coach2.setUsers_reports(new ArrayList<>());
-        when(coachRepositry.save(Mockito.any())).thenReturn(coach2);
-        when(coachRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        when(coachRepository.save(Mockito.any())).thenReturn(coach2);
+        when(coachRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
 
         Coach coach3 = new Coach();
         coach3.setAddress("42 Main St");
@@ -3233,7 +3232,7 @@ private  ReportRepositry reportRepositry;
         plan.setGoal("Goal");
         plan.setPlanName("Plan Name");
         plan.setUsers(new ArrayList<>());
-        when(planRepositry.findByPlanName(Mockito.any())).thenReturn(plan);
+        when(planRepository.findByPlanName(Mockito.any())).thenReturn(plan);
 
         Coach coach4 = new Coach();
         coach4.setAddress("42 Main St");
@@ -3294,29 +3293,29 @@ private  ReportRepositry reportRepositry;
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         Optional<User> ofResult2 = Optional.of(user);
-        when(userRepositry.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
-        when(userRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult2);
-        assertThrows(RuntimeException.class, () -> service.subscribe_to_plan("Plan Name", 1L));
-        verify(planRepositry).findByPlanName(Mockito.any());
-        verify(coachRepositry).findById(Mockito.<Long>any());
-        verify(userRepositry).findById(Mockito.<Long>any());
-        verify(coachRepositry).save(Mockito.any());
-        verify(userRepositry).save(Mockito.any());
+        when(userRepository.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
+        when(userRepository.findById(Mockito.<Long>any())).thenReturn(ofResult2);
+        assertThrows(RuntimeException.class, () -> service.subscribeToPlan("Plan Name", 1L));
+        verify(planRepository).findByPlanName(Mockito.any());
+        verify(coachRepository).findById(Mockito.<Long>any());
+        verify(userRepository).findById(Mockito.<Long>any());
+        verify(coachRepository).save(Mockito.any());
+        verify(userRepository).save(Mockito.any());
     }
 
 
     /**
-     * Method under test: {@link Service#get_subscribed_users(Long)}
+     * Method under test: {@link Service#getSubscribedUsers(Long)}
      */
 
     @Test
     void testDeleteSubscriptionUserNotFound() {
         Long userId = 1L;
-        when(userRepositry.findById(userId)).thenReturn(Optional.empty());
-        User result = service.deletesubscription(userId);
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+        User result = service.deleteSubscription(userId);
         assertNull(result);
-        verify(coachRepositry, never()).save(any());
-        verify(userRepositry, never()).save(any());
+        verify(coachRepository, never()).save(any());
+        verify(userRepository, never()).save(any());
         verify(notificationRepository, never()).save(any());
     }
 
@@ -3329,15 +3328,15 @@ private  ReportRepositry reportRepositry;
         Coach coach = new Coach();
         coach.setNo_users_subscribed(3);
         user.setCoach(coach);
-        when(userRepositry.findById(userId)).thenReturn(Optional.of(user));
-        when(userRepositry.save(any())).thenReturn(user);
-        User result = service.deletesubscription(userId);
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        when(userRepository.save(any())).thenReturn(user);
+        User result = service.deleteSubscription(userId);
         assertNotNull(result);
         assertNull(result.getCoach());
         assertNull(result.getPlan());
         assertEquals(2, coach.getNo_users_subscribed());
-        verify(coachRepositry, times(1)).save(coach);
-        verify(userRepositry, times(1)).save(user);
+        verify(coachRepository, times(1)).save(coach);
+        verify(userRepository, times(1)).save(user);
         verify(notificationRepository, times(1)).save(any());
     }
     @Test
@@ -3362,37 +3361,37 @@ private  ReportRepositry reportRepositry;
         coach.setUsers(users);
         coach.setUsers_reports(new ArrayList<>());
         Optional<Coach> ofResult = Optional.of(coach);
-        when(coachRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
-        List<User> actualGet_subscribed_usersResult = service.get_subscribed_users(1L);
-        verify(coachRepositry).findById(Mockito.<Long>any());
+        when(coachRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        List<User> actualGet_subscribed_usersResult = service.getSubscribedUsers(1L);
+        verify(coachRepository).findById(Mockito.<Long>any());
         assertTrue(actualGet_subscribed_usersResult.isEmpty());
         assertSame(users, actualGet_subscribed_usersResult);
     }
 
     /**
-     * Method under test: {@link Service#get_subscribed_users(Long)}
+     * Method under test: {@link Service#getSubscribedUsers(Long)}
      */
     @Test
     void testGet_subscribed_users2() {
         Optional<Coach> emptyResult = Optional.empty();
-        when(coachRepositry.findById(Mockito.<Long>any())).thenReturn(emptyResult);
-        List<User> actualGet_subscribed_usersResult = service.get_subscribed_users(1L);
-        verify(coachRepositry).findById(Mockito.<Long>any());
+        when(coachRepository.findById(Mockito.<Long>any())).thenReturn(emptyResult);
+        List<User> actualGet_subscribed_usersResult = service.getSubscribedUsers(1L);
+        verify(coachRepository).findById(Mockito.<Long>any());
         assertNull(actualGet_subscribed_usersResult);
     }
 
     /**
-     * Method under test:  {@link Service#get_subscribed_users(Long)}
+     * Method under test:  {@link Service#getSubscribedUsers(Long)}
      */
     @Test
     void testGet_subscribed_users3() {
-        when(coachRepositry.findById(Mockito.<Long>any())).thenThrow(new RuntimeException("foo"));
-        assertThrows(RuntimeException.class, () -> service.get_subscribed_users(1L));
-        verify(coachRepositry).findById(Mockito.<Long>any());
+        when(coachRepository.findById(Mockito.<Long>any())).thenThrow(new RuntimeException("foo"));
+        assertThrows(RuntimeException.class, () -> service.getSubscribedUsers(1L));
+        verify(coachRepository).findById(Mockito.<Long>any());
     }
 
     /**
-     * Method under test: {@link Service#update_comment(String, Long)}
+     * Method under test: {@link Service#updateComment(String, Long)}
      */
     @Test
     void testUpdate_comment() throws UnsupportedEncodingException {
@@ -3514,16 +3513,16 @@ private  ReportRepositry reportRepositry;
         user2.setUser_id(1L);
         user2.setUsername("janedoe");
         user2.setWeights(new ArrayList<>());
-        when(userRepositry.save(Mockito.any())).thenReturn(user2);
-        when(userRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
-        User actualUpdate_commentResult = service.update_comment("Comment", 1L);
-        verify(userRepositry).findById(Mockito.<Long>any());
-        verify(userRepositry).save(Mockito.any());
+        when(userRepository.save(Mockito.any())).thenReturn(user2);
+        when(userRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        User actualUpdate_commentResult = service.updateComment("Comment", 1L);
+        verify(userRepository).findById(Mockito.<Long>any());
+        verify(userRepository).save(Mockito.any());
         assertSame(user2, actualUpdate_commentResult);
     }
 
     /**
-     * Method under test: {@link Service#update_comment(String, Long)}
+     * Method under test: {@link Service#updateComment(String, Long)}
      */
     @Test
     void testUpdate_comment2() throws UnsupportedEncodingException {
@@ -3586,11 +3585,11 @@ private  ReportRepositry reportRepositry;
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         Optional<User> ofResult = Optional.of(user);
-        when(userRepositry.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
-        when(userRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
-        assertThrows(RuntimeException.class, () -> service.update_comment("Comment", 1L));
-        verify(userRepositry).findById(Mockito.<Long>any());
-        verify(userRepositry).save(Mockito.any());
+        when(userRepository.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
+        when(userRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        assertThrows(RuntimeException.class, () -> service.updateComment("Comment", 1L));
+        verify(userRepository).findById(Mockito.<Long>any());
+        verify(userRepository).save(Mockito.any());
     }
 
     /**
@@ -3636,12 +3635,12 @@ private  ReportRepositry reportRepositry;
         coach2.setUsername("janedoe");
         coach2.setUsers(new ArrayList<>());
         coach2.setUsers_reports(new ArrayList<>());
-        when(coachRepositry.save(Mockito.any())).thenReturn(coach2);
-        when(coachRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(coachRepository.save(Mockito.any())).thenReturn(coach2);
+        when(coachRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         Coach actualAddImageToCoachResult = service.addImageToCoach("jane.doe@example.org",
                 new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes(StandardCharsets.UTF_8))));
-        verify(coachRepositry).findByEmail(Mockito.any());
-        verify(coachRepositry).save(Mockito.any());
+        verify(coachRepository).findByEmail(Mockito.any());
+        verify(coachRepository).save(Mockito.any());
         assertSame(coach, actualAddImageToCoachResult);
         byte[] expectedImage = "AXAXAXAX".getBytes(StandardCharsets.UTF_8);
         assertArrayEquals(expectedImage, actualAddImageToCoachResult.getImage());
@@ -3671,12 +3670,12 @@ private  ReportRepositry reportRepositry;
         coach.setUsers(new ArrayList<>());
         coach.setUsers_reports(new ArrayList<>());
         Optional<Coach> ofResult = Optional.of(coach);
-        when(coachRepositry.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
-        when(coachRepositry.findByEmail(Mockito.any())).thenReturn(ofResult);
+        when(coachRepository.save(Mockito.any())).thenThrow(new RuntimeException("foo"));
+        when(coachRepository.findByEmail(Mockito.any())).thenReturn(ofResult);
         assertThrows(RuntimeException.class, () -> service.addImageToCoach("jane.doe@example.org",
                 new MockMultipartFile("Name", new ByteArrayInputStream("AXAXAXAX".getBytes(StandardCharsets.UTF_8)))));
-        verify(coachRepositry).findByEmail(Mockito.any());
-        verify(coachRepositry).save(Mockito.any());
+        verify(coachRepository).findByEmail(Mockito.any());
+        verify(coachRepository).save(Mockito.any());
     }
 
     /**
@@ -3685,9 +3684,9 @@ private  ReportRepositry reportRepositry;
     @Test
     void testGetFoodCalorie() {
         ArrayList<FoodCalorie> foodCalorieList = new ArrayList<>();
-        when(foodCalorieRepositry.findAll()).thenReturn(foodCalorieList);
+        when(foodCalorieRepository.findAll()).thenReturn(foodCalorieList);
         List<FoodCalorie> actualFoodCalorie = service.getFoodCalorie();
-        verify(foodCalorieRepositry).findAll();
+        verify(foodCalorieRepository).findAll();
         assertTrue(actualFoodCalorie.isEmpty());
         assertSame(foodCalorieList, actualFoodCalorie);
     }
@@ -3697,9 +3696,9 @@ private  ReportRepositry reportRepositry;
      */
     @Test
     void testGetFoodCalorie2() {
-        when(foodCalorieRepositry.findAll()).thenThrow(new RuntimeException("foo"));
+        when(foodCalorieRepository.findAll()).thenThrow(new RuntimeException("foo"));
         assertThrows(RuntimeException.class, () -> service.getFoodCalorie());
-        verify(foodCalorieRepositry).findAll();
+        verify(foodCalorieRepository).findAll();
     }
 
 
@@ -3733,24 +3732,24 @@ private  ReportRepositry reportRepositry;
         chatDto.setMessage("message");
 
         //happy case
-   when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
-   when(coachRepositry.findById(2L)).thenReturn(Optional.of(coach));
+   when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+   when(coachRepository.findById(2L)).thenReturn(Optional.of(coach));
    when(chatRepository.save(chat)).thenReturn(chat);
-    Chat actual = service.savechat(chatDto);
+    Chat actual = service.saveChat(chatDto);
     chat.setLocalDateTime(actual.getLocalDateTime());
     assertEquals(chat,actual);
 
     //user not found
-    when(userRepositry.findById(1L)).thenReturn(Optional.empty());
-    assertNull(service.savechat(chatDto));
+    when(userRepository.findById(1L)).thenReturn(Optional.empty());
+    assertNull(service.saveChat(chatDto));
    // coach not found
-    when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
-    when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
-    assertNull(service.savechat(chatDto));
+    when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+    when(coachRepository.findById(2L)).thenReturn(Optional.empty());
+    assertNull(service.saveChat(chatDto));
     // coach and user not found
-    when(userRepositry.findById(1L)).thenReturn(Optional.empty());
-    when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
-    assertNull(service.savechat(chatDto));
+    when(userRepository.findById(1L)).thenReturn(Optional.empty());
+    when(coachRepository.findById(2L)).thenReturn(Optional.empty());
+    assertNull(service.saveChat(chatDto));
 
     }
 
@@ -3785,12 +3784,12 @@ private  ReportRepositry reportRepositry;
         chats.add(chat);
         chats.add(chat2);
         chats.add(chat3);
-        when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(chatRepository.findByUserOrderByLocalDateTimeAsc(1L)).thenReturn(chats);
         List<Chat> actual = service.getUserChats(1L);
         assertEquals(chats,actual);
         //user not found
-        when(userRepositry.findById(1L)).thenReturn(Optional.empty());
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
         assertNull(service.getUserChats(1L));
 
 
@@ -3819,12 +3818,12 @@ private  ReportRepositry reportRepositry;
         chats.add(chat);
         chats.add(chat2);
         chats.add(chat3);
-        when(coachRepositry.findById(1L)).thenReturn(Optional.of(coach));
+        when(coachRepository.findById(1L)).thenReturn(Optional.of(coach));
         when(chatRepository.findByCoachOrderByLocalDateTimeAsc(1L)).thenReturn(chats);
         List<Chat> actual = service.getCoachChats(1L);
         assertEquals(chats,actual);
         //coach not found
-        when(coachRepositry.findById(1L)).thenReturn(Optional.empty());
+        when(coachRepository.findById(1L)).thenReturn(Optional.empty());
         assertNull(service.getCoachChats(1L));
     }
 
@@ -3844,15 +3843,15 @@ private  ReportRepositry reportRepositry;
         user.setEmail(email);
         user.setPassword(new BCryptPasswordEncoder(10).encode(oldPassword));
         when(passwordEncoder.matches(oldPassword, user.getPassword())).thenReturn( new BCryptPasswordEncoder(10).matches(oldPassword, user.getPassword()));
-        when(userRepositry.findByEmail(email)).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
 
 
         String result = service.changePassword(email, oldPassword, newPassword, role);
 
 
         assertEquals("success", result);
-        verify(userRepositry, times(1)).findByEmail(email);
-        verify(userRepositry, times(1)).save(any(User.class));
+        verify(userRepository, times(1)).findByEmail(email);
+        verify(userRepository, times(1)).save(any(User.class));
     }
     /**
      * Method under test:  {@link Service#changePassword(String, String, String, String)}
@@ -3865,12 +3864,12 @@ private  ReportRepositry reportRepositry;
         String newPassword = "newPassword";
         String role = "user";
 
-        when(userRepositry.findByEmail(email)).thenReturn(Optional.empty());
+        when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
 
         String result = service.changePassword(email, oldPassword, newPassword, role);
         assertEquals("Email is not valid!", result);
-        verify(userRepositry, times(1)).findByEmail(email);
-        verify(userRepositry, never()).save(any(User.class));
+        verify(userRepository, times(1)).findByEmail(email);
+        verify(userRepository, never()).save(any(User.class));
     }
 
     /**
@@ -3888,12 +3887,12 @@ private  ReportRepositry reportRepositry;
         user.setEmail(email);
         user.setPassword(new BCryptPasswordEncoder(10).encode("oldPassword"));
 
-        when(userRepositry.findByEmail(email)).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
 
         String result = service.changePassword(email, oldPassword, newPassword, role);
         assertEquals("Old Password is not valid!", result);
-        verify(userRepositry, times(1)).findByEmail(email);
-        verify(userRepositry, never()).save(any(User.class));
+        verify(userRepository, times(1)).findByEmail(email);
+        verify(userRepository, never()).save(any(User.class));
     }
     /**
      * Method under test:  {@link Service#changePassword(String, String, String, String)}
@@ -3912,13 +3911,13 @@ private  ReportRepositry reportRepositry;
         coach.setPassword(new BCryptPasswordEncoder(10).encode(oldPassword));
 
         when(passwordEncoder.matches(oldPassword, coach.getPassword())).thenReturn( new BCryptPasswordEncoder(10).matches(oldPassword, coach.getPassword()));
-        when(coachRepositry.findByEmail(email)).thenReturn(Optional.of(coach));
+        when(coachRepository.findByEmail(email)).thenReturn(Optional.of(coach));
 
         String result = service.changePassword(email, oldPassword, newPassword, role);
 
         assertEquals("success", result);
-        verify(coachRepositry, times(1)).findByEmail(email);
-        verify(coachRepositry, times(1)).save(any(Coach.class));
+        verify(coachRepository, times(1)).findByEmail(email);
+        verify(coachRepository, times(1)).save(any(Coach.class));
     }
 
     /**
@@ -3932,12 +3931,12 @@ private  ReportRepositry reportRepositry;
         String newPassword = "newPassword";
         String role = "coach";
 
-        when(coachRepositry.findByEmail(email)).thenReturn(Optional.empty());
+        when(coachRepository.findByEmail(email)).thenReturn(Optional.empty());
 
         String result = service.changePassword(email, oldPassword, newPassword, role);
         assertEquals("Email is not valid!", result);
-        verify(coachRepositry, times(1)).findByEmail(email);
-        verify(coachRepositry, never()).save(any(Coach.class));
+        verify(coachRepository, times(1)).findByEmail(email);
+        verify(coachRepository, never()).save(any(Coach.class));
     }
 
     /**
@@ -3952,10 +3951,10 @@ private  ReportRepositry reportRepositry;
 
         String result = service.changePassword(email, oldPassword, newPassword, role);
         assertEquals("Email is not valid!", result);
-        verify(userRepositry, never()).findByEmail(anyString());
-        verify(userRepositry, never()).save(any(User.class));
-        verify(coachRepositry, never()).findByEmail(anyString());
-        verify(coachRepositry, never()).save(any(Coach.class));
+        verify(userRepository, never()).findByEmail(anyString());
+        verify(userRepository, never()).save(any(User.class));
+        verify(coachRepository, never()).findByEmail(anyString());
+        verify(coachRepository, never()).save(any(Coach.class));
     }
 
     @Test
@@ -4000,8 +3999,8 @@ private  ReportRepositry reportRepositry;
         chats.add(chat3);
         chats.add(chat4);
         chats.add(chat5);
-        when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
-        when(coachRepositry.findById(2L)).thenReturn(Optional.of(coach));
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(coachRepository.findById(2L)).thenReturn(Optional.of(coach));
         when(chatRepository.findByUserAndCoachOrderByLocalDateTimeAsc(1L,2L)).thenReturn(chats);
         int actual = service.getUnseenChats(1L,2L);
         assertEquals(2,actual);
@@ -4018,17 +4017,17 @@ private  ReportRepositry reportRepositry;
         actual = service.getUnseenChats(1L,2L);
         assertEquals(0,actual);
         // user not found
-        when(userRepositry.findById(1L)).thenReturn(Optional.empty());
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
         actual = service.getUnseenChats(1L,2L);
         assertEquals(-1,actual);
         // coach not found
-        when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
-        when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(coachRepository.findById(2L)).thenReturn(Optional.empty());
         actual = service.getUnseenChats(1L,2L);
         assertEquals(-1,actual);
         // user and coach not found
-        when(userRepositry.findById(1L)).thenReturn(Optional.empty());
-        when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+        when(coachRepository.findById(2L)).thenReturn(Optional.empty());
         actual = service.getUnseenChats(1L,2L);
         assertEquals(-1,actual);
     }
@@ -4039,11 +4038,11 @@ private  ReportRepositry reportRepositry;
         List<Notification> expectedNotifications = Collections.singletonList(new Notification());
         Coach coach = new Coach();
         coach.setCoach_id(coachId);
-        when(coachRepositry.findById(coachId)).thenReturn(java.util.Optional.of(coach));
+        when(coachRepository.findById(coachId)).thenReturn(java.util.Optional.of(coach));
         when(notificationRepository.findByCoach_Coach_id(coachId)).thenReturn(expectedNotifications);
         List<NotificationDto> result = service.getNotifications(coachId, "coach");
         assertEquals(expectedNotifications.size(), result.size());
-        verify(coachRepositry, times(1)).findById(coachId);
+        verify(coachRepository, times(1)).findById(coachId);
         verify(notificationRepository, times(1)).findByCoach_Coach_id(coachId);
     }
     @Test
@@ -4052,11 +4051,11 @@ private  ReportRepositry reportRepositry;
         List<Notification> expectedNotifications = Collections.singletonList(new Notification());
         User user = new User();
         user.setUser_id(userId);
-        when(userRepositry.findById(userId)).thenReturn(java.util.Optional.of(user));
+        when(userRepository.findById(userId)).thenReturn(java.util.Optional.of(user));
         when(notificationRepository.findByUser_User_id(userId)).thenReturn(expectedNotifications);
         List<NotificationDto> result = service.getNotifications(userId, "user");
         assertEquals(expectedNotifications.size(), result.size());
-        verify(userRepositry, times(1)).findById(userId);
+        verify(userRepository, times(1)).findById(userId);
         verify(notificationRepository, times(1)).findByUser_User_id(userId);
     }
 

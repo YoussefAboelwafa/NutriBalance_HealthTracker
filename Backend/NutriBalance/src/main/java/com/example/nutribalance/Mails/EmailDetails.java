@@ -1,4 +1,4 @@
-package com.example.nutribalance.Mails;
+package com.example.nutribalance.mails;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

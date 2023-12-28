@@ -24,15 +24,15 @@ public class LocalUser extends User implements OAuth2User, OidcUser {
 	private final OidcUserInfo userInfo;
 	private Map<String, Object> attributes;
 	@Getter
-	private com.example.nutribalance.Entities.User user;
+	private com.example.nutribalance.entities.User user;
 
 	public LocalUser(final String userID, final String password, final boolean enabled, final boolean accountNonExpired, final boolean credentialsNonExpired,
-			final boolean accountNonLocked, final Collection<? extends GrantedAuthority> authorities, final com.example.nutribalance.Entities.User  user) {
+			final boolean accountNonLocked, final Collection<? extends GrantedAuthority> authorities, final com.example.nutribalance.entities.User  user) {
 		this(userID, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities, user, null, null);
 	}
 
 	public LocalUser(final String userID, final String password, final boolean enabled, final boolean accountNonExpired, final boolean credentialsNonExpired,
-			final boolean accountNonLocked, final Collection<? extends GrantedAuthority> authorities, final com.example.nutribalance.Entities.User  user, OidcIdToken idToken,
+			final boolean accountNonLocked, final Collection<? extends GrantedAuthority> authorities, final com.example.nutribalance.entities.User  user, OidcIdToken idToken,
 			OidcUserInfo userInfo) {
 		super(userID, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		this.user = user;
@@ -40,7 +40,7 @@ public class LocalUser extends User implements OAuth2User, OidcUser {
 		this.userInfo = userInfo;
 	}
 
-	public static LocalUser create(com.example.nutribalance.Entities.User  user, Map<String, Object> attributes, OidcIdToken idToken, OidcUserInfo userInfo) {
+	public static LocalUser create(com.example.nutribalance.entities.User  user, Map<String, Object> attributes, OidcIdToken idToken, OidcUserInfo userInfo) {
 		LocalUser localUser = new LocalUser(user.getEmail(), user.getPassword(), true, true, true, true, GeneralUtils.buildSimpleGrantedAuthorities(Set.of("USER")),
 				user, idToken, userInfo);
 		localUser.setAttributes(attributes);

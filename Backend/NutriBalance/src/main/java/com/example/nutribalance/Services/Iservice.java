@@ -1,6 +1,6 @@
-package com.example.nutribalance.Services;
+package com.example.nutribalance.services;
 
-import com.example.nutribalance.Entities.*;
+import com.example.nutribalance.entities.*;
 import com.example.nutribalance.dto.ChatDto;
 import com.example.nutribalance.dto.LoginRequest;
 import com.example.nutribalance.dto.NotificationDto;
@@ -11,86 +11,83 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
-public interface Iservice {
-    //todo: add methods
+public interface IService {
+
+
+    //------------------------------password methods--------------------------------
+    void sendForgetPasswordEmail(ResetPassword resetPassword) throws UnsupportedEncodingException, MessagingException;
+    void createResetPassword(ResetPassword resetPassword);
+    ResetPassword getResetPassword(String email);
+
+    void resetPassword(LoginRequest loginRequest, String role);
+    String changePassword(String email, String oldPassword, String password, String role);
+    boolean verify(String code);
+
+
     //------------------------------coach methods--------------------------------
-    Coach savecoach(Coach coach);
-    User usersignin(String email, String password);
-    List<FoodCalorie> getFoodCalorie();
-
-    User updateUser(User user);
-
-    User addImageToUser(String Email, MultipartFile image );
-
-    List<Coach> get_waiting_coaches();
-
+    Coach saveCoach(Coach coach);
     String deletecoach(Long id);
-
+    List<FoodCalorie> getFoodCalorie();
     Coach approvecoach(Long id);
-    Coach coachsignin(String email, String pass);
+    Coach coachSignIn(String email, String pass);
+    List<Coach> getWaitingCoaches();
+    Coach addImageToCoach(String Email, MultipartFile image );
+    List<User> getSubscribedUsers(Long coach_id);
+    User updateComment(String comment, Long user_id);
+    Coach updateCoach(Coach coach);
+    Coach updateCoachCV(String email, byte[] bytes);
+    Coach registerCoach(Coach coach);
+    List<Coach> getCoaches();
+    void deleteCoach(Long id);
+
+
+
+    //------------------------------plan methods--------------------------------
+    List<Plan> getPlans(Long coachId);
+    Plan saveplan(Plan plan);
+    Plan updatePlan(Plan plan);
+   List<Plan> getAllPlans();
+
+
 
 
     //------------------------------user methods--------------------------------
+    User getUser(Long id);
     User saveuser(User user);
-
-    void sendForgetPasswordEmail(ResetPassword resetPassword) throws UnsupportedEncodingException, MessagingException;
-
+    User updateUser(User user);
+    User userSignIn(String email, String password);
+    User addImageToUser(String Email, MultipartFile image );
     String findByEmailRole(String email, String role);
-
-    void create_reset_password(ResetPassword resetPassword);
-
-    ResetPassword get_reset_password(String email);
-
-    void resetPassword(LoginRequest loginRequest, String role);
-    Plan saveplan(Plan plan);
-
-    User subscribe_to_plan(String planName, Long user_id);
-    List<User> get_subscribed_users(Long coach_id);
-    User update_comment(String comment, Long user_id);
-
-    Coach addImageToCoach(String Email, MultipartFile image );
-
-    Coach updateCoach(Coach coach);
-
-
-    String changePassword(String email, String oldPassword, String password, String role);
-
-    Coach updateCoachCV(String email, byte[] bytes);
-
-   List<Plan> getallplans();
-
-
-    List<Plan> getPlans(Long coachId);
-
-    Plan updatePlan(Plan plan);
-
+    User subscribeToPlan(String planName, Long user_id);
     String deletePlan(String planName);
+    User addWeight(Long id, Double weight, Date date);
+    List<Weight> getWeights(Long id);
+    User deleteSubscription(Long id);
+    void deleteUser(Long id);
 
-    boolean verify(String code);
 
-    Coach registerCoach(Coach coach);
-    User AddWeight(Long id, Double weight, Date date);
-    List<Weight> GetWeights(Long id);
-    User deletesubscription(Long id);
+
+    //------------------------------notification methods--------------------------------
     List<NotificationDto> getNotifications(Long id, String role);
     String deleteNotification(Long notificationId);
-    User getUser(Long id);
 
-    Chat savechat(ChatDto chatDto);
+
+
+
+
+    //------------------------------chat methods--------------------------------
+    Chat saveChat(ChatDto chatDto);
     List<Chat> getUserChats(Long user_id);
     List<Chat> getCoachChats(Long coach_id);
     void deleteChatByUser(Long user_id);
-  
-    List<Coach> getCoaches();
-    Report addReport(Long user_id,Long coach_id,String message,String author);
-    List<Report> getReports();
-
-    void deleteUser(Long id);
-    void deleteCoach(Long id);
-
-    void deleteReport(Long user_id,Long coach_id);
-
     int getUnseenChats(Long user_id, Long coach_id);
     void setSeen(Long user_id, Long coach_id);
+
+
+
+    //------------------------------report methods--------------------------------
+    Report addReport(Long user_id,Long coach_id,String message,String author);
+    List<Report> getReports();
+    void deleteReport(Long user_id,Long coach_id);
 
 }

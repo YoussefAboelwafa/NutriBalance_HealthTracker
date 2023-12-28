@@ -1,12 +1,13 @@
-package com.example.nutribalance.service;
+package com.example.nutribalance.security.securityService;
 
-import com.example.nutribalance.Entities.User;
-import com.example.nutribalance.Repositries.CoachRepositry;
-import com.example.nutribalance.Repositries.UserRepositry;
+import com.example.nutribalance.entities.User;
+import com.example.nutribalance.repositories.CoachRepository;
+import com.example.nutribalance.repositories.UserRepository;
 import com.example.nutribalance.dto.LocalUser;
 import com.example.nutribalance.dto.SignUpRequest;
 import com.example.nutribalance.security.oauth2.user.OAuth2UserInfo;
 import com.example.nutribalance.security.oauth2.user.OAuth2UserInfoFactory;
+import com.example.nutribalance.security.securityService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
@@ -23,10 +24,10 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserRepositry userRepository;
+	private UserRepository userRepository;
 
 	@Autowired
-	private CoachRepositry coachRepositry;
+	private CoachRepository coachRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		else if(signUpRequest.getRole().equals("COACH")){
-			if (coachRepositry.existsByEmail(signUpRequest.getEmail())) {
+			if (coachRepository.existsByEmail(signUpRequest.getEmail())) {
 				throw new Exception("Display name already exists: " + signUpRequest.getEmail());
 			}
 		}

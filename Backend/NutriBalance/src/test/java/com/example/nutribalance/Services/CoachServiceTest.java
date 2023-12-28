@@ -1,17 +1,14 @@
-package com.example.nutribalance.Services;
+package com.example.nutribalance.services;
 
-import com.example.nutribalance.Entities.Coach;
-import com.example.nutribalance.Mails.EmailService;
-import com.example.nutribalance.Repositries.*;
-import org.junit.Before;
+import com.example.nutribalance.entities.Coach;
+import com.example.nutribalance.mails.EmailService;
+import com.example.nutribalance.repositories.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -35,11 +32,11 @@ public class CoachServiceTest {
     private Service service;
 
     @MockBean
-    private CoachRepositry coachRepo;
+    private CoachRepository coachRepo;
 
 
     @MockBean
-    private UserRepositry userRepositry;
+    private UserRepository userRepository;
 
     @MockBean
     private ResetPasswordRepository resetPasswordRepository;
@@ -51,17 +48,17 @@ public class CoachServiceTest {
     @MockBean
     private EmailService emailService;
     @MockBean
-    private PlanRepositry planRepositry;
+    private PlanRepository planRepository;
     @MockBean
-    private FoodCalorieRepositry foodCalorieRepositry;
+    private FoodCalorieRepository foodCalorieRepository;
     @MockBean
     private ChatRepository chatRepository;
     @MockBean
     private NotificationRepository notificationRepository;
     @MockBean
-    private WeightRepositry weightRepositry;
+    private WeightRepository weightRepository;
     @MockBean
-    private ReportRepositry reportRepositry;
+    private ReportRepository reportRepository;
 
     @BeforeEach
     public void init() {

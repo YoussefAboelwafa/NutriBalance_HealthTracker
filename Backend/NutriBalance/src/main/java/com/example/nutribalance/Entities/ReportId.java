@@ -1,4 +1,4 @@
-package com.example.nutribalance.Entities;
+package com.example.nutribalance.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

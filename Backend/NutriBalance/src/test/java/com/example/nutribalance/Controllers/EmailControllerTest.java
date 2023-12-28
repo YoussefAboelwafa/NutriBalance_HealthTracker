@@ -1,9 +1,9 @@
-package com.example.nutribalance.Controllers;
+package com.example.nutribalance.controllers;
 
 import static org.mockito.Mockito.when;
 
-import com.example.nutribalance.Mails.EmailDetails;
-import com.example.nutribalance.Mails.EmailService;
+import com.example.nutribalance.mails.EmailDetails;
+import com.example.nutribalance.mails.EmailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

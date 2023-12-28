@@ -180,7 +180,13 @@
 }
 
 .mat-menu-item {
-  /* white-space: normal; */
-  word-wrap: break-word;
-  
+  white-space: normal;
+  height: fit-content;
+  line-height: 1.5 !important;
+  width: fit-content;
+
+}
+.notification-message {
+  white-space: pre-wrap;
+  font-size: small;
 }

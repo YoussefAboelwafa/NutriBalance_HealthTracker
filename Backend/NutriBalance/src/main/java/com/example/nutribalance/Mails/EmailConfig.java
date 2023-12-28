@@ -1,4 +1,4 @@
-package com.example.nutribalance.Mails;
+package com.example.nutribalance.mails;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -44,10 +44,10 @@ public class EmailConfig{
         mailSender.setPassword("fe9c6ee1039064d0b69545fca3039e91-07f37fca-39937739");
         mailSender.setDefaultEncoding("UTF-8");
         Properties props = mailSender.getJavaMailProperties();
-//        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-//        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.smtp.starttls.required", "true");
         return mailSender;
     }
 
@@ -60,12 +60,12 @@ public class EmailConfig{
         mailSender.setPassword(email2Password);
         mailSender.setDefaultEncoding("UTF-8");
         Properties props = mailSender.getJavaMailProperties();
-//        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-//        props.put("mail.smtp.starttls.required", "true");
-//        props.put("mail.smtp.timeout", "50000000"); // Set timeout to 5 seconds
-//        props.put("mail.smtp.connectiontimeout", "50000000"); // Set connection timeout to 5 seconds
+        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.smtp.timeout", "50000000"); // Set timeout to 5 seconds
+        props.put("mail.smtp.connectiontimeout", "50000000"); // Set connection timeout to 5 seconds
         return mailSender;
     }
 }

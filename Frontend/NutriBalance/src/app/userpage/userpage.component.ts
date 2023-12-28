@@ -62,7 +62,7 @@ export class UserpageComponent implements OnInit {
       next: (data) => {
         console.log(data);
         data.forEach((element: any) => {
-          if (element.type == 4) {
+          if (element.type == 4 || element.type == 5) {
             this.notifications.push({
               id: element.notificationId,
               message: element.message,

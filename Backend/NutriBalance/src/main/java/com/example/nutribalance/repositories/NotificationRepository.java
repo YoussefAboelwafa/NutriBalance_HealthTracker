@@ -1,7 +1,6 @@
-package com.example.nutribalance.Repositries;
+package com.example.nutribalance.repositories;
 
-import com.example.nutribalance.Entities.Notification;
-import org.springframework.data.jpa.repository.EntityGraph;
+import com.example.nutribalance.entities.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

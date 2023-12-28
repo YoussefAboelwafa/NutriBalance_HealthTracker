@@ -1,5 +1,5 @@
 package com.example.nutribalance.security.oauth2;
-import com.example.nutribalance.service.UserService;
+import com.example.nutribalance.security.securityService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

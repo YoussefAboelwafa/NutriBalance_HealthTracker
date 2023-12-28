@@ -1,12 +1,11 @@
-package com.example.nutribalance.Controllers;
+package com.example.nutribalance.controllers;
 
 
-import com.example.nutribalance.Entities.ResetPassword;
-import com.example.nutribalance.Services.Iservice;
+import com.example.nutribalance.entities.ResetPassword;
+import com.example.nutribalance.services.IService;
 import com.example.nutribalance.dto.ApiResponse;
 import com.example.nutribalance.dto.ChangePasswordDto;
 import com.example.nutribalance.dto.LoginRequest;
-import jakarta.servlet.http.HttpSession;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -23,12 +22,11 @@ public class Authentication {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private Iservice service;
+    private IService service;
 
 
     @PostMapping("/adminLogin")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        System.out.println("loginRequest: " + loginRequest);
         try {
         org.springframework.security.core.Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
@@ -42,14 +40,13 @@ public class Authentication {
 
 
     @GetMapping("/user")
-    public OidcUser get_User(@AuthenticationPrincipal OidcUser user) {
+    public OidcUser getUser(@AuthenticationPrincipal OidcUser user) {
         return user;
     }
 
     @GetMapping("/forgetPassword")
     public ResponseEntity<?> forgetPassword(@Param("email") String email, @Param("role") String role){
         String username = service.findByEmailRole(email, role);
-        System.out.println("username: " + username);
         if (username == null) {
             return ResponseEntity.badRequest().body("Error: Email is not valid!");
         }
@@ -64,12 +61,12 @@ public class Authentication {
         catch (Exception e){
             return ResponseEntity.badRequest().body("Error: Email is not valid!");
         }
-        service.create_reset_password(resetPassword);
+        service.createResetPassword(resetPassword);
         return ResponseEntity.ok().build();
     }
     @GetMapping("/checkOtp")
     public ResponseEntity<?> checkOtp(@Param("otp") String otp,@Param("email") String email) {
-        ResetPassword user = service.get_reset_password(email);
+        ResetPassword user = service.getResetPassword(email);
         if (user == null) {
             return ResponseEntity.badRequest().body("Error: Email is not valid!");
         }

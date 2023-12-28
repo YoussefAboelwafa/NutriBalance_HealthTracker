@@ -6,11 +6,9 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNullApi;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +16,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.example.nutribalance.service.LocalUserDetailService;
+import com.example.nutribalance.security.securityService.LocalUserDetailService;
 
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
@@ -47,9 +45,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
 			if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt,request)) {
 				Long userId = tokenProvider.getUserIdFromToken(jwt);
-				logger.debug("User id from token-------------------------------------------------------------------------->: " + userId);
 				UserDetails userDetails = customUserDetailsService.loadUserById(userId);
-				logger.debug("User details--------------------------------------------------------->>>>: " + userDetails);
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 

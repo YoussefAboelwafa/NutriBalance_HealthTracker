@@ -6,15 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.example.nutribalance.Entities.Coach;
-import com.example.nutribalance.Entities.Plan;
-import com.example.nutribalance.Entities.User;
+import com.example.nutribalance.entities.Coach;
+import com.example.nutribalance.entities.Plan;
+import com.example.nutribalance.entities.User;
 import com.example.nutribalance.dto.LocalUser;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.example.nutribalance.security.securityService.LocalUserDetailService;
+import com.example.nutribalance.security.securityService.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;

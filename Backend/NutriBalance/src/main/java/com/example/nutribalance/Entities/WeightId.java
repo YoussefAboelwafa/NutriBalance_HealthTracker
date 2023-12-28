@@ -1,4 +1,4 @@
-package com.example.nutribalance.Entities;
+package com.example.nutribalance.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -7,10 +7,6 @@ import java.util.Objects;
 public class WeightId implements Serializable {
     private Date date;
     private Long user;
-
-    // Constructors, getters, and setters...
-
-    // Implement equals and hashCode methods
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
