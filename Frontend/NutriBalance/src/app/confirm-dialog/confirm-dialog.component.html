@@ -5,15 +5,10 @@
   {{ data.body }}
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button class="btn btn-danger" (click)="onCancel()" [disabled]="!isLoading">
+  <button mat-button class="btn btn-danger" (click)="onCancel()">
     No
   </button>
-  <button mat-button class="btn btn-success" (click)="onConfirm()" [disabled]="!isLoading">
-    <span *ngIf="!isLoading; else buttonContent">
-      <mat-spinner diameter="20"></mat-spinner>
-    </span>
-    <ng-template #buttonContent>
+  <button mat-button class="btn btn-success" (click)="onConfirm()">
       Yes
-    </ng-template>
   </button>
 </mat-dialog-actions>

@@ -1,41 +1,50 @@
-
 <div id="container">
   <div id="sidebar">
     <div class="top" style="display: flex">
-      <img
-        id="header-img"
-        src="../../assets/images/leaf.png"
-        alt="Header Image"
-      />
+      <img id="header-img" src="../../assets/images/leaf.png" alt="Header Image" />
       <a id="Name">NutriBalance</a>
     </div>
 
     <div id="menu">
       <a routerLink="/home"><i class="fas fa-home icon"></i> Home</a>
-      <a routerLink="calculator" routerLinkActive="active"
-        ><i class="fa-solid fa-calculator"></i> Calculate GDA</a
-      >
-       <a routerLink="subscribe" routerLinkActive="active"
-            ><i class="fa-solid fa-file-signature"></i> Explore Plans</a>
+      <a routerLink="calculator" routerLinkActive="active"><i class="fa-solid fa-calculator"></i> Calculate GDA</a>
+      <a routerLink="subscribe" routerLinkActive="active"><i class="fa-solid fa-file-signature"></i> Explore Plans</a>
       <a routerLink="userplan" routerLinkActive="active"><i class="fa-solid fa-file-circle-check"></i>My Plan</a>
       <a routerLink="Progress" routerLinkActive="active"><i class="fa-solid fa-chart-line"></i>Weight Progress</a>
-      <a routerLink="userprofile" routerLinkActive="active"
-        ><i class="fas fa-user-edit icon"></i> Edit Profile</a
-      >
-      <a routerLink="foodcalories" routerLinkActive="active"
-      ><i class="fas fa-pizza-slice"></i>Food Calories</a>   
-      <a routerLink="userchat" routerLinkActive="active"
-      ><i class="fa-solid fa-comment"></i>Chat with your coach</a>
+      <a routerLink="userprofile" routerLinkActive="active"><i class="fas fa-user-edit icon"></i> Edit Profile</a>
+      <a routerLink="foodcalories" routerLinkActive="active"><i class="fas fa-pizza-slice"></i>Food Calories</a>
+      <a routerLink="userchat" routerLinkActive="active"><i class="fa-solid fa-comment"></i>Chat with your coach</a>
       <a routerLink="userreport" routerLinkActive="active"
       ><i class="fas fa-file-signature"></i>Report</a>
     </div>
 
     <div id="sidebar-end-block">
-      <a (click)="logout()" > <i class="fas fa-sign-out-alt icon" ></i> Logout</a>
+      <a (click)="logout()"> <i class="fas fa-sign-out-alt icon"></i> Logout</a>
     </div>
   </div>
 
   <div id="content">
+    <button mat-icon-button class="bell-icon" [matMenuTriggerFor]="notificationMenu"
+      [class.new-notifications]="hasNewNotifications" (menuOpened)="onMenuOpened()">
+      <mat-icon>notifications</mat-icon>
+      <div *ngIf="hasNewNotifications" class="new-notifications-alert"></div>
+    </button>
+    <mat-menu #notificationMenu="matMenu" style="width: 10000vh;">
+      <div *ngIf="notifications.length">
+
+        <a mat-menu-item *ngFor="let notification of notifications; let i = index" class="mat-menu-item">
+          <a [routerLink]="notification.route" (click)="clearNotification(i)">
+            <span class="notification-message">{{ notification.message }}</span>
+            <small style="font-size: x-small;"> ---{{ notification.date | date: 'medium' }}</small>
+          </a>
+        </a>
+      </div>
+      <div *ngIf="!notifications.length">
+        <h4 mat-menu-item>
+          No new notifications
+        </h4>
+      </div>
+    </mat-menu>
     <router-outlet></router-outlet>
   </div>
 </div>

@@ -1,5 +1,5 @@
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f4f4f4;
@@ -10,7 +10,7 @@ body {
   background-color: #f2fff3;
   margin: 20px auto;
   padding: 20px;
-  max-width: 800px;
+  max-width: 100%;
 }
 #top {
   display: flex;
@@ -74,14 +74,23 @@ body {
 .content {
   font-family: Arial, sans-serif;
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 70%;
   padding: 20px;
-  margin-top: 7%;
+}
+.top-img{
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
 }
 
 .content h1,
 .content h2 {
   color: #008080;
+}
+.content h1 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-top: 30px;
 }
 
 .content p {
@@ -131,13 +140,25 @@ body {
   font-size: 20px;
   margin-right: 10px;
 }
-
-
-
+.btn-success {
+  background-color: #008080;
+  width: 100%;
+  height: 50px;
+  font-weight: 700;
+  font-size: larger;
+  transition: 0.4s;
+  font-family: 'Montserrat', sans-serif;
+}
+.btn-success:hover {
+  background-color: white;
+  color: #008080;
+  border: 2px solid #008080;
+  font-size: large;
+}
 
 /*---------------------------------------------*/
 @media (max-width: 700px) {
-  .page3 .industry-container{
+  .page3 .industry-container {
     display: inline-block;
     width: 90%;
   }
@@ -145,26 +166,25 @@ body {
     width: 90%;
   }
   .user-sidebar.open {
-    width:100%;
+    width: 100%;
   }
-  .user-sidebar .not-logged  {
+  .user-sidebar .not-logged {
     width: 100%;
     display: block;
     justify-content: center;
     align-items: center;
-    }
-    .user-sidebar .logged-in{
-      width: 100%;
-      border: none;
-    }
-    .user-sidebar .logged-in .title{
-      width: 80vw;
-      border: none;
-      margin-bottom: 2rem;
-    }
+  }
+  .user-sidebar .logged-in {
+    width: 100%;
+    border: none;
+  }
+  .user-sidebar .logged-in .title {
+    width: 80vw;
+    border: none;
+    margin-bottom: 2rem;
+  }
   .user-sidebar .not-logged p {
     width: 100%;
-
   }
   .user-sidebar .not-logged button {
     margin-top: 1vw;
@@ -186,7 +206,6 @@ body {
 .user-sidebar .logged-in .logout button:hover {
   background-color: #8d3a95;
 }
-
 
 .user-sidebar {
   position: fixed;
@@ -217,7 +236,7 @@ body {
 .rounded-circle {
   width: 100%;
   height: 100%;
-/* To ensure the image covers the entire circular container */
+  /* To ensure the image covers the entire circular container */
 }
 .user-sidebar.open {
   right: 0; /* Slide in from the right when open */
@@ -297,7 +316,7 @@ body {
   margin-bottom: 2rem;
 }
 .user-sidebar .logged-in .title {
-  height:fit-content;
+  height: fit-content;
 }
 .user-sidebar .logged-in .title p {
   font-size: 30px;
@@ -324,4 +343,3 @@ body {
 .user-link {
   cursor: pointer;
 }
-

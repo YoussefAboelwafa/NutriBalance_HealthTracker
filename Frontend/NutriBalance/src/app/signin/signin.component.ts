@@ -39,7 +39,7 @@ export class SigninComponent {
   flag_show_login = false;
   flag_btn_login = true;
   isUser = true
-  loading=false;
+  loading = false;
 
 
   constructor(private shared: Shared, private userservice: UserService, private coachservice: CoachService, private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router, private route: ActivatedRoute, private pop_service: ModalPopServiceService, private shred: Shared) { }
@@ -95,7 +95,7 @@ export class SigninComponent {
 
   flag_forget_spinner = false;
   onSubmit(event: any) {
-    this.loading=true
+    this.loading = true
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) {
       alert('Invalid email format');
     }
@@ -105,14 +105,15 @@ export class SigninComponent {
         console.log(data);
         if (data == null) {
           alert('wrong email or password');
-          this.loading=false}
+          this.loading = false
+        }
         else {
 
-          let user:User=data;
+          let user: User = data;
 
           this.shared.loggedIn = true;
           this.tokenStorage.saveUser(user);
-          this.loading=false
+          this.loading = false
           this.router.navigate(['/userpage']);
         }
       });
@@ -123,8 +124,8 @@ export class SigninComponent {
         .checksignin(this.email, this.password)
         .subscribe((data) => {
           console.log(data);
-          if (data == null){ 
-            this.loading=false
+          if (data == null) {
+            this.loading = false
             alert('wrong email or password');
           }
           else {
@@ -134,7 +135,7 @@ export class SigninComponent {
             } else {
               this.shared.loggedIn = true;
               this.tokenStorage.saveCoach(coach);
-              this.loading=false
+              this.loading = false
               this.router.navigate(['/coach-page']);
             }
           }
@@ -143,8 +144,25 @@ export class SigninComponent {
         );
     }
     else if (this.role == 'admin') {
-      this.loading=false
-      this.router.navigate(['/adminpage']);
+      this.authService.adminLogin(this.email, this.password).subscribe(
+        {
+          next: (data) => {
+            if(data!=null){
+            this.loading = false
+            console.log(data)
+            this.tokenStorage.saveUser(data);
+            this.router.navigate(['/adminpage'])}
+            else{
+              this.loading = false
+              alert("Wrong email or password")
+            }
+          },
+          error: (err) => {
+            this.loading = false
+            alert("Wrong email or password")
+          },
+        }
+      );
     }
   }
   forget_pass_first_step(email: any) {
@@ -189,7 +207,7 @@ export class SigninComponent {
       this.pop_service.pop_up("Password must be at least 8 characters", "Forget Password");
       return;
     }
-    
+
     this.authService.resetPassword(this.email, new_pass, this.role).subscribe(
       (res) => {
         this.flag_forget_spinner = false

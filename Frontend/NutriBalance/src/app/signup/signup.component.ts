@@ -24,7 +24,6 @@ export class SignupComponent {
   signin() {
     this.router.navigate(['/home']);
   }
-
   submit() {
     this.loading = true;
     if (this.user.password != this.confirmedPassword) {
