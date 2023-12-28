@@ -18,17 +18,21 @@ coaches: Coach[] = [];
  reports :string[]=[];
  loading! :boolean
  buttonEnabled:boolean[]=[]
+ loaded!:boolean
   constructor(private userservice: UserService,private coachservice:CoachService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
     this.user = this.tokenStorage.getUser();
+    this.loaded=false
     this.coachservice.getCoaches().subscribe(
       (data) => {
         this.coaches = data;
         console.log(this.coaches);
+        this.loaded=true
       },
       (error) => {
         console.log(error);
+        this.loaded=true
       }
     );
     this.loading=false;

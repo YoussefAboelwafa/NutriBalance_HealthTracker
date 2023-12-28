@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../Service/admin.service';
 import { Report } from '../Objects/Report';
 import { User } from '../Objects/User';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-view-reports',
   templateUrl: './view-reports.component.html',
@@ -13,9 +14,18 @@ export class ViewReportsComponent implements OnInit {
   user_spinner:boolean[]=[]
   coach_spinner:boolean[]=[]
   discard_spinner:boolean[]=[]
-  constructor(private adminservice:AdminService) { }
+  constructor(private adminservice:AdminService,private sanitizer: DomSanitizer,) { }
 
-
+  convertToImage(string: any) {
+    const binaryString = atob(string);
+    const binaryData = new Uint8Array(binaryString.length);
+    for (let i = 0; i < binaryString.length; i++) {
+      binaryData[i] = binaryString.charCodeAt(i);
+    }
+    const blob = new Blob([binaryData], { type: 'application/image' });
+    const blobUrl = URL.createObjectURL(blob);
+    return this.sanitizer.bypassSecurityTrustUrl(blobUrl) as SafeUrl;
+  }
 
   load_reports(){
     this.adminservice.getReports().subscribe(
