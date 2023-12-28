@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../Service/admin.service';
 import { Report } from '../Objects/Report';
 import { User } from '../Objects/User';
@@ -13,7 +13,7 @@ export class ViewReportsComponent implements OnInit {
   user_spinner:boolean[]=[]
   coach_spinner:boolean[]=[]
   discard_spinner:boolean[]=[]
-  constructor(private adminservice:AdminService,private cdr: ChangeDetectorRef) { }
+  constructor(private adminservice:AdminService) { }
 
 
 

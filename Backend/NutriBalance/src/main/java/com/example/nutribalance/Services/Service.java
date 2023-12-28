@@ -732,19 +732,11 @@ public class Service implements Iservice {
         for(Weight weight:weights_delete){
             weightRepositry.delete(weight);
         }
-        List<Plan> plans=planRepositry.findAll();
-        for(Plan plan:plans){
-            for(int i=0;i<plan.getUsers().size();i++){
-                if(plan.getUsers().get(i).getUser_id()==id){
-                    plan.getUsers().remove(i);
-                    break;
-                }
-            }
-        }
+
         List<Chat> chats=chatRepositry.findAll();
         List<Chat> chats_delete=new ArrayList<>();
         for(Chat chat:chats){
-            if(chat.getUser()==id){
+            if(chat.getUser().longValue()==id){
                 chats_delete.add(chat);
             }
         }
@@ -760,7 +752,7 @@ public class Service implements Iservice {
         List<Plan> plans=planRepositry.findAll();
         List<Plan> plans_delete=new ArrayList<>();
         for(Plan plan:plans){
-            if(plan.getCoach().getCoach_id()==id){
+            if(plan.getCoach().getCoach_id().longValue()==id){
                 plans_delete.add(plan);
             }
         }
@@ -770,7 +762,7 @@ public class Service implements Iservice {
         List<Report> reports=reportRepositry.findAll();
         List<Report> reports_delete=new ArrayList<>();
         for(Report report:reports){
-            if(report.getCoach().getCoach_id()==id){
+            if(report.getCoach().getCoach_id().longValue()==id){
                 reports_delete.add(report);
             }
         }
@@ -780,7 +772,7 @@ public class Service implements Iservice {
         List<Chat> chats=chatRepositry.findAll();
         List<Chat> chats_delete=new ArrayList<>();
         for(Chat chat:chats){
-            if(chat.getCoach()==id){
+            if(chat.getCoach().longValue()==id){
                 chats_delete.add(chat);
             }
         }
