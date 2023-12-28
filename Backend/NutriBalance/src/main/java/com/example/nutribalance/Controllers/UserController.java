@@ -1,10 +1,10 @@
-package com.example.nutribalance.Controllers;
+package com.example.nutribalance.controllers;
 
-import com.example.nutribalance.Entities.FoodCalorie;
-import com.example.nutribalance.Entities.Report;
-import com.example.nutribalance.Entities.User;
-import com.example.nutribalance.Entities.Weight;
-import com.example.nutribalance.Services.Iservice;
+import com.example.nutribalance.entities.FoodCalorie;
+import com.example.nutribalance.entities.Report;
+import com.example.nutribalance.entities.User;
+import com.example.nutribalance.entities.Weight;
+import com.example.nutribalance.services.IService;
 import com.example.nutribalance.dto.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -14,13 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
-
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    Iservice service;
+    IService service;
 
     @PostMapping("/save")
     public User saveUser(@RequestBody User user) {
@@ -29,7 +27,7 @@ public class UserController {
 
     @GetMapping("/usersignin/{email}/{password}")
     public User signIn(@PathVariable String email, @PathVariable String password) {
-        return service.usersignin(email, password);
+        return service.userSignIn(email, password);
     }
     @GetMapping("/getUser")
     public User getUser(@Param("id") Long id) {
@@ -37,7 +35,7 @@ public class UserController {
     }
     @GetMapping("/subscribe")
     public User subscribe(@Param("planName") String planName, @Param("user_id") Long user_id) {
-        return service.subscribe_to_plan(planName, user_id);
+        return service.subscribeToPlan(planName, user_id);
     }
 
     @PutMapping("/updateUser")
@@ -63,16 +61,16 @@ public class UserController {
     }
 
     @PostMapping("/addweight/{id}")
-    public User AddWeight(@PathVariable Long id, @RequestParam("weight") Double weight, @RequestBody Date date){
-        return service.AddWeight(id, weight, date);
+    public User addWeight(@PathVariable Long id, @RequestParam("weight") Double weight, @RequestBody Date date){
+        return service.addWeight(id, weight, date);
     }
     @GetMapping("/getweights/{id}")
-    public List<Weight> GetWeights(@PathVariable Long id){
-        return service.GetWeights(id);
+    public List<Weight> getWeights(@PathVariable Long id){
+        return service.getWeights(id);
     }
     @DeleteMapping("/deletesubscription/{id}")
     public User deleteSubscription(@PathVariable Long id){
-        return service.deletesubscription(id);
+        return service.deleteSubscription(id);
     }
 
     @PostMapping("/report/{id}")

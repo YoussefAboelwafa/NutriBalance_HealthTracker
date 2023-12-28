@@ -1,8 +1,7 @@
-package com.example.nutribalance.Controllers;
+package com.example.nutribalance.controllers;
 
 
-import com.example.nutribalance.Entities.Notification;
-import com.example.nutribalance.Services.Iservice;
+import com.example.nutribalance.services.IService;
 import com.example.nutribalance.dto.ApiResponse;
 import com.example.nutribalance.dto.NotificationDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import java.util.List;
 @RequestMapping("/notification")
 public class NotificationController {
     @Autowired
-    private Iservice iservice;
+    private IService iservice;
 
     @GetMapping("/getNotifications")
     public List<NotificationDto> getNotifications(@RequestParam("id") Long id, @RequestParam("role") String role){

@@ -1,4 +1,4 @@
-package com.example.nutribalance.Mails;
+package com.example.nutribalance.mails;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

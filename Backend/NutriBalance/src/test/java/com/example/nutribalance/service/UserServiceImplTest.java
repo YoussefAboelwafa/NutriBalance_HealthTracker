@@ -7,17 +7,18 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.example.nutribalance.Entities.Coach;
-import com.example.nutribalance.Entities.Plan;
-import com.example.nutribalance.Entities.User;
-import com.example.nutribalance.Repositries.CoachRepositry;
-import com.example.nutribalance.Repositries.UserRepositry;
+import com.example.nutribalance.entities.Coach;
+import com.example.nutribalance.entities.Plan;
+import com.example.nutribalance.entities.User;
+import com.example.nutribalance.repositories.CoachRepository;
+import com.example.nutribalance.repositories.UserRepository;
 import com.example.nutribalance.dto.SignUpRequest;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.example.nutribalance.security.securityService.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -31,13 +32,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 class UserServiceImplTest {
     @MockBean
-    private CoachRepositry coachRepositry;
+    private CoachRepository coachRepository;
 
     @MockBean
     private PasswordEncoder passwordEncoder;
 
     @MockBean
-    private UserRepositry userRepositry;
+    private UserRepository userRepository;
 
     @Autowired
     private UserServiceImpl userServiceImpl;
@@ -105,13 +106,13 @@ class UserServiceImplTest {
         user.setUser_id(1L);
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
-        when(userRepositry.save(Mockito.<User>any())).thenReturn(user);
-        doNothing().when(userRepositry).flush();
+        when(userRepository.save(Mockito.<User>any())).thenReturn(user);
+        doNothing().when(userRepository).flush();
         when(passwordEncoder.encode(Mockito.<CharSequence>any())).thenReturn("secret");
         User actualRegisterNewUserResult = userServiceImpl.registerNewUser(new SignUpRequest("Name", "jane.doe@example.org",
                 "iloveyou", "6625550144", "https://example.org/example", "Provider User ID", "Role"));
-        verify(userRepositry).flush();
-        verify(userRepositry).save(Mockito.<User>any());
+        verify(userRepository).flush();
+        verify(userRepository).save(Mockito.<User>any());
         verify(passwordEncoder).encode(Mockito.<CharSequence>any());
         assertSame(user, actualRegisterNewUserResult);
     }
@@ -191,9 +192,9 @@ class UserServiceImplTest {
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         Optional<User> ofResult = Optional.of(user);
-        when(userRepositry.findByEmail(Mockito.<String>any())).thenReturn(ofResult);
+        when(userRepository.findByEmail(Mockito.<String>any())).thenReturn(ofResult);
         User actualFindUserByEmailResult = userServiceImpl.findUserByEmail("jane.doe@example.org");
-        verify(userRepositry).findByEmail(Mockito.<String>any());
+        verify(userRepository).findByEmail(Mockito.<String>any());
         assertSame(user, actualFindUserByEmailResult);
     }
 
@@ -262,9 +263,9 @@ class UserServiceImplTest {
         user.setUsername("janedoe");
         user.setWeights(new ArrayList<>());
         Optional<User> ofResult = Optional.of(user);
-        when(userRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
+        when(userRepository.findById(Mockito.<Long>any())).thenReturn(ofResult);
         Optional<User> actualFindUserByIdResult = userServiceImpl.findUserById(1L);
-        verify(userRepositry).findById(Mockito.<Long>any());
+        verify(userRepository).findById(Mockito.<Long>any());
         assertTrue(actualFindUserByIdResult.isPresent());
         assertSame(ofResult, actualFindUserByIdResult);
     }

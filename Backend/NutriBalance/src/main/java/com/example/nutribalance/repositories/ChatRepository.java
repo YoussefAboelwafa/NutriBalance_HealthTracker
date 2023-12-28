@@ -1,7 +1,7 @@
-package com.example.nutribalance.Repositries;
+package com.example.nutribalance.repositories;
 
-import com.example.nutribalance.Entities.Chat;
-import com.example.nutribalance.Entities.ChatID;
+import com.example.nutribalance.entities.Chat;
+import com.example.nutribalance.entities.ChatID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

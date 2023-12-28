@@ -1,4 +1,4 @@
-package com.example.nutribalance.Mails;
+package com.example.nutribalance.mails;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

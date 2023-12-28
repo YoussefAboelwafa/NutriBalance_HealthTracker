@@ -1,18 +1,15 @@
 package com.example.nutribalance;
 
-import com.example.nutribalance.Controllers.UserController;
-import com.example.nutribalance.Entities.*;
-import com.example.nutribalance.Repositries.*;
-import com.example.nutribalance.Services.Iservice;
+import com.example.nutribalance.controllers.UserController;
+import com.example.nutribalance.entities.*;
+import com.example.nutribalance.repositories.*;
+import com.example.nutribalance.services.IService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
@@ -30,21 +27,21 @@ import static org.mockito.Mockito.verify;
 @SpringBootTest
 class NutriBalanceApplicationTests {
     @Autowired
-    private Iservice service;
+    private IService service;
     @MockBean
-    private CoachRepositry coachRepositry;
+    private CoachRepository coachRepository;
     @MockBean
-    private UserRepositry userRepositry;
+    private UserRepository userRepository;
     @MockBean
     private UserController userController;
     @MockBean
-    private ReportRepositry reportRepositry;
+    private ReportRepository reportRepository;
 
     @MockBean
-    private WeightRepositry weightRepositry;
+    private WeightRepository weightRepository;
 
     @MockBean
-    private PlanRepositry planRepositry;
+    private PlanRepository planRepository;
 
     @MockBean
     private ChatRepository chatRepository;
@@ -58,12 +55,12 @@ class NutriBalanceApplicationTests {
         coach.setContact_number("01029979868");
         coach.setIsapproved(0);
         //case1:  email  is not found in the database
-        when(coachRepositry.findByEmail(coach.getEmail())).thenReturn(Optional.empty());
-        when(coachRepositry.save(coach)).thenReturn(coach);
-        assertEquals(coach, service.savecoach(coach));
+        when(coachRepository.findByEmail(coach.getEmail())).thenReturn(Optional.empty());
+        when(coachRepository.save(coach)).thenReturn(coach);
+        assertEquals(coach, service.saveCoach(coach));
         //case2: email is found in the database
-        when(coachRepositry.findByEmail(coach.getEmail())).thenReturn(Optional.of(coach));
-        assertNull(service.savecoach(coach));
+        when(coachRepository.findByEmail(coach.getEmail())).thenReturn(Optional.of(coach));
+        assertNull(service.saveCoach(coach));
 
     }
 
@@ -77,11 +74,11 @@ class NutriBalanceApplicationTests {
         user.setPassword("12345678");
         user.setContact_number("01029979868");
         //case1:  email   is not found in the database
-        when(userRepositry.findByEmail(user.getEmail())).thenReturn(Optional.empty());
-        when(userRepositry.save(user)).thenReturn(user);
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
+        when(userRepository.save(user)).thenReturn(user);
         assertEquals(user, service.saveuser(user));
         //case2: email is found in the database
-        when(userRepositry.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
         assertNull(service.saveuser(user));
 
 
@@ -100,13 +97,13 @@ class NutriBalanceApplicationTests {
 
         service.saveuser(user);
 
-        when(userRepositry.findByEmail("tvscx@gmail.com")).thenReturn(Optional.empty());
-        assertNull(service.usersignin("tvscx@gmail.com", "123456"));
+        when(userRepository.findByEmail("tvscx@gmail.com")).thenReturn(Optional.empty());
+        assertNull(service.userSignIn("tvscx@gmail.com", "123456"));
 
 
 
-        when(userRepositry.findByEmail("user1@gmail.com")).thenReturn(Optional.of(user));
-        assertNull(service.usersignin("user1@gmail.com", "111111"));
+        when(userRepository.findByEmail("user1@gmail.com")).thenReturn(Optional.of(user));
+        assertNull(service.userSignIn("user1@gmail.com", "111111"));
 
     }
     @Test
@@ -157,10 +154,10 @@ class NutriBalanceApplicationTests {
         coach2.setDescription("coach2 description");
         coach2.setContact_number("01029979868");
         coach2.setIsapproved(0);
-        when(coachRepositry.findByisapproved(0)).thenReturn(null);
-        assertNull(service.get_waiting_coaches());
-        when(coachRepositry.findByisapproved(0)).thenReturn(List.of(coach1, coach2));
-        assertEquals(List.of(coach1, coach2), service.get_waiting_coaches());
+        when(coachRepository.findByisapproved(0)).thenReturn(null);
+        assertNull(service.getWaitingCoaches());
+        when(coachRepository.findByisapproved(0)).thenReturn(List.of(coach1, coach2));
+        assertEquals(List.of(coach1, coach2), service.getWaitingCoaches());
     }
 
 @Test
@@ -174,17 +171,17 @@ class NutriBalanceApplicationTests {
     report.setCoach(coach);
     report.setAuthor("user");
     report.setMessage("message");
-    when(userRepositry.findById(1234L)).thenReturn(Optional.of(user));
-    when(coachRepositry.findById(4567L)).thenReturn(Optional.of(coach));
-    when(reportRepositry.save(Mockito.any())).thenReturn(report);
+    when(userRepository.findById(1234L)).thenReturn(Optional.of(user));
+    when(coachRepository.findById(4567L)).thenReturn(Optional.of(coach));
+    when(reportRepository.save(Mockito.any())).thenReturn(report);
     assertEquals(service.addReport(1234L,4567L,"message","user"),report);
 }
 @Test
     public void testgetreports(){
         List<Report> reports=new ArrayList<>();
-        when(reportRepositry.findAll()).thenReturn(null);
+        when(reportRepository.findAll()).thenReturn(null);
         assertNull(service.getReports());
-        when(reportRepositry.findAll()).thenReturn(reports);
+        when(reportRepository.findAll()).thenReturn(reports);
         assertEquals(service.getReports(),reports);
 }
 @Test public void deletereports(){
@@ -201,7 +198,7 @@ class NutriBalanceApplicationTests {
     report.setMessage("message");
     report.setAuthor("coach");
     service.deleteReport(1234L,4567L);
-    verify(reportRepositry).deleteById(reportId);
+    verify(reportRepository).deleteById(reportId);
 }
 @Test
     public void testuserdelete(){
@@ -227,17 +224,17 @@ class NutriBalanceApplicationTests {
         chat.setLocalDateTime(localDateTime);
 
 
-        when(reportRepositry.findAll()).thenReturn(List.of(report));
-        when(weightRepositry.findAll()).thenReturn(List.of(weight));
+        when(reportRepository.findAll()).thenReturn(List.of(report));
+        when(weightRepository.findAll()).thenReturn(List.of(weight));
 
         when(chatRepository.findAll()).thenReturn(List.of(chat));
 
         service.deleteUser(1234L);
 
-        verify(reportRepositry).delete(report);
-        verify(weightRepositry).delete(weight);
-        verify(chatRepository).delete(chat);
-        verify(userRepositry).deleteById(1234L);
+        verify(reportRepository).deleteAll(Mockito.anyList());
+        verify(weightRepository).deleteAll(Mockito.anyList());
+        verify(chatRepository).deleteAll(Mockito.anyList());
+        verify(userRepository).deleteById(1234L);
 
 }
 @Test
@@ -260,17 +257,17 @@ class NutriBalanceApplicationTests {
     plan.setCoach(coach);
     plan.setPlanName("planName");
 
-    when(planRepositry.findAll()).thenReturn(List.of(plan));
-    when(reportRepositry.findAll()).thenReturn(List.of(report));
+    when(planRepository.findAll()).thenReturn(List.of(plan));
+    when(reportRepository.findAll()).thenReturn(List.of(report));
     when(chatRepository.findAll()).thenReturn(List.of(chat));
 
 
     service.deleteCoach(4567L);
 
-    verify(planRepositry).delete(plan);
-    verify(reportRepositry).delete(report);
-    verify(chatRepository).delete(chat);
-    verify(coachRepositry).deleteById(4567L);
+    verify(planRepository).deleteAll(Mockito.anyList());
+    verify(reportRepository).deleteAll(Mockito.anyList());
+    verify(chatRepository).deleteAll(Mockito.anyList());
+    verify(coachRepository).deleteById(4567L);
 }
 
 

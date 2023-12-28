@@ -1,8 +1,6 @@
-package com.example.nutribalance.Mails;
+package com.example.nutribalance.mails;
 
-// Importing required classes
 
-// Interface
 public interface EmailService {
     String sendSimpleMail(EmailDetails details);
     String sendMemeMail(EmailDetails details);

@@ -1,7 +1,7 @@
-package com.example.nutribalance.service;
+package com.example.nutribalance.security.securityService;
 
 import com.example.nutribalance.dto.LocalUser;
-import com.example.nutribalance.Entities.User;
+import com.example.nutribalance.entities.User;
 import com.example.nutribalance.util.GeneralUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Set;
 
 @Service("localUserDetailService")

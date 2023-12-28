@@ -1,4 +1,4 @@
-package com.example.nutribalance.Entities;
+package com.example.nutribalance.entities;
 
 public enum NotificationType {
     NEW_PLAN,

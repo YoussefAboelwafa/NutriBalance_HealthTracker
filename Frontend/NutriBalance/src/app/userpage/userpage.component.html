@@ -31,7 +31,6 @@
     </button>
     <mat-menu #notificationMenu="matMenu" style="width: 10000vh;">
       <div *ngIf="notifications.length">
-
         <a mat-menu-item *ngFor="let notification of notifications; let i = index" class="mat-menu-item">
           <a [routerLink]="notification.route" (click)="clearNotification(i)">
             <span class="notification-message">{{ notification.message }}</span>

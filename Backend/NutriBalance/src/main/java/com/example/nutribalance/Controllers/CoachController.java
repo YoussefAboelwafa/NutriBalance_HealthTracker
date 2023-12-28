@@ -1,15 +1,11 @@
-package com.example.nutribalance.Controllers;
+package com.example.nutribalance.controllers;
 
-import com.example.nutribalance.Entities.Coach;
-import com.example.nutribalance.Entities.Notification;
-import com.example.nutribalance.Entities.Plan;
-import com.example.nutribalance.Entities.User;
-import com.example.nutribalance.Mails.EmailDetails;
-import com.example.nutribalance.Mails.EmailService;
-import com.example.nutribalance.Services.Iservice;
 import com.example.nutribalance.dto.ApiResponse;
-import com.example.nutribalance.dto.CoachDto;
 import com.example.nutribalance.dto.PlanDto;
+import com.example.nutribalance.entities.Coach;
+import com.example.nutribalance.entities.Plan;
+import com.example.nutribalance.entities.User;
+import com.example.nutribalance.services.IService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,31 +15,25 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/coach")
 public class CoachController {
     @Autowired
-    private Iservice iservice;
-    @Autowired
-    private EmailService emailService;
+    private IService iservice;
 
     @PostMapping("/save")
-    public ResponseEntity<?> savecoach(@RequestParam("file") MultipartFile file, @RequestParam("coach") String coachJson) throws IOException {
+    public ResponseEntity<?> saveCoach(@RequestParam("file") MultipartFile file, @RequestParam("coach") String coachJson) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         Coach coach = objectMapper.readValue(coachJson, Coach.class);
         coach.setCv(file.getBytes());
         coach.setIsapproved(0);
         coach.setEnabled(false);
-
-
         return ResponseEntity.ok().body(iservice.registerCoach(coach));
     }
 
     @GetMapping("/get_waiting_coaches")
-    public List<Coach> get_waiting_coaches() {
-        return iservice.get_waiting_coaches();
+    public List<Coach> getWaitingCoaches() {
+        return iservice.getWaitingCoaches();
     }
 
     @DeleteMapping("/delete/{id}")
@@ -57,18 +47,18 @@ public class CoachController {
     }
 
     @GetMapping("checksignin/{email}/{password}")
-    public Coach coachsignin(@PathVariable String email, @PathVariable String password) {
-        return iservice.coachsignin(email, password);
+    public Coach coachSignIn(@PathVariable String email, @PathVariable String password) {
+        return iservice.coachSignIn(email, password);
     }
 
     @GetMapping("/get_subscribed_users/{coach_id}")
-    public List<User> get_subscribed_users(@PathVariable Long coach_id) {
-        return iservice.get_subscribed_users(coach_id);
+    public List<User> getSubscribedUsers(@PathVariable Long coach_id) {
+        return iservice.getSubscribedUsers(coach_id);
     }
 
     @GetMapping("/update_comment/{comment}/{user_id}")
-    public User update_comment(@PathVariable String comment, @PathVariable Long user_id) {
-        return iservice.update_comment(comment, user_id);
+    public User updateComment(@PathVariable String comment, @PathVariable Long user_id) {
+        return iservice.updateComment(comment, user_id);
     }
 
     @PostMapping("/addImageToCoach/{Email}")
@@ -77,7 +67,7 @@ public class CoachController {
     }
 
     @PutMapping("/updateCoach")
-    public Coach updateCaoch(@RequestBody Coach coach) {
+    public Coach updateCoach(@RequestBody Coach coach) {
         return iservice.updateCoach(coach);
     }
 

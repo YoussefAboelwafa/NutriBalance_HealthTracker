@@ -1,6 +1,6 @@
-package com.example.nutribalance.Repositries;
+package com.example.nutribalance.repositories;
 
-import com.example.nutribalance.Entities.ResetPassword;
+import com.example.nutribalance.entities.ResetPassword;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ResetPasswordRepository extends JpaRepository<ResetPassword, Long>{

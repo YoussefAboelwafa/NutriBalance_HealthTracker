@@ -1,13 +1,13 @@
-package com.example.nutribalance.Controllers;
+package com.example.nutribalance.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.example.nutribalance.Entities.ResetPassword;
-import com.example.nutribalance.Entities.User;
-import com.example.nutribalance.Services.Iservice;
+import com.example.nutribalance.entities.ResetPassword;
+import com.example.nutribalance.entities.User;
+import com.example.nutribalance.services.IService;
 import com.example.nutribalance.dto.ChangePasswordDto;
 import com.example.nutribalance.dto.LocalUser;
 import com.example.nutribalance.dto.LoginRequest;
@@ -43,7 +43,7 @@ class AuthenticationTest {
     private AuthenticationManager authenticationManager;
 
     @MockBean
-    private Iservice iservice;
+    private IService iservice;
 
     /**
      * Method under test: {@link Authentication#checkOtp(String, String)}
@@ -55,7 +55,7 @@ class AuthenticationTest {
         resetPassword.setId(1L);
         resetPassword.setToken("ABC123");
         resetPassword.setUsername("janedoe");
-        when(iservice.get_reset_password(Mockito.<String>any())).thenReturn(resetPassword);
+        when(iservice.getResetPassword(Mockito.<String>any())).thenReturn(resetPassword);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/checkOtp")
                 .param("email", "foo")
                 .param("otp", "foo");
@@ -66,52 +66,25 @@ class AuthenticationTest {
     }
 
     /**
-     * Method under test: {@link Authentication#get_User(OidcUser)}
+     * Method under test: {@link Authentication#getUser(OidcUser)}
      */
     @Test
     void testGet_User() {
-        //   Diffblue Cover was unable to write a Spring test,
-        //   so wrote a non-Spring test instead.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   jakarta.servlet.ServletException: Request processing failed: java.lang.IllegalStateException: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.oidc.user.OidcUser
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
-        //   java.lang.IllegalStateException: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.oidc.user.OidcUser
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
-        //   See https://diff.blue/R013 to resolve this issue.
-
         Authentication authentication = new Authentication();
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();
         LocalUser user = new LocalUser("User ID", "iloveyou", true, true, true, true, authorities, new User());
-
-        assertSame(user, authentication.get_User(user));
+        assertSame(user, authentication.getUser(user));
     }
 
     /**
-     * Method under test: {@link Authentication#get_User(OidcUser)}
+     * Method under test: {@link Authentication#getUser(OidcUser)}
      */
     @Test
     void testGet_User2() {
-        //   Diffblue Cover was unable to write a Spring test,
-        //   so wrote a non-Spring test instead.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   jakarta.servlet.ServletException: Request processing failed: java.lang.IllegalStateException: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.oidc.user.OidcUser
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
-        //   java.lang.IllegalStateException: No primary or single unique constructor found for interface org.springframework.security.oauth2.core.oidc.user.OidcUser
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564)
-        //       at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
-        //   See https://diff.blue/R013 to resolve this issue.
-
         Authentication authentication = new Authentication();
         LocalUser user = new LocalUser("User ID", "iloveyou", true, true, true, true, new ArrayList<>(), mock(User.class));
 
-        assertSame(user, authentication.get_User(user));
+        assertSame(user, authentication.getUser(user));
     }
 
     /**
@@ -145,7 +118,7 @@ class AuthenticationTest {
         resetPassword.setId(1L);
         resetPassword.setToken("foo");
         resetPassword.setUsername("janedoe");
-        when(iservice.get_reset_password(Mockito.<String>any())).thenReturn(resetPassword);
+        when(iservice.getResetPassword(Mockito.<String>any())).thenReturn(resetPassword);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/checkOtp")
                 .param("email", "foo")
                 .param("otp", "foo");
@@ -160,7 +133,7 @@ class AuthenticationTest {
      */
     @Test
     void testForgetPassword() throws Exception {
-        doNothing().when(iservice).create_reset_password(Mockito.<ResetPassword>any());
+        doNothing().when(iservice).createResetPassword(Mockito.<ResetPassword>any());
         doNothing().when(iservice).sendForgetPasswordEmail(Mockito.<ResetPassword>any());
         when(iservice.findByEmailRole(Mockito.<String>any(), Mockito.<String>any())).thenReturn("jane.doe@example.org");
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/forgetPassword")
@@ -177,7 +150,7 @@ class AuthenticationTest {
      */
     @Test
     void testForgetPassword2() throws Exception {
-        doNothing().when(iservice).create_reset_password(Mockito.<ResetPassword>any());
+        doNothing().when(iservice).createResetPassword(Mockito.<ResetPassword>any());
         doNothing().when(iservice).sendForgetPasswordEmail(Mockito.<ResetPassword>any());
         when(iservice.findByEmailRole(Mockito.<String>any(), Mockito.<String>any())).thenReturn(null);
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/forgetPassword")

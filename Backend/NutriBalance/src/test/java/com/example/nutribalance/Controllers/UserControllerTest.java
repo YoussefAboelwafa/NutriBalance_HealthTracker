@@ -1,11 +1,11 @@
-package com.example.nutribalance.Controllers;
+package com.example.nutribalance.controllers;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.example.nutribalance.Entities.User;
-import com.example.nutribalance.Services.Iservice;
+import com.example.nutribalance.entities.User;
+import com.example.nutribalance.services.IService;
 
 import java.io.DataInputStream;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 @ExtendWith(SpringExtension.class)
 class UserControllerTest {
     @MockBean
-    private Iservice iservice;
+    private IService iservice;
 
     @Autowired
     private UserController userController;
