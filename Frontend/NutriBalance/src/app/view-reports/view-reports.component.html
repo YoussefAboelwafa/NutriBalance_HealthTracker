@@ -10,8 +10,15 @@
       </h5>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item"><strong>User: </strong> {{ report.user.username }}</li>
-      <li class="list-group-item"><strong>Coach: </strong> {{ report.coach.username }}</li>
+      <li class="list-group-item"><strong>User: </strong> {{ report.user.username }}
+        <img [src]="convertToImage(report.user.image)" alt="Photo" class="rounded-circle-container" />
+        <div class="space"></div>
+    <!----  </li>
+      <li class="list-group-item"><strong>Coach: </strong> {{ report.coach.username }} -->
+        
+        <strong>Coach: </strong> {{ report.coach.username }}
+        <img [src]="convertToImage(report.coach.image)" alt="Photo" class="rounded-circle-container" />
+      </li>
         
     </ul>
     <div class="card-body">
