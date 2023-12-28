@@ -19,27 +19,37 @@
         <h2>Features</h2>
         <ul>
           <li>
-            <strong>Guideline Daily Amount (GDA) Calculator:</strong> Understand
+            <strong>Guideline Daily Amount (GDA) Calculator:</strong> <br>Understand
             your daily nutritional needs based on your age, gender, weight, and
             activity level.
           </li>
           <li>
-            <strong>Diet Plans:</strong> Choose from a variety of diet plans
+            <strong>Diet Plans:</strong> <br>Choose from a variety of diet plans
             created by nutrition experts. Whether you're vegan, gluten-free, or
             looking to build muscle, we have a plan for you.
           </li>
           <li>
-            <strong>Weight Tracker:</strong> Keep track of your weight progress
+            <strong>Weight Tracker:</strong> <br>Keep track of your weight progress
             over time. Our intuitive graphs make it easy to see your progress
             and stay motivated.
           </li>
           <li>
-            <strong>Personalized Experience:</strong> Get recommendations
+            <strong>Personalized Experience:</strong> <br>Get recommendations
             tailored to your unique health needs and goals. We help you make
             informed decisions about your health.
           </li>
         </ul>
       </div>
+      
+<h2>Authors:</h2>
+
+<strong> [Youssef Aboelwafa](https://github.com/YoussefAboelwafa)</strong> <br>
+<strong> [Mohamed Wael](https://github.com/mado2002)</strong> <br>
+<strong> [Ahmed Samir](https://github.com/ahmedsamir459)</strong> <br>
+<strong> [Youssef Elmedany](https://github.com/yousefelmedany)</strong> <br>
+<strong> [Ayman Darwish](https://github.com/ayman988)</strong> <br>
+
+<hr>
 
 > ![image](https://github.com/YoussefAboelwafa/NutriBalance_HealthTracker/assets/96186143/65e16054-ca06-4b37-bc2b-09d175bbb15d) <hr>
 > ![image-20231214-004118](https://github.com/YoussefAboelwafa/NutriBalance_HealthTracker/assets/96186143/463690a8-06e9-4f72-9f07-3269be2b7d28) <hr>
