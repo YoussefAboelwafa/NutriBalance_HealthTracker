@@ -17,6 +17,9 @@ export class ViewReportsComponent implements OnInit {
   constructor(private adminservice:AdminService,private sanitizer: DomSanitizer,) { }
 
   convertToImage(string: any) {
+    if(string==undefined){
+      return '../../assets/images/nophoto.png';
+    }
     const binaryString = atob(string);
     const binaryData = new Uint8Array(binaryString.length);
     for (let i = 0; i < binaryString.length; i++) {
