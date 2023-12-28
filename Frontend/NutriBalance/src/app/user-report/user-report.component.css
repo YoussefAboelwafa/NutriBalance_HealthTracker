@@ -1,0 +1,67 @@
+.container {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.card {
+  width: 45%;
+  margin: 20px;
+  border: 4px solid black;
+  border-radius: 20px;
+  background-color: rgb(244, 255, 244);
+}
+h5 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+button {
+  margin: 10px; 
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px;
+  cursor: pointer;
+  transition: 0.4s;
+  
+}
+button:hover {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+}
+.list-group-item {
+  font-size: 24px;
+  background-color: rgb(244, 255, 244);
+}
+.card-body p {
+  font-size: 20px;
+  
+}
+.card-content{
+  height: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  
+}
+textarea{
+  width: 70%;
+  margin-bottom: 10px;
+  height: 130px;
+  word-wrap: break-word;
+  display: inline-block;
+  font-size: large;
+  font-family:'Times New Roman', Times, serif;
+  padding: 2%;
+ 
+}
+
+
+@media screen and (max-width: 768px) {
+  .card {
+    width: 80%;
+  }
+    
+}

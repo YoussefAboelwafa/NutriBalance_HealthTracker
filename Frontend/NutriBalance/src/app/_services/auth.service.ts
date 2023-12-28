@@ -51,5 +51,10 @@ export class AuthService {
       {params}
     );
   }
-
+  updatePassword(email: any, role: string, currentPassword: any, newPassword: any):Observable<any> {
+    return this.http.post<any>(baseUrl+"/changePassword",{email:email,role:role,oldPassword:currentPassword,newPassword:newPassword})
+  }
+  adminLogin(email:string,password:string):Observable<any>{
+    return this.http.post<any>(baseUrl+"/adminLogin",{email:email,password:password})
+  }
 }

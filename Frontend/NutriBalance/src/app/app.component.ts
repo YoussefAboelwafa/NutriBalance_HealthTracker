@@ -12,10 +12,10 @@ export class AppComponent {
 
   constructor(private router: Router) {
     const previousUrl = localStorage.getItem('previousUrl');
+
     if (previousUrl) {
       router.navigateByUrl(previousUrl);
       localStorage.removeItem('previousUrl');
     }
-    
   }
 }

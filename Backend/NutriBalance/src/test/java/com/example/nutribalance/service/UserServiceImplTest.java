@@ -15,29 +15,21 @@ import com.example.nutribalance.Repositries.UserRepositry;
 import com.example.nutribalance.dto.SignUpRequest;
 
 import java.io.UnsupportedEncodingException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.core.oidc.OidcIdToken;
-import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {UserServiceImpl.class})
 @ExtendWith(SpringExtension.class)
-class UserServiceImplDiffblueTest {
+class UserServiceImplTest {
     @MockBean
     private CoachRepositry coachRepositry;
 

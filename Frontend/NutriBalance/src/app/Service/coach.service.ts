@@ -7,6 +7,7 @@ const baseUrl = 'http://localhost:8080/coach';
   providedIn: 'root'
 })
 export class CoachService {
+  
  
   
  
@@ -50,6 +51,15 @@ export class CoachService {
   }
   deletePlan(id: any) :Observable<any> {
     return this.http.delete<any>(`${baseUrl}/deletePlan/${id}`);
+  }
+  getNotification(id:any):Observable<any> {
+    return this.http.get<any>(`http://localhost:8080/notification/getNotifications`,{params:{id:id,role:"coach"}})
+  }
+  deleteNotification(id: any) :Observable<any> {
+    return this.http.delete<any>(`http://localhost:8080/notification/deleteNotification`,{params:{notification_id:id}});
+  }
+  getCoaches():Observable<any>{
+    return this.http.get<any>(`${baseUrl}/getcoaches`);
   }
 
 }

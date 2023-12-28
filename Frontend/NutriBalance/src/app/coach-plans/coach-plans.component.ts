@@ -75,8 +75,10 @@ export class CoachPlansComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result == "confirm") {
         this.service.updatePlan(plan).subscribe(data => {
+
           let index = this.plans.findIndex(x => x.planName === data.planName);
           this.plans[index] = data
+          alert("Plan update successfully")
          
         })
       }

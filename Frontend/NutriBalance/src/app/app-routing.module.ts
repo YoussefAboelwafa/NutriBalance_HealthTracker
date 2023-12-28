@@ -13,16 +13,19 @@ import { CreateplanComponent } from './createplan/createplan.component';
 import { ViewSubscriptionsComponent } from './view-subscriptions/view-subscriptions.component';
 import { CoachProfileComponent } from './coach-profile/coach-profile.component';
 import { UserpageComponent } from './userpage/userpage.component';
-
 import { SubscribeComponent } from './subscribe/subscribe.component';
-
 import { CoachPlansComponent } from './coach-plans/coach-plans.component';
 import { VerifiedComponent } from './verified/verified.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { FoodCalorie } from './Objects/FoodCalorie';
 import { FoodCaloriesComponent } from './food-calories/food-calories.component';
 import { ProgressComponent } from './progress/progress.component';
 import { UserPlanComponent } from './user-plan/user-plan.component';
+import { UserChatComponent } from './user-chat/user-chat.component';
+import { UserReportComponent } from './user-report/user-report.component';
+
+import { ViewReportsComponent } from './view-reports/view-reports.component';
+
+import { CoachChatComponent } from './coach-chat/coach-chat.component';
 
 
 export const routes: Routes = [
@@ -30,6 +33,10 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
+  },
+  {
+    path: 'calculator',
+    component: CalculatorComponent,
   },
 
   {
@@ -43,7 +50,7 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-  },  
+  },
   {
     path: 'coach-signup',
     component: CoachSignupComponent,
@@ -60,6 +67,10 @@ export const routes: Routes = [
         path: 'waiting-coaches',
         component: WaitingCoachesComponent,
       },
+      {
+        path:'viewreports',
+        component:ViewReportsComponent,
+      },
     ]
   },
   {
@@ -73,8 +84,7 @@ export const routes: Routes = [
       {
         path: 'showplans',
         component: CoachPlansComponent,
-      }
-      ,
+      },
       {
         path: 'createplan',
         component: CreateplanComponent,
@@ -83,11 +93,15 @@ export const routes: Routes = [
         path: 'view-subscriptions',
         component: ViewSubscriptionsComponent,
       },
+      {
+        path: 'coachchat',
+        component: CoachChatComponent,
+      },
     ],
   },
   {
-    path:'verify/:token',
-    component:VerifiedComponent
+    path: 'verify/:token',
+    component: VerifiedComponent,
   },
 
   {
@@ -99,7 +113,6 @@ export const routes: Routes = [
         component: CalculatorComponent,
       },
       {
-
         path: 'subscribe',
         component: SubscribeComponent,
       },
@@ -108,10 +121,9 @@ export const routes: Routes = [
         component: UserProfileComponent,
       },
       {
-
-      path: 'Progress',
-      component: ProgressComponent,
-    },
+        path: 'Progress',
+        component: ProgressComponent,
+      },
       {
         path: 'foodcalories',
         component: FoodCaloriesComponent,
@@ -120,13 +132,23 @@ export const routes: Routes = [
         path: 'userplan',
         component: UserPlanComponent,
       },
-
+      {
+        path: 'userchat',
+        component: UserChatComponent,
+      },
+      {
+        path: 'userreport',
+        component: UserReportComponent,
+      },
     ],
+    
   },
+
+
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -1,7 +1,7 @@
-<div *ngIf="user.plan!=null" class="subscribed"><h1>You are already subscribed to a plan<br>If you want to unsubscribe go to <a href="userpage/userplan">my plan</a></h1></div>
+<!-- <div *ngIf="user.plan!=null" class="subscribed"><h1>You are already subscribed to a plan<br>If you want to unsubscribe go to <a href="userpage/userplan">my plan</a></h1></div> -->
 
-<div class="input-group" style="display: flex;align-items: center;justify-content: center;height: 100%;" *ngIf="user.plan==null">
-  <div *ngIf="loading_spinner" class="loading-spinner">loading plans <div
+<div class="input-group" style="display: flex;align-items: center;justify-content: center;height: 100%;">
+  <div *ngIf="loading_spinner" class="loading-spinner">Loading Plans, Please wait <div
     class="spinner-border text-dark"
     role="status"
   ></div></div>
@@ -43,21 +43,73 @@
         <strong>Description: </strong><span>{{ plan.coach?.description }}</span>
       </p>
     </div>
+
     <div class="div3">
       <img [src]="images[i]" />
       <button
         class="btn btn-success"
         data-toggle="modal"
-        data-target="#exampleModalCenter"
+        [attr.data-target]="user.plan!=null ? '#exampleModalCenter1' : '#exampleModalCenter2'"
         (click)="updateindex(i)"
       >
         Subscribe NOW!
       </button>
     </div>
   </div>
+
+
+
+
   <div
     class="modal fade"
-    id="exampleModalCenter"
+    id="exampleModalCenter1"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 20px;">
+            You are currently enrolled in a Plan<br><br> Do you Want to Replace it?
+          </h5>
+          <button class="outer_button" (click)="close()">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <div id="buttons" class="d-flex justify-content-between align-items-center w-100">
+            <button type="button" class="btn btn-primary" (click)="subscribe(1)">
+              Yes
+              <div
+                class="spinner-border text-light"
+                role="status"
+                *ngIf="spinner_flag == true"
+              ></div>
+            </button>
+            <button type="button" class="btn btn-primary" (click)="close()">
+              Cancel
+            </button>
+          </div> 
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <div
+    class="modal fade"
+    id="notify1"
     tabindex="-1"
     role="dialog"
     aria-labelledby="exampleModalCenterTitle"
@@ -67,6 +119,37 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">
+            Your Subscription has been updated Successfully !
+          </h5>
+          <button class="outer_button" (click)="close()">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div
+    class="modal fade"
+    id="exampleModalCenter2"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 25px;">
             Are you sure you want to subscribe to this plan?
           </h5>
           <button class="outer_button" (click)="close()">
@@ -81,7 +164,7 @@
           </button>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="subscribe()">
+          <button type="button" class="btn btn-primary" (click)="subscribe(2)">
             Subscribe
             <div
               class="spinner-border text-light"
@@ -96,7 +179,7 @@
 
   <div
     class="modal fade"
-    id="notify"
+    id="notify2"
     tabindex="-1"
     role="dialog"
     aria-labelledby="exampleModalCenterTitle"
@@ -105,8 +188,8 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">
-            subscribed successfully
+          <h5 class="modal-title" id="exampleModalLongTitle" style="font-size: 20px">
+            You have Subscribed Successfully!
           </h5>
           <button class="outer_button" (click)="close()">
             <button
@@ -123,3 +206,5 @@
     </div>
   </div>
 </div>
+
+

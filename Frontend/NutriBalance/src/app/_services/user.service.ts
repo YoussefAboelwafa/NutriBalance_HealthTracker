@@ -16,6 +16,7 @@ const httpOptions = {
 export class UserService {
 
   constructor(private http: HttpClient) { }
+ 
   saveUser(user:User): Observable<any> {
     return this.http.post<any>(`${baseUrl}/save`,user);
   }
@@ -41,6 +42,9 @@ export class UserService {
 
   getCurrentUser(): Observable<any> {
     return this.http.get(AppConstants.API_URL + 'user/me', httpOptions);
+  }
+  getUser(id:number):Observable<any>{
+    return this.http.get<any>(`${baseUrl}/getUser`,{params:{id:id}});
   }
 
   subscribe(planName: string, userId: number): Observable<any> {
@@ -68,6 +72,16 @@ export class UserService {
   }
   deletesubscription(id:any):Observable<any>{
     return this.http.delete<any>(`${baseUrl}/deletesubscription/${id}`);
+  }
+  addReport(user_id:number,coach_id:number,message:any):Observable<any>{
+    return this.http.post<any>(`${baseUrl}/report/${user_id}?coach_id=${coach_id}`,message);
+  }
+
+  getNotification(id:any):Observable<any> {
+    return this.http.get<any>(`http://localhost:8080/notification/getNotifications`,{params:{id:id,role:"user"}})
+  }
+  deleteNotification(id: any) :Observable<any> {
+    return this.http.delete<any>(`http://localhost:8080/notification/deleteNotification`,{params:{notification_id:id}});
   }
 
 }

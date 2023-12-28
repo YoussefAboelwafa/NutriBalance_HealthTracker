@@ -3,13 +3,17 @@ package com.example.nutribalance.Services;
 import com.example.nutribalance.Entities.*;
 import com.example.nutribalance.Mails.EmailService;
 import com.example.nutribalance.Repositries.*;
-import com.example.nutribalance.dto.LoginRequest;
+
+import com.example.nutribalance.dto.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -19,9 +23,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -31,27 +34,29 @@ import static org.mockito.Mockito.*;
 class ServiceTest {
     @MockBean
     private CoachRepositry coachRepositry;
-
     @MockBean
     private EmailService emailService;
-
     @MockBean
     private FoodCalorieRepositry foodCalorieRepositry;
-
     @MockBean
     private PasswordEncoder passwordEncoder;
-
     @MockBean
     private PlanRepositry planRepositry;
-
     @MockBean
     private ResetPasswordRepository resetPasswordRepository;
-
     @Autowired
     private Service service;
-
     @MockBean
     private UserRepositry userRepositry;
+    @MockBean
+    private ChatRepository chatRepository;
+    @MockBean
+    private WeightRepositry weightRepository;
+    @MockBean
+    private NotificationRepository notificationRepository;
+   @MockBean
+private  ReportRepositry reportRepositry;
+
 
     /**
      * Method under test: {@link Service#savecoach(Coach)}
@@ -3159,208 +3164,7 @@ class ServiceTest {
     /**
      * Method under test: {@link Service#subscribe_to_plan(String, Long)}
      */
-    @Test
-    void testSubscribe_to_plan() throws UnsupportedEncodingException {
-        Coach coach = new Coach();
-        coach.setAddress("42 Main St");
-        coach.setCoach_id(1L);
-        coach.setContact_number("42");
-        coach.setCv("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        coach.setDescription("The characteristics of someone or something");
-        coach.setEmail("jane.doe@example.org");
-        coach.setEnabled(true);
-        coach.setImage("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        coach.setIsapproved(1);
-        coach.setNo_users_subscribed(1);
-        coach.setPassword("iloveyou");
-        coach.setPlans(new ArrayList<>());
-        coach.setPrice("Price");
-        coach.setRating(1);
-        coach.setUsername("janedoe");
-        coach.setUsers(new ArrayList<>());
-        coach.setUsers_reports(new ArrayList<>());
-        Optional<Coach> ofResult = Optional.of(coach);
 
-        Coach coach2 = new Coach();
-        coach2.setAddress("42 Main St");
-        coach2.setCoach_id(1L);
-        coach2.setContact_number("42");
-        coach2.setCv("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        coach2.setDescription("The characteristics of someone or something");
-        coach2.setEmail("jane.doe@example.org");
-        coach2.setEnabled(true);
-        coach2.setImage("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        coach2.setIsapproved(1);
-        coach2.setNo_users_subscribed(1);
-        coach2.setPassword("iloveyou");
-        coach2.setPlans(new ArrayList<>());
-        coach2.setPrice("Price");
-        coach2.setRating(1);
-        coach2.setUsername("janedoe");
-        coach2.setUsers(new ArrayList<>());
-        coach2.setUsers_reports(new ArrayList<>());
-        when(coachRepositry.save(Mockito.any())).thenReturn(coach2);
-        when(coachRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult);
-
-        Coach coach3 = new Coach();
-        coach3.setAddress("42 Main St");
-        coach3.setCoach_id(1L);
-        coach3.setContact_number("42");
-        coach3.setCv("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        coach3.setDescription("The characteristics of someone or something");
-        coach3.setEmail("jane.doe@example.org");
-        coach3.setEnabled(true);
-        coach3.setImage("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        coach3.setIsapproved(1);
-        coach3.setNo_users_subscribed(1);
-        coach3.setPassword("iloveyou");
-        coach3.setPlans(new ArrayList<>());
-        coach3.setPrice("Price");
-        coach3.setRating(1);
-        coach3.setUsername("janedoe");
-        coach3.setUsers(new ArrayList<>());
-        coach3.setUsers_reports(new ArrayList<>());
-
-        Plan plan = new Plan();
-        plan.setCoach(coach3);
-        plan.setDescription("The characteristics of someone or something");
-        plan.setGoal("Goal");
-        plan.setPlanName("Plan Name");
-        plan.setUsers(new ArrayList<>());
-        when(planRepositry.findByPlanName(Mockito.any())).thenReturn(plan);
-
-        Coach coach4 = new Coach();
-        coach4.setAddress("42 Main St");
-        coach4.setCoach_id(1L);
-        coach4.setContact_number("42");
-        coach4.setCv("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        coach4.setDescription("The characteristics of someone or something");
-        coach4.setEmail("jane.doe@example.org");
-        coach4.setEnabled(true);
-        coach4.setImage("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        coach4.setIsapproved(1);
-        coach4.setNo_users_subscribed(1);
-        coach4.setPassword("iloveyou");
-        coach4.setPlans(new ArrayList<>());
-        coach4.setPrice("Price");
-        coach4.setRating(1);
-        coach4.setUsername("janedoe");
-        coach4.setUsers(new ArrayList<>());
-        coach4.setUsers_reports(new ArrayList<>());
-
-        Coach coach5 = new Coach();
-        coach5.setAddress("42 Main St");
-        coach5.setCoach_id(1L);
-        coach5.setContact_number("42");
-        coach5.setCv("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        coach5.setDescription("The characteristics of someone or something");
-        coach5.setEmail("jane.doe@example.org");
-        coach5.setEnabled(true);
-        coach5.setImage("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        coach5.setIsapproved(1);
-        coach5.setNo_users_subscribed(1);
-        coach5.setPassword("iloveyou");
-        coach5.setPlans(new ArrayList<>());
-        coach5.setPrice("Price");
-        coach5.setRating(1);
-        coach5.setUsername("janedoe");
-        coach5.setUsers(new ArrayList<>());
-        coach5.setUsers_reports(new ArrayList<>());
-
-        Plan plan2 = new Plan();
-        plan2.setCoach(coach5);
-        plan2.setDescription("The characteristics of someone or something");
-        plan2.setGoal("Goal");
-        plan2.setPlanName("Plan Name");
-        plan2.setUsers(new ArrayList<>());
-
-        User user = new User();
-        user.setCoach(coach4);
-        user.setCoaches_reports(new ArrayList<>());
-        user.setComment("Comment");
-        user.setContact_number("42");
-        user.setEmail("jane.doe@example.org");
-        user.setEnabled(true);
-        user.setImage("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        user.setPassword("iloveyou");
-        user.setPlan(plan2);
-        user.setUser_id(1L);
-        user.setUsername("janedoe");
-        user.setWeights(new ArrayList<>());
-        Optional<User> ofResult2 = Optional.of(user);
-
-        Coach coach6 = new Coach();
-        coach6.setAddress("42 Main St");
-        coach6.setCoach_id(1L);
-        coach6.setContact_number("42");
-        coach6.setCv("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        coach6.setDescription("The characteristics of someone or something");
-        coach6.setEmail("jane.doe@example.org");
-        coach6.setEnabled(true);
-        coach6.setImage("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        coach6.setIsapproved(1);
-        coach6.setNo_users_subscribed(1);
-        coach6.setPassword("iloveyou");
-        coach6.setPlans(new ArrayList<>());
-        coach6.setPrice("Price");
-        coach6.setRating(1);
-        coach6.setUsername("janedoe");
-        coach6.setUsers(new ArrayList<>());
-        coach6.setUsers_reports(new ArrayList<>());
-
-        Coach coach7 = new Coach();
-        coach7.setAddress("42 Main St");
-        coach7.setCoach_id(1L);
-        coach7.setContact_number("42");
-        coach7.setCv("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        coach7.setDescription("The characteristics of someone or something");
-        coach7.setEmail("jane.doe@example.org");
-        coach7.setEnabled(true);
-        coach7.setImage("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        coach7.setIsapproved(1);
-        coach7.setNo_users_subscribed(1);
-        coach7.setPassword("iloveyou");
-        coach7.setPlans(new ArrayList<>());
-        coach7.setPrice("Price");
-        coach7.setRating(1);
-        coach7.setUsername("janedoe");
-        coach7.setUsers(new ArrayList<>());
-        coach7.setUsers_reports(new ArrayList<>());
-
-        Plan plan3 = new Plan();
-        plan3.setCoach(coach7);
-        plan3.setDescription("The characteristics of someone or something");
-        plan3.setGoal("Goal");
-        plan3.setPlanName("Plan Name");
-        plan3.setUsers(new ArrayList<>());
-
-        User user2 = new User();
-        user2.setCoach(coach6);
-        user2.setCoaches_reports(new ArrayList<>());
-        user2.setComment("Comment");
-        user2.setContact_number("42");
-        user2.setEmail("jane.doe@example.org");
-        user2.setEnabled(true);
-        user2.setImage("AXAXAXAX".getBytes(StandardCharsets.UTF_8));
-        user2.setPassword("iloveyou");
-        user2.setPlan(plan3);
-        user2.setUser_id(1L);
-        user2.setUsername("janedoe");
-        user2.setWeights(new ArrayList<>());
-        when(userRepositry.save(Mockito.any())).thenReturn(user2);
-        when(userRepositry.findById(Mockito.<Long>any())).thenReturn(ofResult2);
-        User actualSubscribe_to_planResult = service.subscribe_to_plan("Plan Name", 1L);
-        verify(planRepositry).findByPlanName(Mockito.any());
-        verify(coachRepositry).findById(Mockito.<Long>any());
-        verify(userRepositry).findById(Mockito.<Long>any());
-        verify(coachRepositry).save(Mockito.any());
-        verify(userRepositry).save(Mockito.any());
-        assertSame(user2, actualSubscribe_to_planResult);
-    }
-
-    /**
-     * Method under test: {@link Service#subscribe_to_plan(String, Long)}
-     */
     @Test
     void testSubscribe_to_plan2() throws UnsupportedEncodingException {
         Coach coach = new Coach();
@@ -3500,11 +3304,44 @@ class ServiceTest {
         verify(userRepositry).save(Mockito.any());
     }
 
+
     /**
      * Method under test: {@link Service#get_subscribed_users(Long)}
      */
+
     @Test
-    void testGet_subscribed_users() throws UnsupportedEncodingException {
+    void testDeleteSubscriptionUserNotFound() {
+        Long userId = 1L;
+        when(userRepositry.findById(userId)).thenReturn(Optional.empty());
+        User result = service.deletesubscription(userId);
+        assertNull(result);
+        verify(coachRepositry, never()).save(any());
+        verify(userRepositry, never()).save(any());
+        verify(notificationRepository, never()).save(any());
+    }
+
+
+    @Test
+    void testDeleteSubscriptionUserWithCoach() {
+        Long userId = 1L;
+        User user = new User();
+        user.setUser_id(userId);
+        Coach coach = new Coach();
+        coach.setNo_users_subscribed(3);
+        user.setCoach(coach);
+        when(userRepositry.findById(userId)).thenReturn(Optional.of(user));
+        when(userRepositry.save(any())).thenReturn(user);
+        User result = service.deletesubscription(userId);
+        assertNotNull(result);
+        assertNull(result.getCoach());
+        assertNull(result.getPlan());
+        assertEquals(2, coach.getNo_users_subscribed());
+        verify(coachRepositry, times(1)).save(coach);
+        verify(userRepositry, times(1)).save(user);
+        verify(notificationRepository, times(1)).save(any());
+    }
+    @Test
+    void testGet_subscribed_users()  {
         Coach coach = new Coach();
         coach.setAddress("42 Main St");
         coach.setCoach_id(1L);
@@ -3864,4 +3701,417 @@ class ServiceTest {
         assertThrows(RuntimeException.class, () -> service.getFoodCalorie());
         verify(foodCalorieRepositry).findAll();
     }
+
+
+    @Test
+    void savechat() {
+        User user = new User();
+        user.setUser_id(1L);
+        user.setUsername("username");
+        user.setPassword("password");
+        user.setPlan(new Plan());
+        user.setCoaches_reports(new ArrayList<>());
+        user.setWeights(new ArrayList<>());
+        user.setEnabled(true);
+        user.setEmail("kk@gmail.com");
+        Coach coach = new Coach();
+        coach.setCoach_id(2L);
+        coach.setUsername("username");
+        coach.setPassword("password");
+        coach.setUsers(new ArrayList<>());
+        coach.setUsers_reports(new ArrayList<>());
+        coach.setPlans(new ArrayList<>());
+        coach.setNo_users_subscribed(0);
+        coach.setIsapproved(1);
+        Chat chat = new Chat();
+        chat.setUser(1L);
+        chat.setCoach(2L);
+        chat.setMessage("message");
+        ChatDto chatDto = new ChatDto();
+        chatDto.setUser_id(1L);
+        chatDto.setCoach_id(2L);
+        chatDto.setMessage("message");
+
+        //happy case
+   when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
+   when(coachRepositry.findById(2L)).thenReturn(Optional.of(coach));
+   when(chatRepository.save(chat)).thenReturn(chat);
+    Chat actual = service.savechat(chatDto);
+    chat.setLocalDateTime(actual.getLocalDateTime());
+    assertEquals(chat,actual);
+
+    //user not found
+    when(userRepositry.findById(1L)).thenReturn(Optional.empty());
+    assertNull(service.savechat(chatDto));
+   // coach not found
+    when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
+    when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
+    assertNull(service.savechat(chatDto));
+    // coach and user not found
+    when(userRepositry.findById(1L)).thenReturn(Optional.empty());
+    when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
+    assertNull(service.savechat(chatDto));
+
+    }
+
+    @Test
+    void getUserChats() {
+        User user = new User();
+        user.setUser_id(1L);
+        user.setUsername("username");
+        user.setPassword("password");
+        user.setPlan(new Plan());
+        user.setCoaches_reports(new ArrayList<>());
+        user.setWeights(new ArrayList<>());
+        user.setEnabled(true);
+        user.setEmail("coach@gmail.com");
+        //test the oredering of the chats
+        Chat chat = new Chat();
+        chat.setUser(1L);
+        chat.setCoach(2L);
+        chat.setMessage("message");
+        chat.setLocalDateTime(LocalDateTime.now());
+        Chat chat2 = new Chat();
+        chat2.setUser(1L);
+        chat2.setCoach(2L);
+        chat2.setMessage("message");
+        chat2.setLocalDateTime(LocalDateTime.now());
+        Chat chat3 = new Chat();
+        chat3.setUser(1L);
+        chat3.setCoach(2L);
+        chat3.setMessage("message");
+        chat3.setLocalDateTime(LocalDateTime.now());
+        List<Chat> chats = new ArrayList<>();
+        chats.add(chat);
+        chats.add(chat2);
+        chats.add(chat3);
+        when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
+        when(chatRepository.findByUserOrderByLocalDateTimeAsc(1L)).thenReturn(chats);
+        List<Chat> actual = service.getUserChats(1L);
+        assertEquals(chats,actual);
+        //user not found
+        when(userRepositry.findById(1L)).thenReturn(Optional.empty());
+        assertNull(service.getUserChats(1L));
+
+
+    }
+
+    @Test
+    void getCoachChats() {
+        Coach coach = new Coach();
+        coach.setCoach_id(1L);
+        Chat chat = new Chat();
+        chat.setUser(2L);
+        chat.setCoach(1L);
+        chat.setMessage("message");
+        chat.setLocalDateTime(LocalDateTime.now());
+        Chat chat2 = new Chat();
+        chat2.setUser(2L);
+        chat2.setCoach(1L);
+        chat2.setMessage("message");
+        chat2.setLocalDateTime(LocalDateTime.now());
+        Chat chat3 = new Chat();
+        chat3.setUser(2L);
+        chat3.setCoach(1L);
+        chat3.setMessage("message");
+        chat3.setLocalDateTime(LocalDateTime.now());
+        List<Chat> chats = new ArrayList<>();
+        chats.add(chat);
+        chats.add(chat2);
+        chats.add(chat3);
+        when(coachRepositry.findById(1L)).thenReturn(Optional.of(coach));
+        when(chatRepository.findByCoachOrderByLocalDateTimeAsc(1L)).thenReturn(chats);
+        List<Chat> actual = service.getCoachChats(1L);
+        assertEquals(chats,actual);
+        //coach not found
+        when(coachRepositry.findById(1L)).thenReturn(Optional.empty());
+        assertNull(service.getCoachChats(1L));
+    }
+
+
+    /**
+     * Method under test:  {@link Service#changePassword(String, String, String, String)}
+     */
+    @Test
+    void testChangePasswordForUserSuccess() {
+
+        String email = "user@example.com";
+        String oldPassword = "oldPassword";
+        String newPassword = "newPassword";
+        String role = "user";
+
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(new BCryptPasswordEncoder(10).encode(oldPassword));
+        when(passwordEncoder.matches(oldPassword, user.getPassword())).thenReturn( new BCryptPasswordEncoder(10).matches(oldPassword, user.getPassword()));
+        when(userRepositry.findByEmail(email)).thenReturn(Optional.of(user));
+
+
+        String result = service.changePassword(email, oldPassword, newPassword, role);
+
+
+        assertEquals("success", result);
+        verify(userRepositry, times(1)).findByEmail(email);
+        verify(userRepositry, times(1)).save(any(User.class));
+    }
+    /**
+     * Method under test:  {@link Service#changePassword(String, String, String, String)}
+     */
+    @Test
+    void testChangePasswordForUserNotFound() {
+
+        String email = "nonexistent@example.com";
+        String oldPassword = "oldPassword";
+        String newPassword = "newPassword";
+        String role = "user";
+
+        when(userRepositry.findByEmail(email)).thenReturn(Optional.empty());
+
+        String result = service.changePassword(email, oldPassword, newPassword, role);
+        assertEquals("Email is not valid!", result);
+        verify(userRepositry, times(1)).findByEmail(email);
+        verify(userRepositry, never()).save(any(User.class));
+    }
+
+    /**
+     * Method under test:  {@link Service#changePassword(String, String, String, String)}
+     */
+    @Test
+    void testChangePasswordForUserIncorrectOldPassword() {
+
+        String email = "user@example.com";
+        String oldPassword = "incorrectOldPassword";
+        String newPassword = "newPassword";
+        String role = "user";
+
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(new BCryptPasswordEncoder(10).encode("oldPassword"));
+
+        when(userRepositry.findByEmail(email)).thenReturn(Optional.of(user));
+
+        String result = service.changePassword(email, oldPassword, newPassword, role);
+        assertEquals("Old Password is not valid!", result);
+        verify(userRepositry, times(1)).findByEmail(email);
+        verify(userRepositry, never()).save(any(User.class));
+    }
+    /**
+     * Method under test:  {@link Service#changePassword(String, String, String, String)}
+     */
+
+    @Test
+    void testChangePasswordForCoachSuccess() {
+
+        String email = "coach@example.com";
+        String oldPassword = "oldPassword";
+        String newPassword = "newPassword";
+        String role = "coach";
+
+        Coach coach = new Coach();
+        coach.setEmail(email);
+        coach.setPassword(new BCryptPasswordEncoder(10).encode(oldPassword));
+
+        when(passwordEncoder.matches(oldPassword, coach.getPassword())).thenReturn( new BCryptPasswordEncoder(10).matches(oldPassword, coach.getPassword()));
+        when(coachRepositry.findByEmail(email)).thenReturn(Optional.of(coach));
+
+        String result = service.changePassword(email, oldPassword, newPassword, role);
+
+        assertEquals("success", result);
+        verify(coachRepositry, times(1)).findByEmail(email);
+        verify(coachRepositry, times(1)).save(any(Coach.class));
+    }
+
+    /**
+     * Method under test:  {@link Service#changePassword(String, String, String, String)}
+     */
+    @Test
+    void testChangePasswordForCoachNotFound() {
+
+        String email = "nonexistentcoach@example.com";
+        String oldPassword = "oldPassword";
+        String newPassword = "newPassword";
+        String role = "coach";
+
+        when(coachRepositry.findByEmail(email)).thenReturn(Optional.empty());
+
+        String result = service.changePassword(email, oldPassword, newPassword, role);
+        assertEquals("Email is not valid!", result);
+        verify(coachRepositry, times(1)).findByEmail(email);
+        verify(coachRepositry, never()).save(any(Coach.class));
+    }
+
+    /**
+     * Method under test:  {@link Service#changePassword(String, String, String, String)}
+     */
+    @Test
+    void testChangePasswordInvalidRole() {
+        String email = "user@example.com";
+        String oldPassword = "oldPassword";
+        String newPassword = "newPassword";
+        String role = "invalidRole";
+
+        String result = service.changePassword(email, oldPassword, newPassword, role);
+        assertEquals("Email is not valid!", result);
+        verify(userRepositry, never()).findByEmail(anyString());
+        verify(userRepositry, never()).save(any(User.class));
+        verify(coachRepositry, never()).findByEmail(anyString());
+        verify(coachRepositry, never()).save(any(Coach.class));
+    }
+
+    @Test
+    void getUnseenChats() {
+        User user = new User();
+        user.setUser_id(1L);
+        Coach coach = new Coach();
+        coach.setCoach_id(2L);
+        Chat chat1 = new Chat();
+        chat1.setUser(1L);
+        chat1.setCoach(2L);
+        chat1.setMessage("message");
+        chat1.setLocalDateTime(LocalDateTime.now());
+        chat1.setSeen(1);
+        Chat chat2 = new Chat();
+        chat2.setUser(1L);
+        chat2.setCoach(2L);
+        chat2.setMessage("message");
+        chat2.setLocalDateTime(LocalDateTime.now());
+        chat2.setSeen(1);
+        Chat chat3 = new Chat();
+        chat3.setUser(1L);
+        chat3.setCoach(2L);
+        chat3.setMessage("message");
+        chat3.setLocalDateTime(LocalDateTime.now());
+        chat3.setSeen(1);
+        Chat chat4 = new Chat();
+        chat4.setUser(1L);
+        chat4.setCoach(2L);
+        chat4.setMessage("message");
+        chat4.setLocalDateTime(LocalDateTime.now());
+        chat4.setSeen(0);
+        Chat chat5 = new Chat();
+        chat5.setUser(1L);
+        chat5.setCoach(2L);
+        chat5.setMessage("message");
+        chat5.setLocalDateTime(LocalDateTime.now());
+        chat5.setSeen(0);
+        List<Chat> chats = new ArrayList<>();
+        chats.add(chat1);
+        chats.add(chat2);
+        chats.add(chat3);
+        chats.add(chat4);
+        chats.add(chat5);
+        when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
+        when(coachRepositry.findById(2L)).thenReturn(Optional.of(coach));
+        when(chatRepository.findByUserAndCoachOrderByLocalDateTimeAsc(1L,2L)).thenReturn(chats);
+        int actual = service.getUnseenChats(1L,2L);
+        assertEquals(2,actual);
+        //all seen
+        chat4.setSeen(1);
+        chat5.setSeen(1);
+        List<Chat> chats1 = new ArrayList<>();
+        chats1.add(chat1);
+        chats1.add(chat2);
+        chats1.add(chat3);
+        chats1.add(chat4);
+        chats1.add(chat5);
+        when(chatRepository.findByUserAndCoachOrderByLocalDateTimeAsc(1L,2L)).thenReturn(chats1);
+        actual = service.getUnseenChats(1L,2L);
+        assertEquals(0,actual);
+        // user not found
+        when(userRepositry.findById(1L)).thenReturn(Optional.empty());
+        actual = service.getUnseenChats(1L,2L);
+        assertEquals(-1,actual);
+        // coach not found
+        when(userRepositry.findById(1L)).thenReturn(Optional.of(user));
+        when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
+        actual = service.getUnseenChats(1L,2L);
+        assertEquals(-1,actual);
+        // user and coach not found
+        when(userRepositry.findById(1L)).thenReturn(Optional.empty());
+        when(coachRepositry.findById(2L)).thenReturn(Optional.empty());
+        actual = service.getUnseenChats(1L,2L);
+        assertEquals(-1,actual);
+    }
+
+    @Test
+    void getNotificationsCoachRoleReturnsNotifications() {
+        Long coachId = 1L;
+        List<Notification> expectedNotifications = Collections.singletonList(new Notification());
+        Coach coach = new Coach();
+        coach.setCoach_id(coachId);
+        when(coachRepositry.findById(coachId)).thenReturn(java.util.Optional.of(coach));
+        when(notificationRepository.findByCoach_Coach_id(coachId)).thenReturn(expectedNotifications);
+        List<NotificationDto> result = service.getNotifications(coachId, "coach");
+        assertEquals(expectedNotifications.size(), result.size());
+        verify(coachRepositry, times(1)).findById(coachId);
+        verify(notificationRepository, times(1)).findByCoach_Coach_id(coachId);
+    }
+    @Test
+    void getNotificationsUserRoleReturnsNotifications() {
+        Long userId = 1L;
+        List<Notification> expectedNotifications = Collections.singletonList(new Notification());
+        User user = new User();
+        user.setUser_id(userId);
+        when(userRepositry.findById(userId)).thenReturn(java.util.Optional.of(user));
+        when(notificationRepository.findByUser_User_id(userId)).thenReturn(expectedNotifications);
+        List<NotificationDto> result = service.getNotifications(userId, "user");
+        assertEquals(expectedNotifications.size(), result.size());
+        verify(userRepositry, times(1)).findById(userId);
+        verify(notificationRepository, times(1)).findByUser_User_id(userId);
+    }
+
+    @Test
+    void getNotificationsInvalidRoleThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.getNotifications(1L, "invalid_role");
+        });
+    }
+
+
+
+    @Test
+    void deleteNotificationNotificationExistsDeletesNotification() {
+        Long notificationId = 1L;
+        Notification notification = new Notification();
+        notification.setNotification_id(notificationId);
+        when(notificationRepository.findById(notificationId)).thenReturn(Optional.of(notification));
+        String result = service.deleteNotification(notificationId);
+        assertEquals("Notification deleted", result);
+        verify(notificationRepository, times(1)).deleteById(notificationId);
+    }
+
+    @Test
+    void deleteNotificationNotificationNotFoundReturnsErrorMessage() {
+        Long notificationId = 1L;
+        doThrow(new IllegalArgumentException("Notification not found")).when(notificationRepository)
+                .deleteById(notificationId);
+        String result = service.deleteNotification(notificationId);
+        assertEquals("Notification not found", result);
+    }
+
+    @Test
+    void addNotification_Coach_AddsNotification() {
+        Coach coach = new Coach();
+        String message = "Test message";
+        int type = 1;
+        service.addNotification(message, type, coach);
+        verify(notificationRepository, times(1)).save(any(Notification.class));
+    }
+
+    @Test
+    void addNotificationUserAddsNotification() {
+        User user = new User();
+        String message = "Test message";
+        int type = 1;
+        service.addNotification(message, type, user);
+        verify(notificationRepository, times(1)).save(any(Notification.class));
+    }
+    @Test
+    void addNotificationInvalidObjectTypeThrowsException() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.addNotification("Test message", 1, new Object());
+        });
+    }
+
+
 }

@@ -1,9 +1,10 @@
 package com.example.nutribalance.Services;
 
 import com.example.nutribalance.Entities.*;
+import com.example.nutribalance.dto.ChatDto;
 import com.example.nutribalance.dto.LoginRequest;
+import com.example.nutribalance.dto.NotificationDto;
 import jakarta.mail.MessagingException;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.UnsupportedEncodingException;
@@ -52,6 +53,7 @@ public interface Iservice {
     Coach updateCoach(Coach coach);
 
 
+    String changePassword(String email, String oldPassword, String password, String role);
 
     Coach updateCoachCV(String email, byte[] bytes);
 
@@ -70,4 +72,25 @@ public interface Iservice {
     User AddWeight(Long id, Double weight, Date date);
     List<Weight> GetWeights(Long id);
     User deletesubscription(Long id);
+    List<NotificationDto> getNotifications(Long id, String role);
+    String deleteNotification(Long notificationId);
+    User getUser(Long id);
+
+    Chat savechat(ChatDto chatDto);
+    List<Chat> getUserChats(Long user_id);
+    List<Chat> getCoachChats(Long coach_id);
+    void deleteChatByUser(Long user_id);
+  
+    List<Coach> getCoaches();
+    Report addReport(Long user_id,Long coach_id,String message,String author);
+    List<Report> getReports();
+
+    void deleteUser(Long id);
+    void deleteCoach(Long id);
+
+    void deleteReport(Long user_id,Long coach_id);
+
+    int getUnseenChats(Long user_id, Long coach_id);
+    void setSeen(Long user_id, Long coach_id);
+
 }

@@ -26,7 +26,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {LocalUserDetailService.class})
 @ExtendWith(SpringExtension.class)
-class LocalUserDetailServiceDiffblueTest {
+class LocalUserDetailServiceTest {
     @Autowired
     private LocalUserDetailService localUserDetailService;
 

@@ -21,7 +21,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {EmailServiceImpl.class})
 @ExtendWith(SpringExtension.class)
-class EmailServiceImplDiffblueTest {
+class EmailServiceImplTest {
     @Autowired
     private EmailServiceImpl emailServiceImpl;
 

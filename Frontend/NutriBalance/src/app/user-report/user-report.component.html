@@ -1,0 +1,32 @@
+<div
+  class="container text-center align-items-center justify-content-center"
+ 
+>
+  <div
+    class="card"
+    *ngFor="let coach of coaches; let i = index"
+  >
+    <div class="card-body">
+      <h5 class="card-title">
+        <strong> {{ coach.username }}</strong>
+      </h5>
+      <p class="card-text">{{ coach.email }}</p>
+    </div>
+
+    <div class="card-content">
+      <button class="btn btn-dark" (click)="report(i)" [disabled]="isdisabled(i)">Report
+        <span *ngIf="loading && !isdisabled(i)" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    </button>
+
+      <textarea (click)="writing(i)" type="text" id="box" [(ngModel)]="reports[i]"></textarea>
+    </div>
+    
+  </div>
+</div>
+<div *ngIf="coaches.length == 0 && loaded">
+  <h5
+    style="margin-top: 20rem; text-align: center; font-size: 24px; color: #333"
+  >
+    <strong> There are no coaches yet</strong>
+  </h5>
+</div>

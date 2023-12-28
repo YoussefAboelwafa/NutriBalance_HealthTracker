@@ -227,4 +227,15 @@ button{
   }
   .subscribed a{
     color: black;
+    font-size: 25px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color:darkgoldenrod;
+    text-decoration: none;
+  }
+
+  .subscribed a:hover{
+    cursor: pointer;
+    color:indianred;
+    transition: 0.7s;
+    margin-left: 5px;
   }
