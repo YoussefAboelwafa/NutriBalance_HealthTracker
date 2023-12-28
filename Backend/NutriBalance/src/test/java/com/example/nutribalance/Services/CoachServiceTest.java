@@ -54,6 +54,14 @@ public class CoachServiceTest {
     private PlanRepositry planRepositry;
     @MockBean
     private FoodCalorieRepositry foodCalorieRepositry;
+    @MockBean
+    private ChatRepository chatRepository;
+    @MockBean
+    private NotificationRepository notificationRepository;
+    @MockBean
+    private WeightRepositry weightRepositry;
+    @MockBean
+    private ReportRepositry reportRepositry;
 
     @BeforeEach
     public void init() {

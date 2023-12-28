@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ContextConfiguration(classes = {EmailController.class})
 @ExtendWith(SpringExtension.class)
-class EmailControllerDiffblueTest {
+class EmailControllerTest {
     @Autowired
     private EmailController emailController;
 

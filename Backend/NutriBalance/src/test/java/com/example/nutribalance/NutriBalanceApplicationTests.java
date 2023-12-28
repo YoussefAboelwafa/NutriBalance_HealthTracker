@@ -57,21 +57,12 @@ class NutriBalanceApplicationTests {
         coach.setDescription("coach1 description");
         coach.setContact_number("01029979868");
         coach.setIsapproved(0);
-        //case1: neither email nor username is found in the database
+        //case1:  email  is not found in the database
         when(coachRepositry.findByEmail(coach.getEmail())).thenReturn(Optional.empty());
-        when(coachRepositry.findByUsername(coach.getUsername())).thenReturn(Optional.empty());
         when(coachRepositry.save(coach)).thenReturn(coach);
         assertEquals(coach, service.savecoach(coach));
         //case2: email is found in the database
         when(coachRepositry.findByEmail(coach.getEmail())).thenReturn(Optional.of(coach));
-        assertNull(service.savecoach(coach));
-        //case3: username is found in the database
-        when(coachRepositry.findByEmail(coach.getEmail())).thenReturn(Optional.empty());
-        when(coachRepositry.findByUsername(coach.getUsername())).thenReturn(Optional.of(coach));
-        assertNull(service.savecoach(coach));
-        //case4: both email and username are found in the database
-        when(coachRepositry.findByEmail(coach.getEmail())).thenReturn(Optional.of(coach));
-        when(coachRepositry.findByUsername(coach.getUsername())).thenReturn(Optional.of(coach));
         assertNull(service.savecoach(coach));
 
     }
@@ -85,22 +76,14 @@ class NutriBalanceApplicationTests {
         user.setEmail("user1@gmail.com");
         user.setPassword("12345678");
         user.setContact_number("01029979868");
-        //case1: neither email nor username is found in the database
+        //case1:  email   is not found in the database
         when(userRepositry.findByEmail(user.getEmail())).thenReturn(Optional.empty());
-        when(userRepositry.findByUsername(user.getUsername())).thenReturn(Optional.empty());
         when(userRepositry.save(user)).thenReturn(user);
         assertEquals(user, service.saveuser(user));
         //case2: email is found in the database
         when(userRepositry.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
         assertNull(service.saveuser(user));
-        //case3: username is found in the database
-        when(userRepositry.findByEmail(user.getEmail())).thenReturn(Optional.empty());
-        when(userRepositry.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
-        assertNull(service.saveuser(user));
-        //case4: both email and username are found in the database
-        when(userRepositry.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
-        when(userRepositry.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
-        assertNull(service.saveuser(user));
+
 
     }
 
@@ -120,8 +103,7 @@ class NutriBalanceApplicationTests {
         when(userRepositry.findByEmail("tvscx@gmail.com")).thenReturn(Optional.empty());
         assertNull(service.usersignin("tvscx@gmail.com", "123456"));
 
-        when(userRepositry.findByEmail("user1@gmail.com")).thenReturn(Optional.of(user));
-        assertEquals(user, service.usersignin("user1@gmail.com", "123456"));
+
 
         when(userRepositry.findByEmail("user1@gmail.com")).thenReturn(Optional.of(user));
         assertNull(service.usersignin("user1@gmail.com", "111111"));

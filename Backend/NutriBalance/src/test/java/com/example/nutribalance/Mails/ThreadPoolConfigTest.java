@@ -11,7 +11,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {ThreadPoolConfig.class})
 @ExtendWith(SpringExtension.class)
-class ThreadPoolConfigDiffblueTest {
+class ThreadPoolConfigTest {
     @Autowired
     private ThreadPoolConfig threadPoolConfig;
 

@@ -27,7 +27,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ContextConfiguration(classes = {TestController.class})
 @ExtendWith(SpringExtension.class)
-class TestControllerDiffblueTest {
+class TestControllerTest {
     @Autowired
     private TestController testController;
 

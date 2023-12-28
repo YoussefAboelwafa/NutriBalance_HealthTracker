@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @org.springframework.stereotype.Service
@@ -52,6 +53,10 @@ public class Service implements Iservice {
     
     @Override
     public Coach savecoach(Coach coach) {
+        Optional<Coach> old_coach_1 = coachRepo.findByEmail(coach.getEmail());
+        if(old_coach_1.isPresent()){
+            return null;
+        }
         return coachRepo.save(coach);
     }
 

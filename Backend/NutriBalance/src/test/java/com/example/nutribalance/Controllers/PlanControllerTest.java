@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @ContextConfiguration(classes = {PlanController.class})
 @ExtendWith(SpringExtension.class)
-class PlanControllerDiffblueTest {
+class PlanControllerTest {
     @MockBean
     private Iservice iservice;
 
